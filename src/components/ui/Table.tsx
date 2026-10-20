@@ -1,14 +1,23 @@
 import type { ReactNode, TdHTMLAttributes, ThHTMLAttributes } from 'react'
-import { cn } from '@/lib/cn'
+import { TableCell, TableHead, TableRow } from '@/components/shadcn/table'
+import { cn } from '@/lib/utils'
 
-/** Table/Header、Row、Cell：表头 40、行 40；数值列右对齐、等宽数字。 */
+/**
+ * Table/Header、Row、Cell：表头 40、行 40；数值列右对齐、等宽数字。
+ * 单元格与行基于 shadcn/ui Table。<table> 自身不套 shadcn 的 overflow 容器：
+ * 该容器会成为 sticky 表头的滚动祖先，导致表头不再随页面滚动吸顶。
+ */
 export default function Table({ children, className }: { children: ReactNode; className?: string }) {
-  return <table className={cn('w-full border-separate border-spacing-0 text-body', className)}>{children}</table>
+  return (
+    <table data-slot="table" className={cn('w-full caption-bottom border-separate border-spacing-0 text-body', className)}>
+      {children}
+    </table>
+  )
 }
 
 export function Th({ align = 'left', className, children, ...rest }: ThHTMLAttributes<HTMLTableCellElement> & { align?: 'left' | 'right' | 'center' }) {
   return (
-    <th
+    <TableHead
       scope="col"
       className={cn(
         'sticky top-0 z-[1] h-10 whitespace-nowrap border-b border-border bg-subtle px-3 text-label font-medium text-muted',
@@ -18,22 +27,22 @@ export function Th({ align = 'left', className, children, ...rest }: ThHTMLAttri
       {...rest}
     >
       {children}
-    </th>
+    </TableHead>
   )
 }
 
 export function Td({ align = 'left', numeric, className, children, ...rest }: TdHTMLAttributes<HTMLTableCellElement> & { align?: 'left' | 'right' | 'center'; numeric?: boolean }) {
   return (
-    <td
+    <TableCell
       className={cn(
-        'h-10 border-b border-line px-3 align-middle',
+        'h-10 whitespace-normal border-b border-line px-3 py-0 align-middle',
         numeric || align === 'right' ? 'tabular text-right' : align === 'center' ? 'text-center' : 'text-left',
         className,
       )}
       {...rest}
     >
       {children}
-    </td>
+    </TableCell>
   )
 }
 
@@ -49,7 +58,8 @@ export function Tr({
   className?: string
 }) {
   return (
-    <tr
+    <TableRow
+      data-state={selected ? 'selected' : undefined}
       aria-selected={onSelect ? Boolean(selected) : undefined}
       tabIndex={onSelect ? 0 : undefined}
       onClick={onSelect}
@@ -64,13 +74,13 @@ export function Tr({
           : undefined
       }
       className={cn(
-        'outline-none transition-colors',
-        onSelect && 'cursor-pointer focus-visible:bg-primary-soft/60',
-        selected ? 'bg-primary-soft/70 [&>td:first-child]:shadow-[inset_3px_0_0_var(--color-primary)]' : onSelect && 'hover:bg-subtle',
+        'border-b-0 outline-none transition-colors hover:bg-transparent',
+        onSelect && 'cursor-pointer hover:bg-subtle focus-visible:bg-primary-soft/60',
+        selected && 'bg-primary-soft/70 hover:bg-primary-soft/70 data-[state=selected]:bg-primary-soft/70 [&>td:first-child]:shadow-[inset_3px_0_0_var(--color-primary)]',
         className,
       )}
     >
       {children}
-    </tr>
+    </TableRow>
   )
 }

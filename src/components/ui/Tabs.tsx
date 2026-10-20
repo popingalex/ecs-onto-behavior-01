@@ -1,4 +1,5 @@
-import { cn } from '@/lib/cn'
+import { Tabs as TabsRoot, TabsList, TabsTrigger } from '@/components/shadcn/tabs'
+import { cn } from '@/lib/utils'
 
 export interface TabItem {
   id: string
@@ -7,6 +8,7 @@ export interface TabItem {
   disabled?: boolean
 }
 
+/** 页签条：基于 shadcn/ui Tabs（Radix，方向键切换焦点）。面板由调用方按 value 渲染。 */
 export default function Tabs({
   items,
   value,
@@ -21,27 +23,28 @@ export default function Tabs({
   ariaLabel: string
 }) {
   return (
-    <div role="tablist" aria-label={ariaLabel} className={cn('flex h-10 items-end gap-5 border-b border-line', className)}>
-      {items.map((item) => {
-        const selected = item.id === value
-        return (
-          <button
+    <TabsRoot value={value} onValueChange={onChange} className="gap-0" activationMode="manual">
+      <TabsList
+        variant="line"
+        aria-label={ariaLabel}
+        className={cn('flex h-10 w-full items-end justify-start gap-5 rounded-none border-b border-line p-0 group-data-[orientation=horizontal]/tabs:h-10', className)}
+      >
+        {items.map((item) => (
+          <TabsTrigger
             key={item.id}
-            role="tab"
-            type="button"
-            aria-selected={selected}
+            value={item.id}
             disabled={item.disabled}
-            onClick={() => onChange(item.id)}
             className={cn(
-              '-mb-px flex h-10 items-center gap-1.5 border-b-2 text-body transition-colors disabled:cursor-not-allowed disabled:text-faint',
-              selected ? 'border-primary font-semibold text-primary-strong' : 'border-transparent text-muted hover:text-ink',
+              '-mb-px h-10 flex-none gap-1.5 rounded-none border-0 border-b-2 border-transparent px-0 py-0 text-body font-normal text-muted shadow-none after:hidden hover:text-ink',
+              'focus-visible:ring-2 focus-visible:ring-primary/25 focus-visible:outline-none disabled:pointer-events-auto disabled:cursor-not-allowed disabled:text-faint disabled:opacity-100',
+              'data-[state=active]:border-primary data-[state=active]:font-semibold data-[state=active]:text-primary-strong',
             )}
           >
             {item.label}
-            {item.count !== undefined ? <span className="tabular rounded bg-neutral-soft px-1.5 text-caption text-muted">{item.count}</span> : null}
-          </button>
-        )
-      })}
-    </div>
+            {item.count !== undefined ? <span className="tabular rounded bg-neutral-soft px-1.5 text-caption font-normal text-muted">{item.count}</span> : null}
+          </TabsTrigger>
+        ))}
+      </TabsList>
+    </TabsRoot>
   )
 }

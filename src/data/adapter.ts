@@ -1,9 +1,9 @@
 import { delay } from '@/lib/id'
-import { seed, type SeedData } from '@/mock/seed'
+import { loadSeed, type SeedData } from '@/mock/seed'
 
 /**
- * 数据适配器边界。当前实现读取内置种子；
- * 之后替换为 mock/*.json 加载器，或 Rust mock adapter（WASM / 本地服务）。
+ * 数据适配器边界。当前实现解析 design/02/mock/prototype_seed.v05.json（见 mock/prototype.ts），
+ * 之后可替换为 Rust mock adapter（WASM / 本地服务）。
  */
 export interface DataAdapter {
   name: string
@@ -13,9 +13,9 @@ export interface DataAdapter {
 
 export const seedDataAdapter: DataAdapter = {
   name: 'seed',
-  label: '内置种子（占位）',
+  label: 'v0.5 设计包种子',
   async load() {
     await delay(260)
-    return structuredClone(seed)
+    return loadSeed()
   },
 }

@@ -6,7 +6,7 @@ import { formatNumber } from '@/lib/format'
 import type { WorldSnapshot, Vector3 } from '@/core/types'
 
 /** P20 ViewModel：WorldSnapshot → 表格列 / 空间条目。页面不复制数字为静态文本。 */
-export const RUN_COLUMNS = ['thermal.temperature', 'combustion.active', 'water.remaining', 'position.local']
+export const RUN_COLUMNS = ['thermal.temperature', 'fire.active', 'water.remaining', 'position.local']
 
 export function runColumns(index: WorkbenchIndex): PropertyDef[] {
   return RUN_COLUMNS.map((id) => index.properties.get(id)).filter((p): p is PropertyDef => Boolean(p))
@@ -15,15 +15,14 @@ export function runColumns(index: WorkbenchIndex): PropertyDef[] {
 const KIND_BY_CLASS: Record<string, SpatialItem['kind']> = {
   Fire: 'fire',
   FoamTruck: 'vehicle',
-  SupplyStation: 'station',
-  CommandUnit: 'command',
+  Command: 'command',
 }
 
 export function spatialItems(index: WorkbenchIndex, world: WorldSnapshot | undefined): SpatialItem[] {
   return [...index.entities.values()].map((e) => {
     const pos = rawWorldValue(world, e.id, 'position.local')
     const temp = rawWorldValue(world, e.id, 'thermal.temperature')
-    const active = rawWorldValue(world, e.id, 'combustion.active')
+    const active = rawWorldValue(world, e.id, 'fire.active')
     const water = rawWorldValue(world, e.id, 'water.remaining')
     const caption =
       typeof temp === 'number'

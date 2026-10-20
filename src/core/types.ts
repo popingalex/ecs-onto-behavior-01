@@ -81,7 +81,10 @@ export interface ClassDef {
   id: string
   label: string
   parent: string | null
+  /** 必需 + 可选组件（展示用）。实体实际装配哪些组件看 EntityDef.components。 */
   components: string[]
+  requiredComponents: string[]
+  optionalComponents: string[]
 }
 
 export interface VersionedAsset {
@@ -103,6 +106,8 @@ export interface EntityDef {
   label: string
   classId: string
   templateRef: string | null
+  /** 已装配的组件实例（来自 v0.5 componentInstances）；属性是否适用只看这里。 */
+  components: string[]
 }
 
 export interface QueryDef {
@@ -159,11 +164,17 @@ export interface CommitDef {
   simTime: number
   summary: string
   checkpoint: boolean
+  /**
+   * base：v0.5 基础世界；reference-sample：expected_runs 的预期样例（不是当前图计算结果）；
+   * computed：浏览器端执行器按当前图计算得到。
+   */
+  source: 'base' | 'reference-sample' | 'computed'
 }
 
 /** 某个不可变提交的世界快照：entityId → propertyId → 原始值。 */
 export interface WorldSnapshot {
   commitId: string
+  simTime?: number
   values: Record<string, Record<string, RawValue>>
 }
 

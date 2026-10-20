@@ -1,8 +1,12 @@
-import { forwardRef, useId, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes } from 'react'
-import { ChevronDown, CircleAlert } from 'lucide-react'
-import { cn } from '@/lib/cn'
+import { forwardRef, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes } from 'react'
+import { CircleAlert } from 'lucide-react'
+import { Input } from '@/components/shadcn/input'
+import { Label } from '@/components/shadcn/label'
+import { NativeSelect, NativeSelectOption } from '@/components/shadcn/native-select'
+import { Switch as ShadSwitch } from '@/components/shadcn/switch'
+import { cn } from '@/lib/utils'
 
-/** Field/Type={text,number,select,quantity,entityRef}/State={default,error,readonly}；输入高 36。 */
+/** Field/Type={text,number,select,quantity,entityRef}/State={default,error,readonly}；输入高 36。基于 shadcn/ui Label、Input、NativeSelect、Switch。 */
 export default function Field({
   label,
   hint,
@@ -19,11 +23,11 @@ export default function Field({
   children: ReactNode
 }) {
   return (
-    <div className="flex flex-col gap-1.5">
-      <label htmlFor={htmlFor} className="flex items-center gap-1 text-label font-medium text-ink-soft">
+    <div data-slot="field" data-invalid={error ? true : undefined} className="flex flex-col gap-1.5">
+      <Label htmlFor={htmlFor} className="gap-1 text-label font-medium leading-5 text-ink-soft">
         {label}
         {required ? <span className="text-danger" aria-hidden>*</span> : null}
-      </label>
+      </Label>
       {children}
       {error ? (
         <p role="alert" className="flex items-start gap-1 text-caption text-danger">
@@ -38,7 +42,7 @@ export default function Field({
 }
 
 const INPUT =
-  'h-9 w-full min-w-0 rounded-ui border bg-surface px-3 text-body text-ink placeholder:text-faint outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/15 read-only:bg-subtle read-only:text-ink-soft disabled:bg-subtle disabled:text-faint'
+  'h-9 w-full min-w-0 rounded-ui border bg-surface px-3 py-0 text-body text-ink shadow-none placeholder:text-faint outline-none transition-colors md:text-body focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/15 read-only:bg-subtle read-only:text-ink-soft disabled:bg-subtle disabled:text-faint disabled:opacity-100 aria-invalid:ring-0'
 
 export interface TextInputProps extends InputHTMLAttributes<HTMLInputElement> {
   invalid?: boolean
@@ -51,10 +55,10 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(function T
   ref,
 ) {
   const input = (
-    <input
+    <Input
       ref={ref}
       aria-invalid={invalid || undefined}
-      className={cn(INPUT, invalid ? 'border-danger' : 'border-border', mono && 'font-mono text-label', suffix ? 'pr-12' : undefined, className)}
+      className={cn(INPUT, invalid ? 'border-danger' : 'border-border', mono && 'font-mono text-label md:text-label', suffix ? 'pr-12' : undefined, className)}
       {...rest}
     />
   )
@@ -74,30 +78,28 @@ export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
 }
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select(
-  { invalid, options, placeholder, className, ...rest },
+  { invalid, options, placeholder, className, size: _size, ...rest },
   ref,
 ) {
   return (
-    <div className="relative">
-      <select
-        ref={ref}
-        aria-invalid={invalid || undefined}
-        className={cn(INPUT, 'appearance-none pr-9', invalid ? 'border-danger' : 'border-border', className)}
-        {...rest}
-      >
-        {placeholder !== undefined ? (
-          <option value="" disabled>
-            {placeholder}
-          </option>
-        ) : null}
-        {options.map((o) => (
-          <option key={o.value} value={o.value} disabled={o.disabled}>
-            {o.label}
-          </option>
-        ))}
-      </select>
-      <ChevronDown size={16} className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-muted" aria-hidden />
-    </div>
+    <NativeSelect
+      ref={ref}
+      aria-invalid={invalid || undefined}
+      wrapperClassName="w-full"
+      className={cn(INPUT, 'appearance-none pr-9', invalid ? 'border-danger' : 'border-border', className)}
+      {...rest}
+    >
+      {placeholder !== undefined ? (
+        <NativeSelectOption value="" disabled>
+          {placeholder}
+        </NativeSelectOption>
+      ) : null}
+      {options.map((o) => (
+        <NativeSelectOption key={o.value} value={o.value} disabled={o.disabled}>
+          {o.label}
+        </NativeSelectOption>
+      ))}
+    </NativeSelect>
   )
 })
 
@@ -112,24 +114,15 @@ export function Switch({
   disabled?: boolean
   label: string
 }) {
-  const id = useId()
   return (
     <div className="flex h-9 items-center gap-2.5">
-      <button
-        id={id}
-        type="button"
-        role="switch"
-        aria-checked={checked}
-        aria-label={label}
+      <ShadSwitch
+        checked={checked}
+        onCheckedChange={onChange}
         disabled={disabled}
-        onClick={() => onChange(!checked)}
-        className={cn(
-          'relative h-5 w-9 shrink-0 rounded-full transition-colors disabled:cursor-not-allowed disabled:opacity-50',
-          checked ? 'bg-primary' : 'bg-[#c3cfdb]',
-        )}
-      >
-        <span className={cn('absolute top-0.5 h-4 w-4 rounded-full bg-white shadow transition-[left]', checked ? 'left-[18px]' : 'left-0.5')} />
-      </button>
+        aria-label={label}
+        className="h-5 w-9 data-[size=default]:h-5 data-[size=default]:w-9 data-[state=unchecked]:bg-[#c3cfdb] [&>span]:size-4 [&>span]:data-[state=checked]:translate-x-[17px] [&>span]:data-[state=unchecked]:translate-x-0.5"
+      />
       <span className="font-mono text-label text-ink-soft">{String(checked)}</span>
     </div>
   )

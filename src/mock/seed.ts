@@ -17,12 +17,14 @@ import type {
   VersionedAsset,
   WorldSnapshot,
 } from '@/core/types'
+import { refKey, type AttributeSchema, type PrototypeModel } from '@/schema/model'
+import type { ReferenceRun } from '@/schema/referenceRuns'
+import { LEGACY_FIXTURE } from './legacy'
+import { loadPrototype } from '@/data/mockLoader'
 
 /**
- * 占位种子数据。
- * 只用于搭建架构与验证数据流；数值取自 docs/spec 的业务示例。
- * 后续由 mock/01_model.json、02_world.json、03_programs.json、07_history.json 与 runs/*.json 替换，
- * 页面不得把这些数字复制为静态文本。
+ * 旧页面读取的 SeedData 形状 —— 现在是 v0.5 规范模型（design/02/mock/prototype_seed.v05.json）的派生桥接，
+ * 不再手写业务数值。v0.5 范围外的旧对象见 ./legacy.ts 的迁移表。
  */
 export interface SeedData {
   project: { id: string; label: string; description: string }
@@ -51,277 +53,141 @@ export interface SeedData {
   worlds: WorldSnapshot[]
 }
 
-export const seed: SeedData = {
-  project: {
-    id: 'park',
-    label: '园区消防推演',
-    description: '虚构园区训练规则：双路冷却裁决、车辆提前接替与分支反事实复盘。',
-  },
-  quantities: [
-    { id: 'temperature', label: '温度' },
-    { id: 'temperatureDelta', label: '温差' },
-    { id: 'volume', label: '体积' },
-    { id: 'flow', label: '体积流量' },
-    { id: 'length', label: '长度' },
-    { id: 'time', label: '时间' },
-  ],
-  units: [
-    { id: 'degC', symbol: '°C', label: '摄氏度', quantityId: 'temperature' },
-    { id: 'deltaK', symbol: 'K', label: '开尔文温差', quantityId: 'temperatureDelta' },
-    { id: 'L', symbol: 'L', label: '升', quantityId: 'volume' },
-    { id: 'Lps', symbol: 'L/s', label: '升每秒', quantityId: 'flow' },
-    { id: 'm', symbol: 'm', label: '米', quantityId: 'length' },
-    { id: 's', symbol: 's', label: '秒', quantityId: 'time' },
-  ],
-  components: [
-    { id: 'Thermal', label: '热状态', description: '温度与冷却额度；温度经贡献裁决写入。' },
-    { id: 'Combustion', label: '燃烧', description: '火源活跃与发现状态，独立于温度。' },
-    { id: 'Water', label: '水箱', description: '容量、余水与耗水速率。' },
-    { id: 'Position', label: '空间位置', description: 'park-ENU 坐标；null 不显示但保留逻辑，原点有效。' },
-    { id: 'Task', label: '任务', description: '派遣、处置与交接关系。' },
-    { id: 'Health', label: '健康', description: '车辆可用性与故障状态。' },
-  ],
-  properties: [
-    {
-      id: 'thermal.temperature',
-      componentId: 'Thermal',
-      label: '温度',
-      shape: 'scalar',
-      primitive: 'f64',
-      unitId: 'degC',
-      nullable: false,
-      default: 100,
-      writeMode: 'contribution',
-      reducer: 'cooling-floor',
-      description: '多个 system 只提交降温请求，经 cooling-floor 裁决后整回合原子生效。',
-    },
-    {
-      id: 'thermal.coolingFloor',
-      componentId: 'Thermal',
-      label: '冷源温度',
-      shape: 'scalar',
-      primitive: 'f64',
-      unitId: 'degC',
-      nullable: false,
-      default: 20,
-      writeMode: 'configuration',
-      description: '同温恒温冷源的绝对温度，用于计算可降温额度。',
-    },
-    {
-      id: 'combustion.active',
-      componentId: 'Combustion',
-      label: '活跃',
-      shape: 'scalar',
-      primitive: 'bool',
-      unitId: null,
-      nullable: false,
-      default: true,
-      writeMode: 'exclusive',
-      description: '独立字段；温度降到 20 °C 不自动表示熄灭。',
-    },
-    {
-      id: 'combustion.discovered',
-      componentId: 'Combustion',
-      label: '已发现',
-      shape: 'scalar',
-      primitive: 'bool',
-      unitId: null,
-      nullable: false,
-      default: true,
-      writeMode: 'exclusive',
-      description: '未发现的火源仍可被查询选中。',
-    },
-    {
-      id: 'water.capacity',
-      componentId: 'Water',
-      label: '水箱容量',
-      shape: 'scalar',
-      primitive: 'f64',
-      unitId: 'L',
-      nullable: false,
-      default: 10000,
-      writeMode: 'configuration',
-      description: '模板默认值；实例可覆盖。',
-    },
-    {
-      id: 'water.remaining',
-      componentId: 'Water',
-      label: '余水',
-      shape: 'scalar',
-      primitive: 'f64',
-      unitId: 'L',
-      nullable: false,
-      default: 10000,
-      writeMode: 'contribution',
-      reducer: 'refill',
-      description: '耗水与补给均以贡献写入。',
-    },
-    {
-      id: 'water.flowRate',
-      componentId: 'Water',
-      label: '耗水速率',
-      shape: 'scalar',
-      primitive: 'f64',
-      unitId: 'Lps',
-      nullable: false,
-      default: 100,
-      writeMode: 'configuration',
-      description: '处置状态下的恒定耗水速率。',
-    },
-    {
-      id: 'position.local',
-      componentId: 'Position',
-      label: '局部坐标',
-      shape: 'vector3',
-      primitive: 'f64',
-      unitId: 'm',
-      nullable: true,
-      default: null,
-      writeMode: 'exclusive',
-      description: 'park-ENU 东/北/高；[0, 0, 0] 为有效位置，null 为未设置。',
-    },
-    {
-      id: 'task.assignment',
-      componentId: 'Task',
-      label: '当前任务目标',
-      shape: 'scalar',
-      primitive: 'EntityRef',
-      unitId: null,
-      nullable: true,
-      default: null,
-      writeMode: 'exclusive',
-      description: '引用目标实体；EntityRef 不是位置快照。',
-    },
-    {
-      id: 'health.available',
-      componentId: 'Health',
-      label: '可用',
-      shape: 'scalar',
-      primitive: 'bool',
-      unitId: null,
-      nullable: false,
-      default: true,
-      writeMode: 'exclusive',
-      description: '故障车辆不可作为接替候选。',
-    },
-  ],
-  classes: [
-    { id: 'Fire', label: '火源', parent: null, components: ['Thermal', 'Combustion', 'Position'] },
-    { id: 'FoamTruck', label: '泡沫消防车', parent: null, components: ['Water', 'Position', 'Task', 'Health'] },
-    { id: 'SupplyStation', label: '补给站', parent: null, components: ['Water', 'Position'] },
-    { id: 'CommandUnit', label: '指挥单元', parent: null, components: ['Position', 'Task'] },
-  ],
-  templates: [{ id: 'tpl-foam', version: 't3', label: '10 吨泡沫消防车', classId: 'FoamTruck' }],
-  sceneTemplates: [{ id: 'tpl-park', version: 'st2', label: '园区标准场景' }],
-  scenes: [{ id: 'scene-04', version: 'scene-04', label: '园区初始场景' }],
-  assets: [{ id: 'asset-truck', version: 'a2', label: '泡沫车三维资产', kind: 'model3d' }],
-  entities: [
-    { id: 'F01', label: '东区仓库火点', classId: 'Fire', templateRef: null },
-    { id: 'F02', label: '装卸平台火点', classId: 'Fire', templateRef: null },
-    { id: 'F03', label: '配电间火点', classId: 'Fire', templateRef: null },
-    { id: 'V01', label: '泡沫车 1 号', classId: 'FoamTruck', templateRef: 'tpl-foam@t3' },
-    { id: 'V02', label: '泡沫车 2 号', classId: 'FoamTruck', templateRef: 'tpl-foam@t3' },
-    { id: 'V03', label: '泡沫车 3 号', classId: 'FoamTruck', templateRef: 'tpl-foam@t3' },
-    { id: 'S01', label: '北门补给站', classId: 'SupplyStation', templateRef: null },
-    { id: 'C01', label: '现场指挥', classId: 'CommandUnit', templateRef: null },
-  ],
-  queries: [{ id: 'q-fire', label: '活跃火源', classId: 'Fire' }],
-  graphs: [{ id: 'g-cool', version: 'g4', label: '喷淋冷却' }],
-  systems: [
-    { id: 'cool-A', label: '喷淋冷却 A', graphRef: 'g-cool@g4', queryId: 'q-fire', enabled: true },
-    { id: 'cool-B', label: '喷淋冷却 B', graphRef: 'g-cool@g4', queryId: 'q-fire', enabled: true },
-  ],
-  schedules: [{ id: 'schedule-main', label: '主回合调度' }],
-  constraints: [
-    { id: 'cooling-floor', label: '冷却下限额度' },
-    { id: 'refill', label: '补给分配' },
-  ],
-  policies: [{ id: 'policy-cover', version: 'p2', label: '消防覆盖持续策略' }],
-  tasks: [{ id: 'task-replace-V02', label: 'V02 接替 V01 处置 F01' }],
-  events: [{ id: 'evt-handoff', label: 'V01 → V02 交接' }],
-  bundles: [{ id: 'bundle-04', label: '冷却与接替演练', revision: 12 }],
-  runs: [
-    {
-      id: 'run-main',
-      label: '主演练',
-      bundleId: 'bundle-04',
-      stepSeconds: 10,
-      playbackSeconds: 1,
-      runtime: 'server',
-    },
-  ],
-  branches: [
-    {
-      id: 'main',
-      runId: 'run-main',
-      label: '主分支',
-      baseCommit: null,
-      headCommit: 'c043',
-      visibility: 'shared',
-    },
-    {
-      id: 'branch-one-cooler',
-      runId: 'run-main',
-      label: '单路冷却试算',
-      baseCommit: 'c042',
-      headCommit: 'c043-one-cooler',
-      visibility: 'private',
-    },
-  ],
-  commits: [
-    { id: 'c041', runId: 'run-main', branchId: 'main', parentId: null, round: 41, simTime: 410, summary: '第 41 回合', checkpoint: true },
-    { id: 'c042', runId: 'run-main', branchId: 'main', parentId: 'c041', round: 42, simTime: 420, summary: 'F01 100 °C，V01 处置中', checkpoint: true },
-    { id: 'c043', runId: 'run-main', branchId: 'main', parentId: 'c042', round: 43, simTime: 430, summary: '双路冷却裁决，V02 提前交接', checkpoint: true },
-    {
-      id: 'c043-one-cooler',
-      runId: 'run-main',
-      branchId: 'branch-one-cooler',
-      parentId: 'c042',
-      round: 43,
-      simTime: 430,
-      summary: '停用 cool-B 后重算',
-      checkpoint: false,
-    },
-  ],
-  worlds: [
-    {
-      commitId: 'c042',
-      values: {
-        F01: { 'thermal.temperature': 100, 'combustion.active': true, 'position.local': [320, 180, 0] },
-        F02: { 'thermal.temperature': 80, 'combustion.active': true, 'position.local': [360, 120, 0] },
-        F03: { 'thermal.temperature': 60, 'combustion.active': true, 'combustion.discovered': false, 'position.local': [410, 220, 0] },
-        V01: { 'water.remaining': 5500, 'position.local': [280, 180, 0] },
-        V02: { 'water.remaining': 9000, 'position.local': [240, 180, 0] },
-        V03: { 'water.remaining': 4000, 'position.local': [160, 90, 0] },
-        S01: { 'water.remaining': 60000, 'position.local': [120, 260, 0] },
-        C01: { 'position.local': null },
+/** v0.5 输入没有给出名称的对象，沿用旧工作台的展示名（只影响显示）。 */
+const DISPLAY_LABELS: Record<string, string> = {
+  temperatureAbsolute: '温度',
+  temperatureDifference: '温差',
+  length: '长度',
+  volume: '体积',
+  degC: '摄氏度',
+  deltaK: '开尔文温差',
+  m: '米',
+  L: '升',
+  'g-cool': '冷却程序',
+  'schedule-main': '主回合调度',
+  'cooling-floor': '冷却下限额度',
+  'scene-05': '园区初始场景',
+  main: '主分支',
+  'branch-one-cooler': '单路冷却试算',
+  'branch-lower-power': 'A 降为 20 K 试算',
+}
+const labelOf = (id: string) => DISPLAY_LABELS[id] ?? id
+
+const RUN: RunDef = { id: 'run-main', label: '主演练', bundleId: 'bundle-04', stepSeconds: 10, playbackSeconds: 1, runtime: 'server' }
+
+function describeAttribute(a: AttributeSchema, m: PrototypeModel): string {
+  const parts: string[] = []
+  if (a.writeMode === 'contribution') parts.push(`贡献写入：多个 system 只提交请求，经 ${a.reducerRef ? refKey(a.reducerRef) : '（未配置归约）'} 裁决后整回合原子生效。`)
+  if (a.writeMode === 'exclusive') parts.push('独占写入：同一回合只能有一个 system 写。')
+  if (a.writeMode === 'configuration') parts.push('配置值：运行中不由 system 写入。')
+  if (a.writeMode === 'contract') parts.push('契约写入：由契约节点统一结算。')
+  if (a.type.frameId) parts.push(`坐标系 ${a.type.frameId}。`)
+  parts.push(a.type.nullable ? 'null 是有效值，表示未设置。' : '不可为 null。')
+  const owners = m.components.filter((c) => c.propertyIds.includes(a.id)).map((c) => c.id)
+  if (owners.length > 1) parts.push(`同时列在 ${owners.join('、')} 中。`)
+  return parts.join('')
+}
+
+function referenceCommit(r: ReferenceRun): CommitDef {
+  return {
+    id: r.resultCommit,
+    runId: RUN.id,
+    branchId: r.branchId,
+    parentId: r.baseCommit,
+    round: Math.round(r.simTimeAfter / RUN.stepSeconds),
+    simTime: r.simTimeAfter,
+    summary: `参考样例 ${r.caseId}（expected_runs，非当前图计算）`,
+    checkpoint: r.branchId === 'main',
+    source: 'reference-sample',
+  }
+}
+
+export function seedFromModel(m: PrototypeModel, referenceRuns: ReferenceRun[]): SeedData {
+  const attrLabel = (id: string) => m.attributes.find((a) => a.id === id)?.label ?? id
+  const typeLabel = (id: string) => m.entityTypes.find((t) => t.id === id)?.label ?? id
+  const base = m.baseWorld
+  return {
+    project: { id: 'park', label: '园区消防推演', description: m.scope },
+    quantities: [...new Set(m.units.map((u) => u.quantityKind))].map((id) => ({ id, label: labelOf(id) })),
+    units: m.units.map((u) => ({ id: u.id, symbol: u.symbol, label: labelOf(u.id), quantityId: u.quantityKind })),
+    components: m.components.map((c) => ({
+      id: c.id,
+      label: c.label,
+      description: `版本 ${c.version}；包含 ${c.propertyIds.map(attrLabel).join('、') || '（无属性）'}。`,
+    })),
+    properties: m.attributes.map((a) => ({
+      id: a.id,
+      componentId: a.componentId,
+      label: a.label,
+      shape: a.type.shape,
+      primitive: a.type.primitive,
+      unitId: a.type.unitId ?? null,
+      nullable: a.type.nullable,
+      default: a.default,
+      writeMode: a.writeMode,
+      reducer: a.reducerRef?.id,
+      description: describeAttribute(a, m),
+    })),
+    classes: m.entityTypes.map((t) => ({
+      id: t.id,
+      label: t.label,
+      parent: null,
+      components: [...t.requiredComponentIds, ...t.optionalComponentIds],
+      requiredComponents: t.requiredComponentIds,
+      optionalComponents: t.optionalComponentIds,
+    })),
+    templates: m.templates.map((t) => ({ id: t.id, version: t.version, label: t.label, classId: t.typeId })),
+    sceneTemplates: LEGACY_FIXTURE.sceneTemplates,
+    scenes: [{ id: m.scene.id, version: m.scene.id, label: labelOf(m.scene.id) }],
+    assets: LEGACY_FIXTURE.assets,
+    entities: m.scene.entities.map((e) => ({
+      id: e.id,
+      label: e.label,
+      classId: e.typeId,
+      templateRef: e.templateRef ? refKey(e.templateRef) : null,
+      components: e.componentInstances.map((ci) => ci.schemaRef.id),
+    })),
+    queries: m.queries.map((q) => ({ id: q.id, label: `${typeLabel(q.typeId)}（${attrLabel(q.condition.propertyId)} = ${String(q.condition.value)}）`, classId: q.typeId })),
+    graphs: m.programs.map((p) => ({ id: p.id, version: p.version, label: labelOf(p.id) })),
+    systems: m.systems.map((s) => ({ id: s.id, label: s.label, graphRef: refKey(s.programRef), queryId: s.queryRef.id, enabled: s.enabled })),
+    schedules: m.schedules.map((s) => ({ id: s.id, label: labelOf(s.id) })),
+    constraints: m.constraints.map((c) => ({ id: c.id, label: labelOf(c.id) })),
+    policies: LEGACY_FIXTURE.policies,
+    tasks: LEGACY_FIXTURE.tasks,
+    events: LEGACY_FIXTURE.events,
+    bundles: LEGACY_FIXTURE.bundles,
+    runs: [RUN],
+    branches: [...new Set(['main', ...referenceRuns.map((r) => r.branchId)])].map((id) => {
+      const head = [...referenceRuns].reverse().find((r) => r.branchId === id)
+      return {
+        id,
+        runId: RUN.id,
+        label: labelOf(id),
+        baseCommit: id === 'main' ? null : base.commitId,
+        headCommit: head?.resultCommit ?? base.commitId,
+        visibility: id === 'main' ? 'shared' : 'private',
+      }
+    }),
+    commits: [
+      {
+        id: base.commitId,
+        runId: RUN.id,
+        branchId: 'main',
+        parentId: null,
+        round: Math.round(base.simTime / RUN.stepSeconds),
+        simTime: base.simTime,
+        summary: `基础世界 · ${m.scene.id} 初值`,
+        checkpoint: true,
+        source: 'base',
       },
-    },
-    {
-      commitId: 'c043',
-      values: {
-        F01: { 'thermal.temperature': 20, 'combustion.active': true, 'position.local': [320, 180, 0] },
-        F02: { 'thermal.temperature': 20, 'combustion.active': true, 'position.local': [360, 120, 0] },
-        F03: { 'thermal.temperature': 20, 'combustion.active': true, 'combustion.discovered': false, 'position.local': [410, 220, 0] },
-        V01: { 'water.remaining': 5100, 'position.local': [280, 180, 0] },
-        V02: { 'water.remaining': 8400, 'position.local': [280, 180, 0] },
-        V03: { 'water.remaining': 4000, 'position.local': [160, 90, 0] },
-        S01: { 'water.remaining': 60000, 'position.local': [120, 260, 0] },
-        C01: { 'position.local': null },
-      },
-    },
-    {
-      commitId: 'c043-one-cooler',
-      values: {
-        F01: { 'thermal.temperature': 50, 'combustion.active': true, 'position.local': [320, 180, 0] },
-        F02: { 'thermal.temperature': 30, 'combustion.active': true, 'position.local': [360, 120, 0] },
-        F03: { 'thermal.temperature': 20, 'combustion.active': true, 'combustion.discovered': false, 'position.local': [410, 220, 0] },
-        V01: { 'water.remaining': 5100, 'position.local': [280, 180, 0] },
-        V02: { 'water.remaining': 8400, 'position.local': [280, 180, 0] },
-        V03: { 'water.remaining': 4000, 'position.local': [160, 90, 0] },
-        S01: { 'water.remaining': 60000, 'position.local': [120, 260, 0] },
-        C01: { 'position.local': null },
-      },
-    },
-  ],
+      ...referenceRuns.map(referenceCommit),
+    ],
+    worlds: [base, ...referenceRuns.map((r) => r.nextWorld)],
+  }
+}
+
+/** 惰性解析：解析失败在 adapter.load() 内抛出，由 loadWorkbench 收进 error 状态，而不是让模块导入崩溃。 */
+export function loadSeed(): SeedData {
+  const loaded = loadPrototype()
+  return seedFromModel(structuredClone(loaded.model), loaded.referenceRuns)
 }

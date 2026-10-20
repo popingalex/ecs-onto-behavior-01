@@ -25,8 +25,7 @@ const CANDIDATES: Candidate[] = [
   { id: 'n-room.out', label: 'CoolingRoom · 可降温额度', type: 'deltaK', view: '旧值 State[n]' },
   { id: 'param.request', label: '参数 · 单路请求降温', type: 'deltaK', view: '运行参数' },
   { id: 'thermal.temperature', label: 'Thermal · 温度', type: 'degC', view: '旧值 State[n]', incompatible: '量种不符：期望温差 K，来源为绝对温度 °C' },
-  { id: 'combustion.active', label: 'Combustion · 活跃', type: 'bool', view: '旧值 State[n]' },
-  { id: 'combustion.discovered', label: 'Combustion · 已发现', type: 'bool', view: '旧值 State[n]' },
+  { id: 'fire.active', label: 'FireState · 未熄灭', type: 'bool', view: '旧值 State[n]' },
   { id: 'policy.minQualified', label: '策略 · 最低合格比例', type: 'ratio', view: '策略参数' },
   { id: 'cool-B.staged', label: 'cool-B · 暂存降温', type: 'deltaK', view: '其他 system 暂存', incompatible: '不可见：同回合其他 system 的暂存值不可读取' },
 ]

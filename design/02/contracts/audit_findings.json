@@ -1,0 +1,112 @@
+[
+  {
+    "id": "A01",
+    "title": "P12/P14/P22/P23核心界面没有实现登记",
+    "path": "src/pages/registry.ts",
+    "lineStart": 24,
+    "lineEnd": 38,
+    "evidence": "主页面只有P01/P03/P20；P15/P21为弹层；其他页回退占位",
+    "action": "实现专用页面后登记，不以导航可达算完成",
+    "url": "https://github.com/popingalex/ecs-onto-behavior-01/blob/112e7eadd81d259c141883f17a411c07b7300aba/src/pages/registry.ts#L24"
+  },
+  {
+    "id": "A02",
+    "title": "画布区域仅为空布局占位",
+    "path": "src/pages/PagePlaceholder.tsx",
+    "lineStart": 1,
+    "lineEnd": null,
+    "evidence": "GraphCanvas只是占位文字，未挂载图编辑库",
+    "action": "P12和P14分别挂载真实画布，提供增删连线和保存",
+    "url": "https://github.com/popingalex/ecs-onto-behavior-01/blob/112e7eadd81d259c141883f17a411c07b7300aba/src/pages/PagePlaceholder.tsx#L1"
+  },
+  {
+    "id": "A03",
+    "title": "未接入目标组件与图编辑库",
+    "path": "package.json",
+    "lineStart": 1,
+    "lineEnd": null,
+    "evidence": "运行依赖仅React、ReactDOM、lucide-react；基础UI为自绘Tailwind封装",
+    "action": "接入shadcn/ui源码与实际图编辑器，不只改视觉样式",
+    "url": "https://github.com/popingalex/ecs-onto-behavior-01/blob/112e7eadd81d259c141883f17a411c07b7300aba/package.json#L1"
+  },
+  {
+    "id": "A04",
+    "title": "属性新增操作不可用",
+    "path": "src/pages/p03/P03ComponentSchema.tsx",
+    "lineStart": 124,
+    "lineEnd": 128,
+    "evidence": "新增属性按钮disabled，页面只有组件索引及属性列表/有限字段编辑",
+    "action": "新增独立属性管理P29，完成CRUD和引用定位",
+    "url": "https://github.com/popingalex/ecs-onto-behavior-01/blob/112e7eadd81d259c141883f17a411c07b7300aba/src/pages/p03/P03ComponentSchema.tsx#L124"
+  },
+  {
+    "id": "A05",
+    "title": "运行数据仍来自独立seed",
+    "path": "src/data/adapter.ts",
+    "lineStart": 1,
+    "lineEnd": null,
+    "evidence": "seedDataAdapter复制seed；未使用design/mock定义作为唯一业务输入",
+    "action": "建立规范化模型与单一mock loader，消除字段漂移",
+    "url": "https://github.com/popingalex/ecs-onto-behavior-01/blob/112e7eadd81d259c141883f17a411c07b7300aba/src/data/adapter.ts#L1"
+  },
+  {
+    "id": "A06",
+    "title": "逻辑图和调度仅保存名称/版本",
+    "path": "src/core/types.ts",
+    "lineStart": 87,
+    "lineEnd": 127,
+    "evidence": "graphs使用VersionedAsset，schedules使用NamedDef；缺少节点/边/端口/绑定的领域模型",
+    "action": "引入LogicGraphDocument与ScheduleDocument，layout另存",
+    "url": "https://github.com/popingalex/ecs-onto-behavior-01/blob/112e7eadd81d259c141883f17a411c07b7300aba/src/core/types.ts#L87"
+  },
+  {
+    "id": "A07",
+    "title": "结算适配器没有计算与过程产物",
+    "path": "src/services/executionAdapter.ts",
+    "lineStart": 15,
+    "lineEnd": 48,
+    "evidence": "仅查预置Map；源码只见registerPrecomputedRound定义未见调用，缺失时返回REFERENCE_RESULT_MISSING",
+    "action": "用可执行mock adapter按当前草稿求值，返回状态、trace、贡献和裁决",
+    "url": "https://github.com/popingalex/ecs-onto-behavior-01/blob/112e7eadd81d259c141883f17a411c07b7300aba/src/services/executionAdapter.ts#L15"
+  },
+  {
+    "id": "A08",
+    "title": "变量候选硬编码且绑定未落到图文档",
+    "path": "src/pages/overlays/P15BindingPicker.tsx",
+    "lineStart": 22,
+    "lineEnd": 46,
+    "evidence": "候选使用示意字符串；BindPort写入通用overlay，缺图数据读取链",
+    "action": "从schema/上游作用域生成候选，绑定写入LogicGraphDocument并影响求值",
+    "url": "https://github.com/popingalex/ecs-onto-behavior-01/blob/112e7eadd81d259c141883f17a411c07b7300aba/src/pages/overlays/P15BindingPicker.tsx#L22"
+  },
+  {
+    "id": "A09",
+    "title": "快照和过程类型不完整",
+    "path": "src/core/types.ts",
+    "lineStart": 153,
+    "lineEnd": 185,
+    "evidence": "有commit和world、DisplayValue；没有RunRecord/SystemExecution/NodeExecution/DecisionDTO",
+    "action": "为计算过程建立独立DTO和store，P22/P23/P24共享记录",
+    "url": "https://github.com/popingalex/ecs-onto-behavior-01/blob/112e7eadd81d259c141883f17a411c07b7300aba/src/core/types.ts#L153"
+  },
+  {
+    "id": "A10",
+    "title": "两套业务字典已经出现差异",
+    "path": "src/mock/seed.ts",
+    "lineStart": 80,
+    "lineEnd": 334,
+    "evidence": "seed与design/mock在实体名、FireState/Combustion、Station/SupplyStation、task目标key、水量默认/站库存等处不一致",
+    "action": "用显式迁移表统一，差异清单逐项裁定，禁止静默覆盖",
+    "url": "https://github.com/popingalex/ecs-onto-behavior-01/blob/112e7eadd81d259c141883f17a411c07b7300aba/src/mock/seed.ts#L80"
+  },
+  {
+    "id": "A11",
+    "title": "28条逐页规格路径全部失效",
+    "path": "design/contracts/page_index.json",
+    "lineStart": 1,
+    "lineEnd": null,
+    "evidence": "索引期望pages/P01_项目与版本总览.md等；磁盘实际为P01_.md/P14_System.md等，28条均不存在",
+    "action": "按稳定P编号修复索引或统一ASCII重命名；不能断言规格未提供",
+    "url": "https://github.com/popingalex/ecs-onto-behavior-01/blob/112e7eadd81d259c141883f17a411c07b7300aba/design/contracts/page_index.json"
+  }
+]

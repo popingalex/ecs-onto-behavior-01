@@ -1,0 +1,162 @@
+[
+  {
+    "id": "AC01",
+    "name": "组件与属性独立",
+    "steps": "P03新建Thermal；P29新建thermal.temperature；P03只显示成员和链接",
+    "expected": "属性CRUD在P29独立入口完成；列表更新，不出现重复编辑器",
+    "status": "not-run",
+    "evidenceRequired": true
+  },
+  {
+    "id": "AC02",
+    "name": "定义与实例值独立",
+    "steps": "P08从Fire建F01、F02；将F01初温改120",
+    "expected": "F02初值、attribute.default、模板不变；引用ID不变",
+    "status": "not-run",
+    "evidenceRequired": true
+  },
+  {
+    "id": "AC03",
+    "name": "模板覆盖",
+    "steps": "P05默认8000；P08 V01覆盖5500后恢复继承",
+    "expected": "恢复8000；显式null仅nullable允许，不能等价于删除override",
+    "status": "not-run",
+    "evidenceRequired": true
+  },
+  {
+    "id": "AC04",
+    "name": "组件实例",
+    "steps": "P08装配/卸载Position；尝试移除Fire必需Thermal",
+    "expected": "可选组件生效；必需组件删除被阻止，不以值key推断成员",
+    "status": "not-run",
+    "evidenceRequired": true
+  },
+  {
+    "id": "AC05",
+    "name": "无位置实体",
+    "steps": "给C01位置null，再赋[0,0,0]",
+    "expected": "null仍有逻辑实体；原点有效，不被隐藏",
+    "status": "not-run",
+    "evidenceRequired": true
+  },
+  {
+    "id": "AC06",
+    "name": "内部图编辑",
+    "steps": "P14从空图放5节点、连线、保存、刷新",
+    "expected": "端口、绑定、节点位置、版本恢复；不是图片或固定图",
+    "status": "not-run",
+    "evidenceRequired": true
+  },
+  {
+    "id": "AC07",
+    "name": "单位错误",
+    "steps": "n-old.value绝对温度接n-emit.delta温差",
+    "expected": "连接被拒绝并定位原因；不静默把°C当K",
+    "status": "not-run",
+    "evidenceRequired": true
+  },
+  {
+    "id": "AC08",
+    "name": "动态变量",
+    "steps": "P29给Thermal增加可用属性，再在P15搜索",
+    "expected": "候选来自schema，兼容性显示；取消不修改；确认影响真实节点binding",
+    "status": "not-run",
+    "evidenceRequired": true
+  },
+  {
+    "id": "AC09",
+    "name": "外层编排",
+    "steps": "P11创建A/B；P12拖入并连接Reducer/Commit",
+    "expected": "仅外层节点注册表；双击进P14后返回保留外层视角",
+    "status": "not-run",
+    "evidenceRequired": true
+  },
+  {
+    "id": "AC10",
+    "name": "调度与读取视图",
+    "steps": "P12增加A→B order边，查看计划并运行",
+    "expected": "分为两个system组；B仍读c042；顺序不自动使B读A暂存",
+    "status": "not-run",
+    "evidenceRequired": true
+  },
+  {
+    "id": "AC11",
+    "name": "基线计算",
+    "steps": "c042执行两路50K冷却",
+    "expected": "F01/F02/F03=20/20/20°C；6个system实体执行、30条完成节点记录、6项请求、3组裁决、3项温度变更",
+    "status": "not-run",
+    "evidenceRequired": true
+  },
+  {
+    "id": "AC12",
+    "name": "过程切实体",
+    "steps": "P22选cool-A/F01再选F02",
+    "expected": "F01 100/50/−50/−40/20；F02 80/30/−50/−30/20；节点端口随execution同步",
+    "status": "not-run",
+    "evidenceRequired": true
+  },
+  {
+    "id": "AC13",
+    "name": "禁用系统",
+    "steps": "从同c042仅禁用B后执行",
+    "expected": "50/30/20°C；只有3个实体执行和15条完成节点记录；旧基线记录不被覆盖",
+    "status": "not-run",
+    "evidenceRequired": true
+  },
+  {
+    "id": "AC14",
+    "name": "参数实际生效",
+    "steps": "A.maxDropK=20，B=50，从c042执行",
+    "expected": "30/20/20°C；请求/获准/trace与最终值一起变化",
+    "status": "not-run",
+    "evidenceRequired": true
+  },
+  {
+    "id": "AC15",
+    "name": "缺输入失败",
+    "steps": "删除n-neg→n-emit连接后校验/执行",
+    "expected": "REQUIRED_INPUT_MISSING；无新commit；不播放预置成功",
+    "status": "not-run",
+    "evidenceRequired": true
+  },
+  {
+    "id": "AC16",
+    "name": "裁决可解释",
+    "steps": "P23查看F01并点击cool-A贡献",
+    "expected": "请求−50K、获准−40K、比例0.8；跳回P22正确execution/node",
+    "status": "not-run",
+    "evidenceRequired": true
+  },
+  {
+    "id": "AC17",
+    "name": "来源版本固定",
+    "steps": "P24查看c043来源，随后改当前程序参数",
+    "expected": "旧来源仍引用c042及g5；不会用新图/当前值解释旧执行",
+    "status": "not-run",
+    "evidenceRequired": true
+  },
+  {
+    "id": "AC18",
+    "name": "持久化与历史",
+    "steps": "分别编辑program和schedule并保存刷新；查看旧commit",
+    "expected": "草稿不串；保存恢复；历史只读且head不被viewCommit覆盖",
+    "status": "not-run",
+    "evidenceRequired": true
+  },
+  {
+    "id": "AC19",
+    "name": "组件库真实使用",
+    "steps": "检查核心页源码和交互",
+    "expected": "shadcn组件源码+import；ReactFlow与FlowGram实际挂载；存在保存/连线事件，不是SVG占位",
+    "status": "not-run",
+    "evidenceRequired": true
+  },
+  {
+    "id": "AC20",
+    "name": "核心页登记与布局",
+    "steps": "走P29→P03→P08→P14→P11→P12→P20→P22→P23→P24",
+    "expected": "无PagePlaceholder；1440×900主操作可达；带可复现截图/录屏",
+    "status": "not-run",
+    "evidenceRequired": true
+  }
+]

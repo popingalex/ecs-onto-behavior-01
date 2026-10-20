@@ -9,12 +9,11 @@ export function toDisplay(value: RawValue | undefined, commitId?: string): Displ
 }
 
 export function entityHasProperty(index: WorkbenchIndex, entityId: string, property: PropertyDef): boolean {
-  const entity = index.entities.get(entityId)
-  const cls = entity ? index.classes.get(entity.classId) : undefined
-  return Boolean(cls?.components.includes(property.componentId))
+  // 只看实体装配的组件实例；不能用类型声明或世界快照里有没有该字段来推断。
+  return Boolean(index.entities.get(entityId)?.components.includes(property.componentId))
 }
 
-/** 某提交下实体属性的显示值：类型没有该组件 → 不适用；快照缺字段 → 未记录（不补 0）。 */
+/** 某提交下实体属性的显示值：实体未装配该组件 → 不适用；快照缺字段 → 未记录（不补 0）。 */
 export function worldValue(index: WorkbenchIndex, world: WorldSnapshot | undefined, entityId: string, property: PropertyDef): DisplayValue {
   if (!entityHasProperty(index, entityId, property)) return { state: 'notApplicable' }
   const row = world?.values[entityId]

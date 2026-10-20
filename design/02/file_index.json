@@ -1,0 +1,24 @@
+{
+  "version": "0.5",
+  "files": [
+    "01_repository_audit.md",
+    "02_revision_plan.md",
+    "03_figma_make_tasks.md",
+    "04_data_and_trace_contract.md",
+    "05_acceptance.md",
+    "06_sources.md",
+    "README.md",
+    "contracts/acceptance.json",
+    "contracts/audit_findings.json",
+    "contracts/domain.ts",
+    "contracts/implementation_tasks.json",
+    "contracts/package_checks.json",
+    "contracts/page_responsibilities.json",
+    "contracts/review_source.json",
+    "contracts/spec_path_repairs.json",
+    "mock/error_cases.v05.json",
+    "mock/expected_runs.v05.json",
+    "mock/prototype_seed.v05.json"
+  ],
+  "kind": "revision plan and prototype construction contracts; no repo mutation"
+}

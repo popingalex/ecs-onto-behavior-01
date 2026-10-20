@@ -4,6 +4,7 @@ import Button, { IconButton } from '@/components/ui/Button'
 import StatusTag, { Tag } from '@/components/ui/StatusTag'
 import CommitSelector from '@/components/domain/CommitSelector'
 import { cn } from '@/lib/cn'
+import { formatLocalStamp } from '@/lib/format'
 import type { ViewportTier } from '@/lib/useViewport'
 import { navigate } from '@/router/router'
 import { canEdit, useRole } from '@/stores/context'
@@ -77,9 +78,14 @@ function AssetContext({ compact }: { compact: boolean }) {
       </span>
       <StatusTag status={saveStatusOf(draft)} size="sm" />
       <StatusTag status={validationStatusOf(draft)} size="sm" />
-      {!compact && draft.published ? (
-        <span className="truncate text-label text-muted">
-          已发布 <span className="font-mono text-ink-soft">{draft.published.bundleId}</span> · r{draft.published.revision}
+      {!compact ? (
+        <span className="truncate text-label text-muted" title="原型阶段的保存只写入本浏览器 localStorage，不上传服务器。">
+          {draft.savedAt ? <>本地保存于 {formatLocalStamp(draft.savedAt)}</> : '未本地保存'}
+          {draft.published ? (
+            <>
+              {' '}· 已发布 <span className="font-mono text-ink-soft">{draft.published.modelVersion}</span>
+            </>
+          ) : null}
         </span>
       ) : null}
     </>
@@ -92,7 +98,7 @@ function DraftActions() {
   const canRedo = useDraft((s) => s.redo.length > 0)
   const saving = useDraft((s) => s.saving)
   const validating = useDraft((s) => s.validating)
-  const dirty = useDraft((s) => s.revision !== s.savedRevision)
+  const dirty = useDraft((s) => s.dirty)
   const editable = canEdit(role)
   return (
     <div className="flex shrink-0 items-center gap-1">
@@ -101,7 +107,7 @@ function DraftActions() {
       <Button size="sm" icon={ShieldCheck} busy={validating} onClick={() => void validateDraft()} className="ml-1">
         校验
       </Button>
-      <Button size="sm" intent="primary" icon={Save} busy={saving} disabled={!dirty || !editable} onClick={() => void saveDraft()} title="保存草稿（Ctrl+S）">
+      <Button size="sm" intent="primary" icon={Save} busy={saving} disabled={!dirty || !editable} onClick={() => void saveDraft()} title="保存到本浏览器（Ctrl+S）">
         保存
       </Button>
     </div>

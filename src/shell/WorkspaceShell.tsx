@@ -217,7 +217,7 @@ function useShortcuts({ ctx, floating, closeFloating, overlayOpen }: { ctx: Work
       if (s.overlayOpen) return
       if (mod && e.key.toLowerCase() === 's' && s.ctx.spec.context === 'asset') {
         e.preventDefault()
-        if (draftStore.getState().revision !== draftStore.getState().savedRevision) void saveDraft()
+        if (draftStore.getState().dirty) void saveDraft()
         return
       }
       if (isEditableTarget(e.target)) return

@@ -1,0 +1,42 @@
+[
+  {
+    "id": "bad-unit",
+    "action": "connect",
+    "source": "n-old.value",
+    "target": "n-emit.delta",
+    "expected": "UNIT_KIND_MISMATCH",
+    "mutationApplied": false
+  },
+  {
+    "id": "missing-input",
+    "action": "delete-edge",
+    "edgeId": "le4",
+    "expected": "REQUIRED_INPUT_MISSING",
+    "canRun": false
+  },
+  {
+    "id": "cycle",
+    "action": "add-order-edge",
+    "source": "commit",
+    "target": "cool-A",
+    "expected": "SCHEDULE_CYCLE",
+    "canRun": false
+  },
+  {
+    "id": "foreign-preview",
+    "binding": {
+      "root": "system",
+      "systemId": "cool-B",
+      "view": "selfPreview"
+    },
+    "expected": "FOREIGN_STAGED_VALUE_NOT_VISIBLE",
+    "canBind": false
+  },
+  {
+    "id": "property-in-use",
+    "action": "delete-attribute",
+    "propertyId": "thermal.temperature",
+    "expected": "ATTRIBUTE_IN_USE",
+    "mutationApplied": false
+  }
+]

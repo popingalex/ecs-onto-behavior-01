@@ -7,14 +7,15 @@ import StatusTag, { Tag } from '@/components/ui/StatusTag'
 import Table, { Td, Th, Tr } from '@/components/ui/Table'
 import { useIndex } from '@/data/store'
 import { cn } from '@/lib/cn'
-import { formatSimTime } from '@/lib/format'
+import { formatLocalStamp, formatSimTime } from '@/lib/format'
 import { GROUP_BY_ID } from '@/navigation/groups'
 import { PAGE_SPECS } from '@/navigation/pages'
 import { REPRESENTATIVE_PATH } from '@/navigation/paths'
 import { buildTransitionRoute } from '@/navigation/resolve'
 import { findTransition } from '@/navigation/transitions'
 import { navigate, useRoute } from '@/router/router'
-import { saveStatusOf, useDraft, validationStatusOf } from '@/stores/draft'
+import { documentFacts, PUBLISHED, saveStatusOf, validationStatusOf } from '@/stores/draft'
+import { useDraftDocuments } from '@/stores/draftRegistry'
 import { useBranches, useCommits } from '@/stores/history'
 
 /** P01 项目总览：资产、运行与最近提交的入口；不在此结算或编辑。 */
@@ -23,7 +24,8 @@ export default function P01ProjectOverview() {
   const route = useRoute()
   const branches = useBranches()
   const commits = useCommits()
-  const draft = useDraft((s) => s)
+  const documentMap = useDraftDocuments()
+  const documents = useMemo(() => Object.values(documentMap), [documentMap])
 
   const go = (action: string) => {
     const t = findTransition('P01', action)
@@ -198,30 +200,30 @@ export default function P01ProjectOverview() {
 
         <div className="flex min-w-0 flex-col gap-5">
           <Card>
-            <PanelHeader title="模型草稿" meta={<span className="font-mono">{draft.draftId}</span>} />
-            <dl className="grid grid-cols-2 gap-x-4 gap-y-3 px-4 py-4">
-              <div>
-                <dt className="text-caption text-muted">当前修订</dt>
-                <dd className="mt-0.5 font-mono text-body">r{draft.revision}</dd>
-              </div>
-              <div>
-                <dt className="text-caption text-muted">已发布</dt>
-                <dd className="mt-0.5 font-mono text-body">{draft.published ? `${draft.published.bundleId} · r${draft.published.revision}` : '未发布'}</dd>
-              </div>
-              <div>
-                <dt className="mb-1 text-caption text-muted">保存</dt>
-                <dd>
-                  <StatusTag status={saveStatusOf(draft)} size="sm" />
-                </dd>
-              </div>
-              <div>
-                <dt className="mb-1 text-caption text-muted">校验</dt>
-                <dd>
-                  <StatusTag status={validationStatusOf(draft)} size="sm" />
-                </dd>
-              </div>
-            </dl>
-            <p className="border-t border-line px-4 py-3 text-label text-muted">运行只使用已发布的不可变 bundle；草稿修改不会进入正在进行的运行。</p>
+            <PanelHeader title="资产草稿" meta={<span>{documents.length} 个文档 · 各自独立保存与撤销</span>} />
+            <ul className="divide-y divide-line">
+              {documents.map((doc) => {
+                const facts = documentFacts(doc)
+                return (
+                  <li key={doc.documentId} className="flex items-center gap-3 px-4 py-2.5">
+                    <div className="min-w-0 flex-1">
+                      <div className="truncate text-body">{doc.label}</div>
+                      <div className="truncate font-mono text-caption text-muted">
+                        {doc.documentId} · r{doc.revision}
+                        {doc.savedAt ? ` · 本地保存 ${formatLocalStamp(doc.savedAt)}` : ' · 已发布基线'}
+                      </div>
+                      {doc.restore.status === 'rejected' ? <div className="mt-0.5 text-caption text-warning">本地存档未恢复：{doc.restore.reason}</div> : null}
+                    </div>
+                    <StatusTag status={saveStatusOf(facts)} size="sm" />
+                    <StatusTag status={validationStatusOf(facts)} size="sm" />
+                  </li>
+                )
+              })}
+            </ul>
+            <p className="border-t border-line px-4 py-3 text-label text-muted">
+              已发布 <span className="font-mono text-ink-soft">{PUBLISHED.modelVersion}</span> · 发布包 <span className="font-mono text-ink-soft">{PUBLISHED.bundleId}</span>
+              。保存只写入本浏览器；运行只使用已发布的不可变 bundle，草稿修改不会进入正在进行的运行。
+            </p>
           </Card>
 
           <Card>

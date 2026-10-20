@@ -1,0 +1,764 @@
+{
+  "schemaVersion": "figma-prototype/0.5",
+  "scope": "聚焦六实体冷却闭环；替换本轮演示输入，不代表完整园区迁移",
+  "units": [
+    {
+      "id": "degC",
+      "symbol": "°C",
+      "quantityKind": "temperatureAbsolute"
+    },
+    {
+      "id": "deltaK",
+      "symbol": "K",
+      "quantityKind": "temperatureDifference"
+    },
+    {
+      "id": "m",
+      "symbol": "m",
+      "quantityKind": "length"
+    },
+    {
+      "id": "L",
+      "symbol": "L",
+      "quantityKind": "volume"
+    }
+  ],
+  "entityTypes": [
+    {
+      "id": "Fire",
+      "label": "火源",
+      "requiredComponentIds": [
+        "Thermal",
+        "FireState"
+      ],
+      "optionalComponentIds": [
+        "Position"
+      ]
+    },
+    {
+      "id": "FoamTruck",
+      "label": "泡沫消防车",
+      "requiredComponentIds": [
+        "Water"
+      ],
+      "optionalComponentIds": [
+        "Position"
+      ]
+    },
+    {
+      "id": "Command",
+      "label": "指挥单元",
+      "requiredComponentIds": [],
+      "optionalComponentIds": [
+        "Position"
+      ]
+    }
+  ],
+  "componentSchemas": [
+    {
+      "id": "Thermal",
+      "label": "热状态",
+      "propertyIds": [
+        "thermal.temperature"
+      ],
+      "version": "1"
+    },
+    {
+      "id": "Position",
+      "label": "位置",
+      "propertyIds": [
+        "position.local"
+      ],
+      "version": "1"
+    },
+    {
+      "id": "FireState",
+      "label": "火源状态",
+      "propertyIds": [
+        "fire.active"
+      ],
+      "version": "1"
+    },
+    {
+      "id": "Water",
+      "label": "消防水量",
+      "propertyIds": [
+        "water.remaining",
+        "water.capacity"
+      ],
+      "version": "1"
+    }
+  ],
+  "attributeSchemas": [
+    {
+      "id": "thermal.temperature",
+      "componentId": "Thermal",
+      "label": "温度",
+      "default": 100,
+      "writeMode": "contribution",
+      "reducerRef": "cooling-floor@c1",
+      "type": {
+        "primitive": "f64",
+        "shape": "scalar",
+        "quantityKind": "temperatureAbsolute",
+        "unitId": "degC",
+        "nullable": false
+      }
+    },
+    {
+      "id": "position.local",
+      "componentId": "Position",
+      "label": "局部位置",
+      "default": null,
+      "writeMode": "exclusive",
+      "type": {
+        "primitive": "f64",
+        "shape": "vector3",
+        "quantityKind": "length",
+        "unitId": "m",
+        "nullable": true,
+        "frameId": "park-ENU"
+      }
+    },
+    {
+      "id": "fire.active",
+      "componentId": "FireState",
+      "label": "未熄灭",
+      "default": true,
+      "writeMode": "exclusive",
+      "type": {
+        "primitive": "bool",
+        "shape": "scalar",
+        "nullable": false
+      }
+    },
+    {
+      "id": "water.remaining",
+      "componentId": "Water",
+      "label": "剩余水量",
+      "default": 8000,
+      "writeMode": "contract",
+      "type": {
+        "primitive": "f64",
+        "shape": "scalar",
+        "quantityKind": "volume",
+        "unitId": "L",
+        "nullable": false
+      }
+    },
+    {
+      "id": "water.capacity",
+      "componentId": "Water",
+      "label": "水箱容量",
+      "default": 10000,
+      "writeMode": "configuration",
+      "type": {
+        "primitive": "f64",
+        "shape": "scalar",
+        "quantityKind": "volume",
+        "unitId": "L",
+        "nullable": false
+      }
+    }
+  ],
+  "entityTemplates": [
+    {
+      "id": "tpl-foam",
+      "version": "t3",
+      "label": "10吨泡沫消防车",
+      "typeId": "FoamTruck",
+      "componentSchemaRefs": [
+        "Water@1",
+        "Position@1"
+      ],
+      "overrides": {
+        "water.remaining": 8000,
+        "water.capacity": 10000,
+        "position.local": null
+      }
+    }
+  ],
+  "sceneDraft": {
+    "id": "scene-05",
+    "entities": [
+      {
+        "id": "F01",
+        "label": "一号储罐火源",
+        "typeId": "Fire",
+        "templateRef": null,
+        "componentInstances": [
+          {
+            "schemaRef": "Thermal@1"
+          },
+          {
+            "schemaRef": "FireState@1"
+          },
+          {
+            "schemaRef": "Position@1"
+          }
+        ],
+        "initialOverrides": {
+          "thermal.temperature": 100,
+          "fire.active": true,
+          "position.local": [
+            320,
+            180,
+            0
+          ]
+        }
+      },
+      {
+        "id": "F02",
+        "label": "装卸区火源",
+        "typeId": "Fire",
+        "templateRef": null,
+        "componentInstances": [
+          {
+            "schemaRef": "Thermal@1"
+          },
+          {
+            "schemaRef": "FireState@1"
+          },
+          {
+            "schemaRef": "Position@1"
+          }
+        ],
+        "initialOverrides": {
+          "thermal.temperature": 80,
+          "fire.active": true,
+          "position.local": [
+            600,
+            260,
+            0
+          ]
+        }
+      },
+      {
+        "id": "F03",
+        "label": "围堰火源",
+        "typeId": "Fire",
+        "templateRef": null,
+        "componentInstances": [
+          {
+            "schemaRef": "Thermal@1"
+          },
+          {
+            "schemaRef": "FireState@1"
+          },
+          {
+            "schemaRef": "Position@1"
+          }
+        ],
+        "initialOverrides": {
+          "thermal.temperature": 60,
+          "fire.active": true,
+          "position.local": [
+            710,
+            430,
+            0
+          ]
+        }
+      },
+      {
+        "id": "V01",
+        "label": "泡沫一车",
+        "typeId": "FoamTruck",
+        "templateRef": "tpl-foam@t3",
+        "componentInstances": [
+          {
+            "schemaRef": "Water@1"
+          },
+          {
+            "schemaRef": "Position@1"
+          }
+        ],
+        "initialOverrides": {
+          "water.remaining": 5500,
+          "position.local": [
+            280,
+            180,
+            0
+          ]
+        }
+      },
+      {
+        "id": "V02",
+        "label": "泡沫二车",
+        "typeId": "FoamTruck",
+        "templateRef": "tpl-foam@t3",
+        "componentInstances": [
+          {
+            "schemaRef": "Water@1"
+          },
+          {
+            "schemaRef": "Position@1"
+          }
+        ],
+        "initialOverrides": {
+          "water.remaining": 9000,
+          "position.local": [
+            240,
+            180,
+            0
+          ]
+        }
+      },
+      {
+        "id": "C01",
+        "label": "园区指挥单元",
+        "typeId": "Command",
+        "templateRef": null,
+        "componentInstances": [
+          {
+            "schemaRef": "Position@1"
+          }
+        ],
+        "initialOverrides": {
+          "position.local": null
+        }
+      }
+    ]
+  },
+  "queries": [
+    {
+      "id": "q-fire",
+      "version": "q1",
+      "typeId": "Fire",
+      "condition": {
+        "propertyId": "fire.active",
+        "op": "eq",
+        "value": true
+      },
+      "readView": "previous",
+      "sort": "id"
+    }
+  ],
+  "logicPrograms": [
+    {
+      "id": "g-cool",
+      "version": "g5",
+      "kind": "entity-program",
+      "scopeType": "Fire",
+      "parameters": [
+        {
+          "id": "maxDropK",
+          "type": {
+            "primitive": "f64",
+            "shape": "scalar",
+            "quantityKind": "temperatureDifference",
+            "unitId": "deltaK",
+            "nullable": false
+          },
+          "default": 50
+        },
+        {
+          "id": "sourceC",
+          "type": {
+            "primitive": "f64",
+            "shape": "scalar",
+            "quantityKind": "temperatureAbsolute",
+            "unitId": "degC",
+            "nullable": false
+          },
+          "default": 20
+        }
+      ],
+      "nodes": [
+        {
+          "id": "n-old",
+          "type": "ReadPrevious",
+          "bindings": {
+            "property": {
+              "root": "self",
+              "propertyId": "thermal.temperature",
+              "view": "previous"
+            }
+          },
+          "inputs": {},
+          "outputs": {
+            "value": {
+              "primitive": "f64",
+              "shape": "scalar",
+              "quantityKind": "temperatureAbsolute",
+              "unitId": "degC",
+              "nullable": false
+            }
+          },
+          "params": {}
+        },
+        {
+          "id": "n-room",
+          "type": "CoolingRoom",
+          "inputs": {
+            "old": {
+              "primitive": "f64",
+              "shape": "scalar",
+              "quantityKind": "temperatureAbsolute",
+              "unitId": "degC",
+              "nullable": false
+            },
+            "source": {
+              "primitive": "f64",
+              "shape": "scalar",
+              "quantityKind": "temperatureAbsolute",
+              "unitId": "degC",
+              "nullable": false
+            }
+          },
+          "outputs": {
+            "room": {
+              "primitive": "f64",
+              "shape": "scalar",
+              "quantityKind": "temperatureDifference",
+              "unitId": "deltaK",
+              "nullable": false
+            }
+          },
+          "bindings": {
+            "source": {
+              "root": "parameter",
+              "parameterId": "sourceC"
+            }
+          },
+          "params": {}
+        },
+        {
+          "id": "n-cap",
+          "type": "Min",
+          "inputs": {
+            "a": {
+              "primitive": "f64",
+              "shape": "scalar",
+              "quantityKind": "temperatureDifference",
+              "unitId": "deltaK",
+              "nullable": false
+            },
+            "b": {
+              "primitive": "f64",
+              "shape": "scalar",
+              "quantityKind": "temperatureDifference",
+              "unitId": "deltaK",
+              "nullable": false
+            }
+          },
+          "outputs": {
+            "value": {
+              "primitive": "f64",
+              "shape": "scalar",
+              "quantityKind": "temperatureDifference",
+              "unitId": "deltaK",
+              "nullable": false
+            }
+          },
+          "bindings": {
+            "b": {
+              "root": "parameter",
+              "parameterId": "maxDropK"
+            }
+          },
+          "params": {}
+        },
+        {
+          "id": "n-neg",
+          "type": "Negate",
+          "inputs": {
+            "value": {
+              "primitive": "f64",
+              "shape": "scalar",
+              "quantityKind": "temperatureDifference",
+              "unitId": "deltaK",
+              "nullable": false
+            }
+          },
+          "outputs": {
+            "delta": {
+              "primitive": "f64",
+              "shape": "scalar",
+              "quantityKind": "temperatureDifference",
+              "unitId": "deltaK",
+              "nullable": false
+            }
+          },
+          "bindings": {},
+          "params": {}
+        },
+        {
+          "id": "n-emit",
+          "type": "Contribute",
+          "inputs": {
+            "delta": {
+              "primitive": "f64",
+              "shape": "scalar",
+              "quantityKind": "temperatureDifference",
+              "unitId": "deltaK",
+              "nullable": false
+            }
+          },
+          "outputs": {
+            "effect": {
+              "primitive": "EffectRef",
+              "shape": "scalar",
+              "nullable": false
+            }
+          },
+          "bindings": {
+            "target": {
+              "root": "self",
+              "propertyId": "thermal.temperature"
+            }
+          },
+          "params": {
+            "constraintRef": "cooling-floor@c1"
+          }
+        }
+      ],
+      "edges": [
+        {
+          "id": "le1",
+          "kind": "data",
+          "source": {
+            "nodeId": "n-old",
+            "portId": "value"
+          },
+          "target": {
+            "nodeId": "n-room",
+            "portId": "old"
+          }
+        },
+        {
+          "id": "le2",
+          "kind": "data",
+          "source": {
+            "nodeId": "n-room",
+            "portId": "room"
+          },
+          "target": {
+            "nodeId": "n-cap",
+            "portId": "a"
+          }
+        },
+        {
+          "id": "le3",
+          "kind": "data",
+          "source": {
+            "nodeId": "n-cap",
+            "portId": "value"
+          },
+          "target": {
+            "nodeId": "n-neg",
+            "portId": "value"
+          }
+        },
+        {
+          "id": "le4",
+          "kind": "data",
+          "source": {
+            "nodeId": "n-neg",
+            "portId": "delta"
+          },
+          "target": {
+            "nodeId": "n-emit",
+            "portId": "delta"
+          }
+        }
+      ]
+    }
+  ],
+  "systems": [
+    {
+      "id": "cool-A",
+      "label": "喷淋冷却",
+      "queryRef": "q-fire@q1",
+      "programRef": "g-cool@g5",
+      "enabled": true,
+      "parameters": {
+        "maxDropK": 50,
+        "sourceC": 20
+      },
+      "access": {
+        "readPrevious": [
+          "self.thermal.temperature"
+        ],
+        "contribute": [
+          "self.thermal.temperature"
+        ],
+        "exclusive": []
+      }
+    },
+    {
+      "id": "cool-B",
+      "label": "泡沫冷却",
+      "queryRef": "q-fire@q1",
+      "programRef": "g-cool@g5",
+      "enabled": true,
+      "parameters": {
+        "maxDropK": 50,
+        "sourceC": 20
+      },
+      "access": {
+        "readPrevious": [
+          "self.thermal.temperature"
+        ],
+        "contribute": [
+          "self.thermal.temperature"
+        ],
+        "exclusive": []
+      }
+    }
+  ],
+  "schedules": [
+    {
+      "id": "schedule-main",
+      "version": "s5",
+      "nodes": [
+        {
+          "id": "cool-A",
+          "type": "SystemNode",
+          "systemRef": "cool-A"
+        },
+        {
+          "id": "cool-B",
+          "type": "SystemNode",
+          "systemRef": "cool-B"
+        },
+        {
+          "id": "reduce-cooling",
+          "type": "ReducerNode",
+          "constraintRef": "cooling-floor@c1"
+        },
+        {
+          "id": "commit",
+          "type": "CommitNode"
+        }
+      ],
+      "edges": [
+        {
+          "id": "se1",
+          "source": "cool-A",
+          "target": "reduce-cooling",
+          "kind": "effect"
+        },
+        {
+          "id": "se2",
+          "source": "cool-B",
+          "target": "reduce-cooling",
+          "kind": "effect"
+        },
+        {
+          "id": "se3",
+          "source": "reduce-cooling",
+          "target": "commit",
+          "kind": "order"
+        }
+      ],
+      "readView": "previous",
+      "outputMode": "atomicCommit"
+    }
+  ],
+  "constraints": [
+    {
+      "id": "cooling-floor",
+      "version": "c1",
+      "strategy": "proportional",
+      "floorC": 20,
+      "domain": "cooling-only-fixed-equal-sources",
+      "unsupported": "mixed source temperatures, positive heat contributions, linked resource effects"
+    }
+  ],
+  "baseWorld": {
+    "commitId": "c042",
+    "simTime": 420,
+    "values": {
+      "F01": {
+        "thermal.temperature": 100,
+        "position.local": [
+          320,
+          180,
+          0
+        ],
+        "fire.active": true
+      },
+      "F02": {
+        "thermal.temperature": 80,
+        "position.local": [
+          600,
+          260,
+          0
+        ],
+        "fire.active": true
+      },
+      "F03": {
+        "thermal.temperature": 60,
+        "position.local": [
+          710,
+          430,
+          0
+        ],
+        "fire.active": true
+      },
+      "V01": {
+        "position.local": [
+          280,
+          180,
+          0
+        ],
+        "water.remaining": 5500,
+        "water.capacity": 10000
+      },
+      "V02": {
+        "position.local": [
+          240,
+          180,
+          0
+        ],
+        "water.remaining": 9000,
+        "water.capacity": 10000
+      },
+      "C01": {
+        "position.local": null
+      }
+    }
+  },
+  "layout": {
+    "schedule-main": {
+      "cool-A": {
+        "x": 40,
+        "y": 50
+      },
+      "cool-B": {
+        "x": 40,
+        "y": 330
+      },
+      "reduce-cooling": {
+        "x": 420,
+        "y": 190
+      },
+      "commit": {
+        "x": 780,
+        "y": 190
+      }
+    },
+    "g-cool": {
+      "n-old": {
+        "x": 0,
+        "y": 100
+      },
+      "n-room": {
+        "x": 250,
+        "y": 100
+      },
+      "n-cap": {
+        "x": 500,
+        "y": 100
+      },
+      "n-neg": {
+        "x": 750,
+        "y": 100
+      },
+      "n-emit": {
+        "x": 1000,
+        "y": 100
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { PAGE_SPECS } from '@/navigation/pages'
 import { navigate, openOverlay, routerStore, setLeaveGuard } from '@/router/router'
-import { discardDraft, isDirty, saveDraft } from '@/stores/draft'
+import { discardAllDrafts, isDirty, saveAllDrafts } from '@/stores/draft'
 import { loadWorkbench } from '@/data/store'
 
 /** 应用启动：加载数据、注册离开守卫、把弹层深链接还原为“底层页面 + 弹层”。 */
@@ -15,9 +15,9 @@ export function useBootstrap() {
       if (PAGE_SPECS[from.pageId].context !== 'asset' || PAGE_SPECS[to.pageId].context !== 'execution') return null
       return {
         reason: '有未保存的草稿修改',
-        detail: '运行只使用已发布的不可变 bundle，草稿修改不会进入运行。离开前可以先保存草稿，或放弃这些修改。',
-        save: saveDraft,
-        discard: discardDraft,
+        detail: '运行只使用已发布的不可变 bundle，草稿修改不会进入运行。离开前可以把全部草稿保存到本浏览器，或放弃这些修改。',
+        save: saveAllDrafts,
+        discard: discardAllDrafts,
       }
     })
 

@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import 'tailwindcss';
+@import 'tw-animate-css';
+
+/* shadcn/ui 组件里的 dark: 只跟随显式 .dark，不跟随系统深色偏好（本工作台只有浅色主题）。 */
+@custom-variant dark (&:is(.dark *));
 
 /*
  * 设计变量 · 见 docs/spec/01_layout_and_interaction.md「视觉与信息密度」
@@ -61,7 +65,39 @@
   --shadow-card: 0 1px 2px rgb(22 42 64 / 0.05);
 }
 
+/*
+ * shadcn/ui 语义 token → 项目语义色。
+ * 注意 --color-muted 在本项目是“次要文字色”；shadcn 的 bg-muted 已在 components/shadcn 中改为 bg-neutral-soft，
+ * 因此这里只映射 muted-foreground，不覆盖 muted。
+ */
+@theme inline {
+  --color-background: var(--color-surface);
+  --color-foreground: var(--color-ink);
+  --color-card: var(--color-surface);
+  --color-card-foreground: var(--color-ink);
+  --color-popover: var(--color-surface);
+  --color-popover-foreground: var(--color-ink);
+  --color-primary-foreground: #ffffff;
+  --color-secondary: var(--color-neutral-soft);
+  --color-secondary-foreground: var(--color-ink);
+  --color-muted-foreground: var(--color-muted);
+  --color-accent: var(--color-hover);
+  --color-accent-foreground: var(--color-ink);
+  --color-destructive: var(--color-danger);
+  --color-input: var(--color-border);
+  --color-ring: var(--color-primary);
+}
+
 @layer base {
+  /* shadcn/ui 组件使用不带颜色的 border-*；默认落到项目边框色而不是 currentColor。 */
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-border);
+  }
+
   html,
   body,
   #root {

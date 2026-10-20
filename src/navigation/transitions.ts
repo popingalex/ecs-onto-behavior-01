@@ -20,7 +20,7 @@ const T = (from: PageId, action: string, to: PageId | 'return', params: Record<s
 
 export const TRANSITIONS: Transition[] = [
   T('P01', 'open-model', 'P02', { classId: 'Fire' }),
-  T('P01', 'edit-scene', 'P07', { sceneVersion: 'scene-04' }),
+  T('P01', 'edit-scene', 'P07', { sceneVersion: 'scene-05' }),
   T('P01', 'open-run', 'P20', { runId: 'run-main', branchId: 'main', viewCommit: 'c043' }),
   T('P01', 'create-run', 'P19', { bundle: 'model-04' }),
   T('P02', 'edit-component', 'P03', { componentId: 'Thermal' }),
@@ -57,7 +57,7 @@ export const TRANSITIONS: Transition[] = [
   T('P14', 'publish', 'P18', { draftId: 'graph-draft' }),
   T('P15', 'confirm', 'return', { returnToken: '', structuredBinding: '' }),
   T('P15', 'cancel', 'return', { returnToken: '', unchanged: 'true' }),
-  T('P16', 'try', 'P23', { mode: 'sandbox', constraintId: 'refill' }),
+  T('P16', 'try', 'P23', { mode: 'sandbox', constraintId: 'cooling-floor' }),
   T('P16', 'system', 'P11', { systemId: 'cool-A' }),
   T('P17', 'target-query', 'P10', { queryId: 'q-fire' }),
   T('P17', 'bind', 'P15', { expectedType: 'ratio', returnPage: 'P17' }),

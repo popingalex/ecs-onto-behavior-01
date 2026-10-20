@@ -19,7 +19,7 @@ export default function P20Inspector({ ctx }: { ctx: WorkbenchContext }) {
   const world = index.worlds.get(viewCommit.id)
   const previous = viewCommit.parentId ? index.worlds.get(viewCommit.parentId) : undefined
   const temp = rawWorldValue(world, entity.id, 'thermal.temperature')
-  const active = rawWorldValue(world, entity.id, 'combustion.active')
+  const active = rawWorldValue(world, entity.id, 'fire.active')
 
   return (
     <div>
@@ -36,12 +36,12 @@ export default function P20Inspector({ ctx }: { ctx: WorkbenchContext }) {
       {typeof temp === 'number' && active === true && temp <= 20 ? (
         <div className="px-4 pt-3">
           <Notice tone="info" icon={<Flame size={15} aria-hidden />}>
-            温度已降至冷源温度，但 <span className="font-mono">combustion.active</span> 仍为 true：降温不等于熄灭。
+            温度已降至冷源温度，但 <span className="font-mono">fire.active</span> 仍为 true：降温不等于熄灭。
           </Notice>
         </div>
       ) : null}
 
-      {cls?.components.map((componentId) => {
+      {entity.components.map((componentId) => {
         const component = index.components.get(componentId)
         const props = index.propertiesByComponent.get(componentId) ?? []
         return (

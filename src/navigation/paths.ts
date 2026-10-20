@@ -10,7 +10,7 @@ const RUN = { runId: 'run-main', branchId: 'main', viewCommit: 'c043' }
 export const REPRESENTATIVE_PATH: Array<{ route: Route; note: string }> = [
   { route: { pageId: 'P03', params: { componentId: 'Thermal', propertyId: 'thermal.temperature' } }, note: '温度属性：贡献写入 + cooling-floor' },
   { route: { pageId: 'P05', params: { templateId: 'tpl-foam' } }, note: '泡沫车模板与实例覆盖' },
-  { route: { pageId: 'P07', params: { sceneVersion: 'scene-04' } }, note: '园区场景装配' },
+  { route: { pageId: 'P07', params: { sceneVersion: 'scene-05' } }, note: '园区场景装配' },
   { route: { pageId: 'P12', params: { scheduleId: 'schedule-main' } }, note: 'cool-A / cool-B 并行组' },
   { route: { pageId: 'P14', params: { systemId: 'cool-A', graphId: 'g-cool' } }, note: '喷淋冷却内部图' },
   { route: { pageId: 'P15', params: { nodeId: 'n-emit', portId: 'delta', expectedType: 'deltaK', returnPage: 'P14' } }, note: '绑定降温量（模态）' },

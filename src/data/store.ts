@@ -2,6 +2,7 @@ import { createStore, useStore } from '@/lib/store'
 import { seedDataAdapter, type DataAdapter } from './adapter'
 import { buildIndex, type WorkbenchIndex } from './index'
 import { initHistory } from '@/stores/history'
+import { ensureModelDocuments } from '@/stores/modelDocuments'
 
 interface DataState {
   status: 'idle' | 'loading' | 'ready' | 'error'
@@ -24,6 +25,8 @@ export async function loadWorkbench(): Promise<void> {
     const raw = await adapter.load()
     const index = buildIndex(raw)
     initHistory(raw.branches, raw.commits)
+    // 数据就绪后登记 v0.5 草稿文档（并恢复本地存档），不在渲染期间写 store。
+    ensureModelDocuments()
     dataStore.setState({ status: 'ready', index })
   } catch (error) {
     dataStore.setState({ status: 'error', error: error instanceof Error ? error.message : String(error) })

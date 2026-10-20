@@ -5,6 +5,7 @@ import Button from '@/components/ui/Button'
 import Card, { PanelHeader } from '@/components/ui/Card'
 import { useIndex } from '@/data/store'
 import { formatSimTime } from '@/lib/format'
+import { migrationOf } from '@/mock/legacy'
 import { checkRoute } from '@/navigation/resolve'
 import { back, navigate, usePreviousEntry } from '@/router/router'
 import { lineage, useBranches, useCommits } from '@/stores/history'
@@ -140,13 +141,33 @@ function MissingTarget({ ctx, items }: { ctx: WorkbenchContext; items: Array<{ p
     >
       <Card>
         <ul className="divide-y divide-line">
-          {items.map((item) => (
-            <li key={`${item.param}:${item.id}`} className="flex items-center gap-3 px-4 py-3 text-body">
-              <span className="w-28 shrink-0 text-muted">{item.typeLabel}</span>
-              <span className="min-w-0 break-all font-mono text-danger line-through">{item.id}</span>
-              <span className="ml-auto shrink-0 font-mono text-caption text-faint">{item.param}</span>
-            </li>
-          ))}
+          {items.map((item) => {
+            // 旧 ID 只给出迁移说明与显式入口，不自动改写链接。
+            const migration = migrationOf(item.id)
+            return (
+              <li key={`${item.param}:${item.id}`} className="px-4 py-3 text-body">
+                <div className="flex items-center gap-3">
+                  <span className="w-28 shrink-0 text-muted">{item.typeLabel}</span>
+                  <span className="min-w-0 break-all font-mono text-danger line-through">{item.id}</span>
+                  <span className="ml-auto shrink-0 font-mono text-caption text-faint">{item.param}</span>
+                </div>
+                {migration ? (
+                  <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 pl-31 text-label text-muted">
+                    <span>{migration.note}</span>
+                    {migration.replacement ? (
+                      <Button
+                        size="sm"
+                        intent="ghost"
+                        onClick={() => navigate({ pageId: ctx.route.pageId, params: { ...ctx.route.params, [item.param]: migration.replacement! } })}
+                      >
+                        改为 <span className="font-mono">{migration.replacement}</span>
+                      </Button>
+                    ) : null}
+                  </div>
+                ) : null}
+              </li>
+            )
+          })}
         </ul>
       </Card>
       <p className="min-w-0 text-label text-muted">

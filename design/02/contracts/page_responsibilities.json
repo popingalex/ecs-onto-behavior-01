@@ -1,0 +1,122 @@
+[
+  {
+    "pageId": "P02",
+    "title": "实体类型",
+    "objectKind": "entityType",
+    "context": "schema",
+    "implementation": "shadcn DataTable+Sheet",
+    "navigationKey": "types"
+  },
+  {
+    "pageId": "P03",
+    "title": "组件定义",
+    "objectKind": "componentSchema",
+    "context": "schema",
+    "implementation": "shadcn DataTable+Sheet",
+    "navigationKey": "components"
+  },
+  {
+    "pageId": "P29",
+    "title": "属性定义",
+    "objectKind": "attributeSchema",
+    "context": "schema",
+    "implementation": "shadcn DataTable+Field+Sheet",
+    "navigationKey": "attributes"
+  },
+  {
+    "pageId": "P05",
+    "title": "实体模板",
+    "objectKind": "entityTemplate",
+    "context": "schema",
+    "implementation": "shadcn Tabs+PropertyGrid",
+    "navigationKey": "templates"
+  },
+  {
+    "pageId": "P08",
+    "title": "实体实例管理",
+    "objectKind": "sceneEntity",
+    "context": "scene",
+    "implementation": "shadcn DataTable+Sheet+Tabs",
+    "navigationKey": "entities"
+  },
+  {
+    "pageId": "P10",
+    "title": "实体查询",
+    "objectKind": "queryDefinition",
+    "context": "asset",
+    "implementation": "shadcn 条件表单+DataTable",
+    "navigationKey": "queries"
+  },
+  {
+    "pageId": "P11",
+    "title": "System定义",
+    "objectKind": "systemDefinition",
+    "context": "asset",
+    "implementation": "shadcn Sheet+Select",
+    "navigationKey": "systems"
+  },
+  {
+    "pageId": "P12",
+    "title": "System外层编排",
+    "objectKind": "scheduleDocument",
+    "context": "asset",
+    "implementation": "React Flow",
+    "navigationKey": "schedules"
+  },
+  {
+    "pageId": "P30",
+    "title": "程序资产库",
+    "objectKind": "logicProgram",
+    "context": "asset",
+    "implementation": "shadcn DataTable",
+    "navigationKey": "programs"
+  },
+  {
+    "pageId": "P14",
+    "title": "System内部逻辑",
+    "objectKind": "logicGraphDocument",
+    "context": "asset",
+    "implementation": "FlowGram FreeLayoutEditor",
+    "navigationKey": "logic"
+  },
+  {
+    "pageId": "P15",
+    "title": "变量绑定",
+    "objectKind": "structuredBinding",
+    "context": "overlay",
+    "implementation": "FlowGram变量scope+shadcn Dialog",
+    "navigationKey": "bindings"
+  },
+  {
+    "pageId": "P20",
+    "title": "模拟运行",
+    "objectKind": "runSession",
+    "context": "runtime",
+    "implementation": "shadcn Controls+DataTable",
+    "navigationKey": "run"
+  },
+  {
+    "pageId": "P22",
+    "title": "计算过程",
+    "objectKind": "runRecord",
+    "context": "runtime",
+    "implementation": "FlowGram只读图+shadcn Tabs/DataTable",
+    "navigationKey": "trace"
+  },
+  {
+    "pageId": "P23",
+    "title": "贡献裁决",
+    "objectKind": "constraintDecision",
+    "context": "runtime",
+    "implementation": "shadcn DataTable+Card",
+    "navigationKey": "decisions"
+  },
+  {
+    "pageId": "P24",
+    "title": "属性来源",
+    "objectKind": "propertyVersionProvenance",
+    "context": "runtime",
+    "implementation": "React Flow只读来源图",
+    "navigationKey": "provenance"
+  }
+]
