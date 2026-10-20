@@ -1,0 +1,660 @@
+{
+  "case": "one-cooler",
+  "inputPatch": {
+    "disableSystem": "cool-B"
+  },
+  "inputCommit": "c042",
+  "commit": "c043-one-cooler",
+  "branch": "branch-one-cooler",
+  "parent": "c042",
+  "simTime": 430,
+  "state": [
+    {
+      "id": "F01",
+      "name": "一号储罐火源",
+      "classId": "Fire",
+      "position": [
+        320,
+        180,
+        0
+      ],
+      "temperature": 50,
+      "floor": 20,
+      "active": true,
+      "discovered": true
+    },
+    {
+      "id": "F02",
+      "name": "装卸区火源",
+      "classId": "Fire",
+      "position": [
+        600,
+        260,
+        0
+      ],
+      "temperature": 30,
+      "floor": 20,
+      "active": true,
+      "discovered": true
+    },
+    {
+      "id": "F03",
+      "name": "围堰火源",
+      "classId": "Fire",
+      "position": [
+        710,
+        430,
+        0
+      ],
+      "temperature": 20,
+      "floor": 20,
+      "active": true,
+      "discovered": false
+    },
+    {
+      "id": "V01",
+      "name": "泡沫一车",
+      "classId": "FoamTruck",
+      "position": [
+        280,
+        180,
+        0
+      ],
+      "water": 5100,
+      "capacity": 10000,
+      "rateLps": 100,
+      "status": "standby",
+      "target": null,
+      "healthy": true,
+      "foam": true
+    },
+    {
+      "id": "V02",
+      "name": "泡沫二车",
+      "classId": "FoamTruck",
+      "position": [
+        280,
+        180,
+        0
+      ],
+      "water": 8400,
+      "capacity": 10000,
+      "rateLps": 100,
+      "status": "suppressing",
+      "target": "F01",
+      "healthy": true,
+      "foam": true,
+      "travelSeconds": 4
+    },
+    {
+      "id": "V03",
+      "name": "泡沫三车",
+      "classId": "FoamTruck",
+      "position": [
+        140,
+        180,
+        0
+      ],
+      "water": 4000,
+      "capacity": 10000,
+      "rateLps": 100,
+      "status": "idle",
+      "target": null,
+      "healthy": true,
+      "foam": true,
+      "travelSeconds": 6
+    },
+    {
+      "id": "S01",
+      "name": "西侧补给站",
+      "classId": "Station",
+      "position": [
+        80,
+        180,
+        0
+      ],
+      "inventory": 1200
+    },
+    {
+      "id": "C01",
+      "name": "园区指挥单元",
+      "classId": "Command",
+      "position": null
+    }
+  ],
+  "temperatures": [
+    {
+      "entityId": "F01",
+      "old": 100,
+      "requestedDelta": -50,
+      "candidate": 50,
+      "approvedDelta": -50,
+      "final": 50,
+      "floor": 20,
+      "unit": "degC",
+      "deltaUnit": "deltaK",
+      "versionId": "F01.thermal.temperature@c043-one-cooler"
+    },
+    {
+      "entityId": "F02",
+      "old": 80,
+      "requestedDelta": -50,
+      "candidate": 30,
+      "approvedDelta": -50,
+      "final": 30,
+      "floor": 20,
+      "unit": "degC",
+      "deltaUnit": "deltaK",
+      "versionId": "F02.thermal.temperature@c043-one-cooler"
+    },
+    {
+      "entityId": "F03",
+      "old": 60,
+      "requestedDelta": -40,
+      "candidate": 20,
+      "approvedDelta": -40,
+      "final": 20,
+      "floor": 20,
+      "unit": "degC",
+      "deltaUnit": "deltaK",
+      "versionId": "F03.thermal.temperature@c043-one-cooler"
+    }
+  ],
+  "waterChanges": [
+    {
+      "entityId": "V01",
+      "propertyId": "water.remaining",
+      "old": 5500,
+      "final": 5100,
+      "delta": -400,
+      "unit": "L",
+      "executionId": "exec-water-V01",
+      "versionId": "V01.water.remaining@c043-one-cooler"
+    },
+    {
+      "entityId": "V02",
+      "propertyId": "water.remaining",
+      "old": 9000,
+      "final": 8400,
+      "delta": -600,
+      "unit": "L",
+      "executionId": "exec-water-V02",
+      "versionId": "V02.water.remaining@c043-one-cooler"
+    }
+  ],
+  "contributions": [
+    {
+      "id": "eff-F01-cool-A",
+      "entityId": "F01",
+      "propertyId": "thermal.temperature",
+      "systemId": "cool-A",
+      "requested": -50,
+      "selfPreview": 50,
+      "executionId": "exec-F01-cool-A",
+      "approved": -50,
+      "scale": 1,
+      "constraintId": "cooling-floor"
+    },
+    {
+      "id": "eff-F02-cool-A",
+      "entityId": "F02",
+      "propertyId": "thermal.temperature",
+      "systemId": "cool-A",
+      "requested": -50,
+      "selfPreview": 30,
+      "executionId": "exec-F02-cool-A",
+      "approved": -50,
+      "scale": 1,
+      "constraintId": "cooling-floor"
+    },
+    {
+      "id": "eff-F03-cool-A",
+      "entityId": "F03",
+      "propertyId": "thermal.temperature",
+      "systemId": "cool-A",
+      "requested": -40,
+      "selfPreview": 20,
+      "executionId": "exec-F03-cool-A",
+      "approved": -40,
+      "scale": 1,
+      "constraintId": "cooling-floor"
+    }
+  ],
+  "traces": [
+    {
+      "executionId": "exec-F01-cool-A",
+      "entityId": "F01",
+      "systemId": "cool-A",
+      "nodes": [
+        {
+          "nodeId": "n-old",
+          "inputs": {},
+          "outputs": {
+            "value": 100
+          }
+        },
+        {
+          "nodeId": "n-room",
+          "inputs": {
+            "old": 100,
+            "source": 20
+          },
+          "outputs": {
+            "room": 80
+          }
+        },
+        {
+          "nodeId": "n-cap",
+          "inputs": {
+            "a": 80,
+            "b": 50
+          },
+          "outputs": {
+            "value": 50
+          }
+        },
+        {
+          "nodeId": "n-neg",
+          "inputs": {
+            "value": 50
+          },
+          "outputs": {
+            "delta": -50
+          }
+        },
+        {
+          "nodeId": "n-emit",
+          "inputs": {
+            "delta": -50
+          },
+          "outputs": {
+            "request": -50
+          }
+        }
+      ]
+    },
+    {
+      "executionId": "exec-F02-cool-A",
+      "entityId": "F02",
+      "systemId": "cool-A",
+      "nodes": [
+        {
+          "nodeId": "n-old",
+          "inputs": {},
+          "outputs": {
+            "value": 80
+          }
+        },
+        {
+          "nodeId": "n-room",
+          "inputs": {
+            "old": 80,
+            "source": 20
+          },
+          "outputs": {
+            "room": 60
+          }
+        },
+        {
+          "nodeId": "n-cap",
+          "inputs": {
+            "a": 60,
+            "b": 50
+          },
+          "outputs": {
+            "value": 50
+          }
+        },
+        {
+          "nodeId": "n-neg",
+          "inputs": {
+            "value": 50
+          },
+          "outputs": {
+            "delta": -50
+          }
+        },
+        {
+          "nodeId": "n-emit",
+          "inputs": {
+            "delta": -50
+          },
+          "outputs": {
+            "request": -50
+          }
+        }
+      ]
+    },
+    {
+      "executionId": "exec-F03-cool-A",
+      "entityId": "F03",
+      "systemId": "cool-A",
+      "nodes": [
+        {
+          "nodeId": "n-old",
+          "inputs": {},
+          "outputs": {
+            "value": 60
+          }
+        },
+        {
+          "nodeId": "n-room",
+          "inputs": {
+            "old": 60,
+            "source": 20
+          },
+          "outputs": {
+            "room": 40
+          }
+        },
+        {
+          "nodeId": "n-cap",
+          "inputs": {
+            "a": 40,
+            "b": 50
+          },
+          "outputs": {
+            "value": 40
+          }
+        },
+        {
+          "nodeId": "n-neg",
+          "inputs": {
+            "value": 40
+          },
+          "outputs": {
+            "delta": -40
+          }
+        },
+        {
+          "nodeId": "n-emit",
+          "inputs": {
+            "delta": -40
+          },
+          "outputs": {
+            "request": -40
+          }
+        }
+      ]
+    }
+  ],
+  "activities": [
+    {
+      "id": "exec-F01-cool-A",
+      "kind": "system",
+      "systemId": "cool-A",
+      "graphVersion": "g4",
+      "inputCommit": "c042"
+    },
+    {
+      "id": "reduce-F01",
+      "kind": "allocation",
+      "constraintVersion": "c1"
+    },
+    {
+      "id": "exec-F02-cool-A",
+      "kind": "system",
+      "systemId": "cool-A",
+      "graphVersion": "g4",
+      "inputCommit": "c042"
+    },
+    {
+      "id": "reduce-F02",
+      "kind": "allocation",
+      "constraintVersion": "c1"
+    },
+    {
+      "id": "exec-F03-cool-A",
+      "kind": "system",
+      "systemId": "cool-A",
+      "graphVersion": "g4",
+      "inputCommit": "c042"
+    },
+    {
+      "id": "reduce-F03",
+      "kind": "allocation",
+      "constraintVersion": "c1"
+    },
+    {
+      "id": "exec-water-V01",
+      "kind": "domainConsumption",
+      "systemId": "water-use",
+      "inputCommit": "c042",
+      "taskRef": null
+    },
+    {
+      "id": "exec-water-V02",
+      "kind": "domainConsumption",
+      "systemId": "water-use",
+      "inputCommit": "c042",
+      "taskRef": "task-replace-V02"
+    }
+  ],
+  "dependencies": [
+    {
+      "source": "F01.thermal.temperature@c042",
+      "target": "exec-F01-cool-A",
+      "kind": "used"
+    },
+    {
+      "source": "exec-F01-cool-A",
+      "target": "reduce-F01",
+      "kind": "proposed"
+    },
+    {
+      "source": "reduce-F01",
+      "target": "F01.thermal.temperature@c043-one-cooler",
+      "kind": "generated"
+    },
+    {
+      "source": "F02.thermal.temperature@c042",
+      "target": "exec-F02-cool-A",
+      "kind": "used"
+    },
+    {
+      "source": "exec-F02-cool-A",
+      "target": "reduce-F02",
+      "kind": "proposed"
+    },
+    {
+      "source": "reduce-F02",
+      "target": "F02.thermal.temperature@c043-one-cooler",
+      "kind": "generated"
+    },
+    {
+      "source": "F03.thermal.temperature@c042",
+      "target": "exec-F03-cool-A",
+      "kind": "used"
+    },
+    {
+      "source": "exec-F03-cool-A",
+      "target": "reduce-F03",
+      "kind": "proposed"
+    },
+    {
+      "source": "reduce-F03",
+      "target": "F03.thermal.temperature@c043-one-cooler",
+      "kind": "generated"
+    },
+    {
+      "source": "V01.water.remaining@c042",
+      "target": "exec-water-V01",
+      "kind": "used"
+    },
+    {
+      "source": "exec-water-V01",
+      "target": "V01.water.remaining@c043-one-cooler",
+      "kind": "generated"
+    },
+    {
+      "source": "V02.water.remaining@c042",
+      "target": "exec-water-V02",
+      "kind": "used"
+    },
+    {
+      "source": "exec-water-V02",
+      "target": "V02.water.remaining@c043-one-cooler",
+      "kind": "generated"
+    }
+  ],
+  "events": [
+    {
+      "id": "evt-predict",
+      "time": 420,
+      "type": "prediction",
+      "label": "一车在425秒触及50%",
+      "causedBy": [],
+      "relation": "derivedFrom"
+    },
+    {
+      "id": "evt-dispatch",
+      "time": 420,
+      "type": "taskAccepted",
+      "label": "派遣二车接替",
+      "causedBy": [
+        "evt-predict"
+      ],
+      "relation": "triggeredBy"
+    },
+    {
+      "id": "evt-arrive",
+      "time": 424,
+      "type": "arrival",
+      "label": "二车到达处置点",
+      "causedBy": [
+        "evt-dispatch"
+      ],
+      "relation": "taskLifecycle"
+    },
+    {
+      "id": "evt-handoff",
+      "time": 424,
+      "type": "handoff",
+      "label": "一车停止耗水，二车接替",
+      "causedBy": [
+        "evt-arrive"
+      ],
+      "relation": "triggeredBy"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task-replace-V02",
+      "executor": "V02",
+      "target": "F01",
+      "status": "suppressing",
+      "route": {
+        "frame": "park-ENU",
+        "points": [
+          [
+            240,
+            180,
+            0
+          ],
+          [
+            280,
+            180,
+            0
+          ]
+        ],
+        "durationSeconds": 4,
+        "distanceMetres": 40
+      },
+      "startedAt": 420,
+      "arrivedAt": 424
+    }
+  ],
+  "checkpoint": {
+    "policyInstances": [
+      {
+        "id": "policy-cover",
+        "targetId": "F01",
+        "currentVehicle": "V01",
+        "crossingSeconds": 5.0,
+        "thresholdTime": 425,
+        "replacementId": "V02",
+        "candidateIds": [
+          "V02"
+        ],
+        "excluded": [
+          {
+            "entityId": "V03",
+            "reasons": [
+              "水量低于50%"
+            ]
+          }
+        ],
+        "status": "satisfied",
+        "violationStart": null,
+        "endWater": {
+          "V01": 5100,
+          "V02": 8400
+        },
+        "sampling": "事件子步：420/424/425/430；425秒恰好50%仍合格，之后不足"
+      }
+    ],
+    "eventQueue": [],
+    "rng": {
+      "algorithm": "mock-fixed",
+      "state": 7
+    },
+    "runtimeVersion": "mock-ref-04"
+  },
+  "policy": {
+    "id": "policy-cover",
+    "targetId": "F01",
+    "currentVehicle": "V01",
+    "crossingSeconds": 5.0,
+    "thresholdTime": 425,
+    "replacementId": "V02",
+    "candidateIds": [
+      "V02"
+    ],
+    "excluded": [
+      {
+        "entityId": "V03",
+        "reasons": [
+          "水量低于50%"
+        ]
+      }
+    ],
+    "status": "satisfied",
+    "violationStart": null,
+    "endWater": {
+      "V01": 5100,
+      "V02": 8400
+    },
+    "sampling": "事件子步：420/424/425/430；425秒恰好50%仍合格，之后不足"
+  },
+  "contractPreview": {
+    "isolated": true,
+    "inventoryBefore": 1200,
+    "allocations": [
+      {
+        "id": "req-1",
+        "entity": "V01",
+        "litres": 800,
+        "priority": 10,
+        "granted": 800,
+        "status": "accepted"
+      },
+      {
+        "id": "req-2",
+        "entity": "V03",
+        "litres": 800,
+        "priority": 5,
+        "granted": 400,
+        "status": "partial"
+      }
+    ],
+    "inventoryAfter": 0
+  },
+  "readViews": {
+    "previous": "c042",
+    "self": "execution scoped provisional",
+    "final": "c043-one-cooler"
+  },
+  "warnings": [
+    "温度达到20°C不会自动产生火焰熄灭事件；两者为独立mock状态。"
+  ]
+}

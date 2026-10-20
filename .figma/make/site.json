@@ -1,0 +1,10 @@
+{
+  "description": "Provides a foundational system architecture framework enabling developers to build and expand complex business applications efficiently.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

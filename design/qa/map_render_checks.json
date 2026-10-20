@@ -1,0 +1,20 @@
+[
+  {
+    "pageId": "P07",
+    "pageCount": 1,
+    "renderer": "WeasyPrint 70 + Poppler",
+    "imagePixels": [
+      1920,
+      1200
+    ]
+  },
+  {
+    "pageId": "P20",
+    "pageCount": 1,
+    "renderer": "WeasyPrint 70 + Poppler",
+    "imagePixels": [
+      1920,
+      1200
+    ]
+  }
+]

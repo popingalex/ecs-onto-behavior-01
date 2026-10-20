@@ -1,0 +1,64 @@
+{
+  "defaultContext": {
+    "projectId": "park",
+    "modelVersion": "model-04",
+    "sceneVersion": "scene-04",
+    "branchId": "main",
+    "viewCommit": "c043",
+    "headCommit": "c043",
+    "selection": {
+      "entityId": "F01",
+      "propertyId": "thermal.temperature"
+    },
+    "role": "controller"
+  },
+  "states": {
+    "loading": {
+      "delayMs": 600
+    },
+    "empty": {
+      "queryResult": []
+    },
+    "saveConflict": {
+      "expectedRevision": 12,
+      "actualRevision": 13,
+      "code": "REVISION_CONFLICT"
+    },
+    "invalidUnit": {
+      "port": "n-emit.delta",
+      "expected": "deltaK",
+      "received": "degC",
+      "code": "UNIT_KIND_MISMATCH"
+    },
+    "missingPosition": {
+      "entityId": "V02",
+      "code": "POSITION_REQUIRED"
+    },
+    "readonly": {
+      "viewCommit": "c042",
+      "headCommit": "c043"
+    },
+    "disconnected": {
+      "lastCommit": "c042",
+      "authoritativeHead": "c043",
+      "code": "CONNECTION_LOST"
+    },
+    "observer": {
+      "role": "observer"
+    },
+    "budgetExceeded": {
+      "code": "EXECUTION_BUDGET",
+      "committed": false
+    }
+  },
+  "layout": {
+    "width": 1920,
+    "height": 1200,
+    "rail": 72,
+    "top": 56,
+    "context": 48,
+    "outline": 256,
+    "inspector": 344,
+    "bottomPanel": 264
+  }
+}

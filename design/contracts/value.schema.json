@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TypedValue",
+  "type": "object",
+  "required": [
+    "definitionId",
+    "data",
+    "view"
+  ],
+  "properties": {
+    "definitionId": {
+      "type": "string"
+    },
+    "data": {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        {
+          "type": "object",
+          "required": [
+            "blockRef",
+            "shape",
+            "dtype"
+          ],
+          "properties": {
+            "blockRef": {
+              "type": "string"
+            },
+            "shape": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "dtype": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "view": {
+      "enum": [
+        "previous",
+        "selfPreview",
+        "requested",
+        "approved",
+        "final"
+      ]
+    },
+    "versionRef": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "effectId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "$comment": "跨字段量种/nullable/写入模式由model validator检查；本schema不保证领域语义。"
+}

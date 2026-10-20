@@ -1,0 +1,148 @@
+{
+  "runs": [
+    {
+      "id": "run-baseline",
+      "branch": "main",
+      "head": "c043"
+    },
+    {
+      "id": "run-one-cooler",
+      "branch": "branch-one-cooler",
+      "head": "c043-one-cooler"
+    },
+    {
+      "id": "run-no-replacement",
+      "branch": "branch-no-replacement",
+      "head": "c043-no-replacement"
+    },
+    {
+      "id": "run-lower-power",
+      "branch": "branch-lower-power",
+      "head": "c043-lower-power"
+    },
+    {
+      "id": "run-contract-competition",
+      "branch": "branch-contract-competition",
+      "head": "c043-contract-competition"
+    },
+    {
+      "id": "run-missing-position",
+      "branch": "branch-missing-position",
+      "head": "c043-missing-position"
+    }
+  ],
+  "commits": [
+    {
+      "id": "c042",
+      "parents": [],
+      "simTime": 420,
+      "kind": "checkpoint",
+      "completeForMock": true,
+      "worldFile": "02_world.json"
+    },
+    {
+      "id": "c043",
+      "parents": [
+        "c042"
+      ],
+      "simTime": 430,
+      "caseId": "baseline",
+      "resultFile": "runs/baseline.json",
+      "kind": "commit"
+    },
+    {
+      "id": "c043-one-cooler",
+      "parents": [
+        "c042"
+      ],
+      "simTime": 430,
+      "caseId": "one-cooler",
+      "resultFile": "runs/one-cooler.json",
+      "kind": "commit"
+    },
+    {
+      "id": "c043-no-replacement",
+      "parents": [
+        "c042"
+      ],
+      "simTime": 430,
+      "caseId": "no-replacement",
+      "resultFile": "runs/no-replacement.json",
+      "kind": "commit"
+    },
+    {
+      "id": "c043-lower-power",
+      "parents": [
+        "c042"
+      ],
+      "simTime": 430,
+      "caseId": "lower-power",
+      "resultFile": "runs/lower-power.json",
+      "kind": "commit"
+    },
+    {
+      "id": "c043-contract-competition",
+      "parents": [
+        "c042"
+      ],
+      "simTime": 430,
+      "caseId": "contract-competition",
+      "resultFile": "runs/contract-competition.json",
+      "kind": "commit"
+    },
+    {
+      "id": "c043-missing-position",
+      "parents": [
+        "c042"
+      ],
+      "simTime": 430,
+      "caseId": "missing-position",
+      "resultFile": "runs/missing-position.json",
+      "kind": "commit"
+    }
+  ],
+  "branches": [
+    {
+      "id": "main",
+      "head": "c043",
+      "forkCommit": "c042",
+      "visibility": "team",
+      "runtime": "server"
+    },
+    {
+      "id": "branch-one-cooler",
+      "head": "c043-one-cooler",
+      "forkCommit": "c042",
+      "visibility": "private",
+      "runtime": "local-worker"
+    },
+    {
+      "id": "branch-no-replacement",
+      "head": "c043-no-replacement",
+      "forkCommit": "c042",
+      "visibility": "private",
+      "runtime": "local-worker"
+    },
+    {
+      "id": "branch-lower-power",
+      "head": "c043-lower-power",
+      "forkCommit": "c042",
+      "visibility": "private",
+      "runtime": "local-worker"
+    },
+    {
+      "id": "branch-contract-competition",
+      "head": "c043-contract-competition",
+      "forkCommit": "c042",
+      "visibility": "private",
+      "runtime": "local-worker"
+    },
+    {
+      "id": "branch-missing-position",
+      "head": "c043-missing-position",
+      "forkCommit": "c042",
+      "visibility": "private",
+      "runtime": "local-worker"
+    }
+  ]
+}

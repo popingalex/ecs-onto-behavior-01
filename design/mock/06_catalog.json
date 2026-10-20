@@ -1,0 +1,79 @@
+{
+  "assets": [
+    {
+      "id": "asset-truck",
+      "version": "a2",
+      "name": "泡沫消防车",
+      "format": "GLB",
+      "ready": true,
+      "source": "mock",
+      "preview": "schematic"
+    },
+    {
+      "id": "asset-tank",
+      "version": "a1",
+      "name": "立式储罐",
+      "format": "GLB",
+      "ready": true,
+      "source": "mock",
+      "preview": "schematic"
+    }
+  ],
+  "manifest": {
+    "id": "bundle-04",
+    "modelVersion": "model-04",
+    "sceneVersion": "scene-04",
+    "graphVersion": "g4",
+    "queryVersion": "q1",
+    "constraintVersion": "c1",
+    "policyVersion": "p2",
+    "revision": 12,
+    "validatedRevision": 12,
+    "assets": [
+      "asset-truck@a2",
+      "asset-tank@a1"
+    ]
+  },
+  "commands": [
+    {
+      "id": "cmd-001",
+      "actor": "主控",
+      "type": "InstallPolicy",
+      "target": "F01",
+      "baseCommit": "c042",
+      "status": "accepted",
+      "idempotencyKey": "install:p2:F01"
+    },
+    {
+      "id": "cmd-002",
+      "actor": "策略控制器",
+      "type": "DispatchReplacement",
+      "target": "V02",
+      "baseCommit": "c042",
+      "status": "accepted",
+      "idempotencyKey": "replace:p2:F01:420"
+    }
+  ],
+  "accessDiagnostics": [
+    {
+      "id": "safe-01",
+      "systems": [
+        "cool-A",
+        "cool-B"
+      ],
+      "result": "parallel",
+      "reason": "只读previous；同属性加性贡献经共同归约"
+    },
+    {
+      "id": "conflict-01",
+      "systems": [
+        "exclusive-setter",
+        "cool-A"
+      ],
+      "result": "blocked",
+      "target": "F01.thermal.temperature",
+      "reason": "独占赋值与贡献重叠",
+      "illustrative": true
+    }
+  ]
+}

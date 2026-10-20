@@ -1,0 +1,45 @@
+{
+  "cases": [
+    {
+      "id": "baseline",
+      "label": "双路冷却＋提前接替",
+      "patch": {}
+    },
+    {
+      "id": "one-cooler",
+      "label": "禁用泡沫冷却",
+      "patch": {
+        "disableSystem": "cool-B"
+      }
+    },
+    {
+      "id": "no-replacement",
+      "label": "二车故障，无合格接替",
+      "patch": {
+        "unavailableVehicle": "V02"
+      }
+    },
+    {
+      "id": "lower-power",
+      "label": "喷淋最大降温改为20 K",
+      "patch": {
+        "systemParameter": {
+          "id": "cool-A",
+          "maxDropK": 20
+        }
+      }
+    },
+    {
+      "id": "contract-competition",
+      "label": "补给站库存争用",
+      "patch": {}
+    },
+    {
+      "id": "missing-position",
+      "label": "二车无位置不能派遣",
+      "patch": {
+        "clearPosition": "V02"
+      }
+    }
+  ]
+}

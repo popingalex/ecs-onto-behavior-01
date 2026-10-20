@@ -1,0 +1,73 @@
+[
+  {
+    "id": "project",
+    "label": "项目",
+    "pages": [
+      "P01",
+      "P18",
+      "P19"
+    ]
+  },
+  {
+    "id": "model",
+    "label": "建模",
+    "pages": [
+      "P02",
+      "P03",
+      "P04",
+      "P05",
+      "P06"
+    ]
+  },
+  {
+    "id": "scene",
+    "label": "场景",
+    "pages": [
+      "P07",
+      "P08",
+      "P09"
+    ]
+  },
+  {
+    "id": "logic",
+    "label": "逻辑",
+    "pages": [
+      "P10",
+      "P11",
+      "P12",
+      "P13",
+      "P14",
+      "P16",
+      "P17"
+    ]
+  },
+  {
+    "id": "run",
+    "label": "运行",
+    "pages": [
+      "P20",
+      "P22",
+      "P23",
+      "P28"
+    ]
+  },
+  {
+    "id": "review",
+    "label": "复盘",
+    "pages": [
+      "P24",
+      "P25",
+      "P26",
+      "P27"
+    ]
+  },
+  {
+    "id": "overlays",
+    "label": "上下文弹层",
+    "pages": [
+      "P15",
+      "P21"
+    ],
+    "notGlobalNav": true
+  }
+]

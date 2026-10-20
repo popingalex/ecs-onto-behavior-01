@@ -1,0 +1,220 @@
+{
+  "schemaVersion": "ui-mock/0.4",
+  "project": {
+    "id": "park",
+    "name": "临江危化品园区 · 联合处置演练",
+    "fictional": true
+  },
+  "modelVersion": "model-04",
+  "sceneVersion": "scene-04",
+  "clock": {
+    "stepSeconds": 10,
+    "playbackSeconds": 1
+  },
+  "units": [
+    {
+      "id": "degC",
+      "kind": "temperatureAbsolute",
+      "symbol": "°C",
+      "canonical": "K",
+      "offset": 273.15
+    },
+    {
+      "id": "deltaK",
+      "kind": "temperatureDifference",
+      "symbol": "K",
+      "canonical": "deltaK",
+      "offset": 0
+    },
+    {
+      "id": "L",
+      "kind": "volume",
+      "symbol": "L"
+    },
+    {
+      "id": "ratio",
+      "kind": "ratio",
+      "symbol": "%",
+      "displayScale": 100
+    },
+    {
+      "id": "m",
+      "kind": "length",
+      "symbol": "m"
+    },
+    {
+      "id": "s",
+      "kind": "duration",
+      "symbol": "s"
+    }
+  ],
+  "classes": [
+    {
+      "id": "Fire",
+      "name": "火源",
+      "components": [
+        "Thermal",
+        "FireState",
+        "Position"
+      ]
+    },
+    {
+      "id": "FoamTruck",
+      "name": "泡沫消防车",
+      "components": [
+        "Water",
+        "Task",
+        "Position",
+        "Health"
+      ]
+    },
+    {
+      "id": "Station",
+      "name": "补给站",
+      "components": [
+        "Inventory",
+        "Position"
+      ]
+    },
+    {
+      "id": "Command",
+      "name": "指挥单元",
+      "components": [
+        "Policy"
+      ]
+    }
+  ],
+  "properties": [
+    {
+      "id": "thermal.temperature",
+      "component": "Thermal",
+      "name": "温度",
+      "shape": "scalar",
+      "primitive": "f64",
+      "unit": "degC",
+      "nullable": false,
+      "writeMode": "contribution",
+      "reducer": "cooling-allocation",
+      "constraint": "cooling-floor",
+      "default": 100
+    },
+    {
+      "id": "water.remaining",
+      "component": "Water",
+      "name": "剩余水量",
+      "shape": "scalar",
+      "primitive": "f64",
+      "unit": "L",
+      "nullable": false,
+      "writeMode": "contract",
+      "constraint": "water-nonnegative",
+      "default": 8000
+    },
+    {
+      "id": "water.capacity",
+      "component": "Water",
+      "name": "水箱容量",
+      "shape": "scalar",
+      "primitive": "f64",
+      "unit": "L",
+      "nullable": false,
+      "writeMode": "configuration",
+      "default": 10000
+    },
+    {
+      "id": "position.local",
+      "component": "Position",
+      "name": "局部位置",
+      "shape": "vector3",
+      "primitive": "f64",
+      "unit": "m",
+      "coordinateFrame": "park-ENU",
+      "axes": [
+        "east",
+        "north",
+        "up"
+      ],
+      "nullable": true,
+      "writeMode": "exclusive",
+      "default": null
+    },
+    {
+      "id": "fire.active",
+      "component": "FireState",
+      "name": "未熄灭",
+      "shape": "scalar",
+      "primitive": "bool",
+      "nullable": false,
+      "writeMode": "exclusive",
+      "default": true
+    }
+  ],
+  "relations": [
+    {
+      "id": "task.target",
+      "sourceClass": "FoamTruck",
+      "targetClass": "Fire",
+      "cardinality": "0..1"
+    },
+    {
+      "id": "belongsTo",
+      "sourceClass": "FoamTruck",
+      "targetClass": "Command",
+      "cardinality": "1"
+    }
+  ],
+  "constraints": [
+    {
+      "id": "cooling-floor",
+      "kind": "joint",
+      "domain": "cooling-only",
+      "sourceTemperature": 20,
+      "allocation": "proportional",
+      "version": "c1",
+      "assumption": "恒温同温冷源；仅降温；训练额度模型，非传热求解器"
+    },
+    {
+      "id": "water-nonnegative",
+      "kind": "joint",
+      "min": 0,
+      "allocation": "priorityThenStableId",
+      "version": "w1"
+    }
+  ],
+  "entityTemplates": [
+    {
+      "id": "tpl-foam",
+      "name": "10吨泡沫消防车",
+      "version": "t3",
+      "classId": "FoamTruck",
+      "defaults": {
+        "water.capacity": 10000,
+        "water.remaining": 8000,
+        "position.local": null
+      },
+      "behavior": "policy-cover",
+      "asset": "asset-truck@a2"
+    }
+  ],
+  "sceneTemplate": {
+    "id": "tpl-park",
+    "name": "园区联合处置",
+    "version": "s2",
+    "entityRefs": [
+      "F01",
+      "F02",
+      "F03",
+      "V01",
+      "V02",
+      "V03",
+      "S01",
+      "C01"
+    ],
+    "defaultSchedule": "schedule-main",
+    "requiredAssets": [
+      "asset-truck@a2",
+      "asset-tank@a1"
+    ],
+    "coordinateFrame": "park-ENU"
+  }
+}

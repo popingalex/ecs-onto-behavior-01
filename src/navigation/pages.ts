@@ -1,0 +1,68 @@
+import type { ComponentId, ContextKind, GroupId, PageId } from '@/core/types'
+
+/**
+ * 页面注册表。分组、布局与组件规划来自 docs/spec；
+ * navigation_tree.json 与 pages/ 逐页规格尚未提供，分组为暂定，集中在此调整。
+ */
+export interface PageSpec {
+  id: PageId
+  title: string
+  group: GroupId
+  /** P15 为模态、P21 为抽屉：不替换底层页面。 */
+  kind: 'page' | 'modal' | 'drawer'
+  context: ContextKind
+  summary: string
+  layout: { tree: boolean; inspector: boolean; dock: boolean; canvas: boolean }
+  /** 缺失时展示上下文选择器，不用“最新”填补。 */
+  requires: string[]
+  components: ComponentId[]
+}
+
+type Layout = PageSpec['layout']
+const FORM: Layout = { tree: true, inspector: true, dock: false, canvas: false }
+const GRAPH: Layout = { tree: true, inspector: true, dock: true, canvas: true }
+const OVERLAY: Layout = { tree: false, inspector: false, dock: false, canvas: false }
+
+const RUN_CONTEXT = ['runId', 'branchId', 'viewCommit']
+
+const LIST: PageSpec[] = [
+  { id: 'P01', title: '项目总览', group: 'project', kind: 'page', context: 'project', summary: '项目资产、运行与最近提交的入口；不在此结算或编辑。', layout: FORM, requires: [], components: ['C03', 'C06', 'C14', 'C20'] },
+  { id: 'P02', title: '类型与关系', group: 'modeling', kind: 'page', context: 'asset', summary: '定义实体类型、继承与关系基数；关系删除策略需显式裁决。', layout: FORM, requires: [], components: ['C03', 'C05', 'C06', 'C10'] },
+  { id: 'P03', title: '组件与属性模式', group: 'modeling', kind: 'page', context: 'asset', summary: '组件内属性的值形状、单位、可空、默认值与写入方式。', layout: FORM, requires: [], components: ['C05', 'C04', 'C06', 'C10'] },
+  { id: 'P04', title: '量种、单位与约束', group: 'modeling', kind: 'page', context: 'asset', summary: '量种与单位换算，属性取值约束；可进入沙盒试算约束。', layout: FORM, requires: [], components: ['C05', 'C04', 'C10'] },
+  { id: 'P05', title: '实体模板与覆盖', group: 'modeling', kind: 'page', context: 'asset', summary: '模板默认值与实例覆盖；“恢复继承”和“设为空”是不同操作。', layout: FORM, requires: [], components: ['C05', 'C04', 'C06'] },
+  { id: 'P06', title: '场景模板', group: 'scene', kind: 'page', context: 'asset', summary: '可复用的场景模板与默认调度。', layout: FORM, requires: [], components: ['C03', 'C06', 'C12'] },
+  { id: 'P07', title: '场景构建工作台', group: 'scene', kind: 'page', context: 'asset', summary: '在空间视口中装配实体；位置为 null 的实体不显示但保留逻辑。', layout: GRAPH, requires: [], components: ['C12', 'C11', 'C05', 'C10'] },
+  { id: 'P08', title: '实体表与状态检查', group: 'scene', kind: 'page', context: 'asset', summary: '按类型或查询列出实体；可在指定提交下只读检查属性值。', layout: FORM, requires: [], components: ['C11', 'C04', 'C06'] },
+  { id: 'P09', title: '资产与资源清单', group: 'scene', kind: 'page', context: 'asset', summary: '三维资产、地图与 manifest 版本；资产授权独立于界面库许可。', layout: FORM, requires: [], components: ['C03', 'C06', 'C20'] },
+  { id: 'P10', title: '实体查询', group: 'logic', kind: 'page', context: 'asset', summary: '类型化条件、读取视图与稳定排序；保存版本后才更新引用。', layout: FORM, requires: [], components: ['C11', 'C09', 'C04'] },
+  { id: 'P11', title: 'System 定义与绑定', group: 'logic', kind: 'page', context: 'asset', summary: 'system 绑定逻辑图版本、实体查询与参数。', layout: FORM, requires: [], components: ['C05', 'C06', 'C10'] },
+  { id: 'P12', title: 'System 外层调度', group: 'logic', kind: 'page', context: 'asset', summary: '外层顺序与并行组；顺序边不自动传新状态。', layout: GRAPH, requires: [], components: ['C07', 'C08', 'C10'] },
+  { id: 'P13', title: '读写访问与并发诊断', group: 'logic', kind: 'page', context: 'asset', summary: 'system 读写集合与冲突边；定位到节点或调度边。', layout: FORM, requires: [], components: ['C10', 'C11', 'C06'] },
+  { id: 'P14', title: 'System 内部逻辑', group: 'logic', kind: 'page', context: 'asset', summary: '节点图：ReadPrevious → CoolingRoom → Min → Negate → Contribute。', layout: GRAPH, requires: [], components: ['C07', 'C08', 'C09', 'C10'] },
+  { id: 'P15', title: '属性与变量绑定选择器', group: 'logic', kind: 'modal', context: 'asset', summary: '按期望类型、作用域与读取视图选择来源；确认生成一次 patch，取消无变化。', layout: OVERLAY, requires: [], components: ['C09', 'C04'] },
+  { id: 'P16', title: '联合约束与归约规则', group: 'logic', kind: 'page', context: 'asset', summary: '额度分配规则、关联效果与失败策略；不可默默限幅。', layout: FORM, requires: [], components: ['C05', 'C15', 'C10'] },
+  { id: 'P17', title: '持续策略定义', group: 'logic', kind: 'page', context: 'asset', summary: '目标、最低合格数、水量下限与交接条件。', layout: FORM, requires: [], components: ['C05', 'C09', 'C17'] },
+  { id: 'P18', title: '校验与发布', group: 'logic', kind: 'page', context: 'asset', summary: '跨对象语义校验；用已校验 revision 创建不可变 bundle。', layout: FORM, requires: [], components: ['C10', 'C06'] },
+  { id: 'P19', title: '新建运行', group: 'run', kind: 'page', context: 'execution', summary: '选择发布包、模式、步长与运行位置；创建后不自动结算。', layout: FORM, requires: [], components: ['C05', 'C06'] },
+  { id: 'P20', title: '演练运行工作台', group: 'run', kind: 'page', context: 'execution', summary: '冻结 → 计算 → 提交 → 播放；暂停播放不改变已提交 commit。', layout: GRAPH, requires: RUN_CONTEXT, components: ['C12', 'C13', 'C11', 'C14', 'C17'] },
+  { id: 'P21', title: '运行命令队列', group: 'run', kind: 'drawer', context: 'execution', summary: '待处理运行命令：幂等键、基准提交与生命周期。', layout: OVERLAY, requires: [], components: ['C13', 'C20'] },
+  { id: 'P22', title: '工作流批次与节点调试', group: 'run', kind: 'page', context: 'execution', summary: '按实体查看旧值 / 暂存 / 请求 / 获准 / 最终；轨迹步进是记录查看。', layout: GRAPH, requires: ['viewCommit'], components: ['C07', 'C08', 'C16', 'C15'] },
+  { id: 'P23', title: '联合约束与贡献裁决', group: 'run', kind: 'page', context: 'execution', summary: '额度、比例与获准贡献；尚未裁决时不补 0。', layout: FORM, requires: ['viewCommit'], components: ['C15', 'C04', 'C06'] },
+  { id: 'P24', title: '属性演化链与输入来源', group: 'review', kind: 'page', context: 'execution', summary: '属性版本、执行输入与裁决来源；依赖边指向输入版本。', layout: GRAPH, requires: ['entityId', 'viewCommit'], components: ['C07', 'C04', 'C16'] },
+  { id: 'P25', title: '业务事件链', group: 'review', kind: 'page', context: 'execution', summary: '预测、派遣、到达、交接事件与具名关系；时间顺序不等于因果。', layout: FORM, requires: [], components: ['C18', 'C06'] },
+  { id: 'P26', title: '提交历史与分支', group: 'review', kind: 'page', context: 'execution', summary: '提交图与分支；选历史只改 viewCommit，切分支才改 branchId。', layout: GRAPH, requires: ['branchId'], components: ['C07', 'C14'] },
+  { id: 'P27', title: '分支对比与反事实', group: 'review', kind: 'page', context: 'execution', summary: '同一基准与时刻的结果对比；缺值显示未记录，不当作 0。', layout: FORM, requires: ['leftCommit', 'rightCommit'], components: ['C19', 'C04'] },
+  { id: 'P28', title: '持续策略与任务监控', group: 'run', kind: 'page', context: 'execution', summary: '策略覆盖区间、候选排除原因与补救任务；预测与事实分开标记。', layout: FORM, requires: [], components: ['C17', 'C18'] },
+]
+
+export const PAGE_SPECS = Object.fromEntries(LIST.map((p) => [p.id, p])) as Record<PageId, PageSpec>
+export const PAGE_LIST = LIST
+
+export function isPageId(value: string): value is PageId {
+  return value in PAGE_SPECS
+}
+
+export function pagesInGroup(group: GroupId): PageSpec[] {
+  return LIST.filter((p) => p.group === group)
+}

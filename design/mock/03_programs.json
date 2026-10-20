@@ -1,0 +1,234 @@
+{
+  "queries": [
+    {
+      "id": "q-fire",
+      "name": "未熄灭火源",
+      "class": "Fire",
+      "filters": [
+        {
+          "property": "active",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "sort": "id",
+      "snapshot": "previous",
+      "expectedIds": [
+        "F01",
+        "F02",
+        "F03"
+      ]
+    }
+  ],
+  "graphs": [
+    {
+      "id": "g-cool",
+      "version": "g4",
+      "kind": "entity-dataflow",
+      "queryId": "q-fire",
+      "parameters": {
+        "maxDropK": 50,
+        "sourceC": 20
+      },
+      "nodes": [
+        {
+          "id": "n-old",
+          "kind": "ReadPrevious",
+          "out": {
+            "value": "Quantity<temperatureAbsolute,degC>"
+          },
+          "binding": {
+            "root": "self",
+            "propertyId": "thermal.temperature",
+            "view": "previous"
+          }
+        },
+        {
+          "id": "n-room",
+          "kind": "CoolingRoom",
+          "in": {
+            "old": "Quantity<temperatureAbsolute,degC>",
+            "source": "Quantity<temperatureAbsolute,degC>"
+          },
+          "out": {
+            "room": "Quantity<temperatureDifference,deltaK>"
+          }
+        },
+        {
+          "id": "n-cap",
+          "kind": "Min",
+          "in": {
+            "a": "Quantity<temperatureDifference,deltaK>",
+            "b": "Quantity<temperatureDifference,deltaK>"
+          },
+          "out": {
+            "value": "Quantity<temperatureDifference,deltaK>"
+          }
+        },
+        {
+          "id": "n-neg",
+          "kind": "Negate",
+          "in": {
+            "value": "Quantity<temperatureDifference,deltaK>"
+          },
+          "out": {
+            "delta": "Quantity<temperatureDifference,deltaK>"
+          }
+        },
+        {
+          "id": "n-emit",
+          "kind": "Contribute",
+          "in": {
+            "delta": "Quantity<temperatureDifference,deltaK>"
+          },
+          "out": {
+            "request": "EffectRef"
+          },
+          "propertyId": "thermal.temperature",
+          "constraintId": "cooling-floor"
+        }
+      ],
+      "edges": [
+        {
+          "source": "n-old",
+          "port": "value",
+          "target": "n-room",
+          "targetPort": "old",
+          "kind": "data"
+        },
+        {
+          "source": "n-room",
+          "port": "room",
+          "target": "n-cap",
+          "targetPort": "a",
+          "kind": "data"
+        },
+        {
+          "source": "n-cap",
+          "port": "value",
+          "target": "n-neg",
+          "targetPort": "value",
+          "kind": "data"
+        },
+        {
+          "source": "n-neg",
+          "port": "delta",
+          "target": "n-emit",
+          "targetPort": "delta",
+          "kind": "data"
+        }
+      ],
+      "constantBindings": [
+        {
+          "target": "n-room",
+          "targetPort": "source",
+          "value": 20,
+          "unit": "degC"
+        },
+        {
+          "target": "n-cap",
+          "targetPort": "b",
+          "parameter": "maxDropK",
+          "unit": "deltaK"
+        }
+      ]
+    }
+  ],
+  "systems": [
+    {
+      "id": "cool-A",
+      "name": "喷淋冷却",
+      "graph": "g-cool@g4",
+      "query": "q-fire",
+      "enabled": true,
+      "params": {
+        "maxDropK": 50,
+        "sourceC": 20
+      },
+      "access": {
+        "read": [
+          "self.thermal.temperature@previous"
+        ],
+        "contribute": [
+          "self.thermal.temperature"
+        ],
+        "exclusive": []
+      }
+    },
+    {
+      "id": "cool-B",
+      "name": "泡沫冷却",
+      "graph": "g-cool@g4",
+      "query": "q-fire",
+      "enabled": true,
+      "params": {
+        "maxDropK": 50,
+        "sourceC": 20
+      },
+      "access": {
+        "read": [
+          "self.thermal.temperature@previous"
+        ],
+        "contribute": [
+          "self.thermal.temperature"
+        ],
+        "exclusive": []
+      }
+    }
+  ],
+  "schedule": {
+    "id": "schedule-main",
+    "mode": "contribution",
+    "nodes": [
+      "cool-A",
+      "cool-B",
+      "reduce-cooling",
+      "commit"
+    ],
+    "edges": [
+      {
+        "source": "cool-A",
+        "target": "reduce-cooling",
+        "kind": "effect"
+      },
+      {
+        "source": "cool-B",
+        "target": "reduce-cooling",
+        "kind": "effect"
+      },
+      {
+        "source": "reduce-cooling",
+        "target": "commit",
+        "kind": "order"
+      }
+    ],
+    "readView": "previous",
+    "reduceOrder": [
+      "systemId",
+      "entityId",
+      "effectId"
+    ]
+  },
+  "contracts": [
+    {
+      "id": "refill",
+      "resource": "S01",
+      "proposals": [
+        {
+          "id": "req-1",
+          "entity": "V01",
+          "litres": 800,
+          "priority": 10
+        },
+        {
+          "id": "req-2",
+          "entity": "V03",
+          "litres": 800,
+          "priority": 5
+        }
+      ],
+      "rule": "priorityThenStableId",
+      "allowPartial": true
+    }
+  ]
+}

@@ -1,0 +1,1261 @@
+[
+  {
+    "source": "P01",
+    "event": "open-model",
+    "target": "P02",
+    "params": [
+      "classId=Fire"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P01",
+    "event": "edit-scene",
+    "target": "P07",
+    "params": [
+      "sceneVersion=scene-04"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P01",
+    "event": "open-run",
+    "target": "P20",
+    "params": [
+      "runId=run-main",
+      "branchId=main",
+      "viewCommit=c043"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P01",
+    "event": "create-run",
+    "target": "P19",
+    "params": [
+      "bundle=model-04"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P02",
+    "event": "edit-component",
+    "target": "P03",
+    "params": [
+      "componentId=Thermal"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P02",
+    "event": "open-instance",
+    "target": "P08",
+    "params": [
+      "classId=Fire"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P03",
+    "event": "unit-settings",
+    "target": "P04",
+    "params": [
+      "propertyId=thermal.temperature"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P03",
+    "event": "locate-reference",
+    "target": "P14",
+    "params": [
+      "graphId=g-cool",
+      "nodeId=n-old"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P04",
+    "event": "try-constraint",
+    "target": "P23",
+    "params": [
+      "mode=sandbox",
+      "constraintId=cooling-floor"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P05",
+    "event": "instantiate",
+    "target": "P07",
+    "params": [
+      "templateId=tpl-foam",
+      "version=t3"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P05",
+    "event": "component",
+    "target": "P03",
+    "params": [
+      "componentId=Water"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P06",
+    "event": "instantiate",
+    "target": "P07",
+    "params": [
+      "sceneTemplateId=tpl-park"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P06",
+    "event": "schedule",
+    "target": "P12",
+    "params": [
+      "scheduleId=schedule-main"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P07",
+    "event": "entity-list",
+    "target": "P08",
+    "params": [
+      "entityId=F01"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P07",
+    "event": "asset",
+    "target": "P09",
+    "params": [
+      "assetId=asset-truck",
+      "version=a2"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P07",
+    "event": "schedule",
+    "target": "P12",
+    "params": [
+      "scheduleId=schedule-main"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P07",
+    "event": "validate",
+    "target": "P18",
+    "params": [
+      "draftId=scene-draft"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P08",
+    "event": "trace-property",
+    "target": "P24",
+    "params": [
+      "entityId=F01",
+      "propertyId=thermal.temperature",
+      "viewCommit=c043"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P08",
+    "event": "task",
+    "target": "P28",
+    "params": [
+      "taskId=task-replace-V02"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P09",
+    "event": "place-asset",
+    "target": "P07",
+    "params": [
+      "assetId=asset-truck",
+      "version=a2"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P10",
+    "event": "bind-property",
+    "target": "P15",
+    "params": [
+      "expectedType=bool",
+      "returnPage=P10"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P10",
+    "event": "bind-system",
+    "target": "P11",
+    "params": [
+      "queryId=q-fire"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P10",
+    "event": "open-result",
+    "target": "P08",
+    "params": [
+      "queryId=q-fire",
+      "viewCommit=c042"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P11",
+    "event": "edit-graph",
+    "target": "P14",
+    "params": [
+      "systemId=cool-A",
+      "graphId=g-cool"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P11",
+    "event": "query",
+    "target": "P10",
+    "params": [
+      "queryId=q-fire"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P11",
+    "event": "schedule",
+    "target": "P12",
+    "params": [
+      "systemId=cool-A"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P11",
+    "event": "access",
+    "target": "P13",
+    "params": [
+      "systemId=cool-A"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P12",
+    "event": "open-system",
+    "target": "P14",
+    "params": [
+      "systemId=cool-A",
+      "graphId=g-cool"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P12",
+    "event": "open-reducer",
+    "target": "P16",
+    "params": [
+      "constraintId=cooling-floor"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P12",
+    "event": "diagnostics",
+    "target": "P13",
+    "params": [
+      "scheduleId=schedule-main"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P12",
+    "event": "publish",
+    "target": "P18",
+    "params": [
+      "draftId=schedule-draft"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P13",
+    "event": "locate-node",
+    "target": "P14",
+    "params": [
+      "nodeId=n-emit",
+      "systemId=cool-A"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P13",
+    "event": "locate-edge",
+    "target": "P12",
+    "params": [
+      "edgeId=conflict-edge"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P14",
+    "event": "bind",
+    "target": "P15",
+    "params": [
+      "nodeId=n-emit",
+      "portId=delta",
+      "expectedType=deltaK",
+      "returnPage=P14"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P14",
+    "event": "try-run",
+    "target": "P22",
+    "params": [
+      "mode=sandbox",
+      "systemId=cool-A",
+      "entityId=F01"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P14",
+    "event": "publish",
+    "target": "P18",
+    "params": [
+      "draftId=graph-draft"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P15",
+    "event": "confirm",
+    "target": "return",
+    "params": [
+      "returnToken",
+      "structuredBinding"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P15",
+    "event": "cancel",
+    "target": "return",
+    "params": [
+      "returnToken",
+      "unchanged=true"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P16",
+    "event": "try",
+    "target": "P23",
+    "params": [
+      "mode=sandbox",
+      "constraintId=refill"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P16",
+    "event": "system",
+    "target": "P11",
+    "params": [
+      "systemId=cool-A"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P17",
+    "event": "target-query",
+    "target": "P10",
+    "params": [
+      "queryId=q-fire"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P17",
+    "event": "bind",
+    "target": "P15",
+    "params": [
+      "expectedType=ratio",
+      "returnPage=P17"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P17",
+    "event": "install",
+    "target": "P21",
+    "params": [
+      "commandType=InstallPolicy",
+      "policyVersion=p2"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P17",
+    "event": "monitor",
+    "target": "P28",
+    "params": [
+      "instanceKey=policy-cover@p2:F01"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P18",
+    "event": "fix-unit",
+    "target": "P14",
+    "params": [
+      "nodeId=n-emit",
+      "portId=delta"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P18",
+    "event": "published",
+    "target": "P19",
+    "params": [
+      "bundleId=bundle-04"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P19",
+    "event": "start",
+    "target": "P20",
+    "params": [
+      "runId=run-main",
+      "branchId=main",
+      "viewCommit=c042"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P20",
+    "event": "queue",
+    "target": "P21",
+    "params": [
+      "baseCommit=c043"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P20",
+    "event": "debug",
+    "target": "P22",
+    "params": [
+      "runId=run-main",
+      "branchId=main",
+      "viewCommit=c043"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P20",
+    "event": "trace",
+    "target": "P24",
+    "params": [
+      "entityId=F01",
+      "propertyId=thermal.temperature",
+      "viewCommit=c043"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P20",
+    "event": "history",
+    "target": "P26",
+    "params": [
+      "branchId=main",
+      "viewCommit=c043"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P20",
+    "event": "policy",
+    "target": "P28",
+    "params": [
+      "instanceKey=policy-cover@p2:F01"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P21",
+    "event": "close",
+    "target": "return",
+    "params": [
+      "returnToken"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P22",
+    "event": "decision",
+    "target": "P23",
+    "params": [
+      "entityId=F01",
+      "constraintId=cooling-floor",
+      "viewCommit=c043"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P22",
+    "event": "trace",
+    "target": "P24",
+    "params": [
+      "entityId=F01",
+      "propertyId=thermal.temperature",
+      "viewCommit=c043"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P23",
+    "event": "execution",
+    "target": "P22",
+    "params": [
+      "entityId=F01",
+      "executionId=exec-F01-cool-A",
+      "systemId=cool-A"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P23",
+    "event": "value",
+    "target": "P24",
+    "params": [
+      "entityId=F01",
+      "propertyId=thermal.temperature",
+      "viewCommit=c043"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P23",
+    "event": "compare",
+    "target": "P27",
+    "params": [
+      "leftCommit=c043",
+      "rightCommit=c043-one-cooler"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P24",
+    "event": "execution",
+    "target": "P22",
+    "params": [
+      "executionId=exec-F01-cool-A",
+      "entityId=F01"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P24",
+    "event": "decision",
+    "target": "P23",
+    "params": [
+      "constraintId=cooling-floor",
+      "entityId=F01"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P24",
+    "event": "event-link",
+    "target": "P25",
+    "params": [
+      "entityId=F01"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P25",
+    "event": "task",
+    "target": "P28",
+    "params": [
+      "taskId=task-replace-V02"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P25",
+    "event": "value",
+    "target": "P24",
+    "params": [
+      "entityId=V01",
+      "propertyId=water.remaining",
+      "viewCommit=c043"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P25",
+    "event": "branch",
+    "target": "P26",
+    "params": [
+      "branchId=main"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P26",
+    "event": "compare",
+    "target": "P27",
+    "params": [
+      "leftCommit=c043",
+      "rightCommit=c043-one-cooler"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P26",
+    "event": "return-head",
+    "target": "P20",
+    "params": [
+      "branchId=main",
+      "viewCommit=c043"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P27",
+    "event": "left-trace",
+    "target": "P24",
+    "params": [
+      "branchId=main",
+      "viewCommit=c043",
+      "entityId=F01"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P27",
+    "event": "right-trace",
+    "target": "P24",
+    "params": [
+      "branchId=branch-one-cooler",
+      "viewCommit=c043-one-cooler",
+      "entityId=F01"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P28",
+    "event": "definition",
+    "target": "P17",
+    "params": [
+      "policyId=policy-cover",
+      "version=p2"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P28",
+    "event": "event",
+    "target": "P25",
+    "params": [
+      "eventId=evt-handoff"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  },
+  {
+    "source": "P28",
+    "event": "remedy",
+    "target": "P21",
+    "params": [
+      "commandType=DispatchReplacement"
+    ],
+    "preserve": [
+      "projectId",
+      "modelVersion",
+      "branchId",
+      "viewCommit",
+      "returnToken"
+    ],
+    "back": "restore selection,filter,scroll,camera; no implicit mutation",
+    "guard": "dirty draft prompts save/discard/stay; history readonly"
+  }
+]

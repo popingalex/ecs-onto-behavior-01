@@ -1,0 +1,705 @@
+[
+  {
+    "id": "D01",
+    "title": "新建类型",
+    "page": "P02",
+    "fields": [
+      {
+        "key": "id",
+        "label": "稳定key",
+        "control": "text",
+        "default": "",
+        "validation": "必填；ASCII key；项目唯一"
+      },
+      {
+        "key": "name",
+        "label": "显示名",
+        "control": "text",
+        "default": "",
+        "validation": "必填，≤80字"
+      },
+      {
+        "key": "parent",
+        "label": "父类型",
+        "control": "typeRef",
+        "default": null,
+        "validation": "不可循环"
+      }
+    ],
+    "command": "CreateType",
+    "result": "创建草稿后选中新类型"
+  },
+  {
+    "id": "D02",
+    "title": "新增属性",
+    "page": "P03",
+    "fields": [
+      {
+        "key": "id",
+        "label": "属性ID",
+        "control": "text",
+        "default": "",
+        "validation": "组件内唯一，发布后不重用"
+      },
+      {
+        "key": "shape",
+        "label": "值形状",
+        "control": "select",
+        "default": "scalar",
+        "validation": "必选",
+        "options": [
+          "scalar",
+          "vector3",
+          "matrixRef"
+        ]
+      },
+      {
+        "key": "primitive",
+        "label": "基础类型",
+        "control": "select",
+        "default": "f64",
+        "validation": "shape和类型兼容",
+        "options": [
+          "f64",
+          "i64",
+          "bool",
+          "string",
+          "EntityRef"
+        ]
+      },
+      {
+        "key": "unitId",
+        "label": "单位",
+        "control": "unitRef",
+        "default": "degC",
+        "validation": "量种兼容"
+      },
+      {
+        "key": "nullable",
+        "label": "允许无值",
+        "control": "switch",
+        "default": false,
+        "validation": "bool"
+      },
+      {
+        "key": "default",
+        "label": "默认值",
+        "control": "typedValue",
+        "default": 100,
+        "validation": "不可空字段必须有效"
+      },
+      {
+        "key": "writeMode",
+        "label": "写入方式",
+        "control": "select",
+        "default": "contribution",
+        "validation": "必须与属性归约契约一致",
+        "options": [
+          "configuration",
+          "exclusive",
+          "contribution",
+          "contract"
+        ]
+      }
+    ],
+    "command": "AddProperty",
+    "result": "新增未发布模式，不能回写运行"
+  },
+  {
+    "id": "D03",
+    "title": "关系定义",
+    "page": "P02",
+    "fields": [
+      {
+        "key": "id",
+        "label": "关系key",
+        "control": "text",
+        "default": "",
+        "validation": "唯一"
+      },
+      {
+        "key": "source",
+        "label": "源类型",
+        "control": "typeRef",
+        "default": "FoamTruck",
+        "validation": "必有"
+      },
+      {
+        "key": "target",
+        "label": "目标类型",
+        "control": "typeRef",
+        "default": "Fire",
+        "validation": "必有"
+      },
+      {
+        "key": "cardinality",
+        "label": "基数",
+        "control": "select",
+        "default": "0..1",
+        "validation": "支持约定集合",
+        "options": [
+          "0..1",
+          "1",
+          "0..*",
+          "1..*"
+        ]
+      },
+      {
+        "key": "onDelete",
+        "label": "目标删除",
+        "control": "select",
+        "default": "restrict",
+        "validation": "运行结构操作要显式裁决",
+        "options": [
+          "restrict",
+          "clearRef",
+          "cascadeDefined"
+        ]
+      }
+    ],
+    "command": "AddRelation",
+    "result": "预览现有实例是否违反基数"
+  },
+  {
+    "id": "D04",
+    "title": "位置与空值",
+    "page": "P07",
+    "fields": [
+      {
+        "key": "frameId",
+        "label": "坐标系",
+        "control": "select",
+        "default": "park-ENU",
+        "validation": "必须与scene一致"
+      },
+      {
+        "key": "position",
+        "label": "东/北/高",
+        "control": "vector3",
+        "default": [
+          320,
+          180,
+          0
+        ],
+        "validation": "三个有限数；m"
+      },
+      {
+        "key": "clear",
+        "label": "未设置",
+        "control": "explicitNull",
+        "default": false,
+        "validation": "仅nullable允许；不删除实体"
+      }
+    ],
+    "command": "SetScenePosition",
+    "result": "空间投影与实体表同步；单一撤销步骤"
+  },
+  {
+    "id": "D05",
+    "title": "模板实例化",
+    "page": "P05",
+    "fields": [
+      {
+        "key": "template",
+        "label": "模板版本",
+        "control": "templateRef",
+        "default": "tpl-foam@t3",
+        "validation": "固定版本"
+      },
+      {
+        "key": "name",
+        "label": "实体名",
+        "control": "text",
+        "default": "新泡沫车",
+        "validation": "必填"
+      },
+      {
+        "key": "placement",
+        "label": "位置",
+        "control": "vector3",
+        "default": null,
+        "validation": "null合法，原点合法"
+      },
+      {
+        "key": "overrides",
+        "label": "属性覆盖",
+        "control": "propertyGrid",
+        "default": {},
+        "validation": "基于definition校验"
+      }
+    ],
+    "command": "InstantiateTemplate",
+    "result": "新稳定entityId；保留覆盖来源"
+  },
+  {
+    "id": "D06",
+    "title": "查询条件",
+    "page": "P10",
+    "fields": [
+      {
+        "key": "classId",
+        "label": "类型",
+        "control": "typeRef",
+        "default": "Fire",
+        "validation": "必有"
+      },
+      {
+        "key": "groups",
+        "label": "条件",
+        "control": "conditionBuilder",
+        "default": [
+          {
+            "property": "active",
+            "op": "eq",
+            "value": true
+          }
+        ],
+        "validation": "AND/OR有类型；缺位置显式处理"
+      },
+      {
+        "key": "view",
+        "label": "读取视图",
+        "control": "select",
+        "default": "previous",
+        "validation": "默认previous"
+      },
+      {
+        "key": "sort",
+        "label": "排序",
+        "control": "select",
+        "default": "id",
+        "validation": "稳定排序"
+      }
+    ],
+    "command": "SaveQuery",
+    "result": "预览三实体；保存版本才更新引用"
+  },
+  {
+    "id": "D07",
+    "title": "System绑定",
+    "page": "P11",
+    "fields": [
+      {
+        "key": "id",
+        "label": "System ID",
+        "control": "text",
+        "default": "cool-A",
+        "validation": "唯一"
+      },
+      {
+        "key": "graphRef",
+        "label": "逻辑版本",
+        "control": "graphRef",
+        "default": "g-cool@g4",
+        "validation": "已存在"
+      },
+      {
+        "key": "queryId",
+        "label": "实体查询",
+        "control": "queryRef",
+        "default": "q-fire",
+        "validation": "类型兼容"
+      },
+      {
+        "key": "maxDropK",
+        "label": "最大降温",
+        "control": "quantity",
+        "default": 50,
+        "validation": "≥0；deltaK"
+      },
+      {
+        "key": "sourceC",
+        "label": "冷源温度",
+        "control": "quantity",
+        "default": 20,
+        "validation": "degC绝对温度"
+      },
+      {
+        "key": "enabled",
+        "label": "启用",
+        "control": "switch",
+        "default": true,
+        "validation": "bool"
+      }
+    ],
+    "command": "UpdateSystem",
+    "result": "显示计划变化，发布后或分支覆盖才影响运行"
+  },
+  {
+    "id": "D08",
+    "title": "图连线",
+    "page": "P14",
+    "fields": [
+      {
+        "key": "sourceNode",
+        "label": "来源节点",
+        "control": "nodeRef",
+        "default": "n-neg",
+        "validation": "存在"
+      },
+      {
+        "key": "sourcePort",
+        "label": "来源端口",
+        "control": "portRef",
+        "default": "delta",
+        "validation": "输出端口"
+      },
+      {
+        "key": "targetNode",
+        "label": "目标节点",
+        "control": "nodeRef",
+        "default": "n-emit",
+        "validation": "存在"
+      },
+      {
+        "key": "targetPort",
+        "label": "目标端口",
+        "control": "portRef",
+        "default": "delta",
+        "validation": "输入端口；唯一生产者"
+      },
+      {
+        "key": "edgeKind",
+        "label": "边语义",
+        "control": "select",
+        "default": "data",
+        "validation": "不能用样式替代语义",
+        "options": [
+          "data",
+          "control",
+          "product"
+        ]
+      }
+    ],
+    "command": "ConnectPorts",
+    "result": "类型/单位/可空/作用域检查失败不写入"
+  },
+  {
+    "id": "D09",
+    "title": "变量绑定",
+    "page": "P15",
+    "fields": [
+      {
+        "key": "root",
+        "label": "来源",
+        "control": "select",
+        "default": "self",
+        "validation": "当前作用域可见",
+        "options": [
+          "self",
+          "parameter",
+          "upstream",
+          "relation",
+          "local",
+          "context"
+        ]
+      },
+      {
+        "key": "propertyId",
+        "label": "属性",
+        "control": "propertyRef",
+        "default": "thermal.temperature",
+        "validation": "稳定ID"
+      },
+      {
+        "key": "view",
+        "label": "读取视图",
+        "control": "select",
+        "default": "previous",
+        "validation": "selfPreview仅本上下文",
+        "options": [
+          "previous",
+          "selfPreview"
+        ]
+      },
+      {
+        "key": "snapshotMode",
+        "label": "引用/快照",
+        "control": "select",
+        "default": "valueAtEvaluation",
+        "validation": "EntityRef不得伪装为位置快照",
+        "options": [
+          "entityRef",
+          "valueAtEvaluation"
+        ]
+      }
+    ],
+    "command": "SetBinding",
+    "result": "一次patch，取消无变化"
+  },
+  {
+    "id": "D10",
+    "title": "额度分配",
+    "page": "P16",
+    "fields": [
+      {
+        "key": "constraintId",
+        "label": "约束",
+        "control": "constraintRef",
+        "default": "cooling-floor",
+        "validation": "固定版本"
+      },
+      {
+        "key": "strategy",
+        "label": "分配规则",
+        "control": "select",
+        "default": "proportional",
+        "validation": "必须显式选择",
+        "options": [
+          "proportional",
+          "priorityThenStableId",
+          "solverPlugin"
+        ]
+      },
+      {
+        "key": "linkedEffects",
+        "label": "关联效果",
+        "control": "mapping",
+        "default": [],
+        "validation": "缺映射不得宣称守恒"
+      },
+      {
+        "key": "failure",
+        "label": "失败策略",
+        "control": "select",
+        "default": "rejectRound",
+        "validation": "不可默默限幅",
+        "options": [
+          "rejectRound",
+          "explicitProjection"
+        ]
+      }
+    ],
+    "command": "UpdateConstraint",
+    "result": "重验引用system，运行不改旧版本"
+  },
+  {
+    "id": "D11",
+    "title": "持续策略",
+    "page": "P17",
+    "fields": [
+      {
+        "key": "target",
+        "label": "目标",
+        "control": "entityRef",
+        "default": "F01",
+        "validation": "Fire且未熄灭"
+      },
+      {
+        "key": "minCount",
+        "label": "最低合格数",
+        "control": "integer",
+        "default": 1,
+        "validation": "≥1"
+      },
+      {
+        "key": "waterMin",
+        "label": "水量下限",
+        "control": "ratio",
+        "default": 0.5,
+        "validation": "[0,1]；UI显示50%"
+      },
+      {
+        "key": "allowMoving",
+        "label": "前往可计覆盖",
+        "control": "switch",
+        "default": true,
+        "validation": "bool"
+      },
+      {
+        "key": "handoff",
+        "label": "交接条件",
+        "control": "select",
+        "default": "arrival",
+        "validation": "显式业务选择",
+        "options": [
+          "arrival",
+          "taskAccepted"
+        ]
+      },
+      {
+        "key": "terminate",
+        "label": "终止",
+        "control": "select",
+        "default": "fireExtinguished",
+        "validation": "不得由温度阈值自动猜测"
+      }
+    ],
+    "command": "SavePolicy",
+    "result": "首次安装时匹配已存在火源"
+  },
+  {
+    "id": "D12",
+    "title": "发布",
+    "page": "P18",
+    "fields": [
+      {
+        "key": "revision",
+        "label": "当前修订",
+        "control": "readonly",
+        "default": 12,
+        "validation": "等于validatedRevision"
+      },
+      {
+        "key": "summary",
+        "label": "发布说明",
+        "control": "text",
+        "default": "冷却与接替演练",
+        "validation": "必填"
+      },
+      {
+        "key": "warnings",
+        "label": "警告确认",
+        "control": "checklist",
+        "default": [],
+        "validation": "保留原诊断"
+      }
+    ],
+    "command": "PublishBundle",
+    "result": "成功返回bundleId；失败不切P19"
+  },
+  {
+    "id": "D13",
+    "title": "运行创建",
+    "page": "P19",
+    "fields": [
+      {
+        "key": "bundleId",
+        "label": "发布包",
+        "control": "bundleRef",
+        "default": "bundle-04",
+        "validation": "资源齐备"
+      },
+      {
+        "key": "mode",
+        "label": "模式",
+        "control": "select",
+        "default": "turn",
+        "validation": "RTS后续，不混用时钟"
+      },
+      {
+        "key": "stepSeconds",
+        "label": "模拟步长",
+        "control": "quantity",
+        "default": 10,
+        "validation": ">0；s"
+      },
+      {
+        "key": "playbackSeconds",
+        "label": "演示时长",
+        "control": "quantity",
+        "default": 1,
+        "validation": ">0；s"
+      },
+      {
+        "key": "runtime",
+        "label": "运行位置",
+        "control": "select",
+        "default": "server",
+        "validation": "插件能力匹配",
+        "options": [
+          "server",
+          "local-worker"
+        ]
+      }
+    ],
+    "command": "CreateRun",
+    "result": "创建后c042待操作，不自动结算"
+  },
+  {
+    "id": "D14",
+    "title": "个人分支",
+    "page": "P26",
+    "fields": [
+      {
+        "key": "baseCommit",
+        "label": "分叉提交",
+        "control": "readonly",
+        "default": "c042",
+        "validation": "检查点可续算"
+      },
+      {
+        "key": "name",
+        "label": "分支名",
+        "control": "text",
+        "default": "个人冷却试算",
+        "validation": "必填"
+      },
+      {
+        "key": "visibility",
+        "label": "可见性",
+        "control": "select",
+        "default": "private",
+        "validation": "默认仅自己",
+        "options": [
+          "private",
+          "team"
+        ]
+      },
+      {
+        "key": "runtime",
+        "label": "运行位置",
+        "control": "select",
+        "default": "local-worker",
+        "validation": "与可见性无关",
+        "options": [
+          "local-worker",
+          "server"
+        ]
+      },
+      {
+        "key": "scope",
+        "label": "推演范围",
+        "control": "readonly",
+        "default": "full-world",
+        "validation": "局部查看不等于裁掉依赖"
+      }
+    ],
+    "command": "CreateBranch",
+    "result": "新分支头指向c042，后续独立提交"
+  },
+  {
+    "id": "D15",
+    "title": "分支对比",
+    "page": "P27",
+    "fields": [
+      {
+        "key": "leftCommit",
+        "label": "左侧提交",
+        "control": "commitRef",
+        "default": "c043",
+        "validation": "存在"
+      },
+      {
+        "key": "rightCommit",
+        "label": "右侧提交",
+        "control": "commitRef",
+        "default": "c043-one-cooler",
+        "validation": "存在"
+      },
+      {
+        "key": "alignment",
+        "label": "对齐依据",
+        "control": "select",
+        "default": "simTime",
+        "validation": "显示具体时刻",
+        "options": [
+          "simTime",
+          "round"
+        ]
+      },
+      {
+        "key": "metrics",
+        "label": "指标",
+        "control": "multiSelect",
+        "default": [
+          "thermal.temperature",
+          "water.remaining"
+        ],
+        "validation": "单位与量种兼容"
+      }
+    ],
+    "command": "CompareBranches",
+    "result": "缺值显示未记录，不当作0"
+  }
+]

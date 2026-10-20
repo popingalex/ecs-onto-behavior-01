@@ -1,0 +1,162 @@
+[
+  {
+    "id": "C01",
+    "name": "WorkspaceShell",
+    "props": "mode,role,context,panels",
+    "events": "navigate,resize,resetLayout",
+    "ownership": "工作区持有布局；egui_dock负责停靠",
+    "variants": "edit/run/history；default/compact"
+  },
+  {
+    "id": "C02",
+    "name": "ContextBar",
+    "props": "draftRevision或run/branch/view/head",
+    "events": "selectVersion,returnHead,primaryAction",
+    "ownership": "ContextStore；egui基础组件",
+    "variants": "draft/published/head/history/disconnected"
+  },
+  {
+    "id": "C03",
+    "name": "ObjectTree",
+    "props": "nodes,selectedId,filter,counts",
+    "events": "select,open,rename,contextAction",
+    "ownership": "ObjectIndex；egui CollapsingHeader/ScrollArea",
+    "variants": "asset/entity/execution；empty/loading"
+  },
+  {
+    "id": "C04",
+    "name": "TypedValueCell",
+    "props": "ValueRef,definition,view,provenance",
+    "events": "edit,clear,resetInherited,trace",
+    "ownership": "只格式化，不直接写world；egui DragValue/TextEdit",
+    "variants": "scalar/vector3/matrixRef/null/invalid/provisional"
+  },
+  {
+    "id": "C05",
+    "name": "PropertyGrid",
+    "props": "schema,effectiveValues,overrides",
+    "events": "patchDraft,openBinding",
+    "ownership": "SchemaStore+DraftStore；egui_extras TableBuilder",
+    "variants": "template/entity/multi-select/readonly"
+  },
+  {
+    "id": "C06",
+    "name": "ObjectLink",
+    "props": "objectType,id,version,context",
+    "events": "openObject",
+    "ownership": "导航路由统一解析；egui Link/Button",
+    "variants": "valid/missing/forbidden/readonly"
+  },
+  {
+    "id": "C07",
+    "name": "GraphCanvas",
+    "props": "graph,layout,selection,diagnostics",
+    "events": "connect,move,delete,openNode",
+    "ownership": "GraphDocument与布局分离；egui-snarl",
+    "variants": "schedule/entityLogic/provenance"
+  },
+  {
+    "id": "C08",
+    "name": "NodeCard",
+    "props": "nodeId,type,ports,summary,runState",
+    "events": "select,breakpoint,openConfig",
+    "ownership": "NodeDefinition决定端口；SnarlViewer绘制",
+    "variants": "selected/error/running/waiting/cached"
+  },
+  {
+    "id": "C09",
+    "name": "BindingPicker",
+    "props": "expectedType,scope,binding,previewContext",
+    "events": "confirmBinding,cancel",
+    "ownership": "BindingService；egui Modal+树/列表",
+    "variants": "compatible/incompatible/nullable/stale"
+  },
+  {
+    "id": "C10",
+    "name": "ValidationList",
+    "props": "diagnostics,validationRevision,currentRevision",
+    "events": "locate,revalidate",
+    "ownership": "core diagnostics，不在UI复制编译器",
+    "variants": "error/warning/stale/clear"
+  },
+  {
+    "id": "C11",
+    "name": "EntityTable",
+    "props": "queryResult,columns,commit,selection",
+    "events": "sort,filter,select,bulkPatch",
+    "ownership": "WorldSnapshot；TableBody.rows只渲染可见行",
+    "variants": "editable/readOnly/loading/empty"
+  },
+  {
+    "id": "C12",
+    "name": "SpatialViewport",
+    "props": "renderProjection,camera,selection",
+    "events": "pick,transform,place",
+    "ownership": "消费同一权威route/position；Bevy视图适配",
+    "variants": "edit/run/history/resourcesMissing"
+  },
+  {
+    "id": "C13",
+    "name": "RunControls",
+    "props": "phase,role,head,playbackState",
+    "events": "settle,pausePlayback,step,seek",
+    "ownership": "SessionStore与PlaybackStore分开",
+    "variants": "waiting/frozen/computing/committed/playing/failed"
+  },
+  {
+    "id": "C14",
+    "name": "CommitSelector",
+    "props": "branches,viewCommit,headCommit",
+    "events": "select,returnHead,createBranch",
+    "ownership": "HistoryStore；不覆盖分支head",
+    "variants": "head/historical/checkpointMissing"
+  },
+  {
+    "id": "C15",
+    "name": "ContributionTable",
+    "props": "effectRows,decision,units,context",
+    "events": "openExecution,openConstraint",
+    "ownership": "按effectId关联请求/获准；TableBuilder",
+    "variants": "requested/pending/approved/partial/rejected"
+  },
+  {
+    "id": "C16",
+    "name": "TraceInspector",
+    "props": "executionId,entityId,nodeId,inputs,outputs",
+    "events": "stepRecordedTrace,openValueVersion",
+    "ownership": "TraceStore；端口值不读最新world",
+    "variants": "recorded/pausedLiveUnsupported/failed/noTrace"
+  },
+  {
+    "id": "C17",
+    "name": "PolicyStatus",
+    "props": "instance,coverage,forecast,candidates",
+    "events": "openTask,openPolicy,remedy",
+    "ownership": "PolicyStore；预测与事实分别标记",
+    "variants": "satisfied/unmet/pending/cancelled"
+  },
+  {
+    "id": "C18",
+    "name": "EventTimeline",
+    "props": "events,relations,timeRange,commit",
+    "events": "selectEvent,seekRecorded,openTask",
+    "ownership": "EventStore；egui_plot+领域覆盖绘制",
+    "variants": "prediction/fact/cancelled/missingRelation"
+  },
+  {
+    "id": "C19",
+    "name": "DiffTable",
+    "props": "leftRef,rightRef,alignment,rows",
+    "events": "openLeftTrace,openRightTrace",
+    "ownership": "ComparisonService；数值差和来源差并存",
+    "variants": "changed/equalValueDifferentSource/missing"
+  },
+  {
+    "id": "C20",
+    "name": "AsyncStatePanel",
+    "props": "status,error,retry,contextKey",
+    "events": "retry,cancel",
+    "ownership": "所有读组件共用，旧上下文响应被丢弃",
+    "variants": "loading/empty/error/stale/disconnected"
+  }
+]

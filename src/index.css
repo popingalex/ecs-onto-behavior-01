@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import 'tailwindcss';
+
+/*
+ * 设计变量 · 见 docs/spec/01_layout_and_interaction.md「视觉与信息密度」
+ * 语义色：bg / surface / ink / muted / border / primary / success / warning / danger / purple
+ * 字号：caption 12 · label 13 · body 14 · body-lg 16 · title 20 · display 24
+ * 间距沿用 Tailwind 1/2/3/4/6 = 4/8/12/16/24
+ */
+@theme {
+  --font-sans: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --color-bg: #f3f6fa;
+  --color-surface: #ffffff;
+  --color-subtle: #f7f9fc;
+  --color-hover: #eef3f8;
+  --color-ink: #162a40;
+  --color-ink-soft: #33475c;
+  --color-muted: #64778b;
+  --color-faint: #8a9aab;
+  --color-border: #dce4ec;
+  --color-line: #e9eef3;
+  --color-chrome: #162a40;
+  --color-chrome-raised: #20374f;
+  --color-chrome-line: #2d4660;
+
+  --color-primary: #087f8c;
+  --color-primary-strong: #066975;
+  --color-primary-soft: #e2f1f2;
+  --color-primary-line: #a9d4d8;
+  --color-success: #17856b;
+  --color-success-soft: #e3f3ed;
+  --color-warning: #b67714;
+  --color-warning-ink: #7a4e0b;
+  --color-warning-soft: #fbf1df;
+  --color-warning-line: #ecd29f;
+  --color-danger: #c14555;
+  --color-danger-soft: #f9e7ea;
+  --color-danger-line: #ebb9c0;
+  --color-purple: #7565af;
+  --color-purple-soft: #eeebf7;
+  --color-neutral-soft: #edf1f5;
+
+  --text-caption: 12px;
+  --text-caption--line-height: 18px;
+  --text-label: 13px;
+  --text-label--line-height: 20px;
+  --text-body: 14px;
+  --text-body--line-height: 22px;
+  --text-body-lg: 16px;
+  --text-body-lg--line-height: 24px;
+  --text-title: 20px;
+  --text-title--line-height: 28px;
+  --text-display: 24px;
+  --text-display--line-height: 32px;
+
+  --radius-ui: 6px;
+
+  --shadow-pop: 0 12px 32px -8px rgb(22 42 64 / 0.22), 0 2px 6px rgb(22 42 64 / 0.08);
+  --shadow-card: 0 1px 2px rgb(22 42 64 / 0.05);
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 1px;
+  }
+
+  ::selection {
+    background: var(--color-primary-soft);
+  }
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+}
+
+/* 画布底纹：16px 细网格 + 80px 主网格 */
+@utility canvas-grid {
+  background-color: #f8fafc;
+  background-image:
+    linear-gradient(to right, rgb(22 42 64 / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(22 42 64 / 0.06) 1px, transparent 1px),
+    linear-gradient(to right, rgb(22 42 64 / 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(22 42 64 / 0.025) 1px, transparent 1px);
+  background-size:
+    80px 80px,
+    80px 80px,
+    16px 16px,
+    16px 16px;
+}
+
+@utility scroll-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #c6d2dd transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

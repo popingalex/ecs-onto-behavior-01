@@ -1,0 +1,135 @@
+{
+  "commit": "c042",
+  "branch": "main",
+  "simTime": 420,
+  "entities": [
+    {
+      "id": "F01",
+      "name": "一号储罐火源",
+      "classId": "Fire",
+      "position": [
+        320,
+        180,
+        0
+      ],
+      "temperature": 100,
+      "floor": 20,
+      "active": true,
+      "discovered": true
+    },
+    {
+      "id": "F02",
+      "name": "装卸区火源",
+      "classId": "Fire",
+      "position": [
+        600,
+        260,
+        0
+      ],
+      "temperature": 80,
+      "floor": 20,
+      "active": true,
+      "discovered": true
+    },
+    {
+      "id": "F03",
+      "name": "围堰火源",
+      "classId": "Fire",
+      "position": [
+        710,
+        430,
+        0
+      ],
+      "temperature": 60,
+      "floor": 20,
+      "active": true,
+      "discovered": false
+    },
+    {
+      "id": "V01",
+      "name": "泡沫一车",
+      "classId": "FoamTruck",
+      "position": [
+        280,
+        180,
+        0
+      ],
+      "water": 5500,
+      "capacity": 10000,
+      "rateLps": 100,
+      "status": "suppressing",
+      "target": "F01",
+      "healthy": true,
+      "foam": true
+    },
+    {
+      "id": "V02",
+      "name": "泡沫二车",
+      "classId": "FoamTruck",
+      "position": [
+        240,
+        180,
+        0
+      ],
+      "water": 9000,
+      "capacity": 10000,
+      "rateLps": 100,
+      "status": "idle",
+      "target": null,
+      "healthy": true,
+      "foam": true,
+      "travelSeconds": 4
+    },
+    {
+      "id": "V03",
+      "name": "泡沫三车",
+      "classId": "FoamTruck",
+      "position": [
+        140,
+        180,
+        0
+      ],
+      "water": 4000,
+      "capacity": 10000,
+      "rateLps": 100,
+      "status": "idle",
+      "target": null,
+      "healthy": true,
+      "foam": true,
+      "travelSeconds": 6
+    },
+    {
+      "id": "S01",
+      "name": "西侧补给站",
+      "classId": "Station",
+      "position": [
+        80,
+        180,
+        0
+      ],
+      "inventory": 1200
+    },
+    {
+      "id": "C01",
+      "name": "园区指挥单元",
+      "classId": "Command",
+      "position": null
+    }
+  ],
+  "policy": {
+    "id": "policy-cover",
+    "version": "p2",
+    "minCount": 1,
+    "waterMin": 0.5,
+    "target": "F01",
+    "allowMoving": true,
+    "handoffOnArrival": true,
+    "enabled": true
+  },
+  "pendingEvents": [],
+  "tasks": [],
+  "rng": {
+    "algorithm": "mock-fixed",
+    "state": 7
+  }
+}

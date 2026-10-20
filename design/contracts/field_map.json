@@ -1,0 +1,10 @@
+{
+  "Fire.temperature": "thermal.temperature",
+  "FoamTruck.water": "water.remaining",
+  "FoamTruck.capacity": "water.capacity",
+  "*.position": "position.local",
+  "Fire.active": "fire.active",
+  "FoamTruck.target": "task.target",
+  "commitKey": "commit",
+  "stableIds": "entityId/propertyId/systemId/nodeId/executionId/effectId/constraintId/commitId"
+}

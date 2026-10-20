@@ -1,0 +1,209 @@
+[
+  {
+    "pageId": "P03",
+    "caseId": "baseline",
+    "mockFile": "runs/baseline.json",
+    "viewCommit": null,
+    "selection": {
+      "entityId": "F01",
+      "systemId": "cool-A"
+    },
+    "rightComparisonFile": null,
+    "sources": [
+      "01_model.json#/properties",
+      "01_model.json#/units"
+    ],
+    "mode": "edit"
+  },
+  {
+    "pageId": "P05",
+    "caseId": "baseline",
+    "mockFile": "runs/baseline.json",
+    "viewCommit": null,
+    "selection": {
+      "entityId": "F01",
+      "systemId": "cool-A"
+    },
+    "rightComparisonFile": null,
+    "sources": [
+      "01_model.json#/entityTemplates",
+      "02_world.json#/entities"
+    ],
+    "mode": "edit"
+  },
+  {
+    "pageId": "P07",
+    "caseId": "baseline",
+    "mockFile": "runs/baseline.json",
+    "viewCommit": "c042",
+    "selection": {
+      "entityId": "F01",
+      "systemId": "cool-A"
+    },
+    "rightComparisonFile": null,
+    "sources": [
+      "02_world.json#/entities"
+    ],
+    "mode": "edit"
+  },
+  {
+    "pageId": "P12",
+    "caseId": "baseline",
+    "mockFile": "runs/baseline.json",
+    "viewCommit": "c043",
+    "selection": {
+      "entityId": "F01",
+      "systemId": "cool-A"
+    },
+    "rightComparisonFile": null,
+    "sources": [
+      "03_programs.json#/schedule",
+      "03_programs.json#/systems"
+    ],
+    "mode": "edit"
+  },
+  {
+    "pageId": "P14",
+    "caseId": "baseline",
+    "mockFile": "runs/baseline.json",
+    "viewCommit": "c042",
+    "selection": {
+      "entityId": "F01",
+      "systemId": "cool-A"
+    },
+    "rightComparisonFile": null,
+    "sources": [
+      "03_programs.json#/graphs/0",
+      "runs/baseline.json#/traces"
+    ],
+    "mode": "edit"
+  },
+  {
+    "pageId": "P15",
+    "caseId": "baseline",
+    "mockFile": "runs/baseline.json",
+    "viewCommit": "c042",
+    "selection": {
+      "entityId": "F01",
+      "systemId": "cool-A"
+    },
+    "rightComparisonFile": null,
+    "sources": [
+      "01_model.json#/properties",
+      "02_world.json#/entities"
+    ],
+    "mode": "edit"
+  },
+  {
+    "pageId": "P20",
+    "caseId": "baseline",
+    "mockFile": "runs/baseline.json",
+    "viewCommit": "c043",
+    "selection": {
+      "entityId": "F01",
+      "systemId": "cool-A"
+    },
+    "rightComparisonFile": null,
+    "sources": [
+      "runs/baseline.json#/state",
+      "runs/baseline.json#/events"
+    ],
+    "mode": "run"
+  },
+  {
+    "pageId": "P22",
+    "caseId": "baseline",
+    "mockFile": "runs/baseline.json",
+    "viewCommit": "c043",
+    "selection": {
+      "entityId": "F01",
+      "systemId": "cool-A"
+    },
+    "rightComparisonFile": null,
+    "sources": [
+      "runs/baseline.json#/traces",
+      "runs/baseline.json#/contributions"
+    ],
+    "mode": "run"
+  },
+  {
+    "pageId": "P23",
+    "caseId": "baseline",
+    "mockFile": "runs/baseline.json",
+    "viewCommit": "c043",
+    "selection": {
+      "entityId": "F01",
+      "systemId": "cool-A"
+    },
+    "rightComparisonFile": null,
+    "sources": [
+      "runs/baseline.json#/temperatures",
+      "runs/baseline.json#/contributions"
+    ],
+    "mode": "run"
+  },
+  {
+    "pageId": "P24",
+    "caseId": "baseline",
+    "mockFile": "runs/baseline.json",
+    "viewCommit": "c043",
+    "selection": {
+      "entityId": "F01",
+      "systemId": "cool-A"
+    },
+    "rightComparisonFile": null,
+    "sources": [
+      "runs/baseline.json#/activities",
+      "runs/baseline.json#/dependencies"
+    ],
+    "mode": "history"
+  },
+  {
+    "pageId": "P26",
+    "caseId": "baseline",
+    "mockFile": "runs/baseline.json",
+    "viewCommit": "c042",
+    "selection": {
+      "entityId": "F01",
+      "systemId": "cool-A"
+    },
+    "rightComparisonFile": null,
+    "sources": [
+      "07_history.json#/commits",
+      "07_history.json#/branches"
+    ],
+    "mode": "history"
+  },
+  {
+    "pageId": "P27",
+    "caseId": "baseline",
+    "mockFile": "runs/baseline.json",
+    "viewCommit": "c043",
+    "selection": {
+      "entityId": "F01",
+      "systemId": "cool-A"
+    },
+    "rightComparisonFile": "runs/one-cooler.json",
+    "sources": [
+      "runs/baseline.json#/temperatures",
+      "runs/one-cooler.json#/temperatures"
+    ],
+    "mode": "history"
+  },
+  {
+    "pageId": "P28",
+    "caseId": "no-replacement",
+    "mockFile": "runs/no-replacement.json",
+    "viewCommit": "c043-no-replacement",
+    "selection": {
+      "entityId": "F01",
+      "systemId": "cool-A"
+    },
+    "rightComparisonFile": null,
+    "sources": [
+      "runs/no-replacement.json#/policy",
+      "runs/no-replacement.json#/state"
+    ],
+    "mode": "run"
+  }
+]

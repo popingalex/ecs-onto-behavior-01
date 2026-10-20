@@ -1,0 +1,672 @@
+[
+  {
+    "pageId": "P01",
+    "sources": [
+      "01_model.json#/project",
+      "runs/baseline.json#/policy"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "draftId",
+      "revision"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  },
+  {
+    "pageId": "P02",
+    "sources": [
+      "01_model.json#/classes",
+      "01_model.json#/relations"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "draftId",
+      "revision"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  },
+  {
+    "pageId": "P03",
+    "sources": [
+      "01_model.json#/properties"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "draftId",
+      "revision"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  },
+  {
+    "pageId": "P04",
+    "sources": [
+      "01_model.json#/units",
+      "01_model.json#/constraints"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "draftId",
+      "revision"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  },
+  {
+    "pageId": "P05",
+    "sources": [
+      "01_model.json#/entityTemplates"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "draftId",
+      "revision"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  },
+  {
+    "pageId": "P06",
+    "sources": [
+      "01_model.json#/sceneTemplate"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "draftId",
+      "revision"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  },
+  {
+    "pageId": "P07",
+    "sources": [
+      "02_world.json#/entities"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "draftId",
+      "revision"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  },
+  {
+    "pageId": "P08",
+    "sources": [
+      "02_world.json#/entities",
+      "runs/baseline.json#/state"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "draftId",
+      "revision"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  },
+  {
+    "pageId": "P09",
+    "sources": [
+      "06_catalog.json#/assets"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "draftId",
+      "revision"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  },
+  {
+    "pageId": "P10",
+    "sources": [
+      "03_programs.json#/queries"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "draftId",
+      "revision"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  },
+  {
+    "pageId": "P11",
+    "sources": [
+      "03_programs.json#/systems"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "draftId",
+      "revision"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  },
+  {
+    "pageId": "P12",
+    "sources": [
+      "03_programs.json#/schedule"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "draftId",
+      "revision"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  },
+  {
+    "pageId": "P13",
+    "sources": [
+      "06_catalog.json#/accessDiagnostics"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "draftId",
+      "revision"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  },
+  {
+    "pageId": "P14",
+    "sources": [
+      "03_programs.json#/graphs/0"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "draftId",
+      "revision"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  },
+  {
+    "pageId": "P15",
+    "sources": [
+      "01_model.json#/properties",
+      "03_programs.json#/graphs/0"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "draftId",
+      "revision"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  },
+  {
+    "pageId": "P16",
+    "sources": [
+      "03_programs.json#/contracts",
+      "01_model.json#/constraints"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "draftId",
+      "revision"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  },
+  {
+    "pageId": "P17",
+    "sources": [
+      "02_world.json#/policy"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "draftId",
+      "revision"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  },
+  {
+    "pageId": "P18",
+    "sources": [
+      "06_catalog.json#/manifest"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "draftId",
+      "revision"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  },
+  {
+    "pageId": "P19",
+    "sources": [
+      "01_model.json#/clock",
+      "07_history.json#/runs"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "runId",
+      "branchId",
+      "viewCommit"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  },
+  {
+    "pageId": "P20",
+    "sources": [
+      "runs/baseline.json#/state",
+      "runs/baseline.json#/events"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "runId",
+      "branchId",
+      "viewCommit"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  },
+  {
+    "pageId": "P21",
+    "sources": [
+      "06_catalog.json#/commands"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "runId",
+      "branchId",
+      "viewCommit"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  },
+  {
+    "pageId": "P22",
+    "sources": [
+      "runs/baseline.json#/traces",
+      "runs/baseline.json#/contributions",
+      "runs/baseline.json#/temperatures"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "runId",
+      "branchId",
+      "viewCommit"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  },
+  {
+    "pageId": "P23",
+    "sources": [
+      "runs/baseline.json#/contributions",
+      "runs/baseline.json#/temperatures",
+      "runs/baseline.json#/contractPreview"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "runId",
+      "branchId",
+      "viewCommit"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  },
+  {
+    "pageId": "P24",
+    "sources": [
+      "runs/baseline.json#/activities",
+      "runs/baseline.json#/dependencies"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "runId",
+      "branchId",
+      "viewCommit"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  },
+  {
+    "pageId": "P25",
+    "sources": [
+      "runs/baseline.json#/events"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "runId",
+      "branchId",
+      "viewCommit"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  },
+  {
+    "pageId": "P26",
+    "sources": [
+      "07_history.json#/commits",
+      "07_history.json#/branches"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "runId",
+      "branchId",
+      "viewCommit"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  },
+  {
+    "pageId": "P27",
+    "sources": [
+      "runs/baseline.json#/temperatures",
+      "runs/one-cooler.json#/temperatures"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "runId",
+      "branchId",
+      "viewCommit"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  },
+  {
+    "pageId": "P28",
+    "sources": [
+      "runs/baseline.json#/policy",
+      "runs/no-replacement.json#/policy"
+    ],
+    "context": [
+      "projectId",
+      "modelVersion",
+      "runId",
+      "branchId",
+      "viewCommit"
+    ],
+    "selectionKeys": [
+      "entityId",
+      "propertyId",
+      "systemId",
+      "nodeId",
+      "executionId"
+    ],
+    "updateRule": "immutable reads + explicit draft/command mutation",
+    "empty": "data=[]",
+    "pending": "approved/final=null until arbitration",
+    "errorFixture": "05_ui_states.json#/states"
+  }
+]
