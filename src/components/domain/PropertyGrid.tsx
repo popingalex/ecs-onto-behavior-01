@@ -25,6 +25,7 @@ export default function PropertyGrid({
   diagnostics,
   selectedId,
   onSelect,
+  onOpenDetail,
   /** propertyId → 草稿中被覆盖的字段 */
 }: {
   properties: PropertyDef[]
@@ -33,6 +34,8 @@ export default function PropertyGrid({
   diagnostics: Diagnostic[]
   selectedId?: string
   onSelect: (id: string) => void
+  /** 属性名点击 → 就地详情抽屉（P31）；行点击仍是同页选中。 */
+  onOpenDetail?: (id: string) => void
 }) {
   return (
     <div className="scroll-thin overflow-auto">
@@ -81,16 +84,32 @@ export default function PropertyGrid({
                       )
                     ) : null}
                     <div className="min-w-0">
-                      <div
-                        className={cn(
-                          "truncate font-medium",
-                          isChanged("label") && "text-purple",
-                        )}
-                      >
-                        {p.label || (
-                          <span className="text-danger">（未命名）</span>
-                        )}
-                      </div>
+                      {onOpenDetail ? (
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            onOpenDetail(p.id)
+                          }}
+                          title={`打开属性详情 ${p.id}`}
+                          className="block max-w-full truncate text-left font-medium text-primary-strong hover:underline"
+                        >
+                          {p.label || (
+                            <span className="text-danger">（未命名）</span>
+                          )}
+                        </button>
+                      ) : (
+                        <div
+                          className={cn(
+                            "truncate font-medium",
+                            isChanged("label") && "text-purple",
+                          )}
+                        >
+                          {p.label || (
+                            <span className="text-danger">（未命名）</span>
+                          )}
+                        </div>
+                      )}
                       <div className="truncate font-mono text-caption text-muted">
                         {p.id}
                       </div>

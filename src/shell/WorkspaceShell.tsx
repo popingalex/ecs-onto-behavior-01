@@ -250,7 +250,9 @@ function MainArea({
       }
       className={cn(
         "relative min-w-0 flex-1",
-        fill ? "flex flex-col overflow-hidden" : "scroll-thin overflow-auto",
+        // 画布页用 clip 而不是 hidden：clip 不是滚动容器，溢出内容被裁切，
+        // 不会被焦点 reveal / scrollIntoView 横向拉动导致整列错位。
+        fill ? "flex flex-col overflow-clip" : "scroll-thin overflow-auto",
       )}
     >
       {children}
@@ -352,7 +354,7 @@ function Strip({
   )
 }
 
-/** 全局快捷键：Alt+1…6 切换功能入口；Ctrl+Z / Ctrl+Shift+Z / Ctrl+S 草稿；Esc 关闭浮层 / 退出全屏。 */
+/** 全局快捷键：Alt+1…4 切换功能入口；Ctrl+Z / Ctrl+Shift+Z / Ctrl+S 草稿；Esc 关闭浮层 / 退出全屏。 */
 function useShortcuts({
   ctx,
   floating,
@@ -371,10 +373,10 @@ function useShortcuts({
       if (e.isComposing) return
       const s = state.current
       const mod = e.ctrlKey || e.metaKey
-      if (e.altKey && !mod && /^Digit[1-6]$/.test(e.code)) {
+      if (e.altKey && !mod && /^Digit[1-4]$/.test(e.code)) {
         e.preventDefault()
         const group = GROUPS[Number(e.code.slice(5)) - 1]
-        navigate({ pageId: group.defaultPage, params: {} })
+        if (group) navigate({ pageId: group.defaultPage, params: {} })
         return
       }
       if (s.overlayOpen) return

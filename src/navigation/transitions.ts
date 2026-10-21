@@ -25,7 +25,7 @@ const T = (
 
 export const TRANSITIONS: Transition[] = [
   T("P01", "open-model", "P02", { classId: "Fire" }),
-  T("P01", "edit-scene", "P07", { sceneVersion: "scene-05" }),
+  T("P01", "edit-scene", "P08", {}),
   T("P01", "open-run", "P20", {
     runId: "run-main",
     branchId: "main",
@@ -174,7 +174,7 @@ export const TRANSITIONS: Transition[] = [
 
 export const ACTION_LABELS: Record<string, string> = {
   "open-model": "打开类型模型",
-  "edit-scene": "编辑场景",
+  "edit-scene": "场景实体",
   "open-run": "打开运行",
   "create-run": "新建运行",
   "edit-component": "编辑组件",

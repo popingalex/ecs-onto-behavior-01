@@ -3,9 +3,9 @@
  * 稳定 ID 一律为字符串，不使用第三方组件内部序号。
  */
 
-export type PageId = "P01" | "P02" | "P03" | "P04" | "P05" | "P06" | "P07" | "P08" | "P09" | "P10" | "P11" | "P12" | "P13" | "P14" | "P15" | "P16" | "P17" | "P18" | "P19" | "P20" | "P21" | "P22" | "P23" | "P24" | "P25" | "P26" | "P27" | "P28" | "P29" | "P30"
+export type PageId = "P01" | "P02" | "P03" | "P04" | "P05" | "P06" | "P07" | "P08" | "P09" | "P10" | "P11" | "P12" | "P13" | "P14" | "P15" | "P16" | "P17" | "P18" | "P19" | "P20" | "P21" | "P22" | "P23" | "P24" | "P25" | "P26" | "P27" | "P28" | "P29" | "P30" | "P31"
 
-export type GroupId = "project" | "modeling" | "scene" | "logic" | "run" | "review"
+export type GroupId = "project" | "modeling" | "logic" | "simulation"
 
 /** project：总览；asset：模型/场景/程序资产；execution：运行/分支/提交。两组不混排。 */
 export type ContextKind = "project" | "asset" | "execution"

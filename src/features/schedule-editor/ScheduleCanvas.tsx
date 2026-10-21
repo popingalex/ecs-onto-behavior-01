@@ -22,6 +22,7 @@ import {
   type ScheduleFlowEdge,
   type ScheduleFlowNode,
 } from "./codec"
+import { systemNodeForFocus } from "./focus"
 import { SCHEDULE_NODE_TYPES } from "./nodes"
 import { DRAG_MIME, type DragPayload } from "./SystemLibrary"
 import * as ops from "./ops"
@@ -36,6 +37,7 @@ export default function ScheduleCanvas({
   schedule,
   layout,
   readOnly,
+  focusSystemId,
   onSelectionChange,
   onSystemPairConnect,
 }: {
@@ -44,6 +46,8 @@ export default function ScheduleCanvas({
   schedule: ScheduleDocument
   layout: EditorLayout
   readOnly: boolean
+  /** 路由 systemId 聚焦：选中对应 SystemNode 并平移视野，不写草稿。 */
+  focusSystemId?: string
   onSelectionChange: (
     node: ScheduleFlowNode | null,
     edge: ScheduleFlowEdge | null,
@@ -73,11 +77,33 @@ export default function ScheduleCanvas({
     )
   }, [flow.edges])
 
-  const { screenToFlowPosition } = useReactFlow()
+  const { screenToFlowPosition, setCenter } = useReactFlow()
   // 首挂载 fitView 会触发一次 onMoveEnd；那不是用户操作，不写进草稿。
   const isDefaultViewport =
     layout.viewport.x === 0 && layout.viewport.y === 0 && layout.viewport.zoom === 1
   const skipInitialMoveEnd = useRef(isDefaultViewport)
+  /** 路由聚焦引起的视野移动同样不是用户编辑，不写 layout。 */
+  const programmaticMove = useRef(false)
+  const selectionCallback = useRef(onSelectionChange)
+  selectionCallback.current = onSelectionChange
+  const focusedSystem = useRef<string | null>(null)
+
+  useEffect(() => {
+    if (!focusSystemId || focusedSystem.current === focusSystemId) return
+    const nodeId = systemNodeForFocus(schedule, focusSystemId)
+    if (!nodeId) return
+    const node = flow.nodes.find((n) => n.id === nodeId)
+    if (!node) return
+    focusedSystem.current = focusSystemId
+    selectedRef.current = { nodes: [nodeId], edges: [] }
+    setNodes((ns) => ns.map((n) => ({ ...n, selected: n.id === nodeId })))
+    selectionCallback.current(node, null)
+    programmaticMove.current = true
+    void setCenter(node.position.x + 110, node.position.y + 60, {
+      zoom: 1,
+      duration: 300,
+    })
+  }, [focusSystemId, flow.nodes, schedule, setCenter])
 
   const onNodesChange = (changes: NodeChange<ScheduleFlowNode>[]) =>
     setNodes((ns) =>
@@ -161,6 +187,10 @@ export default function ScheduleCanvas({
         onMoveEnd={(_event, viewport: Viewport) => {
           if (skipInitialMoveEnd.current) {
             skipInitialMoveEnd.current = false
+            return
+          }
+          if (programmaticMove.current) {
+            programmaticMove.current = false
             return
           }
           const rounded = {

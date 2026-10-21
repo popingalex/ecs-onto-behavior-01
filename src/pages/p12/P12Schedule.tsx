@@ -72,6 +72,11 @@ export default function P12Schedule({ ctx }: { ctx: WorkbenchContext }) {
                 未保存
               </Tag>
             ) : null}
+            {ctx.route.params.systemId ? (
+              <Tag size="sm" tone="primary">
+                聚焦 {ctx.route.params.systemId}
+              </Tag>
+            ) : null}
           </div>
         </div>
         <span className="hidden min-w-0 truncate text-label text-muted 2xl:inline">
@@ -128,7 +133,11 @@ export default function P12Schedule({ ctx }: { ctx: WorkbenchContext }) {
           </Button>
         </div>
       </div>
-      <ScheduleEditor docId={docId} readOnly={readOnly} />
+      <ScheduleEditor
+        docId={docId}
+        readOnly={readOnly}
+        focusSystemId={ctx.route.params.systemId}
+      />
     </div>
   )
 }

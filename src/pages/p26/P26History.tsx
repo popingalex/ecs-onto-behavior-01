@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import {
   GitBranch,
   GitCommitHorizontal,
@@ -27,6 +27,7 @@ import {
 import { useRecordByCommit } from "@/stores/trace"
 import { toast } from "@/stores/toast"
 import type { BranchDef, CommitDef } from "@/core/types"
+import { commitFocusPosition, commitGraphLayout } from "./commitGraphLayout"
 
 const SOURCE_TAG = {
   base: { tone: "neutral" as const, label: "基础世界" },
@@ -234,28 +235,29 @@ function CommitGraph({
   onSelect: (commit: CommitDef) => void
   onSwitchBranch: (branch: BranchDef) => void
 }) {
-  const laneH = 72
-  const laneOf = new Map(branches.map((b, i) => [b.id, i]))
-  const rows = branches.map((b, i) => ({
-    branch: b,
-    y: 36 + i * laneH,
-    // 画该分支名下的全部提交：谱系外的参考样例提交（如 c043）也保留在自己的泳道上。
-    commits: Object.values(commits)
-      .filter((c) => c.branchId === b.id)
-      .sort((a, b2) => a.simTime - b2.simTime || a.id.localeCompare(b2.id)),
-  }))
-  const times = [
-    ...new Set(rows.flatMap((r) => r.commits.map((c) => c.simTime))),
-  ].sort((a, b) => a - b)
-  const xOf = (t: number) => 90 + Math.max(0, times.indexOf(t)) * 130
-  const pos = new Map<string, { x: number ;y: number }>()
-  for (const r of rows)
-    for (const c of r.commits) pos.set(c.id, { x: xOf(c.simTime), y: r.y })
-  const width = xOf(times[times.length - 1] ?? 0) + 110
-  const height = 36 + branches.length * laneH
+  const { rows, pos, width, height } = useMemo(
+    () => commitGraphLayout(branches, commits),
+    [branches, commits],
+  )
+  const scrollRef = useRef<HTMLDivElement>(null)
+
+  // 路由 viewCommit → 图中聚焦：滚动到该提交进入视野（高亮由选中态圆环承担）。
+  useEffect(() => {
+    const container = scrollRef.current
+    const p = commitFocusPosition(
+      commitGraphLayout(branches, commits),
+      viewCommit?.id,
+    )
+    if (!container || !p) return
+    container.scrollTo({
+      left: Math.max(0, p.x - container.clientWidth / 2),
+      top: Math.max(0, p.y - 80),
+      behavior: "smooth",
+    })
+  }, [branches, commits, viewCommit?.id])
 
   return (
-    <div className="scroll-thin overflow-auto">
+    <div className="scroll-thin overflow-auto" ref={scrollRef}>
       <svg
         width={Math.max(width, 560)}
         height={height}

@@ -1,277 +1,22 @@
 import { useMemo, useRef, useState, type KeyboardEvent } from "react"
 import { ChevronRight, Search, X } from "lucide-react"
-import type { GroupId, Route } from "@/core/types"
-import type { WorkbenchIndex } from "@/data/index"
+import type { GroupId } from "@/core/types"
 import { useIndex } from "@/data/store"
 import { cn } from "@/lib/cn"
 import { GROUP_BY_ID } from "@/navigation/groups"
 import { PAGE_SPECS } from "@/navigation/pages"
-import { routeMatches } from "@/router/route"
 import { navigate, useRoute, useViewState } from "@/router/router"
-import { useBranches } from "@/stores/history"
-import type { BranchDef } from "@/core/types"
+import { useBranches, useCommits } from "@/stores/history"
+import { useStore } from "@/lib/store"
+import { traceStore } from "@/stores/trace"
+import {
+  buildTree,
+  flatten,
+  selectedNodeId,
+  type TreeNode,
+} from "./resourceTreeModel"
 
-/** C03 ObjectTree：二级对象放在资源树，不扩展全局功能栏。 */
-interface TreeNode {
-  id: string
-  label: string
-  meta?: string
-  route: Route
-  children?: TreeNode[]
-}
-
-const page = (
-  pageId: Route["pageId"],
-  params: Record<string, string> = {},
-  children?: TreeNode[],
-): TreeNode => ({
-  id: `${pageId}:${JSON.stringify(params)}`,
-  label: PAGE_SPECS[pageId].title,
-  meta: pageId,
-  route: { pageId, params },
-  children,
-})
-
-const leaf = (
-  pageId: Route["pageId"],
-  params: Record<string, string>,
-  label: string,
-  meta?: string,
-): TreeNode => ({
-  id: `${pageId}:${JSON.stringify(params)}`,
-  label,
-  meta,
-  route: { pageId, params },
-})
-
-function execParams(route: Route): Record<string, string> {
-  const out: Record<string, string> = {}
-  for (const key of ["runId", "branchId", "viewCommit"] as const)
-    if (route.params[key]) out[key] = route.params[key]
-  return out
-}
-
-function buildTree(
-  group: GroupId,
-  index: WorkbenchIndex,
-  branches: BranchDef[],
-  current: Route,
-): TreeNode[] {
-  const branchLeaves = (pageId: Route["pageId"]) =>
-    branches.map((b) =>
-      leaf(
-        pageId,
-        { runId: b.runId, branchId: b.id, viewCommit: b.headCommit },
-        b.label,
-        b.headCommit,
-      ),
-    )
-  const exec = execParams(current)
-  switch (group) {
-    case "project":
-      return [page("P01"), page("P19"), page("P20", {}, branchLeaves("P20"))]
-    case "modeling":
-      return [
-        page(
-          "P02",
-          {},
-          [...index.classes.values()].map((c) =>
-            leaf("P02", { classId: c.id }, c.label, c.id),
-          ),
-        ),
-        page(
-          "P03",
-          {},
-          [...index.components.values()].map((c) =>
-            leaf(
-              "P03",
-              { componentId: c.id },
-              c.label,
-              `${index.propertiesByComponent.get(c.id)?.length ?? 0} 属性`,
-            ),
-          ),
-        ),
-        page("P04"),
-        page(
-          "P05",
-          {},
-          [...index.templates.values()].map((t) =>
-            leaf("P05", { templateId: t.id }, t.label, t.version),
-          ),
-        ),
-        page("P29"),
-      ]
-    case "scene":
-      return [
-        page(
-          "P06",
-          {},
-          [...index.sceneTemplates.values()].map((t) =>
-            leaf("P06", { sceneTemplateId: t.id }, t.label, t.version),
-          ),
-        ),
-        page(
-          "P07",
-          {},
-          [...index.scenes.values()].map((s) =>
-            leaf("P07", { sceneVersion: s.id }, s.label, s.version),
-          ),
-        ),
-        page(
-          "P08",
-          {},
-          [...index.entities.values()].map((e) =>
-            leaf("P08", { entityId: e.id }, e.label, e.id),
-          ),
-        ),
-        page(
-          "P09",
-          {},
-          [...index.assets.values()].map((a) =>
-            leaf("P09", { assetId: a.id }, a.label, a.version),
-          ),
-        ),
-      ]
-    case "logic":
-      return [
-        page(
-          "P10",
-          {},
-          [...index.queries.values()].map((q) =>
-            leaf("P10", { queryId: q.id }, q.label, q.id),
-          ),
-        ),
-        page(
-          "P11",
-          {},
-          [...index.systems.values()].map((s) =>
-            leaf("P11", { systemId: s.id }, s.label, s.id),
-          ),
-        ),
-        page(
-          "P12",
-          {},
-          [...index.schedules.values()].map((s) =>
-            leaf("P12", { scheduleId: s.id }, s.label),
-          ),
-        ),
-        page("P13"),
-        page(
-          "P14",
-          {},
-          [...index.systems.values()].map((s) =>
-            leaf(
-              "P14",
-              { systemId: s.id, graphId: s.graphRef.split("@")[0] },
-              s.label,
-              s.graphRef,
-            ),
-          ),
-        ),
-        page(
-          "P16",
-          {},
-          [...index.constraints.values()].map((c) =>
-            leaf("P16", { constraintId: c.id }, c.label, c.id),
-          ),
-        ),
-        page(
-          "P17",
-          {},
-          [...index.policies.values()].map((p) =>
-            leaf("P17", { policyId: p.id }, p.label, p.version),
-          ),
-        ),
-        page("P18"),
-        page(
-          "P30",
-          {},
-          [...index.graphs.values()].map((g) =>
-            leaf("P30", { graphId: g.id }, g.label, g.version),
-          ),
-        ),
-      ]
-    case "run":
-      return [
-        page("P19"),
-        page("P20", {}, branchLeaves("P20")),
-        page("P21"),
-        page("P22", exec),
-        page("P23", exec),
-        page(
-          "P28",
-          {},
-          [...index.tasks.values()].map((t) =>
-            leaf("P28", { taskId: t.id }, t.label),
-          ),
-        ),
-      ]
-    case "review":
-      return [
-        page("P24", exec),
-        page(
-          "P25",
-          {},
-          [...index.events.values()].map((e) =>
-            leaf("P25", { eventId: e.id }, e.label),
-          ),
-        ),
-        page("P26", {}, branchLeaves("P26")),
-        page("P27", {}, [
-          leaf(
-            "P27",
-            { leftCommit: "c043", rightCommit: "c043-one-cooler" },
-            "双路 ↔ 单路冷却",
-            "c043 ↔ c043-one-cooler",
-          ),
-        ]),
-      ]
-  }
-}
-
-function flatten(
-  nodes: TreeNode[],
-  expanded: Set<string>,
-  query: string,
-  depth = 0,
-  out: Array<{ node: TreeNode ;depth: number }> = [],
-) {
-  for (const node of nodes) {
-    const childMatches = node.children?.some((c) => matches(c, query))
-    if (query && !matches(node, query) && !childMatches) continue
-    out.push({ node, depth })
-    if (node.children && (expanded.has(node.id) || (query && childMatches)))
-      flatten(node.children, expanded, query, depth + 1, out)
-  }
-  return out
-}
-
-function matches(node: TreeNode, query: string): boolean {
-  if (!query) return true
-  const q = query.toLowerCase()
-  return (
-    node.label.toLowerCase().includes(q) ||
-    Boolean(node.meta?.toLowerCase().includes(q)) ||
-    Boolean(node.children?.some((c) => matches(c, q)))
-  )
-}
-
-function selectedNodeId(nodes: TreeNode[], route: Route): string | null {
-  let best: { id: string ;score: number } | null = null
-  const visit = (list: TreeNode[]) => {
-    for (const n of list) {
-      if (n.route.pageId === route.pageId && routeMatches(route, n.route)) {
-        const score =
-          Object.keys(n.route.params).length + (n.children ? 0 : 0.5)
-        if (!best || score > best.score) best = { id: n.id, score }
-      }
-      if (n.children) visit(n.children)
-    }
-  }
-  visit(nodes)
-  return (best as { id: string } | null)?.id ?? null
-}
-
+/** C03 ObjectTree：树只列对象；点击对象 = 宿主页内选中（同页聚焦），动作入口在页面工具栏。 */
 export default function ResourceTree({
   group,
   onNavigate,
@@ -282,10 +27,12 @@ export default function ResourceTree({
   const index = useIndex()
   const route = useRoute()
   const branchMap = useBranches()
+  const commits = useCommits()
+  const recordByCommit = useStore(traceStore, (s) => s.byCommit)
   const branches = useMemo(() => Object.values(branchMap), [branchMap])
   const nodes = useMemo(
-    () => buildTree(group, index, branches, route),
-    [group, index, branches, route],
+    () => buildTree(group, index, branches, commits, recordByCommit),
+    [group, index, branches, commits, recordByCommit],
   )
   const [collapsed, setCollapsed] = useViewState<string[]>(
     `tree:${group}:collapsed`,
@@ -298,7 +45,9 @@ export default function ResourceTree({
     const set = new Set<string>()
     const visit = (list: TreeNode[]) =>
       list.forEach((n) => {
-        if (n.children && !collapsed.includes(n.id)) set.add(n.id)
+        // 小节标题（无路由）恒展开；只有对象自身的子层级可折叠。
+        if (n.children && (!n.route || !collapsed.includes(n.id)))
+          set.add(n.id)
         if (n.children) visit(n.children)
       })
     visit(nodes)
@@ -309,6 +58,13 @@ export default function ResourceTree({
     () => flatten(nodes, expanded, query.trim()),
     [nodes, expanded, query],
   )
+  /** 键盘导航只覆盖可点行（小节标题不可聚焦）。 */
+  const focusable = useMemo(() => rows.filter((r) => r.node.route), [rows])
+  const focusIndexOf = useMemo(() => {
+    const map = new Map<string, number>()
+    focusable.forEach((r, i) => map.set(r.node.id, i))
+    return map
+  }, [focusable])
   const selected = selectedNodeId(nodes, route)
 
   const toggle = (id: string, open?: boolean) =>
@@ -319,34 +75,42 @@ export default function ResourceTree({
     })
 
   const open = (node: TreeNode) => {
+    if (!node.route) return
     navigate(node.route)
     onNavigate?.()
   }
 
-  const onKeyDown = (e: KeyboardEvent<HTMLButtonElement>, i: number) => {
+  const onKeyDown = (e: KeyboardEvent<HTMLButtonElement>, fi: number) => {
     if (e.nativeEvent.isComposing) return
     const items =
       listRef.current?.querySelectorAll<HTMLButtonElement>("[data-tree-item]")
     const focus = (n: number) =>
-      items?.[Math.max(0, Math.min(rows.length - 1, n))]?.focus()
-    const { node } = rows[i]
+      items?.[Math.max(0, Math.min(focusable.length - 1, n))]?.focus()
+    const { node } = focusable[fi]
     if (e.key === "ArrowDown") {
       e.preventDefault()
-      focus(i + 1)
+      focus(fi + 1)
     } else if (e.key === "ArrowUp") {
       e.preventDefault()
-      focus(i - 1)
+      focus(fi - 1)
     } else if (e.key === "ArrowRight" && node.children) {
       e.preventDefault()
       if (!expanded.has(node.id)) toggle(node.id, true)
-      else focus(i + 1)
+      else focus(fi + 1)
     } else if (e.key === "ArrowLeft") {
       e.preventDefault()
-      if (node.children && expanded.has(node.id)) toggle(node.id, false)
-      else {
-        const depth = rows[i].depth
-        for (let j = i - 1; j >= 0; j--)
-          if (rows[j].depth < depth) return focus(j)
+      if (node.children && expanded.has(node.id)) {
+        toggle(node.id, false)
+        return
+      }
+      const row = rows.findIndex((r) => r.node.id === node.id)
+      const depth = rows[row].depth
+      for (let j = row - 1; j >= 0; j--) {
+        if (rows[j].depth < depth) {
+          const parent = focusIndexOf.get(rows[j].node.id)
+          if (parent !== undefined) return focus(parent)
+          return
+        }
       }
     }
   }
@@ -374,8 +138,8 @@ export default function ResourceTree({
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="筛选资源"
-            aria-label="筛选资源"
+            placeholder="筛选对象"
+            aria-label="筛选对象"
             className="h-8 w-full rounded-ui border border-border bg-subtle pl-8 pr-7 text-label outline-none placeholder:text-faint focus:border-primary focus:bg-surface"
           />
           {query ? (
@@ -393,15 +157,31 @@ export default function ResourceTree({
       <ul
         ref={listRef}
         role="tree"
-        aria-label="资源树"
+        aria-label="对象树"
         className="scroll-thin min-h-0 flex-1 overflow-auto px-2 pb-3"
       >
         {rows.length === 0 ? (
           <li className="px-3 py-6 text-center text-label text-muted">
-            没有匹配“{query}”的资源
+            没有匹配“{query}”的对象
           </li>
         ) : null}
-        {rows.map(({ node, depth }, i) => {
+        {rows.map(({ node, depth }) => {
+          if (!node.route) {
+            return (
+              <li key={node.id} role="presentation">
+                <div
+                  style={{ paddingLeft: 8 + depth * 16 }}
+                  className="flex h-7 items-center pr-2 text-caption font-semibold uppercase tracking-wide text-faint"
+                >
+                  <span className="min-w-0 flex-1 truncate">{node.label}</span>
+                  <span className="shrink-0 tabular">
+                    {node.children?.length ?? 0}
+                  </span>
+                </div>
+              </li>
+            )
+          }
+          const fi = focusIndexOf.get(node.id) ?? 0
           const isSelected = node.id === selected
           const isOpen = node.children
             ? expanded.has(node.id) || Boolean(query)
@@ -417,7 +197,7 @@ export default function ResourceTree({
                 aria-expanded={isOpen}
                 aria-level={depth + 1}
                 onClick={() => open(node)}
-                onKeyDown={(e) => onKeyDown(e, i)}
+                onKeyDown={(e) => onKeyDown(e, fi)}
                 style={{ paddingLeft: 8 + depth * 16 }}
                 className={cn(
                   "group flex h-8 w-full items-center gap-1.5 rounded-ui pr-2 text-left text-body transition-colors",
@@ -448,7 +228,7 @@ export default function ResourceTree({
                   <span className="w-5 shrink-0" />
                 )}
                 <span className="min-w-0 flex-1 truncate">{node.label}</span>
-                {spec.kind !== "page" && depth === 0 ? (
+                {spec.kind !== "page" ? (
                   <span className="shrink-0 text-caption text-faint">
                     {spec.kind === "modal" ? "弹层" : "抽屉"}
                   </span>

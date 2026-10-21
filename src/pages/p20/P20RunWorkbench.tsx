@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import { Bug, Eye, GitBranch, ListOrdered, X } from "lucide-react"
+import { Bug, Eye, GitBranch, ListOrdered, Plus, X } from "lucide-react"
 import type { WorkbenchContext } from "@/app/useWorkbenchContext"
 import Button, { IconButton } from "@/components/ui/Button"
 import { Notice } from "@/components/ui/Card"
@@ -21,6 +21,8 @@ import {
   useExecutionAdapterLabel,
   useRunSession,
 } from "@/stores/session"
+import { useRecordByCommit } from "@/stores/trace"
+import OrchestrationPanel from "./OrchestrationPanel"
 import { runColumns, spatialItems } from "./runView"
 
 const COMMIT_SOURCE = {
@@ -38,6 +40,7 @@ export default function P20RunWorkbench({ ctx }: { ctx: WorkbenchContext }) {
   const { run, branch, viewCommit, mode } = ctx
   const session = useRunSession(run?.id)
   const adapterLabel = useExecutionAdapterLabel()
+  const record = useRecordByCommit(viewCommit?.id)
   const [selected, setSelected] = useViewState<string>("selectedEntity", "F01")
   const [modelView, setModelView] = useViewState<"saved" | "draft">(
     "modelView",
@@ -64,8 +67,12 @@ export default function P20RunWorkbench({ ctx }: { ctx: WorkbenchContext }) {
 
   return (
     <div className="flex h-full min-h-0 flex-col">
-      <div className="flex h-12 shrink-0 items-center gap-3 border-b border-border bg-surface px-4">
-        <div className="min-w-0">
+      {/*
+        头部允许换行：1280 紧凑布局 + 树/检查器同时展开时单行放不下全部操作；
+        单行溢出会让主区（overflow-hidden）被焦点 reveal 横向拉动，整列错位。
+      */}
+      <div className="flex min-h-12 shrink-0 flex-wrap items-center gap-x-3 gap-y-1 border-b border-border bg-surface px-4 py-1.5">
+        <div className="shrink-0">
           <div className="flex items-center gap-2 text-body">
             <span className="font-semibold">世界快照</span>
             <span className="font-mono text-label">{viewCommit.id}</span>
@@ -80,9 +87,19 @@ export default function P20RunWorkbench({ ctx }: { ctx: WorkbenchContext }) {
         <span className="hidden min-w-0 truncate text-label text-muted xl:inline">
           {viewCommit.summary}
         </span>
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ml-auto flex flex-wrap items-center justify-end gap-x-2 gap-y-1">
+          <Button
+            size="sm"
+            intent="ghost"
+            icon={Plus}
+            title="新建运行（P19）"
+            onClick={() => navigate({ pageId: "P19", params: {} })}
+          >
+            <span className="hidden 2xl:inline">新建运行</span>
+          </Button>
+          <span className="h-5 w-px bg-border" aria-hidden />
           <div
-            className="flex items-center overflow-hidden rounded-ui border border-border"
+            className="flex shrink-0 items-center overflow-hidden rounded-ui border border-border"
             title="试算输入版本：推算消费的模型快照"
           >
             {(
@@ -96,7 +113,7 @@ export default function P20RunWorkbench({ ctx }: { ctx: WorkbenchContext }) {
                 type="button"
                 aria-pressed={modelView === value}
                 onClick={() => setModelView(value)}
-                className={`h-7 px-2.5 text-label ${
+                className={`h-7 shrink-0 whitespace-nowrap px-2.5 text-label ${
                   modelView === value
                     ? "bg-primary-soft text-primary-strong"
                     : "text-muted hover:bg-hover"
@@ -189,7 +206,11 @@ export default function P20RunWorkbench({ ctx }: { ctx: WorkbenchContext }) {
         </div>
       ) : null}
 
-      <div className="relative min-h-0 flex-1">
+      {/*
+        视口至少保留可辨认的高度并裁切溢出： SpatialViewport 内容有 min-h-[240px]，
+        矮视口下若不裁切会越过 1px 的容器画到编排层/实体状态表上。
+      */}
+      <div className="relative min-h-[160px] flex-1 overflow-hidden">
         <SpatialViewport
           items={items}
           selectedId={selected}
@@ -199,6 +220,8 @@ export default function P20RunWorkbench({ ctx }: { ctx: WorkbenchContext }) {
           }`}
         />
       </div>
+
+      <OrchestrationPanel record={record} exec={exec} />
 
       {dockOpen && !fullscreen ? (
         <div

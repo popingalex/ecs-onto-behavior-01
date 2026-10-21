@@ -16,8 +16,9 @@
 | M5 验收取证 | done（19 通过 / 1 部分 / 0 失败） | — |
 | 补缺：parent 继承 + P22 端口单位 | done | 40 passed |
 | 补缺：13 个占位页全部落地 | done | 66 passed |
+| IA v2 导航与交互重构 | done | 77 passed |
 
-最终基线：`66 passed, 0 failed`；`vite build` 通过；全部 30 页 + 2 overlay 无 PagePlaceholder。
+最终基线：`77 passed, 0 failed`；`vite build` 通过；全部 30 页 + 2 overlay 无 PagePlaceholder（P06/P07/P09 为下线迁移说明页）。
 
 ## M0 收尾
 
@@ -108,3 +109,22 @@
 - **实体类型 parent 继承**：`EntityTypeDef.parent?: string | null`（`src/schema/model.ts`，zod `.nullable().optional()`）；新增 `src/schema/inheritance.ts`（parentChain / wouldCycle / hasCycle / effectiveComponents / effectiveRequiredIds，对成环宽容截断）。语义：有效装配 = 自身声明 + 父链补充，就近声明优先。checkIntegrity 新增 TYPE_REF_MISSING（父缺失）与 ONTOLOGY_CYCLE（成环，error）；实体必需组件检查、createTemplate/createSceneEntity 初始装配、removeEntityComponent 阻止、scopeAttributes、P10/P11 候选属性全部走有效装配。`setEntityTypeParent` 拒绝自身/子孙作父；entityTypeRefs 计入子类型引用，删除被继承的父类型被阻止。P02 详情页可编辑父类型（子孙置灰防环），继承来的组件标注「继承自 X」并禁止在子类型改动；列表新增父类型列；P08 继承必需组件标「必需（继承）」。种子未加 parent 示例（避免改动既有基线），行为全部由测试构造。`src/mock/seed.ts` 的 ClassDef.parent 改为镜像真实字段；契约文档 `contracts/domain.ts` 与 `04_data_and_trace_contract.md` 已补 entityType 形状与继承语义。
 - **P22 端口单位**：新增 `traceView.portUnit(program, trace, direction, portId)`，单位取自记录绑定的固定图快照（record.programs）节点 inputs/outputs 的 TypeRef.unitId；端口不在快照中时回落旧启发式（old/source→degC，其余随节点第一输出单位）并以 source="heuristic" 标注，页面在端口名旁显示 ≈（title 说明）。效果：n-emit.delta（Contribute 增量）现在显示 K（旧启发式因其 outputUnitId=null 不显示单位），其余主干端口单位与图定义一致。
 - 测试：新增 5 例（继承装配展开 / 循环拒绝 / 删除被继承父类型阻止 / 端口单位来自图声明 / 启发式回落标注）。基线 `40 passed, 0 failed`；`vite build` 通过。
+
+## IA v2：导航与交互模型重构（2026-10-21，由用户验收批评驱动）
+
+用户六点意见 → 处理对照：
+
+| 意见 | 处理 |
+|---|---|
+| 「新建运行」是动作，不该和「项目总览」同级在树里 | P19 移出对象树；入口改为 P01/P20 的按钮 |
+| 树点击就跳页 = 导航复制品 | 树改为纯对象树（`shell/resourceTreeModel.ts`）：点击对象=宿主页内选中（同页聚焦）；画布宿主（P12/P26）选中即图中聚焦高亮；P14 用 programId 参数。「树管对象层级，图管关系呈现」 |
+| 场景组不需要（MapEngine 承担） | 「场景」组整组下线；P06/P07/P09 注销路由到 `RetiredPage`（迁移到 mas-suite MapEngine 的说明 + 显式入口）；P08 实体表并入「建模」；P20 微缩图保留只读 |
+| 推演只看到第二层（system 内行为），看不到第一层（system 编排） | P20 首屏新增编排层（`OrchestrationPanel` + `orchestration.ts` 纯函数）：执行批次/并行组 → system 卡片（读 previous 标注、请求/获准合计、实体数）→ system×实体矩阵 → 点格下钻 P22；无记录时显示计划预览+「尚未执行」。P22/P23/P24 页头加「第二层 · system 内行为」标注与「返回编排层」链接 |
+| 建模查看属性要来回跳页 | 新增 P31 属性详情抽屉（overlay，不替换底层页面）：全字段 + 引用位置 +「在 P29 中打开」深链；P03/P05/P08 属性名点击开抽屉 |
+| 运行/复盘不应是两个导航，分支不该占树节点 | 六组并四组：项目/建模/逻辑/推演（Alt+1..4）；分支由 ContextBar 切换器承担，树内分支叶子移除；P26 页内分支泳道保留 |
+
+其他：P01 统计卡改 建模/逻辑/推演 三卡；`GroupId` 收缩为 4 值并全局同步；`transitions.ts`/`paths.ts` 的代表链路 P07→P08。
+
+修复的随改缺陷（复核冒烟发现）：P20 紧凑布局下工具栏溢出导致焦点 reveal 横向拉动整列（工具栏改 flex-wrap；画布页 MainArea 改 `overflow-clip` 根除该类问题）；视口容器被 shrink-0 分段压到 1px 致 SpatialViewport 越界绘画（容器 `min-h-[160px] overflow-hidden`，编排层改弹性段）。
+
+验证：77 passed / build 通过；1280×720 与 1440×900 双视口截图复核无重叠；四组导航、对象树同页选中、编排层→P22 下钻、属性抽屉、P19 不在树、P07 迁移说明均浏览器验证。

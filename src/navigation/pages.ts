@@ -16,6 +16,8 @@ export interface PageSpec {
   /** 缺失时展示上下文选择器，不用“最新”填补。 */
   requires: string[]
   components: ComponentId[]
+  /** 已下线（能力迁移到外部系统）：深链显示迁移说明页，不进资源树。 */
+  retired?: boolean
 }
 
 type Layout = PageSpec["layout"]
@@ -89,29 +91,31 @@ const LIST: PageSpec[] = [
   {
     id: "P06",
     title: "场景模板",
-    group: "scene",
+    group: "modeling",
     kind: "page",
     context: "asset",
     summary: "可复用的场景模板与默认调度。",
     layout: FORM,
     requires: [],
     components: ["C03", "C06", "C12"],
+    retired: true,
   },
   {
     id: "P07",
     title: "场景构建工作台",
-    group: "scene",
+    group: "modeling",
     kind: "page",
     context: "asset",
     summary: "在空间视口中装配实体；位置为 null 的实体不显示但保留逻辑。",
     layout: GRAPH,
     requires: [],
     components: ["C12", "C11", "C05", "C10"],
+    retired: true,
   },
   {
     id: "P08",
     title: "实体表与状态检查",
-    group: "scene",
+    group: "modeling",
     kind: "page",
     context: "asset",
     summary: "按类型或查询列出实体；可在指定提交下只读检查属性值。",
@@ -122,13 +126,14 @@ const LIST: PageSpec[] = [
   {
     id: "P09",
     title: "资产与资源清单",
-    group: "scene",
+    group: "modeling",
     kind: "page",
     context: "asset",
     summary: "三维资产、地图与 manifest 版本；资产授权独立于界面库许可。",
     layout: FORM,
     requires: [],
     components: ["C03", "C06", "C20"],
+    retired: true,
   },
   {
     id: "P10",
@@ -233,7 +238,7 @@ const LIST: PageSpec[] = [
   {
     id: "P19",
     title: "新建运行",
-    group: "run",
+    group: "simulation",
     kind: "page",
     context: "execution",
     summary: "选择发布包、模式、步长与运行位置；创建后不自动结算。",
@@ -244,7 +249,7 @@ const LIST: PageSpec[] = [
   {
     id: "P20",
     title: "演练运行工作台",
-    group: "run",
+    group: "simulation",
     kind: "page",
     context: "execution",
     summary: "冻结 → 计算 → 提交 → 播放；暂停播放不改变已提交 commit。",
@@ -255,7 +260,7 @@ const LIST: PageSpec[] = [
   {
     id: "P21",
     title: "运行命令队列",
-    group: "run",
+    group: "simulation",
     kind: "drawer",
     context: "execution",
     summary: "待处理运行命令：幂等键、基准提交与生命周期。",
@@ -266,7 +271,7 @@ const LIST: PageSpec[] = [
   {
     id: "P22",
     title: "工作流批次与节点调试",
-    group: "run",
+    group: "simulation",
     kind: "page",
     context: "execution",
     summary: "按实体查看旧值 / 暂存 / 请求 / 获准 / 最终；轨迹步进是记录查看。",
@@ -277,7 +282,7 @@ const LIST: PageSpec[] = [
   {
     id: "P23",
     title: "联合约束与贡献裁决",
-    group: "run",
+    group: "simulation",
     kind: "page",
     context: "execution",
     summary: "额度、比例与获准贡献；尚未裁决时不补 0。",
@@ -288,7 +293,7 @@ const LIST: PageSpec[] = [
   {
     id: "P24",
     title: "属性演化链与输入来源",
-    group: "review",
+    group: "simulation",
     kind: "page",
     context: "execution",
     summary: "属性版本、执行输入与裁决来源；依赖边指向输入版本。",
@@ -299,7 +304,7 @@ const LIST: PageSpec[] = [
   {
     id: "P25",
     title: "业务事件链",
-    group: "review",
+    group: "simulation",
     kind: "page",
     context: "execution",
     summary: "预测、派遣、到达、交接事件与具名关系；时间顺序不等于因果。",
@@ -310,7 +315,7 @@ const LIST: PageSpec[] = [
   {
     id: "P26",
     title: "提交历史与分支",
-    group: "review",
+    group: "simulation",
     kind: "page",
     context: "execution",
     summary: "提交图与分支；选历史只改 viewCommit，切分支才改 branchId。",
@@ -321,7 +326,7 @@ const LIST: PageSpec[] = [
   {
     id: "P27",
     title: "分支对比与反事实",
-    group: "review",
+    group: "simulation",
     kind: "page",
     context: "execution",
     summary: "同一基准与时刻的结果对比；缺值显示未记录，不当作 0。",
@@ -332,7 +337,7 @@ const LIST: PageSpec[] = [
   {
     id: "P28",
     title: "持续策略与任务监控",
-    group: "run",
+    group: "simulation",
     kind: "page",
     context: "execution",
     summary: "策略覆盖区间、候选排除原因与补救任务；预测与事实分开标记。",
@@ -362,6 +367,18 @@ const LIST: PageSpec[] = [
     layout: FORM,
     requires: [],
     components: ["C03", "C06"],
+  },
+  {
+    id: "P31",
+    title: "属性详情",
+    group: "modeling",
+    kind: "drawer",
+    context: "asset",
+    summary:
+      "属性定义全字段与引用位置的就地抽屉；不替换底层页面，可转入 P29 编辑。",
+    layout: OVERLAY,
+    requires: ["attributeId"],
+    components: ["C04", "C06"],
   },
 ]
 

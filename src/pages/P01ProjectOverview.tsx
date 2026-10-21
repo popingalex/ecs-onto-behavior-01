@@ -4,9 +4,9 @@ import {
   Boxes,
   CirclePlay,
   GitBranch,
-  Map as MapIcon,
   PencilRuler,
   Plus,
+  Table2,
   Workflow,
   type LucideIcon,
 } from "lucide-react"
@@ -69,15 +69,7 @@ export default function P01ProjectOverview() {
         ["类型", index.classes.size],
         ["组件", index.components.size],
         ["属性", index.properties.size],
-      ],
-    },
-    {
-      group: "scene",
-      icon: MapIcon,
-      items: [
         ["实体", index.entities.size],
-        ["场景", index.scenes.size],
-        ["资产", index.assets.size],
       ],
     },
     {
@@ -90,7 +82,7 @@ export default function P01ProjectOverview() {
       ],
     },
     {
-      group: "run",
+      group: "simulation",
       icon: CirclePlay,
       items: [
         ["运行", index.runs.size],
@@ -121,8 +113,8 @@ export default function P01ProjectOverview() {
           <Button icon={PencilRuler} onClick={() => go("open-model")}>
             打开类型模型
           </Button>
-          <Button icon={MapIcon} onClick={() => go("edit-scene")}>
-            编辑场景
+          <Button icon={Table2} onClick={() => go("edit-scene")}>
+            场景实体
           </Button>
           <Button icon={Plus} onClick={() => go("create-run")}>
             新建运行
@@ -138,7 +130,7 @@ export default function P01ProjectOverview() {
       </section>
 
       <section
-        className="grid grid-cols-1 gap-3 @min-[560px]:grid-cols-2 @min-[1120px]:grid-cols-4"
+        className="grid grid-cols-1 gap-3 @min-[560px]:grid-cols-2 @min-[1120px]:grid-cols-3"
         aria-label="资产概况"
       >
         {stats.map(({ group, icon: Icon, items }) => {

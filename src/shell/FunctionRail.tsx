@@ -2,9 +2,7 @@ import {
   Boxes,
   CirclePlay,
   FolderKanban,
-  Map as MapIcon,
   RotateCcw,
-  ScanSearch,
   Workflow,
   type LucideIcon,
 } from "lucide-react"
@@ -18,13 +16,11 @@ import { toast } from "@/stores/toast"
 export const GROUP_ICONS: Record<GroupId, LucideIcon> = {
   project: FolderKanban,
   modeling: Boxes,
-  scene: MapIcon,
   logic: Workflow,
-  run: CirclePlay,
-  review: ScanSearch,
+  simulation: CirclePlay,
 }
 
-/** 全局功能栏：只保留六个主入口。 */
+/** 全局功能栏：只保留四个主入口。 */
 export default function FunctionRail({ active }: { active: GroupId }) {
   return (
     <nav

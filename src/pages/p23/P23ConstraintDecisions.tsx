@@ -1,4 +1,4 @@
-import { ArrowUpRight, Scale } from "lucide-react"
+import { ArrowUpRight, Layers, Scale } from "lucide-react"
 import type { WorkbenchContext } from "@/app/useWorkbenchContext"
 import Button from "@/components/ui/Button"
 import Card, { KeyValue, Notice, PanelHeader, SectionLabel } from "@/components/ui/Card"
@@ -68,6 +68,26 @@ export default function P23ConstraintDecisions({
         >
           {record.origin === "computed" ? "当前图求值" : "参考样例 · 非当前图计算"}
         </Tag>
+        <Tag size="sm" tone="neutral">
+          第二层 · system 内行为
+        </Tag>
+        <Button
+          size="sm"
+          intent="ghost"
+          icon={Layers}
+          onClick={() =>
+            navigate({
+              pageId: "P20",
+              params: {
+                runId: record.record.runId,
+                branchId: record.record.branchId,
+                viewCommit: record.record.resultCommit,
+              },
+            })
+          }
+        >
+          返回编排层
+        </Button>
         <span className="ml-auto text-label text-muted">
           额度 = max(旧值 − 冷源下限, 0)，按 |请求| 比例分配；裁决前的获准值显示“待裁决”，不补 0。
         </span>

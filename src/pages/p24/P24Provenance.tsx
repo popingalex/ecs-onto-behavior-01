@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUpRight, GitFork } from "lucide-react"
+import { ArrowDown, ArrowUpRight, GitFork, Layers } from "lucide-react"
 import type { WorkbenchContext } from "@/app/useWorkbenchContext"
 import Button from "@/components/ui/Button"
 import { KeyValue, Notice, SectionLabel } from "@/components/ui/Card"
@@ -85,6 +85,27 @@ export default function P24Provenance({ ctx }: { ctx: WorkbenchContext }) {
         >
           {record.origin === "computed" ? "当前图求值" : "参考样例"}
         </Tag>
+        <Tag size="sm" tone="neutral">
+          第二层 · system 内行为
+        </Tag>
+        <Button
+          size="sm"
+          intent="ghost"
+          icon={Layers}
+          className="ml-auto"
+          onClick={() =>
+            navigate({
+              pageId: "P20",
+              params: {
+                runId: record.record.runId,
+                branchId: record.record.branchId,
+                viewCommit: record.record.resultCommit,
+              },
+            })
+          }
+        >
+          返回编排层
+        </Button>
       </div>
 
       {changes.length > 1 ? (

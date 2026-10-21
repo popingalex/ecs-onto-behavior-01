@@ -442,7 +442,7 @@ function TemplateDetail({ templateId }: { templateId: string }) {
                     <ObjectLink
                       label={a.label}
                       id={a.id}
-                      route={{ pageId: "P29", params: { attributeId: a.id } }}
+                      route={{ pageId: "P31", params: { attributeId: a.id } }}
                     />
                     <div className="font-mono text-caption text-muted">
                       {component.id}

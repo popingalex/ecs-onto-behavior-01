@@ -4,6 +4,7 @@ import {
   ChevronRight,
   CircleAlert,
   Crosshair,
+  Layers,
   ListOrdered,
 } from "lucide-react"
 import type { WorkbenchContext } from "@/app/useWorkbenchContext"
@@ -126,6 +127,9 @@ export default function P22NodeDebug({ ctx }: { ctx: WorkbenchContext }) {
             <Tag size="sm" tone={origin.tone}>
               {origin.label}
             </Tag>
+            <Tag size="sm" tone="neutral">
+              第二层 · system 内行为
+            </Tag>
           </div>
         </div>
         <span className="hidden min-w-0 truncate text-label text-muted xl:inline">
@@ -134,6 +138,23 @@ export default function P22NodeDebug({ ctx }: { ctx: WorkbenchContext }) {
           {formatNumber(record.record.simTimeAfter)} s · 耗时未测量
         </span>
         <div className="ml-auto flex items-center gap-2">
+          <Button
+            size="sm"
+            intent="ghost"
+            icon={Layers}
+            onClick={() =>
+              navigate({
+                pageId: "P20",
+                params: {
+                  runId: record.record.runId,
+                  branchId: record.record.branchId,
+                  viewCommit: record.record.resultCommit,
+                },
+              })
+            }
+          >
+            返回编排层
+          </Button>
           <IconButton
             icon={ChevronLeft}
             label="上一条节点记录"

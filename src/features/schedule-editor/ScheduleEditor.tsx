@@ -30,9 +30,12 @@ const HANDLE =
 export default function ScheduleEditor({
   docId,
   readOnly,
+  focusSystemId,
 }: {
   docId: string
   readOnly: boolean
+  /** 路由 systemId：进入页面时聚焦高亮对应 System 节点。 */
+  focusSystemId?: string
 }) {
   const model = useDraftModel()
   const doc = useModelDocument<ScheduleContent>(docId)
@@ -138,6 +141,7 @@ export default function ScheduleEditor({
               schedule={schedule}
               layout={layout}
               readOnly={readOnly}
+              focusSystemId={focusSystemId}
               onSelectionChange={(node, edge) => setSelected({ node, edge })}
               onSystemPairConnect={(source, target) => {
                 setPendingPair({ source, target })

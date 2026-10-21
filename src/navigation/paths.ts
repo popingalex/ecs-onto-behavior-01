@@ -2,7 +2,7 @@ import type { Route } from "@/core/types"
 
 /**
  * 代表性路径（03_navigation「代表性路径」）：
- * P03 → P05 → P07 → P12 → P14 → P15 → P18 → P20 → P22 → P23 → P24 → P26 → P27。
+ * P03 → P05 → P08 → P12 → P14 → P15 → P18 → P20 → P22 → P23 → P24 → P26 → P27。
  * 参数与跳转表一致；执行页显式携带 runId / branchId / viewCommit。
  */
 const RUN = { runId: "run-main", branchId: "main", viewCommit: "c043" }
@@ -20,8 +20,8 @@ export const REPRESENTATIVE_PATH: Array<{ route: Route ;note: string }> = [
     note: "泡沫车模板与实例覆盖",
   },
   {
-    route: { pageId: "P07", params: { sceneVersion: "scene-05" } },
-    note: "园区场景装配",
+    route: { pageId: "P08", params: { entityId: "F01" } },
+    note: "场景实体与初值覆盖",
   },
   {
     route: { pageId: "P12", params: { scheduleId: "schedule-main" } },

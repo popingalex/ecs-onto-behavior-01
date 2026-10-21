@@ -421,7 +421,7 @@ function ComponentDetail({
           }
           actions={
             <span className="text-caption text-muted">
-              选择一行在检查器中编辑；类型 / 删除在 P29 或检查器中
+              选择一行在检查器中编辑；点属性名打开详情抽屉（P31），类型 / 删除在 P29
             </span>
           }
         />
@@ -437,6 +437,9 @@ function ComponentDetail({
             navigate({ ...route, params: { ...route.params, propertyId } }, {
               replace: true,
             })
+          }
+          onOpenDetail={(id) =>
+            navigate({ pageId: "P31", params: { attributeId: id } })
           }
         />
       </Card>
