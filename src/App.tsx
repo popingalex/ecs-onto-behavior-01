@@ -1,7 +1,7 @@
-import AsyncStatePanel from '@/components/domain/AsyncStatePanel'
-import { useBootstrap } from '@/app/useBootstrap'
-import { loadWorkbench, useDataStatus } from '@/data/store'
-import WorkspaceShell from '@/shell/WorkspaceShell'
+import AsyncStatePanel from "@/components/domain/AsyncStatePanel"
+import { useBootstrap } from "@/app/useBootstrap"
+import { loadWorkbench, useDataStatus } from "@/data/store"
+import WorkspaceShell from "@/shell/WorkspaceShell"
 
 /**
  * 推演建模与运行工作台（React 原型）。
@@ -10,10 +10,10 @@ import WorkspaceShell from '@/shell/WorkspaceShell'
 export default function App() {
   useBootstrap()
   const status = useDataStatus()
-  if (status === 'ready') return <WorkspaceShell />
+  if (status === "ready") return <WorkspaceShell />
   return (
     <div className="flex h-screen items-center justify-center bg-bg">
-      {status === 'error' ? (
+      {status === "error" ? (
         <AsyncStatePanel
           status="error"
           title="工作台数据加载失败"
@@ -21,7 +21,11 @@ export default function App() {
           onRetry={() => void loadWorkbench()}
         />
       ) : (
-        <AsyncStatePanel status="loading" title="正在加载项目" description="读取模型、场景、程序与运行历史" />
+        <AsyncStatePanel
+          status="loading"
+          title="正在加载项目"
+          description="读取模型、场景、程序与运行历史"
+        />
       )}
     </div>
   )

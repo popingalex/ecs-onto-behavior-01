@@ -1,5 +1,5 @@
-import type { Role } from '@/core/types'
-import { createStore, useStore } from '@/lib/store'
+import type { Role } from "@/core/types"
+import { createStore, useStore } from "@/lib/store"
 
 /**
  * ContextStore 中不由路由决定的部分：角色、执行者与连接状态。
@@ -9,20 +9,20 @@ interface ContextState {
   role: Role
   actorId: string
   actorName: string
-  connection: 'online' | 'offline'
+  connection: "online" | "offline"
 }
 
 export const contextStore = createStore<ContextState>({
-  role: 'modeler',
-  actorId: 'u-lin',
-  actorName: '林工',
-  connection: 'online',
+  role: "modeler",
+  actorId: "u-lin",
+  actorName: "林工",
+  connection: "online",
 })
 
 export const ROLE_LABELS: Record<Role, string> = {
-  modeler: '建模员',
-  director: '导演',
-  observer: '观察者',
+  modeler: "建模员",
+  director: "导演",
+  observer: "观察者",
 }
 
 export function setRole(role: Role) {
@@ -30,7 +30,9 @@ export function setRole(role: Role) {
 }
 
 export function toggleConnection() {
-  contextStore.setState((s) => ({ connection: s.connection === 'online' ? 'offline' : 'online' }))
+  contextStore.setState((s) => ({
+    connection: s.connection === "online" ? "offline" : "online",
+  }))
 }
 
 export function useRole() {
@@ -46,5 +48,5 @@ export function useActorName() {
 }
 
 export function canEdit(role: Role) {
-  return role !== 'observer'
+  return role !== "observer"
 }

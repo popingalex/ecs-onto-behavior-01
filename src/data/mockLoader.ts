@@ -1,8 +1,8 @@
-import rawSeed from '../../design/02/mock/prototype_seed.v05.json'
-import rawRuns from '../../design/02/mock/expected_runs.v05.json'
-import type { DomainDiagnostic, PrototypeModel } from '@/schema/model'
-import { parsePrototypeSeed } from '@/schema/parse'
-import { parseReferenceRuns, type ReferenceRun } from '@/schema/referenceRuns'
+import rawSeed from "../../design/02/mock/prototype_seed.v05.json"
+import rawRuns from "../../design/02/mock/expected_runs.v05.json"
+import type { DomainDiagnostic, PrototypeModel } from "@/schema/model"
+import { parsePrototypeSeed } from "@/schema/parse"
+import { parseReferenceRuns, type ReferenceRun } from "@/schema/referenceRuns"
 
 /**
  * 唯一的业务 mock 输入：design/02/mock/prototype_seed.v05.json。
@@ -21,7 +21,12 @@ export function loadPrototype(): PrototypeLoad {
   if (cached) return cached
   const { model, diagnostics } = parsePrototypeSeed(rawSeed)
   const reference = parseReferenceRuns(rawRuns)
-  cached = { model, integrity: diagnostics, referencePurpose: reference.purpose, referenceRuns: reference.runs }
+  cached = {
+    model,
+    integrity: diagnostics,
+    referencePurpose: reference.purpose,
+    referenceRuns: reference.runs,
+  }
   return cached
 }
 

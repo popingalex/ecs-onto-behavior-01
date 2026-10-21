@@ -1,11 +1,17 @@
-import { z } from 'zod'
-import type { WorldSnapshot } from './model'
+import { z } from "zod"
+import type { WorldSnapshot } from "./model"
 
 /**
  * expected_runs.v05.json：预期结果与过程记录的“参考样例”。
  * 只用于对照与历史样例展示，执行器不得按 caseId 查表代替执行当前图。
  */
-const rawValue = z.union([z.number(), z.boolean(), z.string(), z.null(), z.tuple([z.number(), z.number(), z.number()])])
+const rawValue = z.union([
+  z.number(),
+  z.boolean(),
+  z.string(),
+  z.null(),
+  z.tuple([z.number(), z.number(), z.number()]),
+])
 const schema = z.object({
   purpose: z.string(),
   runs: z.array(
@@ -20,7 +26,11 @@ const schema = z.object({
         simTimeBefore: z.number(),
         simTimeAfter: z.number(),
       }),
-      nextWorld: z.object({ commitId: z.string(), simTime: z.number(), values: z.record(z.string(), z.record(z.string(), rawValue)) }),
+      nextWorld: z.object({
+        commitId: z.string(),
+        simTime: z.number(),
+        values: z.record(z.string(), z.record(z.string(), rawValue)),
+      }),
     }),
   ),
 })
@@ -40,9 +50,14 @@ export interface ReferenceRun {
   raw: Record<string, unknown>
 }
 
-export function parseReferenceRuns(raw: unknown): { purpose: string; runs: ReferenceRun[] } {
+export function parseReferenceRuns(
+  raw: unknown,
+): { purpose: string ;runs: ReferenceRun[] } {
   const parsed = schema.safeParse(raw)
-  if (!parsed.success) throw new Error(`expected_runs 解析失败：${parsed.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join('；')}`)
+  if (!parsed.success)
+    throw new Error(
+      `expected_runs 解析失败：${parsed.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`).join("；")}`,
+    )
   return {
     purpose: parsed.data.purpose,
     runs: parsed.data.runs.map((r) => ({

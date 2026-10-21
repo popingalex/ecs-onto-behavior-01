@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { ReactNode } from "react"
 import {
   Ban,
   CircleCheck,
@@ -21,17 +21,17 @@ import {
   TriangleAlert,
   WifiOff,
   type LucideIcon,
-} from 'lucide-react'
-import { STATUS, type StatusKey, type Tone } from '@/core/status'
-import { cn } from '@/lib/cn'
+} from "lucide-react"
+import { STATUS, type StatusKey, type Tone } from "@/core/status"
+import { cn } from "@/lib/cn"
 
 const TONE: Record<Tone, string> = {
-  neutral: 'bg-neutral-soft text-ink-soft',
-  primary: 'bg-primary-soft text-primary-strong',
-  success: 'bg-success-soft text-success',
-  warning: 'bg-warning-soft text-warning-ink',
-  danger: 'bg-danger-soft text-danger',
-  purple: 'bg-purple-soft text-purple',
+  neutral: "bg-neutral-soft text-ink-soft",
+  primary: "bg-primary-soft text-primary-strong",
+  success: "bg-success-soft text-success",
+  warning: "bg-warning-soft text-warning-ink",
+  danger: "bg-danger-soft text-danger",
+  purple: "bg-purple-soft text-purple",
 }
 
 const ICON: Partial<Record<StatusKey, LucideIcon>> = {
@@ -69,40 +69,76 @@ const ICON: Partial<Record<StatusKey, LucideIcon>> = {
   noPosition: MapPinOff,
 }
 
-const SPINNING = new Set<StatusKey>(['saving', 'validating', 'publishing', 'computing', 'committing'])
+const SPINNING = new Set<StatusKey>([
+  "saving",
+  "validating",
+  "publishing",
+  "computing",
+  "committing",
+])
 
 export interface TagProps {
   tone?: Tone
   icon?: LucideIcon
-  size?: 'md' | 'sm'
+  size?: "md" | "sm"
   spin?: boolean
   className?: string
   title?: string
   children: ReactNode
 }
 
-export function Tag({ tone = 'neutral', icon: Icon, size = 'md', spin, className, title, children }: TagProps) {
+export function Tag({
+  tone = "neutral",
+  icon: Icon,
+  size = "md",
+  spin,
+  className,
+  title,
+  children,
+}: TagProps) {
   return (
     <span
       title={title}
       className={cn(
-        'inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-ui font-medium',
-        size === 'md' ? 'h-7 px-2 text-label' : 'h-6 px-1.5 text-caption',
+        "inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-ui font-medium",
+        size === "md" ? "h-7 px-2 text-label" : "h-6 px-1.5 text-caption",
         TONE[tone],
         className,
       )}
     >
-      {Icon ? <Icon size={size === 'md' ? 14 : 12} aria-hidden className={spin ? 'animate-spin' : undefined} /> : null}
+      {Icon ? (
+        <Icon
+          size={size === "md" ? 14 : 12}
+          aria-hidden
+          className={spin ? "animate-spin" : undefined}
+        />
+      ) : null}
       {children}
     </span>
   )
 }
 
 /** 语义状态标签：图标与文字并存，不只靠颜色。 */
-export default function StatusTag({ status, size, label, className }: { status: StatusKey; size?: 'md' | 'sm'; label?: string; className?: string }) {
+export default function StatusTag({
+  status,
+  size,
+  label,
+  className,
+}: {
+  status: StatusKey
+  size?: "md" | "sm"
+  label?: string
+  className?: string
+}) {
   const meta = STATUS[status]
   return (
-    <Tag tone={meta.tone} icon={ICON[status]} spin={SPINNING.has(status)} size={size} className={className}>
+    <Tag
+      tone={meta.tone}
+      icon={ICON[status]}
+      spin={SPINNING.has(status)}
+      size={size}
+      className={className}
+    >
       {label ?? meta.label}
     </Tag>
   )

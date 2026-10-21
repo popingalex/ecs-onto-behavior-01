@@ -1,4 +1,4 @@
-import { createStore, useStore } from '@/lib/store'
+import { createStore, useStore } from "@/lib/store"
 
 /**
  * PlaybackStore：只保存演示时间、速度与相机。暂停播放不改变已提交 commit。
@@ -24,10 +24,21 @@ let timer: ReturnType<typeof setInterval> | null = null
 let onFinish: (() => void) | null = null
 const TICK = 50
 
-export function startPlayback(runId: string, commitId: string, seconds: number, done: () => void) {
+export function startPlayback(
+  runId: string,
+  commitId: string,
+  seconds: number,
+  done: () => void,
+) {
   stopTimer()
   onFinish = done
-  playbackStore.setState({ runId, commitId, progress: 0, paused: false, durationMs: Math.max(200, seconds * 1000) })
+  playbackStore.setState({
+    runId,
+    commitId,
+    progress: 0,
+    paused: false,
+    durationMs: Math.max(200, seconds * 1000),
+  })
   timer = setInterval(() => {
     const s = playbackStore.getState()
     if (s.paused) return
@@ -46,7 +57,12 @@ function finish() {
   stopTimer()
   const done = onFinish
   onFinish = null
-  playbackStore.setState({ runId: null, commitId: null, progress: 0, paused: false })
+  playbackStore.setState({
+    runId: null,
+    commitId: null,
+    progress: 0,
+    paused: false,
+  })
   done?.()
 }
 

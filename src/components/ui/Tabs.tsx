@@ -1,5 +1,9 @@
-import { Tabs as TabsRoot, TabsList, TabsTrigger } from '@/components/shadcn/tabs'
-import { cn } from '@/lib/utils'
+import {
+  Tabs as TabsRoot,
+  TabsList,
+  TabsTrigger,
+} from "@/components/shadcn/tabs"
+import { cn } from "@/lib/utils"
 
 export interface TabItem {
   id: string
@@ -23,11 +27,19 @@ export default function Tabs({
   ariaLabel: string
 }) {
   return (
-    <TabsRoot value={value} onValueChange={onChange} className="gap-0" activationMode="manual">
+    <TabsRoot
+      value={value}
+      onValueChange={onChange}
+      className="gap-0"
+      activationMode="manual"
+    >
       <TabsList
         variant="line"
         aria-label={ariaLabel}
-        className={cn('flex h-10 w-full items-end justify-start gap-5 rounded-none border-b border-line p-0 group-data-[orientation=horizontal]/tabs:h-10', className)}
+        className={cn(
+          "flex h-10 w-full items-end justify-start gap-5 rounded-none border-b border-line p-0 group-data-[orientation=horizontal]/tabs:h-10",
+          className,
+        )}
       >
         {items.map((item) => (
           <TabsTrigger
@@ -35,13 +47,17 @@ export default function Tabs({
             value={item.id}
             disabled={item.disabled}
             className={cn(
-              '-mb-px h-10 flex-none gap-1.5 rounded-none border-0 border-b-2 border-transparent px-0 py-0 text-body font-normal text-muted shadow-none after:hidden hover:text-ink',
-              'focus-visible:ring-2 focus-visible:ring-primary/25 focus-visible:outline-none disabled:pointer-events-auto disabled:cursor-not-allowed disabled:text-faint disabled:opacity-100',
-              'data-[state=active]:border-primary data-[state=active]:font-semibold data-[state=active]:text-primary-strong',
+              "-mb-px h-10 flex-none gap-1.5 rounded-none border-0 border-b-2 border-transparent px-0 py-0 text-body font-normal text-muted shadow-none after:hidden hover:text-ink",
+              "focus-visible:ring-2 focus-visible:ring-primary/25 focus-visible:outline-none disabled:pointer-events-auto disabled:cursor-not-allowed disabled:text-faint disabled:opacity-100",
+              "data-[state=active]:border-primary data-[state=active]:font-semibold data-[state=active]:text-primary-strong",
             )}
           >
             {item.label}
-            {item.count !== undefined ? <span className="tabular rounded bg-neutral-soft px-1.5 text-caption font-normal text-muted">{item.count}</span> : null}
+            {item.count !== undefined ? (
+              <span className="tabular rounded bg-neutral-soft px-1.5 text-caption font-normal text-muted">
+                {item.count}
+              </span>
+            ) : null}
           </TabsTrigger>
         ))}
       </TabsList>

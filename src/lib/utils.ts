@@ -1,5 +1,5 @@
-import { clsx, type ClassValue } from 'clsx'
-import { extendTailwindMerge } from 'tailwind-merge'
+import { clsx, type ClassValue } from "clsx"
+import { extendTailwindMerge } from "tailwind-merge"
 
 /**
  * shadcn/ui 使用的 className 合并。
@@ -9,9 +9,9 @@ import { extendTailwindMerge } from 'tailwind-merge'
 const twMerge = extendTailwindMerge({
   extend: {
     theme: {
-      text: ['caption', 'label', 'body', 'body-lg', 'title', 'display'],
-      radius: ['ui'],
-      shadow: ['card', 'pop'],
+      text: ["caption", "label", "body", "body-lg", "title", "display"],
+      radius: ["ui"],
+      shadow: ["card", "pop"],
     },
   },
 })

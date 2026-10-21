@@ -1,4 +1,4 @@
-import { useSyncExternalStore } from 'react'
+import { useSyncExternalStore } from "react"
 
 /**
  * 极简外部 store：替代 egui 端的 Resource/State。
@@ -16,7 +16,7 @@ export function createStore<T extends object>(initial: T): Store<T> {
   return {
     getState: () => state,
     setState(partial) {
-      const next = typeof partial === 'function' ? partial(state) : partial
+      const next = typeof partial === "function" ? partial(state) : partial
       if (!next || Object.keys(next).length === 0) return
       state = { ...state, ...next }
       listeners.forEach((listener) => listener())

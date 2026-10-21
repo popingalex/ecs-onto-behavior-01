@@ -14,15 +14,15 @@ import type {
   UnitDef,
   VersionedAsset,
   WorldSnapshot,
-} from '@/core/types'
-import type { SeedData } from '@/mock/seed'
+} from "@/core/types"
+import type { SeedData } from "@/mock/seed"
 
 /**
  * 规范化索引：JSON/API → 索引 → 页面 selector → ViewModel → 组件。
  * 模式层与静态资产不可变；运行历史（分支/提交）的可变部分在 stores/history。
  */
 export interface WorkbenchIndex {
-  project: SeedData['project']
+  project: SeedData["project"]
   quantities: Map<string, QuantityKind>
   units: Map<string, UnitDef>
   components: Map<string, ComponentDef>

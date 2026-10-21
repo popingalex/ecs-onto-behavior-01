@@ -1,6 +1,6 @@
-import { useEffect, useId, useRef, useState, type ReactNode } from 'react'
-import { Check, ChevronDown } from 'lucide-react'
-import { cn } from '@/lib/cn'
+import { useEffect, useId, useRef, useState, type ReactNode } from "react"
+import { Check, ChevronDown } from "lucide-react"
+import { cn } from "@/lib/cn"
 
 export interface DropdownOption {
   value: string
@@ -40,8 +40,8 @@ export default function Dropdown({
     const onDown = (e: MouseEvent) => {
       if (!rootRef.current?.contains(e.target as Node)) setOpen(false)
     }
-    document.addEventListener('mousedown', onDown)
-    return () => document.removeEventListener('mousedown', onDown)
+    document.addEventListener("mousedown", onDown)
+    return () => document.removeEventListener("mousedown", onDown)
   }, [open])
 
   const openList = () => {
@@ -58,7 +58,7 @@ export default function Dropdown({
   }
 
   return (
-    <div ref={rootRef} className={cn('relative', className)}>
+    <div ref={rootRef} className={cn("relative", className)}>
       <button
         ref={buttonRef}
         type="button"
@@ -70,23 +70,26 @@ export default function Dropdown({
         onClick={() => (open ? setOpen(false) : openList())}
         onKeyDown={(e) => {
           if (e.nativeEvent.isComposing) return
-          if (!open && (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ')) {
+          if (
+            !open &&
+            (e.key === "ArrowDown" || e.key === "Enter" || e.key === " ")
+          ) {
             e.preventDefault()
             openList()
             return
           }
           if (!open) return
-          if (e.key === 'Escape') {
+          if (e.key === "Escape") {
             e.preventDefault()
             e.stopPropagation()
             setOpen(false)
-          } else if (e.key === 'ArrowDown') {
+          } else if (e.key === "ArrowDown") {
             e.preventDefault()
             setActive((a) => Math.min(options.length - 1, a + 1))
-          } else if (e.key === 'ArrowUp') {
+          } else if (e.key === "ArrowUp") {
             e.preventDefault()
             setActive((a) => Math.max(0, a - 1))
-          } else if (e.key === 'Enter') {
+          } else if (e.key === "Enter") {
             e.preventDefault()
             choose(options[active])
           }
@@ -94,7 +97,14 @@ export default function Dropdown({
         className="flex h-9 items-center gap-2 rounded-ui border border-border bg-surface pl-2.5 pr-2 text-body transition-colors hover:border-[#c3cfdb] disabled:cursor-not-allowed disabled:bg-subtle"
       >
         {renderValue}
-        <ChevronDown size={15} className={cn('text-muted transition-transform', open && 'rotate-180')} aria-hidden />
+        <ChevronDown
+          size={15}
+          className={cn(
+            "text-muted transition-transform",
+            open && "rotate-180",
+          )}
+          aria-hidden
+        />
       </button>
       {open ? (
         <ul
@@ -114,14 +124,22 @@ export default function Dropdown({
               onMouseDown={(e) => e.preventDefault()}
               onClick={() => choose(option)}
               className={cn(
-                'flex cursor-pointer items-center gap-2 px-3 py-2',
-                i === active && 'bg-hover',
-                option.disabled && 'cursor-not-allowed opacity-50',
+                "flex cursor-pointer items-center gap-2 px-3 py-2",
+                i === active && "bg-hover",
+                option.disabled && "cursor-not-allowed opacity-50",
               )}
             >
-              <span className="flex w-4 shrink-0 justify-center text-primary">{option.value === value ? <Check size={15} aria-hidden /> : null}</span>
+              <span className="flex w-4 shrink-0 justify-center text-primary">
+                {option.value === value ? (
+                  <Check size={15} aria-hidden />
+                ) : null}
+              </span>
               <span className="min-w-0 flex-1">{option.label}</span>
-              {option.meta ? <span className="shrink-0 text-caption text-muted">{option.meta}</span> : null}
+              {option.meta ? (
+                <span className="shrink-0 text-caption text-muted">
+                  {option.meta}
+                </span>
+              ) : null}
             </li>
           ))}
         </ul>

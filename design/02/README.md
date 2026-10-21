@@ -2,18 +2,20 @@
 
 目标：将当前React/Figma Make工作台的四项核心能力做成可编辑、可执行、可解释的原型：ECS构建、System外层调度、System内部逻辑、计算过程记录与展示。
 
-这是基于仓库源码的修改计划与施工资料，本次没有修改仓库、提交PR或宣称原型已实现。
+这是基于仓库源码的修改计划与施工资料。M0–M5 已全部完成（2026-10-20/21），实际进度见 07_progress.md、acceptance/ 与 contracts/implementation_tasks.json 的 statusNote。
 
 ## 阅读顺序
 
-1. 01_repository_audit.md：实际缺口、可保留基础和源码证据，含28条失效规格路径。
+1. 01_repository_audit.md：实际缺口、可保留基础和源码证据，含28条失效规格路径（已修复，见 07_progress.md）。
 2. 02_revision_plan.md：对象分层、独立页面、组件职责、数据流、文件改动与施工顺序。
 3. 03_figma_make_tasks.md：可逐轮交给Figma Make的明确任务，含完成标准。
 4. 04_data_and_trace_contract.md：模型、图、运行记录、旧数据迁移与可复算业务。
 5. 05_acceptance.md：原型点击验收，防止再次交付占位页面。
 6. 06_sources.md：官方组件文档、使用边界与核对依据。
-7. contracts/：审计证据、页面映射、任务列表、TypeScript DTO。
-8. mock/：结构化原型输入和预期结果。输入/结果文件用于施工与核对，不冒充已接入应用的执行器。
+7. 07_progress.md：M0–M5 施工与验收回传：实际改动、验证结果与剩余缺口。
+8. acceptance/：核心旅程验收记录（AC01–AC20）、组件库使用核对与真实截图。
+9. contracts/：审计证据、页面映射、任务列表（含施工状态）、TypeScript DTO。
+10. mock/：结构化原型输入和预期结果。prototype_seed.v05.json 是应用唯一种子来源；expected_runs 仅作对照核对与「查看样例」，不作为「执行当前图」的分支查表（M4 起执行由 src/services/mock-executor 真实求值）。
 
 ## 本轮决策
 

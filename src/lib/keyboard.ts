@@ -7,7 +7,7 @@ export function isEditableTarget(target: EventTarget | null): boolean {
   if (!(target instanceof HTMLElement)) return false
   if (target.isContentEditable) return true
   const tag = target.tagName
-  return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT'
+  return tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT"
 }
 
 const FOCUSABLE =
@@ -15,6 +15,6 @@ const FOCUSABLE =
 
 export function focusableWithin(container: HTMLElement): HTMLElement[] {
   return Array.from(container.querySelectorAll<HTMLElement>(FOCUSABLE)).filter(
-    (el) => !el.hasAttribute('data-focus-skip'),
+    (el) => !el.hasAttribute("data-focus-skip"),
   )
 }

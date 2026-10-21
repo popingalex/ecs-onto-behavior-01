@@ -3,30 +3,25 @@
  * 稳定 ID 一律为字符串，不使用第三方组件内部序号。
  */
 
-export type PageId =
-  | 'P01' | 'P02' | 'P03' | 'P04' | 'P05' | 'P06' | 'P07' | 'P08' | 'P09' | 'P10'
-  | 'P11' | 'P12' | 'P13' | 'P14' | 'P15' | 'P16' | 'P17' | 'P18' | 'P19' | 'P20'
-  | 'P21' | 'P22' | 'P23' | 'P24' | 'P25' | 'P26' | 'P27' | 'P28'
+export type PageId = "P01" | "P02" | "P03" | "P04" | "P05" | "P06" | "P07" | "P08" | "P09" | "P10" | "P11" | "P12" | "P13" | "P14" | "P15" | "P16" | "P17" | "P18" | "P19" | "P20" | "P21" | "P22" | "P23" | "P24" | "P25" | "P26" | "P27" | "P28" | "P29" | "P30"
 
-export type GroupId = 'project' | 'modeling' | 'scene' | 'logic' | 'run' | 'review'
+export type GroupId = "project" | "modeling" | "scene" | "logic" | "run" | "review"
 
 /** project：总览；asset：模型/场景/程序资产；execution：运行/分支/提交。两组不混排。 */
-export type ContextKind = 'project' | 'asset' | 'execution'
+export type ContextKind = "project" | "asset" | "execution"
 
-export type WorkbenchMode = 'overview' | 'edit' | 'run' | 'history'
+export type WorkbenchMode = "overview" | "edit" | "run" | "history"
 
-export type Role = 'modeler' | 'director' | 'observer'
+export type Role = "modeler" | "director" | "observer"
 
-export type ComponentId =
-  | 'C01' | 'C02' | 'C03' | 'C04' | 'C05' | 'C06' | 'C07' | 'C08' | 'C09' | 'C10'
-  | 'C11' | 'C12' | 'C13' | 'C14' | 'C15' | 'C16' | 'C17' | 'C18' | 'C19' | 'C20'
+export type ComponentId = "C01" | "C02" | "C03" | "C04" | "C05" | "C06" | "C07" | "C08" | "C09" | "C10" | "C11" | "C12" | "C13" | "C14" | "C15" | "C16" | "C17" | "C18" | "C19" | "C20"
 
 export interface Route {
   pageId: PageId
   params: Record<string, string>
 }
 
-export type Severity = 'error' | 'warning' | 'info'
+export type Severity = "error" | "warning" | "info"
 
 export interface Diagnostic {
   id: string
@@ -39,9 +34,9 @@ export interface Diagnostic {
 
 // ---------- 模式层 ----------
 
-export type ValueShape = 'scalar' | 'vector3' | 'matrixRef'
-export type Primitive = 'f64' | 'i64' | 'bool' | 'string' | 'EntityRef'
-export type WriteMode = 'configuration' | 'exclusive' | 'contribution' | 'contract'
+export type ValueShape = "scalar" | "vector3" | "matrixRef"
+export type Primitive = "f64" | "i64" | "bool" | "string" | "EntityRef"
+export type WriteMode = "configuration" | "exclusive" | "contribution" | "contract"
 export type Vector3 = [number, number, number]
 export type RawValue = number | boolean | string | Vector3 | null
 
@@ -98,7 +93,7 @@ export interface TemplateDef extends VersionedAsset {
 }
 
 export interface AssetDef extends VersionedAsset {
-  kind: 'model3d' | 'map' | 'icon'
+  kind: "model3d" | "map" | "icon"
 }
 
 export interface EntityDef {
@@ -143,7 +138,7 @@ export interface RunDef {
   bundleId: string
   stepSeconds: number
   playbackSeconds: number
-  runtime: 'server' | 'local-worker'
+  runtime: "server" | "local-worker"
 }
 
 export interface BranchDef {
@@ -152,7 +147,7 @@ export interface BranchDef {
   label: string
   baseCommit: string | null
   headCommit: string
-  visibility: 'shared' | 'private' | 'team'
+  visibility: "shared" | "private" | "team"
 }
 
 export interface CommitDef {
@@ -168,7 +163,7 @@ export interface CommitDef {
    * base：v0.5 基础世界；reference-sample：expected_runs 的预期样例（不是当前图计算结果）；
    * computed：浏览器端执行器按当前图计算得到。
    */
-  source: 'base' | 'reference-sample' | 'computed'
+  source: "base" | "reference-sample" | "computed"
 }
 
 /** 某个不可变提交的世界快照：entityId → propertyId → 原始值。 */
@@ -184,16 +179,19 @@ export interface WorldSnapshot {
  * 值状态（01_layout「值与状态表达」）。不同状态来自不同记录，
  * 不能用一个标签在同一值上随意切换，也不能用 0 占位。
  */
-export type DisplayValue =
-  | { state: 'value'; value: Exclude<RawValue, null>; commitId?: string }
-  | { state: 'null' }
-  | { state: 'notApplicable' }
-  | { state: 'requested'; value: number }
-  | { state: 'selfPreview'; value: Exclude<RawValue, null> }
-  | { state: 'pending' }
-  | { state: 'unknownSource' }
-  | { state: 'unrecorded' }
-  | { state: 'invalid'; reason: string }
+export type DisplayValue = {
+  state: "value"
+  value: Exclude<RawValue, null>
+  commitId?: string
+} | { state: "null" } | { state: "notApplicable" } | {
+  state: "requested"
+  value: number
+} | { state: "selfPreview" ;value: Exclude<RawValue, null> } | {
+  state: "pending"
+} | { state: "unknownSource" } | { state: "unrecorded" } | {
+  state: "invalid"
+  reason: string
+}
 
 // ---------- 命令 ----------
 
@@ -205,10 +203,10 @@ export interface DraftCommand {
   baseRevision: number
   targetId: string
   patch: Record<string, unknown>
-  prev: Record<string, { present: boolean; value: unknown }>
+  prev: Record<string, { present: boolean ;value: unknown }>
 }
 
-export type RunCommandStatus = 'pending' | 'accepted' | 'applied' | 'rejected'
+export type RunCommandStatus = "pending" | "accepted" | "applied" | "rejected"
 
 /** 运行命令：{commandId, idempotencyKey, baseCommit, actorId, type, args}。 */
 export interface RunCommand {
@@ -223,10 +221,4 @@ export interface RunCommand {
   message?: string
 }
 
-export type RunPhase =
-  | 'waitingInputs'
-  | 'frozen'
-  | 'computing'
-  | 'committing'
-  | 'committed'
-  | 'playing'
+export type RunPhase = "waitingInputs" | "frozen" | "computing" | "committing" | "committed" | "playing"

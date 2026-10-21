@@ -1,9 +1,9 @@
-import { useState } from 'react'
-import { TriangleAlert } from 'lucide-react'
-import Button from '@/components/ui/Button'
-import Modal from '@/components/ui/Modal'
-import { PAGE_SPECS } from '@/navigation/pages'
-import { cancelPendingNavigation, usePendingNavigation } from '@/router/router'
+import { useState } from "react"
+import { TriangleAlert } from "lucide-react"
+import Button from "@/components/ui/Button"
+import Modal from "@/components/ui/Modal"
+import { PAGE_SPECS } from "@/navigation/pages"
+import { cancelPendingNavigation, usePendingNavigation } from "@/router/router"
 
 /** 离开守卫：保存并继续 / 放弃修改 / 留在此页。 */
 export default function LeaveGuardDialog() {
@@ -46,7 +46,11 @@ export default function LeaveGuardDialog() {
       }
     >
       <div className="flex gap-3 px-5 py-4">
-        <TriangleAlert size={20} className="mt-0.5 shrink-0 text-warning" aria-hidden />
+        <TriangleAlert
+          size={20}
+          className="mt-0.5 shrink-0 text-warning"
+          aria-hidden
+        />
         <div className="text-body text-ink-soft">
           <p>{pending.detail}</p>
           <p className="mt-2 text-label text-muted">

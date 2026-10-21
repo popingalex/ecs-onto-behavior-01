@@ -1,5 +1,5 @@
-import type { BranchDef, CommitDef } from '@/core/types'
-import { createStore, useStore } from '@/lib/store'
+import type { BranchDef, CommitDef } from "@/core/types"
+import { createStore, useStore } from "@/lib/store"
 
 /**
  * HistoryStore：分支与提交。提交不可变；只有分支 head 会前移。
@@ -10,7 +10,10 @@ interface HistoryState {
   commits: Record<string, CommitDef>
 }
 
-export const historyStore = createStore<HistoryState>({ branches: {}, commits: {} })
+export const historyStore = createStore<HistoryState>({
+  branches: {},
+  commits: {},
+})
 
 export function initHistory(branches: BranchDef[], commits: CommitDef[]) {
   historyStore.setState({
@@ -25,7 +28,10 @@ export function appendCommit(commit: CommitDef) {
     if (!branch) return {}
     return {
       commits: { ...s.commits, [commit.id]: commit },
-      branches: { ...s.branches, [branch.id]: { ...branch, headCommit: commit.id } },
+      branches: {
+        ...s.branches,
+        [branch.id]: { ...branch, headCommit: commit.id },
+      },
     }
   })
 }
@@ -39,7 +45,10 @@ export function useCommits() {
 }
 
 /** 从 head 沿 parent 回溯；跨分支的祖先也包含在内（分叉点之前的共同历史）。 */
-export function lineage(commits: Record<string, CommitDef>, headId: string): CommitDef[] {
+export function lineage(
+  commits: Record<string, CommitDef>,
+  headId: string,
+): CommitDef[] {
   const out: CommitDef[] = []
   let cursor: string | null = headId
   const seen = new Set<string>()

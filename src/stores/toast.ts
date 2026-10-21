@@ -1,18 +1,20 @@
-import { createId } from '@/lib/id'
-import { createStore, useStore } from '@/lib/store'
+import { createId } from "@/lib/id"
+import { createStore, useStore } from "@/lib/store"
 
 /** 全局 toast 只做确认，不承担唯一错误解释。 */
 export interface Toast {
   id: string
   message: string
-  tone: 'success' | 'info' | 'warning'
+  tone: "success" | "info" | "warning"
 }
 
 export const toastStore = createStore<{ toasts: Toast[] }>({ toasts: [] })
 
-export function toast(message: string, tone: Toast['tone'] = 'success') {
-  const id = createId('toast')
-  toastStore.setState((s) => ({ toasts: [...s.toasts.slice(-3), { id, message, tone }] }))
+export function toast(message: string, tone: Toast["tone"] = "success") {
+  const id = createId("toast")
+  toastStore.setState((s) => ({
+    toasts: [...s.toasts.slice(-3), { id, message, tone }],
+  }))
   setTimeout(() => dismissToast(id), 3200)
 }
 

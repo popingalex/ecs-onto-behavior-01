@@ -1,9 +1,9 @@
-import { useCallback } from 'react'
-import type { Route } from '@/core/types'
-import { createId } from '@/lib/id'
-import { createStore, useStore } from '@/lib/store'
-import { PAGE_SPECS } from '@/navigation/pages'
-import { DEFAULT_ROUTE, parseHash, sameRoute, toHash } from './route'
+import { useCallback } from "react"
+import type { Route } from "@/core/types"
+import { createId } from "@/lib/id"
+import { createStore, useStore } from "@/lib/store"
+import { PAGE_SPECS } from "@/navigation/pages"
+import { DEFAULT_ROUTE, parseHash, sameRoute, toHash } from "./route"
 
 /**
  * 导航栈。每次导航生成 returnToken（= 来源条目的 token），
@@ -22,7 +22,10 @@ export interface OverlayEntry {
   returnToken: string
 }
 
-export type OverlayResult = { kind: 'confirm'; payload: Record<string, unknown> } | { kind: 'cancel' }
+export type OverlayResult = {
+  kind: "confirm"
+  payload: Record<string, unknown>
+} | { kind: "cancel" }
 
 export interface LeaveGuardDecision {
   reason: string
@@ -44,7 +47,12 @@ interface RouterState {
 }
 
 const initialRoute = parseHash(window.location.hash) ?? DEFAULT_ROUTE
-const initialEntry: HistoryEntry = { token: createId('rt'), route: initialRoute, viewState: {}, returnToken: null }
+const initialEntry: HistoryEntry = {
+  token: createId("rt"),
+  route: initialRoute,
+  viewState: {},
+  returnToken: null,
+}
 
 export const routerStore = createStore<RouterState>({
   entries: [initialEntry],
@@ -53,7 +61,11 @@ export const routerStore = createStore<RouterState>({
   pending: null,
 })
 
-window.history.replaceState({ wbToken: initialEntry.token }, '', toHash(initialRoute))
+window.history.replaceState(
+  { wbToken: initialEntry.token },
+  "",
+  toHash(initialRoute),
+)
 
 // ---------- 离开守卫 ----------
 
@@ -80,29 +92,37 @@ function commitNavigation(route: Route, replace: boolean) {
     const entries = s.entries.slice()
     entries[s.index] = entry
     routerStore.setState({ entries })
-    window.history.replaceState({ wbToken: entry.token }, '', toHash(route))
+    window.history.replaceState({ wbToken: entry.token }, "", toHash(route))
     return
   }
-  const entry: HistoryEntry = { token: createId('rt'), route, viewState: {}, returnToken: current.token }
+  const entry: HistoryEntry = {
+    token: createId("rt"),
+    route,
+    viewState: {},
+    returnToken: current.token,
+  }
   const entries = [...s.entries.slice(0, s.index + 1), entry]
   routerStore.setState({ entries, index: entries.length - 1 })
-  window.history.pushState({ wbToken: entry.token }, '', toHash(route))
+  window.history.pushState({ wbToken: entry.token }, "", toHash(route))
 }
 
-export function navigate(route: Route, options: { replace?: boolean; onResult?: (r: OverlayResult) => void } = {}) {
+export function navigate(
+  route: Route,
+  options: { replace?: boolean ;onResult?: (r: OverlayResult) => void } = {},
+) {
   const spec = PAGE_SPECS[route.pageId]
-  if (spec.kind !== 'page') {
+  if (spec.kind !== "page") {
     openOverlay(route, options.onResult)
     return
   }
   const current = currentEntry().route
   if (sameRoute(current, route)) {
-    closeOverlay({ kind: 'cancel' })
+    closeOverlay({ kind: "cancel" })
     return
   }
   const go = () => {
     routerStore.setState({ pending: null })
-    closeOverlay({ kind: 'cancel' })
+    closeOverlay({ kind: "cancel" })
     commitNavigation(route, Boolean(options.replace))
   }
   const decision = leaveGuard?.(current, route)
@@ -120,37 +140,47 @@ export function cancelPendingNavigation() {
 export function back() {
   const s = routerStore.getState()
   if (s.overlay) {
-    closeOverlay({ kind: 'cancel' })
+    closeOverlay({ kind: "cancel" })
     return
   }
   if (s.index > 0) window.history.back()
 }
 
-window.addEventListener('popstate', (event) => {
+window.addEventListener("popstate", (event) => {
   const token = (event.state as { wbToken?: string } | null)?.wbToken
   const s = routerStore.getState()
   const found = token ? s.entries.findIndex((e) => e.token === token) : -1
-  closeOverlay({ kind: 'cancel' })
+  closeOverlay({ kind: "cancel" })
   if (found >= 0) {
     routerStore.setState({ index: found, pending: null })
     return
   }
   // 手动修改 hash / 外部深链接：作为新条目进入。
   const route = parseHash(window.location.hash) ?? DEFAULT_ROUTE
-  const entry: HistoryEntry = { token: createId('rt'), route, viewState: {}, returnToken: s.entries[s.index].token }
+  const entry: HistoryEntry = {
+    token: createId("rt"),
+    route,
+    viewState: {},
+    returnToken: s.entries[s.index].token,
+  }
   const entries = [...s.entries.slice(0, s.index + 1), entry]
   routerStore.setState({ entries, index: entries.length - 1, pending: null })
-  window.history.replaceState({ wbToken: entry.token }, '', toHash(route))
+  window.history.replaceState({ wbToken: entry.token }, "", toHash(route))
 })
 
 // ---------- 弹层（P15 模态 / P21 抽屉） ----------
 
 const overlayCallbacks = new Map<string, (result: OverlayResult) => void>()
 
-export function openOverlay(route: Route, onResult?: (result: OverlayResult) => void) {
-  const token = createId('ov')
+export function openOverlay(
+  route: Route,
+  onResult?: (result: OverlayResult) => void,
+) {
+  const token = createId("ov")
   if (onResult) overlayCallbacks.set(token, onResult)
-  routerStore.setState({ overlay: { token, route, returnToken: currentEntry().token } })
+  routerStore.setState({
+    overlay: { token, route, returnToken: currentEntry().token },
+  })
 }
 
 /** 关闭弹层只销毁局部状态；结果回传给打开者。 */
@@ -165,9 +195,15 @@ export function closeOverlay(result: OverlayResult) {
 
 // ---------- 视图状态（随 returnToken 恢复） ----------
 
-export function useViewState<T>(key: string, initial: T): [T, (next: T | ((prev: T) => T)) => void] {
+export function useViewState<T>(
+  key: string,
+  initial: T,
+): [T, (next: T | ((prev: T) => T)) => void] {
   const token = useStore(routerStore, (s) => s.entries[s.index].token)
-  const stored = useStore(routerStore, (s) => s.entries[s.index].viewState[key]) as T | undefined
+  const stored = useStore(
+    routerStore,
+    (s) => s.entries[s.index].viewState[key],
+  ) as T | undefined
   const value = stored === undefined ? initial : stored
   const set = useCallback(
     (next: T | ((prev: T) => T)) => {
@@ -176,9 +212,13 @@ export function useViewState<T>(key: string, initial: T): [T, (next: T | ((prev:
         if (idx < 0) return {}
         const entry = s.entries[idx]
         const prev = (entry.viewState[key] ?? initial) as T
-        const resolved = typeof next === 'function' ? (next as (p: T) => T)(prev) : next
+        const resolved =
+          typeof next === "function" ? (next as (p: T) => T)(prev) : next
         const entries = s.entries.slice()
-        entries[idx] = { ...entry, viewState: { ...entry.viewState, [key]: resolved } }
+        entries[idx] = {
+          ...entry,
+          viewState: { ...entry.viewState, [key]: resolved },
+        }
         return { entries }
       })
     },
@@ -211,7 +251,9 @@ export function useCurrentEntry(): HistoryEntry {
 }
 
 export function usePreviousEntry(): HistoryEntry | null {
-  return useStore(routerStore, (s) => (s.index > 0 ? s.entries[s.index - 1] : null))
+  return useStore(routerStore, (s) =>
+    s.index > 0 ? s.entries[s.index - 1] : null,
+  )
 }
 
 export function useOverlay(): OverlayEntry | null {

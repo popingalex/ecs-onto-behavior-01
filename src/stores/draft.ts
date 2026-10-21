@@ -1,9 +1,9 @@
-import { z } from 'zod'
-import type { Diagnostic, DraftCommand } from '@/core/types'
-import { getIndex } from '@/data/store'
-import { useSyncExternalStore } from 'react'
-import { useStore } from '@/lib/store'
-import { validateModel, type DraftOverlay } from '@/services/coreValidation'
+import { z } from "zod"
+import type { Diagnostic, DraftCommand } from "@/core/types"
+import { getIndex } from "@/data/store"
+import { useSyncExternalStore } from "react"
+import { useStore } from "@/lib/store"
+import { validateModel, type DraftOverlay } from "@/services/coreValidation"
 import {
   anyDocumentDirty,
   applyEdit,
@@ -21,27 +21,32 @@ import {
   type DocumentKind,
   type DraftDocument,
   type HistoryEntry,
-} from './draftRegistry'
-import { toast } from './toast'
+} from "./draftRegistry"
+import { toast } from "./toast"
 
 /**
  * 旧 DraftStore API 的兼容层。真实状态在 draftRegistry（按 documentId 隔离）；
  * 这里把“当前编辑焦点文档”投影成旧的 DraftState 形状，并把旧的属性覆盖层登记为文档 model-draft。
  */
-export const LEGACY_DRAFT_ID = 'model-draft'
+export const LEGACY_DRAFT_ID = "model-draft"
 
 /** 已发布元数据：与草稿 revision 无关。 */
-export const PUBLISHED = { bundleId: 'bundle-04', modelVersion: 'model-05' } as const
+export const PUBLISHED = {
+  bundleId: "bundle-04",
+  modelVersion: "model-05",
+} as const
 
 registerDocument<DraftOverlay>(LEGACY_DRAFT_ID, {
-  kind: 'legacy',
-  label: '属性覆盖层（旧）',
+  kind: "legacy",
+  label: "属性覆盖层（旧）",
   baseVersion: PUBLISHED.modelVersion,
   baseline: () => ({}),
-  restore: (raw) => z.record(z.string(), z.record(z.string(), z.unknown())).parse(raw),
+  restore: (raw) =>
+    z.record(z.string(), z.record(z.string(), z.unknown())).parse(raw),
   validate: (overlay) => validateModel(getIndex(), overlay),
 })
-if (!draftRegistry.getState().activeId) draftRegistry.setState({ activeId: LEGACY_DRAFT_ID })
+if (!draftRegistry.getState().activeId)
+  draftRegistry.setState({ activeId: LEGACY_DRAFT_ID })
 
 export interface DraftState {
   draftId: string
@@ -59,7 +64,7 @@ export interface DraftState {
   /** 语义内容自上次校验后发生了变化（只移动布局不算）。 */
   validationStale: boolean
   diagnostics: Diagnostic[]
-  published: { bundleId: string; modelVersion: string } | null
+  published: { bundleId: string ;modelVersion: string } | null
   overlay: DraftOverlay
   savedOverlay: DraftOverlay
   undo: HistoryEntry[]
@@ -92,7 +97,8 @@ function view(): DraftState {
     savedAt: doc.savedAt,
     validating: doc.validating,
     validatedRevision: doc.validatedRevision,
-    validationStale: doc.validatedHash !== null && doc.validatedHash !== doc.semanticHash,
+    validationStale:
+      doc.validatedHash !== null && doc.validatedHash !== doc.semanticHash,
     diagnostics: doc.diagnostics,
     published: PUBLISHED,
     overlay: legacy.content,
@@ -109,12 +115,12 @@ export const draftStore = {
   subscribe: draftRegistry.subscribe,
 }
 
-export type SaveStatus = 'saved' | 'dirty' | 'saving' | 'saveFailed'
-export type ValidationStatus = 'unvalidated' | 'validating' | 'valid' | 'validationFailed' | 'validationStale'
+export type SaveStatus = "saved" | "dirty" | "saving" | "saveFailed"
+export type ValidationStatus = "unvalidated" | "validating" | "valid" | "validationFailed" | "validationStale"
 
 /** DraftState 或单个 DraftDocument 都可以求状态。 */
-type SaveFacts = Pick<DraftState, 'saving' | 'saveError' | 'dirty'>
-type ValidationFacts = Pick<DraftState, 'validating' | 'validatedRevision' | 'validationStale' | 'diagnostics'>
+type SaveFacts = Pick<DraftState, "saving" | "saveError" | "dirty">
+type ValidationFacts = Pick<DraftState, "validating" | "validatedRevision" | "validationStale" | "diagnostics">
 
 export function documentFacts(doc: DraftDocument): SaveFacts & ValidationFacts {
   return {
@@ -123,22 +129,25 @@ export function documentFacts(doc: DraftDocument): SaveFacts & ValidationFacts {
     dirty: isDocumentDirty(doc),
     validating: doc.validating,
     validatedRevision: doc.validatedRevision,
-    validationStale: doc.validatedHash !== null && doc.validatedHash !== doc.semanticHash,
+    validationStale:
+      doc.validatedHash !== null && doc.validatedHash !== doc.semanticHash,
     diagnostics: doc.diagnostics,
   }
 }
 
 export function saveStatusOf(s: SaveFacts): SaveStatus {
-  if (s.saving) return 'saving'
-  if (s.saveError) return 'saveFailed'
-  return s.dirty ? 'dirty' : 'saved'
+  if (s.saving) return "saving"
+  if (s.saveError) return "saveFailed"
+  return s.dirty ? "dirty" : "saved"
 }
 
 export function validationStatusOf(s: ValidationFacts): ValidationStatus {
-  if (s.validating) return 'validating'
-  if (s.validatedRevision === null) return 'unvalidated'
-  if (s.validationStale) return 'validationStale'
-  return s.diagnostics.some((d) => d.severity === 'error') ? 'validationFailed' : 'valid'
+  if (s.validating) return "validating"
+  if (s.validatedRevision === null) return "unvalidated"
+  if (s.validationStale) return "validationStale"
+  return s.diagnostics.some((d) => d.severity === "error")
+    ? "validationFailed"
+    : "valid"
 }
 
 /** 任一草稿文档有未保存修改。 */
@@ -147,28 +156,49 @@ export function isDirty() {
 }
 
 /** 由 commandBus 调用：旧属性覆盖层的一次 patch，进入 model-draft 文档自己的历史。 */
-export function applyDraftCommand(input: { type: string; label: string; targetId: string; patch: Record<string, unknown> }): DraftCommand {
+export function applyDraftCommand(input: {
+  type: string
+  label: string
+  targetId: string
+  patch: Record<string, unknown>
+}): DraftCommand {
   const doc = getDocument<DraftOverlay>(LEGACY_DRAFT_ID)!
   const current = doc.content[input.targetId] ?? {}
-  const prev: DraftCommand['prev'] = {}
+  const prev: DraftCommand["prev"] = {}
   for (const field of Object.keys(input.patch)) {
-    prev[field] = field in current ? { present: true, value: current[field] } : { present: false, value: undefined }
+    prev[field] =
+      field in current
+        ? { present: true, value: current[field] }
+        : { present: false, value: undefined }
   }
-  const command: DraftCommand = { commandId: `${LEGACY_DRAFT_ID}:r${doc.revision + 1}`, baseRevision: doc.revision, prev, ...input }
-  applyEdit<DraftOverlay>(LEGACY_DRAFT_ID, input.label, (overlay) => ({ ...overlay, [input.targetId]: { ...(overlay[input.targetId] ?? {}), ...input.patch } }), {
-    coalesceKey: `${input.type}:${input.targetId}:${Object.keys(input.patch).sort().join(',')}`,
-  })
+  const command: DraftCommand = {
+    commandId: `${LEGACY_DRAFT_ID}:r${doc.revision + 1}`,
+    baseRevision: doc.revision,
+    prev,
+    ...input,
+  }
+  applyEdit<DraftOverlay>(
+    LEGACY_DRAFT_ID,
+    input.label,
+    (overlay) => ({
+      ...overlay,
+      [input.targetId]: { ...(overlay[input.targetId] ?? {}), ...input.patch },
+    }),
+    {
+      coalesceKey: `${input.type}:${input.targetId}:${Object.keys(input.patch).sort().join(",")}`,
+    },
+  )
   return command
 }
 
 export function undoDraft() {
   const entry = undoDocument(activeDoc().documentId)
-  if (entry) toast(`已撤销：${entry.label}`, 'info')
+  if (entry) toast(`已撤销：${entry.label}`, "info")
 }
 
 export function redoDraft() {
   const entry = redoDocument(activeDoc().documentId)
-  if (entry) toast(`已重做：${entry.label}`, 'info')
+  if (entry) toast(`已重做：${entry.label}`, "info")
 }
 
 /** 保存当前编辑焦点文档到本地。 */
@@ -183,27 +213,34 @@ export async function saveDraft(): Promise<boolean> {
 /** 离开确认用：保存全部有修改的文档。 */
 export async function saveAllDrafts(): Promise<boolean> {
   const ok = await saveAllDocuments()
-  if (ok) toast('全部草稿已本地保存')
+  if (ok) toast("全部草稿已本地保存")
   return ok
 }
 
 export function discardDraft() {
   const doc = activeDoc()
   discardDocument(doc.documentId)
-  toast(`已放弃 ${doc.label} 的未保存修改，回到 r${doc.savedRevision}`, 'info')
+  toast(`已放弃 ${doc.label} 的未保存修改，回到 r${doc.savedRevision}`, "info")
 }
 
 export function discardAllDrafts() {
   discardAllDocuments()
-  toast('已放弃全部未保存修改', 'info')
+  toast("已放弃全部未保存修改", "info")
 }
 
 export async function validateDraft(): Promise<boolean> {
   const doc = activeDoc()
   const ok = await validateDocument(doc.documentId)
   const latest = getDocument(doc.documentId)!
-  const errors = latest.diagnostics.filter((d) => d.severity === 'error').length
-  if (errors === 0) toast(`${latest.label} r${latest.validatedRevision} 校验通过${latest.diagnostics.length ? ` · ${latest.diagnostics.length} 条警告` : ''}`)
+  const errors = latest.diagnostics.filter((d) => d.severity === "error").length
+  if (errors === 0)
+    toast(
+      `${latest.label} r${latest.validatedRevision} 校验通过${
+        latest.diagnostics.length
+          ? ` · ${latest.diagnostics.length} 条警告`
+          : ""
+      }`,
+    )
   return ok
 }
 
@@ -212,6 +249,14 @@ export function useDraft<S>(selector: (s: DraftState) => S): S {
   return useSyncExternalStore(draftRegistry.subscribe, read, read)
 }
 
-export function useDraftTarget(targetId: string): Record<string, unknown> | undefined {
-  return useStore(draftRegistry, (s) => (s.documents[LEGACY_DRAFT_ID] as DraftDocument<DraftOverlay>).content[targetId])
+export function useDraftTarget(
+  targetId: string,
+): Record<string, unknown> | undefined {
+  return useStore(
+    draftRegistry,
+    (s) =>
+      (s.documents[LEGACY_DRAFT_ID] as DraftDocument<DraftOverlay>).content[
+        targetId
+      ],
+  )
 }

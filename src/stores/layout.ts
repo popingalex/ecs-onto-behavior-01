@@ -1,4 +1,4 @@
-import { createStore, useStore } from '@/lib/store'
+import { createStore, useStore } from "@/lib/store"
 
 /** 工作区布局（egui_dock 对应物）。宽高为用户值，断点规则在 WorkspaceShell 中套用。 */
 export interface LayoutState {
@@ -11,7 +11,7 @@ export interface LayoutState {
   fullscreen: boolean
 }
 
-const STORAGE_KEY = 'workbench.layout.v1'
+const STORAGE_KEY = "workbench.layout.v1"
 
 export const LAYOUT_DEFAULTS: LayoutState = {
   treeWidth: 256,
@@ -55,10 +55,12 @@ function clamp(value: number, [min, max]: readonly [number, number]) {
 }
 
 export function resizePanel(key: keyof typeof LAYOUT_LIMITS, value: number) {
-  layoutStore.setState({ [key]: clamp(value, LAYOUT_LIMITS[key]) } as Partial<LayoutState>)
+  layoutStore.setState({
+    [key]: clamp(value, LAYOUT_LIMITS[key]),
+  } as Partial<LayoutState>)
 }
 
-export function togglePanel(key: 'treeOpen' | 'inspectorOpen' | 'dockOpen') {
+export function togglePanel(key: "treeOpen" | "inspectorOpen" | "dockOpen") {
   layoutStore.setState((s) => ({ [key]: !s[key] }) as Partial<LayoutState>)
 }
 

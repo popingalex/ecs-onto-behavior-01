@@ -29,7 +29,8 @@
       "属性、图和调度三类草稿互不覆盖。",
       "页面规格路径扫描不再出现28个失效引用。"
     ],
-    "status": "planned"
+    "status": "done",
+    "statusNote": "2026-10-20：page_index.json 与 file_index.json 共 56 条失效路径已按 spec_path_repairs.json 修复（扫描 0 失效）；shadcn/ui + TanStack Table + @xyflow/react + FlowGram 已安装并在 P12/P14 真实挂载；prototype_seed.v05.json 为唯一种子来源；draft 按 documentId 分离（draftRegistry/modelDocuments）。"
   },
   {
     "id": "M1",
@@ -61,7 +62,8 @@
       "P03→P29→引用位置的跳转正确。",
       "null位置实体仍在表中，原点位置有效。"
     ],
-    "status": "planned"
+    "status": "done",
+    "statusNote": "2026-10-20：P02/P05/P08/P29 页面与 src/features/ecs 建成（CRUD、搜索、引用阻止删除、恢复继承≠显式 null、null 位置语义）；P03 迁移到 modelDocuments 并启用新增属性；刷新恢复与分层隔离有测试。偏离：EntityTypeDef 无 parent 字段（v0.5 契约不含），P02 继承编辑未做。"
   },
   {
     "id": "M2",
@@ -92,7 +94,8 @@
       "不存在n-min.out等硬编码候选依赖。",
       "P12不在这里复用内部运算节点注册表。"
     ],
-    "status": "planned"
+    "status": "done",
+    "statusNote": "2026-10-20：P14 FlowGram FreeLayoutEditor 五类物料 + 四区布局；P30 程序资产库与动态程序文档；P15 硬编码候选（含 n-min.out）已删除，改用 bindingCandidates；°C→K 连边拒绝、删必需连接校验失败、codec 往返与语义 hash 均有测试。注意：main.tsx 已移除 StrictMode（FlowGram DI 冲突）。"
   },
   {
     "id": "M3",
@@ -123,7 +126,8 @@
       "成环显示诊断，不能执行。",
       "System详情展示query、program、参数与访问声明，而不是只放标题。"
     ],
-    "status": "planned"
+    "status": "done",
+    "statusNote": "2026-10-20/21：P10 查询预览（q-fire=3 火源）、P11 System 定义与绑定（详情含 query/program/参数/访问声明）、P12 React Flow 外层调度（SystemNode/ReducerNode/ContractNode/CommitNode，order/effect 边标签，product 拒绝，成环诊断，compileSchedule 计划预览，双击跳 P14）；调度与程序独立文档。scheduleCompiler 随本批扩展。"
   },
   {
     "id": "M4",
@@ -156,7 +160,8 @@
       "禁用B得到50/30/20；A改20K得到30/20/20。",
       "旧记录不随当前图参数修改而变化。"
     ],
-    "status": "planned"
+    "status": "done",
+    "statusNote": "2026-10-21：src/services/mock-executor 纯 TS 求值器（无 setTimeout）；P20 默认接 mockExecutorAdapter（referenceAdapter 仅查看样例并明确标注）；trace store 不可变记录；P22/P23/P24 联动过程页；基线 100/50/−50/−40/20、停用 B 50/30/20、A 20K 30/20/20 三组试算有测试与浏览器证据；失败保留 baseCommit。偏离：种子分支头改为 c042（样例提交保留供查看）。"
   },
   {
     "id": "M5",
@@ -185,6 +190,7 @@
       "构建通过及浏览器交互证据齐备。",
       "未实现项逐项列出，不把页面登记数或链接数当完成率。"
     ],
-    "status": "planned"
+    "status": "done",
+    "statusNote": "2026-10-21：AC01–AC20 逐项验收（通过 19 / 部分 1 / 失败 0），13 张真实截图在 design/02/acceptance/screens/，详见 acceptance/core-journeys.md 与 component-usage.md。偏离：TanStack Table 已装未用；AC10 浏览器端加边操作无逐帧录屏（分组逻辑有单测）。"
   }
 ]

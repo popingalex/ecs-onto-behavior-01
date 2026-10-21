@@ -2,141 +2,141 @@
   {
     "id": "P01",
     "title": "项目与版本总览",
-    "file": "pages/P01_项目与版本总览.md"
+    "file": "pages/P01_.md"
   },
   {
     "id": "P02",
     "title": "本体类型与关系",
-    "file": "pages/P02_本体类型与关系.md"
+    "file": "pages/P02_.md"
   },
   {
     "id": "P03",
     "title": "组件与属性模式",
-    "file": "pages/P03_组件与属性模式.md"
+    "file": "pages/P03_.md"
   },
   {
     "id": "P04",
     "title": "丰富值、单位与联合约束",
-    "file": "pages/P04_丰富值、单位与联合约束.md"
+    "file": "pages/P04_.md"
   },
   {
     "id": "P05",
     "title": "实体模板与覆盖",
-    "file": "pages/P05_实体模板与覆盖.md"
+    "file": "pages/P05_.md"
   },
   {
     "id": "P06",
     "title": "场景模板与装配",
-    "file": "pages/P06_场景模板与装配.md"
+    "file": "pages/P06_.md"
   },
   {
     "id": "P07",
     "title": "场景构建工作台",
-    "file": "pages/P07_场景构建工作台.md"
+    "file": "pages/P07_.md"
   },
   {
     "id": "P08",
     "title": "实体与批量属性",
-    "file": "pages/P08_实体与批量属性.md"
+    "file": "pages/P08_.md"
   },
   {
     "id": "P09",
     "title": "资产库与导入",
-    "file": "pages/P09_资产库与导入.md"
+    "file": "pages/P09_.md"
   },
   {
     "id": "P10",
     "title": "实体查询构建器",
-    "file": "pages/P10_实体查询构建器.md"
+    "file": "pages/P10_.md"
   },
   {
     "id": "P11",
     "title": "System目录与执行绑定",
-    "file": "pages/P11_System目录与执行绑定.md"
+    "file": "pages/P11_System.md"
   },
   {
     "id": "P12",
     "title": "System外层调度",
-    "file": "pages/P12_System外层调度.md"
+    "file": "pages/P12_System.md"
   },
   {
     "id": "P13",
     "title": "访问声明与并发诊断",
-    "file": "pages/P13_访问声明与并发诊断.md"
+    "file": "pages/P13_.md"
   },
   {
     "id": "P14",
     "title": "System内部逻辑编辑",
-    "file": "pages/P14_System内部逻辑编辑.md"
+    "file": "pages/P14_System.md"
   },
   {
     "id": "P15",
     "title": "属性与变量绑定选择器",
-    "file": "pages/P15_属性与变量绑定选择器.md"
+    "file": "pages/P15_.md"
   },
   {
     "id": "P16",
     "title": "贡献归约与Contract配置",
-    "file": "pages/P16_贡献归约与Contract配置.md"
+    "file": "pages/P16_Contract.md"
   },
   {
     "id": "P17",
     "title": "持续策略配置",
-    "file": "pages/P17_持续策略配置.md"
+    "file": "pages/P17_.md"
   },
   {
     "id": "P18",
     "title": "发布校验与版本清单",
-    "file": "pages/P18_发布校验与版本清单.md"
+    "file": "pages/P18_.md"
   },
   {
     "id": "P19",
     "title": "演练创建与运行清单",
-    "file": "pages/P19_演练创建与运行清单.md"
+    "file": "pages/P19_.md"
   },
   {
     "id": "P20",
     "title": "演练运行工作台",
-    "file": "pages/P20_演练运行工作台.md"
+    "file": "pages/P20_.md"
   },
   {
     "id": "P21",
     "title": "操作队列与冲突审查",
-    "file": "pages/P21_操作队列与冲突审查.md"
+    "file": "pages/P21_.md"
   },
   {
     "id": "P22",
     "title": "工作流批次与节点调试",
-    "file": "pages/P22_工作流批次与节点调试.md"
+    "file": "pages/P22_.md"
   },
   {
     "id": "P23",
     "title": "联合约束与贡献裁决",
-    "file": "pages/P23_联合约束与贡献裁决.md"
+    "file": "pages/P23_.md"
   },
   {
     "id": "P24",
     "title": "属性演化链与输入来源",
-    "file": "pages/P24_属性演化链与输入来源.md"
+    "file": "pages/P24_.md"
   },
   {
     "id": "P25",
     "title": "事件链与业务解释",
-    "file": "pages/P25_事件链与业务解释.md"
+    "file": "pages/P25_.md"
   },
   {
     "id": "P26",
     "title": "提交历史与分支",
-    "file": "pages/P26_提交历史与分支.md"
+    "file": "pages/P26_.md"
   },
   {
     "id": "P27",
     "title": "分支对比与反事实",
-    "file": "pages/P27_分支对比与反事实.md"
+    "file": "pages/P27_.md"
   },
   {
     "id": "P28",
     "title": "持续策略与任务监控",
-    "file": "pages/P28_持续策略与任务监控.md"
+    "file": "pages/P28_.md"
   }
 ]
