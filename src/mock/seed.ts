@@ -172,7 +172,7 @@ export function seedFromModel(
     classes: m.entityTypes.map((t) => ({
       id: t.id,
       label: t.label,
-      parent: null,
+      parent: t.parent ?? null,
       components: [...t.requiredComponentIds, ...t.optionalComponentIds],
       requiredComponents: t.requiredComponentIds,
       optionalComponents: t.optionalComponentIds,

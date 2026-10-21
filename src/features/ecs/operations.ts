@@ -1,6 +1,7 @@
 import type {
   AttributeSchema,
   ComponentSchema,
+  ConstraintDef,
   EntityTemplate,
   EntityTypeDef,
   ObjectRef,
@@ -8,17 +9,25 @@ import type {
   RawValue,
   SceneDraft,
   SceneEntity,
+  UnitDef,
   ValueTypeRef,
   WriteMode,
 } from "@/schema/model"
 import { isAssembled } from "@/schema/values"
-import type { SchemaContent } from "@/stores/modelDocuments"
+import {
+  effectiveComponents,
+  effectiveRequiredIds,
+  wouldCycle,
+} from "@/schema/inheritance"
+import type { SchemaContent, SystemsContent } from "@/stores/modelDocuments"
 import {
   attributeRefs,
   componentRefs,
+  constraintRefs,
   entityRefs,
   entityTypeRefs,
   templateRefs,
+  unitRefs,
   type RefHit,
 } from "./refs"
 import { validId } from "./ids"
@@ -165,6 +174,32 @@ export function deleteEntityType(
   if (refs.length)
     return fail(`实体类型 ${id} 仍被 ${refs.length} 处引用，不能删除`, refs)
   return ok({ ...s, entityTypes: s.entityTypes.filter((t) => t.id !== id) })
+}
+
+/** 设置 / 清除类型的父类型；parentId 为 null 表示无父类型。成环（父是自身或子孙）被拒绝。 */
+export function setEntityTypeParent(
+  s: SchemaContent,
+  typeId: string,
+  parentId: string | null,
+): OpResult<SchemaContent> {
+  const type = s.entityTypes.find((t) => t.id === typeId)
+  if (!type) return fail(`实体类型 ${typeId} 不存在`)
+  if (parentId !== null) {
+    if (!s.entityTypes.some((t) => t.id === parentId))
+      return fail(`父类型 ${parentId} 不存在`)
+    if (wouldCycle(s.entityTypes, typeId, parentId))
+      return fail(
+        parentId === typeId
+          ? "类型不能继承自身"
+          : `${parentId} 是 ${typeId} 的子孙类型，设为父类型会形成继承环`,
+      )
+  }
+  return ok({
+    ...s,
+    entityTypes: s.entityTypes.map((t) =>
+      t.id === typeId ? { ...t, parent: parentId } : t,
+    ),
+  })
 }
 
 // ---------- 组件 ----------
@@ -349,12 +384,13 @@ export function createTemplate(
   if (err) return fail(err)
   const type = s.entityTypes.find((t) => t.id === input.typeId)
   if (!type) return fail(`实体类型 ${input.typeId} 不存在`)
-  const componentSchemaRefs: ObjectRef[] = type.requiredComponentIds.map(
-    (cid) => ({
-      id: cid,
-      version: s.components.find((c) => c.id === cid)?.version ?? "1",
-    }),
-  )
+  const componentSchemaRefs: ObjectRef[] = effectiveRequiredIds(
+    s.entityTypes,
+    input.typeId,
+  ).map((cid) => ({
+    id: cid,
+    version: s.components.find((c) => c.id === cid)?.version ?? "1",
+  }))
   const template: EntityTemplate = {
     id: input.id,
     version: input.version,
@@ -469,7 +505,7 @@ export function createSceneEntity(
     )
   const refs: ObjectRef[] = template
     ? template.componentSchemaRefs.map((r) => ({ ...r }))
-    : type.requiredComponentIds.map((cid) => ({
+    : effectiveRequiredIds(model.entityTypes, input.typeId).map((cid) => ({
         id: cid,
         version: model.components.find((c) => c.id === cid)?.version ?? "1",
       }))
@@ -536,7 +572,7 @@ export function addEntityComponent(
   })
 }
 
-/** 移除组件实例；类型声明为必需组件时报错，同时清理该组件属性的实例覆盖。 */
+/** 移除组件实例；有效装配（含继承）里的必需组件时报错，同时清理该组件属性的实例覆盖。 */
 export function removeEntityComponent(
   model: PrototypeModel,
   scene: SceneDraft,
@@ -547,10 +583,14 @@ export function removeEntityComponent(
   if (!entity) return fail(`实体 ${entityId} 不存在`)
   if (!isAssembled(entity, componentId))
     return fail(`实体未装配组件 ${componentId}`)
-  const type = model.entityTypes.find((t) => t.id === entity.typeId)
-  if (type?.requiredComponentIds.includes(componentId))
+  const origin = effectiveComponents(model.entityTypes, entity.typeId).find(
+    (o) => o.componentId === componentId,
+  )
+  if (origin?.mode === "required")
     return fail(
-      `${componentId} 是 ${entity.typeId} 的必需组件，不能从实体 ${entityId} 移除`,
+      `${componentId} 是 ${entity.typeId} 的必需组件${
+        origin.inheritedFrom ? `（继承自 ${origin.inheritedFrom}）` : ""
+      }，不能从实体 ${entityId} 移除`,
     )
   const memberProps = new Set(
     model.components.find((c) => c.id === componentId)?.propertyIds ?? [],
@@ -627,4 +667,112 @@ export function clearEntityOverride(
   propertyId: string,
 ): OpResult<SceneDraft> {
   return withEntityOverride(model, scene, entityId, propertyId, INHERIT)
+}
+
+// ---------- 单位（P04，SCHEMA_DOC） ----------
+
+/** 新建单位：量种必填；v0.5 契约没有换算公式字段，同量种单位并列展示。 */
+export function createUnit(
+  s: SchemaContent,
+  input: { id: string ;symbol: string ;quantityKind: string },
+): OpResult<SchemaContent> {
+  const err = checkId(
+    input.id,
+    s.units.some((u) => u.id === input.id),
+  )
+  if (err) return fail(err)
+  if (!input.symbol.trim()) return fail("单位符号不能为空")
+  if (!input.quantityKind.trim()) return fail("量种不能为空")
+  const unit: UnitDef = {
+    id: input.id,
+    symbol: input.symbol.trim(),
+    quantityKind: input.quantityKind.trim(),
+  }
+  return ok({ ...s, units: [...s.units, unit] })
+}
+
+/** 修改符号 / 量种；量种改动可能使引用属性报 UNIT_KIND_MISMATCH，由校验诊断暴露。 */
+export function updateUnit(
+  s: SchemaContent,
+  id: string,
+  patch: Partial<Pick<UnitDef, "symbol" | "quantityKind">>,
+): OpResult<SchemaContent> {
+  const unit = s.units.find((u) => u.id === id)
+  if (!unit) return fail(`单位 ${id} 不存在`)
+  const next: UnitDef = { ...unit, ...patch }
+  if (!next.symbol.trim()) return fail("单位符号不能为空")
+  if (!next.quantityKind.trim()) return fail("量种不能为空")
+  return ok({
+    ...s,
+    units: s.units.map((u) => (u.id === id ? next : u)),
+  })
+}
+
+export function deleteUnit(
+  model: PrototypeModel,
+  s: SchemaContent,
+  id: string,
+): OpResult<SchemaContent> {
+  const refs = unitRefs(model, id)
+  if (refs.length)
+    return fail(`单位 ${id} 仍被 ${refs.length} 处引用，不能删除`, refs)
+  return ok({ ...s, units: s.units.filter((u) => u.id !== id) })
+}
+
+// ---------- 约束（P04，SYSTEMS_DOC） ----------
+
+/** 新建约束：策略固定 proportional（v0.5 契约唯一策略），版本从 c1 起。 */
+export function createConstraint(
+  c: SystemsContent,
+  input: { id: string ;floorC: number ;domain: string ;unsupported: string },
+): OpResult<SystemsContent> {
+  const err = checkId(
+    input.id,
+    c.constraints.some((x) => x.id === input.id),
+  )
+  if (err) return fail(err)
+  if (!Number.isFinite(input.floorC))
+    return fail("下限必须是有限数值，NaN / Infinity 不能入库")
+  if (!input.domain.trim()) return fail("适用域不能为空")
+  const constraint: ConstraintDef = {
+    id: input.id,
+    version: "c1",
+    strategy: "proportional",
+    floorC: input.floorC,
+    domain: input.domain.trim(),
+    unsupported: input.unsupported.trim(),
+  }
+  return ok({ ...c, constraints: [...c.constraints, constraint] })
+}
+
+/** 修改约束参数；版本不自动递进（引用方固定 id@version，需显式升版另行处理）。 */
+export function updateConstraint(
+  c: SystemsContent,
+  id: string,
+  patch: Partial<Pick<ConstraintDef, "floorC" | "domain" | "unsupported">>,
+): OpResult<SystemsContent> {
+  const constraint = c.constraints.find((x) => x.id === id)
+  if (!constraint) return fail(`约束 ${id} 不存在`)
+  const next: ConstraintDef = { ...constraint, ...patch }
+  if (!Number.isFinite(next.floorC))
+    return fail("下限必须是有限数值，NaN / Infinity 不能入库")
+  if (!next.domain.trim()) return fail("适用域不能为空")
+  return ok({
+    ...c,
+    constraints: c.constraints.map((x) => (x.id === id ? next : x)),
+  })
+}
+
+export function deleteConstraint(
+  model: PrototypeModel,
+  c: SystemsContent,
+  id: string,
+): OpResult<SystemsContent> {
+  const refs = constraintRefs(model, id)
+  if (refs.length)
+    return fail(`约束 ${id} 仍被 ${refs.length} 处引用，不能删除`, refs)
+  return ok({
+    ...c,
+    constraints: c.constraints.filter((x) => x.id !== id),
+  })
 }

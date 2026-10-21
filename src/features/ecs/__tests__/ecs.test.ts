@@ -2,6 +2,10 @@ import assert from "node:assert/strict"
 import { baselineModel } from "@/data/mockLoader"
 import type { PrototypeModel, SceneDraft } from "@/schema/model"
 import { checkIntegrity } from "@/schema/parse"
+import {
+  effectiveComponents,
+} from "@/schema/inheritance"
+import { scopeAttributes } from "@/services/domainBindingService"
 import { resolveInitialValue, valuesEqual } from "@/schema/values"
 import type { SchemaContent } from "@/stores/modelDocuments"
 import * as ops from "@/features/ecs/operations"
@@ -430,4 +434,163 @@ export function createChainIntegrity() {
   s = mk(ops.deleteComponent(m, s, "ThermalNew"))
   m = withSchema(m, s)
   assert.deepEqual(errors(m), [])
+}
+
+/** parent 继承：子类型的有效装配叠加父链必需/可选组件；就近声明优先。 */
+export function inheritanceAssemblyExpands() {
+  const model = fresh()
+  let s = schemaOf(model)
+  const mk = <T>(r: ops.OpResult<T>): T => {
+    assert.ok(r.ok, JSON.stringify(r))
+    return r.ok ? r.content : undefined as never
+  }
+
+  // 父类型 VehicleBase：必需 Position、可选 Water；子类型 PatrolCar 继承它
+  s = mk(ops.createEntityType(s, { id: "VehicleBase", label: "载具基座" }))
+  s = mk(ops.setEntityTypeComponent(s, "VehicleBase", "Position", "required"))
+  s = mk(ops.setEntityTypeComponent(s, "VehicleBase", "Water", "optional"))
+  s = mk(ops.createEntityType(s, { id: "PatrolCar", label: "巡逻车" }))
+  s = mk(ops.setEntityTypeComponent(s, "PatrolCar", "Thermal", "optional"))
+  s = mk(ops.setEntityTypeParent(s, "PatrolCar", "VehicleBase"))
+
+  const origins = effectiveComponents(s.entityTypes, "PatrolCar")
+  assert.deepEqual(
+    origins.map((o) => [o.componentId, o.mode, o.inheritedFrom]),
+    [
+      ["Thermal", "optional", null],
+      ["Position", "required", "VehicleBase"],
+      ["Water", "optional", "VehicleBase"],
+    ],
+  )
+  // 就近声明优先：子类型自己声明可选 Position 时，覆盖父类的必需声明
+  const sOverride = mk(
+    ops.setEntityTypeComponent(s, "PatrolCar", "Position", "optional"),
+  )
+  const own = effectiveComponents(sOverride.entityTypes, "PatrolCar").find(
+    (o) => o.componentId === "Position",
+  )!
+  assert.deepEqual([own.mode, own.inheritedFrom], ["optional", null])
+
+  // 程序作用域属性包含继承来的组件属性
+  const scoped = scopeAttributes(
+    { attributes: model.attributes, entityTypes: s.entityTypes },
+    "PatrolCar",
+  )
+  assert.ok(scoped.some((x) => x.attribute.id === "position.local"))
+  assert.ok(scoped.some((x) => x.attribute.id === "water.remaining"))
+
+  // 完整性：加 parent 之后种子链路仍无错误
+  let m = withSchema(model, s)
+  assert.deepEqual(errors(m), [])
+
+  // 新建模板 / 实体：初始装配含继承来的必需组件 Position
+  s = mk(
+    ops.createTemplate(s, {
+      id: "tpl-patrol",
+      version: "1",
+      label: "巡逻车模板",
+      typeId: "PatrolCar",
+    }),
+  )
+  const tpl = s.templates.find((t) => t.id === "tpl-patrol")!
+  assert.ok(tpl.componentSchemaRefs.some((r) => r.id === "Position"))
+  assert.ok(!tpl.componentSchemaRefs.some((r) => r.id === "Water"))
+  m = withSchema(model, s)
+  const scene = mk(
+    ops.createSceneEntity(m, structuredClone(model.scene), {
+      id: "P901",
+      label: "巡逻车 1 号",
+      typeId: "PatrolCar",
+    }),
+  )
+  const p901 = scene.entities.find((e) => e.id === "P901")!
+  assert.ok(p901.componentInstances.some((ci) => ci.schemaRef.id === "Position"))
+  m = withScene(m, scene)
+  assert.deepEqual(errors(m), [])
+
+  // 继承来的必需组件不能从实体移除（报文标注继承来源）；继承来的可选组件可以移除
+  const bad = ops.removeEntityComponent(m, m.scene, "P901", "Position")
+  assert.equal(bad.ok, false)
+  assert.ok(
+    !bad.ok && bad.message.includes("继承自 VehicleBase"),
+    JSON.stringify(bad),
+  )
+  const dropped = ops.addEntityComponent(m, m.scene, "P901", "Water")
+  assert.ok(dropped.ok, JSON.stringify(dropped))
+  const mWater = withScene(m, dropped.ok ? dropped.content : m.scene)
+  const good = ops.removeEntityComponent(mWater, mWater.scene, "P901", "Water")
+  assert.ok(good.ok, JSON.stringify(good))
+}
+
+/** 继承环：操作层拒绝自身/子孙作父；直接注入成环数据时 checkIntegrity 报 ONTOLOGY_CYCLE。 */
+export function inheritanceCycleRejected() {
+  const model = fresh()
+  let s = schemaOf(model)
+  const mk = <T>(r: ops.OpResult<T>): T => {
+    assert.ok(r.ok, JSON.stringify(r))
+    return r.ok ? r.content : undefined as never
+  }
+  s = mk(ops.createEntityType(s, { id: "BaseA", label: "A" }))
+  s = mk(ops.createEntityType(s, { id: "ChildB", label: "B" }))
+  s = mk(ops.createEntityType(s, { id: "GrandC", label: "C" }))
+
+  // 不能继承自身
+  const selfLoop = ops.setEntityTypeParent(s, "BaseA", "BaseA")
+  assert.equal(selfLoop.ok, false)
+  assert.ok(!selfLoop.ok && selfLoop.message.includes("自身"))
+
+  // BaseA ← ChildB ← GrandC 之后，BaseA 不能继承自己的子孙
+  s = mk(ops.setEntityTypeParent(s, "ChildB", "BaseA"))
+  s = mk(ops.setEntityTypeParent(s, "GrandC", "ChildB"))
+  assert.equal(ops.setEntityTypeParent(s, "BaseA", "GrandC").ok, false)
+  assert.equal(ops.setEntityTypeParent(s, "BaseA", "ChildB").ok, false)
+  // 父类型必须存在
+  assert.equal(ops.setEntityTypeParent(s, "BaseA", "Ghost").ok, false)
+  // 清掉 parent 后可以再设
+  s = mk(ops.setEntityTypeParent(s, "GrandC", null))
+  assert.equal(
+    s.entityTypes.find((t) => t.id === "GrandC")!.parent ?? null,
+    null,
+  )
+  s = mk(ops.setEntityTypeParent(s, "BaseA", "GrandC"))
+  assert.deepEqual(errors(withSchema(model, s)), [])
+
+  // 绕过操作层直接注入环：完整性检查报 ONTOLOGY_CYCLE 并定位
+  const cycled = withSchema(model, s)
+  cycled.entityTypes = cycled.entityTypes.map((t) =>
+    t.id === "GrandC" ? { ...t, parent: "BaseA" } : t,
+  )
+  const diags = checkIntegrity(cycled).filter((d) => d.code === "ONTOLOGY_CYCLE")
+  assert.ok(diags.length >= 1, JSON.stringify(checkIntegrity(cycled)))
+  assert.ok(diags.every((d) => d.severity === "error"))
+}
+
+/** 删除被继承的父类型被阻止（子类型计入引用）；清除继承后可删。 */
+export function inheritedParentDeleteBlocked() {
+  const model = fresh()
+  let s = schemaOf(model)
+  const mk = <T>(r: ops.OpResult<T>): T => {
+    assert.ok(r.ok, JSON.stringify(r))
+    return r.ok ? r.content : undefined as never
+  }
+  s = mk(ops.createEntityType(s, { id: "BaseX", label: "基类 X" }))
+  s = mk(ops.createEntityType(s, { id: "ChildY", label: "子类 Y" }))
+  s = mk(ops.setEntityTypeParent(s, "ChildY", "BaseX"))
+  const m = withSchema(model, s)
+
+  const refs = entityTypeRefs(m, "BaseX")
+  assert.ok(
+    refs.some((r) => r.kind === "entityType" && r.id === "ChildY"),
+    JSON.stringify(refs),
+  )
+  const blocked = ops.deleteEntityType(m, s, "BaseX")
+  assert.equal(blocked.ok, false)
+  assert.ok(!blocked.ok && blocked.message.includes("BaseX"))
+
+  // 子类型改回无父后，父类型可删
+  s = mk(ops.setEntityTypeParent(s, "ChildY", null))
+  const freed = ops.deleteEntityType(withSchema(model, s), s, "BaseX")
+  assert.ok(freed.ok, JSON.stringify(freed))
+  s = freed.ok ? freed.content : s
+  assert.deepEqual(errors(withSchema(model, s)), [])
 }

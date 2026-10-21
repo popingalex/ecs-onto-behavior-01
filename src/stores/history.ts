@@ -36,6 +36,15 @@ export function appendCommit(commit: CommitDef) {
   })
 }
 
+/** 建立新分支：head 固定为 fromCommit；同 id 忽略。不影响任何现有分支头。 */
+export function appendBranch(branch: BranchDef) {
+  historyStore.setState((s) =>
+    s.branches[branch.id]
+      ? {}
+      : { branches: { ...s.branches, [branch.id]: branch } },
+  )
+}
+
 export function useBranches() {
   return useStore(historyStore, (s) => s.branches)
 }

@@ -1,4 +1,4 @@
-# 施工进展回传（M0–M4，2026-10-20/21）
+# 施工进展回传（M0–M5 + 补缺，2026-10-20/21）
 
 本文记录各批次的实际改动、验证结果与剩余缺口。状态机读版见 `contracts/implementation_tasks.json` 的 `status`/`statusNote`。未完成项如实列出，不把页面登记数当完成率。
 
@@ -14,8 +14,10 @@
 | M3 System 定义与外层调度 | done | 25 passed |
 | M4 运行与计算过程 | done | 35 passed |
 | M5 验收取证 | done（19 通过 / 1 部分 / 0 失败） | — |
+| 补缺：parent 继承 + P22 端口单位 | done | 40 passed |
+| 补缺：13 个占位页全部落地 | done | 66 passed |
 
-最终基线：`35 passed, 0 failed`；`vite build` 通过（仅 chunk 体积提示）。
+最终基线：`66 passed, 0 failed`；`vite build` 通过；全部 30 页 + 2 overlay 无 PagePlaceholder。
 
 ## M0 收尾
 
@@ -28,7 +30,7 @@
 - 新页面：`src/pages/p02/`（实体类型）、`p29/`（独立属性定义）、`p05/`（模板覆盖）、`p08/`（场景实体实例与初值）；`PageId` 扩 P29/P30，导航与 ResourceTree 同步。
 - P03 整体迁移到 modelDocuments 栈：「新增属性」已启用、组件 CRUD、搜索、引用阻止删除（删除 `thermal.temperature` 列出 10 处引用并阻止）。
 - 验证：新建 Thermal→属性→类型→实体链路可用，保存后刷新恢复；改 V01 水量不影响默认/模板/V02（单测）；null 位置实体仍在表中；必需组件移除报错。
-- **偏离**：`EntityTypeDef` 无 `parent` 字段（v0.5 zod 契约不含），P02 的 parent 继承编辑未做，页面已注明；如需支持要先改契约。
+- ~~**偏离**：`EntityTypeDef` 无 `parent` 字段（v0.5 zod 契约不含），P02 的 parent 继承编辑未做，页面已注明；如需支持要先改契约。~~（已在补缺批次修复，见下）
 - **事故记录**：曾误运行 oxfmt 导致全仓 src 单引号→双引号并重排（23 个文件被误改后已逐一修复，tsc/test/build 证明语义未变）；残留影响是 src 现为双引号风格，diff 噪音大。
 
 ## M2 System 内部逻辑可视化编辑
@@ -59,7 +61,7 @@
 - 新页面：`p22/`（recordId→system→entity→node 联动，只读图 + 端口值 + 访问日志 + 贡献矩阵，步进标「记录回看」）、`p23/`（requested→approved→final 与比例，未裁决不补 0）、`p24/`（属性演化链与输入来源，可跳回 P22 固定图版本）。P20 增加提交来源标注与「已保存模型/草稿试算」切换。
 - 数值验收（测试 + 浏览器）：基线 F01=100/50/−50/−40/20；停用 B=50/30/20；A 改 20K=30/20/20；初温<20°C 请求为 0 不反向升温；循环/product/断必需连接 → 诊断报错不产结果；旧记录不随草稿修改变化。
 - **偏离**：种子分支头改为 c042（原样例提交当头会让 BASE_NOT_HEAD 守卫永远挡住真实推算；样例提交保留供 P27/查看样例）。
-- **简化**：P22 只读节点图为自绘 SVG（未嵌 FlowGram）；端口单位映射为启发式（主干五节点场景正确）。
+- **简化**：P22 只读节点图为自绘 SVG（未嵌 FlowGram）；~~端口单位映射为启发式（主干五节点场景正确）~~（已改为读记录图快照的端口声明，见补缺批次）。
 
 ## 收尾冒烟（2026-10-21，dev server :8443，桌面浏览器）
 
@@ -78,8 +80,31 @@
 ## 剩余缺口（下一轮）
 
 1. ~~**M5 验收取证**~~（已完成，见上）。
-2. M1 偏离：实体类型 parent 继承（需先改 v0.5 契约）。
-3. P22 端口单位启发式映射的完整化。
+2. ~~M1 偏离：实体类型 parent 继承（需先改 v0.5 契约）~~（已完成，见下）。
+3. ~~P22 端口单位启发式映射的完整化~~（已完成，见下）。
 4. TanStack Table 已装未用：表格层是否替换另立任务。
-5. 占位页：P04/P06/P07/P09/P13/P16–P19/P25–P28 仍回落 PagePlaceholder（非核心）。
+5. ~~占位页：P04/P06/P07/P09/P13/P16–P19/P25–P28 仍回落 PagePlaceholder~~（已完成，见下；全应用 30 页 + 2 overlay 均为真实页面）。
 6. 工具链：建议团队统一 `corepack pnpm@10.34.3` 或安装 mise；不要运行 `pnpm format`（oxfmt 0.2.0 有破坏性行为）。
+7. 受 v0.5 契约限制的只读页：P17 持续策略（种子仅 id/version/label，无结构字段可编辑）、P28 策略监控（无策略评估/任务记录来源，候选表是 head 世界读数并明确标注）。需扩契约后再做编辑。
+
+## 占位页批次（2026-10-21）：13 页全部落地，PagePlaceholder 退役
+
+- **P04 量种/单位/约束**：单位表（量种分组、引用计数）、测试台实时解析（100°C−20°C=80K，跨量种报错）、单位/约束 CRUD（引用阻止）；约束沙盒试算与运行裁决同口径（额度 80K/比例 0.8/−50→−40，标 sandbox 不产 commit）。
+- **P06 场景模板**：当前场景另存为模板（独立本地草稿文档）、角色表、实例化到当前场景（6 角色写 SCENE_DOC，P07 联动变 逻辑 12/空间 10）；legacy 样例只读。
+- **P07 场景构建工作台**（fill）：SpatialViewport 扩展拖拽移动（写 SCENE_DOC、可撤销）、放置模式点击落点建实体、未定位实体芯片「逻辑保留，视图不绘制」、底栏实体/关系/问题三标签、观察者只读。
+- **P09 资产清单**：旧样例 asset-truck@a2 如实展示（标注未接入 v0.5 运行链）、manifest 版本清单 12 项真实对象带跳转、导入禁用说明。
+- **P13 访问与并发诊断**：直接消费 compileSchedule 访问/冲突输出，矩阵 + 冲突详情可跳 P12/P11。
+- **P16 联合约束与归约**：cooling-floor@c1 编辑（applySystemsOp）、归约路由、独立试算（executeRound 同步求值一回合只展示不写入）。
+- **P18 校验与发布**：全量 checkIntegrity 绑定文档语义哈希（草稿一变即「已过期」）、诊断分组定位到各页、0 错误才可发布不可变 bundle（stores/publish.ts，幂等无修改入口）。
+- **P19 新建运行**：运行目录（stores/runCatalog.ts，localStorage 持久化）+ 新建表单，创建不自动结算、主分支头不动。
+- **P25 事件链**：从 trace/提交目录提取真实事件，事实与参考样例分标；预测/派遣/到达/交接无来源 → 诚实空态。
+- **P26 提交历史与分支**（fill）：分支泳道 SVG DAG（样例提交半透明不可选）、选历史只改 viewCommit、切分支改 branchId、「从此建立分支」（appendBranch 不动他分支头）、跳 P27 对比。
+- **P27 分支对比**：时刻对齐判定（不齐显示「不可对齐」不填 0）、逐属性左右对比带 @commit、差值单位 K、缺值「未记录」、「同值·来源不同」标注、跳 P24 两侧来源。
+- **P28 策略监控**：真实空态 + head 世界 V01/V02 水量读数（标注非策略评估）。
+- 测试新增 26 例（两批合计），基线 **66 passed, 0 failed**；build 通过。逐页浏览器冒烟完成（:8443），渲染真实数据。
+
+## 补缺批次（2026-10-21）：parent 继承 + P22 端口单位
+
+- **实体类型 parent 继承**：`EntityTypeDef.parent?: string | null`（`src/schema/model.ts`，zod `.nullable().optional()`）；新增 `src/schema/inheritance.ts`（parentChain / wouldCycle / hasCycle / effectiveComponents / effectiveRequiredIds，对成环宽容截断）。语义：有效装配 = 自身声明 + 父链补充，就近声明优先。checkIntegrity 新增 TYPE_REF_MISSING（父缺失）与 ONTOLOGY_CYCLE（成环，error）；实体必需组件检查、createTemplate/createSceneEntity 初始装配、removeEntityComponent 阻止、scopeAttributes、P10/P11 候选属性全部走有效装配。`setEntityTypeParent` 拒绝自身/子孙作父；entityTypeRefs 计入子类型引用，删除被继承的父类型被阻止。P02 详情页可编辑父类型（子孙置灰防环），继承来的组件标注「继承自 X」并禁止在子类型改动；列表新增父类型列；P08 继承必需组件标「必需（继承）」。种子未加 parent 示例（避免改动既有基线），行为全部由测试构造。`src/mock/seed.ts` 的 ClassDef.parent 改为镜像真实字段；契约文档 `contracts/domain.ts` 与 `04_data_and_trace_contract.md` 已补 entityType 形状与继承语义。
+- **P22 端口单位**：新增 `traceView.portUnit(program, trace, direction, portId)`，单位取自记录绑定的固定图快照（record.programs）节点 inputs/outputs 的 TypeRef.unitId；端口不在快照中时回落旧启发式（old/source→degC，其余随节点第一输出单位）并以 source="heuristic" 标注，页面在端口名旁显示 ≈（title 说明）。效果：n-emit.delta（Contribute 增量）现在显示 K（旧启发式因其 outputUnitId=null 不显示单位），其余主干端口单位与图定义一致。
+- 测试：新增 5 例（继承装配展开 / 循环拒绝 / 删除被继承父类型阻止 / 端口单位来自图声明 / 启发式回落标注）。基线 `40 passed, 0 failed`；`vite build` 通过。

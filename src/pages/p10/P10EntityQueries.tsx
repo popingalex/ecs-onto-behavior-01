@@ -11,6 +11,7 @@ import Table, { Td, Th, Tr } from "@/components/ui/Table"
 import { queryMatches } from "@/services/domainBindingService"
 import { navigate, useRoute } from "@/router/router"
 import type { EntityQuery, PrototypeModel } from "@/schema/model"
+import { effectiveComponents } from "@/schema/inheritance"
 import { applyEdit, useEditingDocument } from "@/stores/draftRegistry"
 import {
   SYSTEMS_DOC,
@@ -24,14 +25,13 @@ import { useReadOnly } from "@/features/ecs/editing"
 import { validId } from "@/features/ecs/ids"
 import { queryRefs, type RefHit } from "@/features/ecs/refs"
 
-/** 类型可装配组件里的全部属性（条件只能指向这些属性）。 */
+/** 类型可装配组件里的全部属性（条件只能指向这些属性）；含 parent 继承的组件。 */
 function typeAttributes(model: PrototypeModel, typeId: string) {
   const type = model.entityTypes.find((t) => t.id === typeId)
   if (!type) return []
-  const componentIds = new Set([
-    ...type.requiredComponentIds,
-    ...type.optionalComponentIds,
-  ])
+  const componentIds = new Set(
+    effectiveComponents(model.entityTypes, typeId).map((o) => o.componentId),
+  )
   const propertyIds = model.components
     .filter((c) => componentIds.has(c.id))
     .flatMap((c) => c.propertyIds)

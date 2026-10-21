@@ -8,8 +8,10 @@ import {
 import {
   SCHEMA_DOC,
   SCENE_DOC,
+  SYSTEMS_DOC,
   ensureModelDocuments,
   type SchemaContent,
+  type SystemsContent,
 } from "@/stores/modelDocuments"
 import { canEdit, useRole } from "@/stores/context"
 import type { OpResult } from "./operations"
@@ -39,11 +41,22 @@ export function applySceneOp(
   return result
 }
 
+export function applySystemsOp(
+  label: string,
+  op: (c: SystemsContent) => OpResult<SystemsContent>,
+): OpResult<SystemsContent> {
+  ensureModelDocuments()
+  const doc = getDocument<SystemsContent>(SYSTEMS_DOC)
+  if (!doc) return { ok: false, message: "System 草稿文档未注册" }
+  const result = op(doc.content)
+  if (result.ok) applyEdit(SYSTEMS_DOC, label, () => result.content)
+  return result
+}
+
 export function useSchemaDoc(): DraftDocument<SchemaContent> | undefined {
   ensureModelDocuments()
   return useDraftDocument<SchemaContent>(SCHEMA_DOC)
 }
-
 export function useSceneDoc(): DraftDocument<SceneDraft> | undefined {
   ensureModelDocuments()
   return useDraftDocument<SceneDraft>(SCENE_DOC)

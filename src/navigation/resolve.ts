@@ -3,6 +3,11 @@ import type { WorkbenchIndex } from "@/data/index"
 import type { BranchDef, CommitDef } from "@/core/types"
 import { lineage } from "@/stores/history"
 import { composeModel } from "@/stores/modelDocuments"
+import { getDocument } from "@/stores/draftRegistry"
+import {
+  SCENE_TEMPLATES_DOC,
+  type SceneTemplatesContent,
+} from "@/features/scene/templates"
 import { PAGE_SPECS } from "./pages"
 import type { Transition } from "./transitions"
 
@@ -78,7 +83,12 @@ export const PARAM_TYPES: Record<string, ParamType> = {
   },
   sceneTemplateId: {
     label: "场景模板",
-    exists: (id, i) => i.sceneTemplates.has(id),
+    exists: (id, i) =>
+      i.sceneTemplates.has(id) ||
+      Boolean(
+        getDocument<SceneTemplatesContent>(SCENE_TEMPLATES_DOC)
+          ?.content.templates.some((t) => t.id === id),
+      ),
   },
   sceneVersion: { label: "场景", exists: (id, i) => i.scenes.has(id) },
   assetId: { label: "资产", exists: (id, i) => i.assets.has(id) },
@@ -86,7 +96,11 @@ export const PARAM_TYPES: Record<string, ParamType> = {
   systemId: { label: "System", exists: (id, i) => i.systems.has(id) },
   graphId: { label: "逻辑图", exists: (id, i) => i.graphs.has(id) },
   scheduleId: { label: "调度", exists: (id, i) => i.schedules.has(id) },
-  constraintId: { label: "约束", exists: (id, i) => i.constraints.has(id) },
+  constraintId: {
+    label: "约束",
+    exists: (id, i) =>
+      i.constraints.has(id) || draft().constraints.some((c) => c.id === id),
+  },
   policyId: { label: "策略", exists: (id, i) => i.policies.has(id) },
   taskId: { label: "任务", exists: (id, i) => i.tasks.has(id) },
   eventId: { label: "事件", exists: (id, i) => i.events.has(id) },

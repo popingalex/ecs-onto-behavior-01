@@ -20,6 +20,7 @@ import type {
   SystemDefinition,
 } from "@/schema/model"
 import { refKey } from "@/schema/model"
+import { effectiveComponents } from "@/schema/inheritance"
 import { applyEdit, useEditingDocument } from "@/stores/draftRegistry"
 import {
   SYSTEMS_DOC,
@@ -57,12 +58,14 @@ function programOf(model: PrototypeModel, system: SystemDefinition): LogicGraphD
   )
 }
 
-/** System 访问声明可选属性：查询目标类型装配的属性。 */
+/** System 访问声明可选属性：查询目标类型装配的属性（含 parent 继承）。 */
 function candidateAttributes(model: PrototypeModel, system: SystemDefinition): AttributeSchema[] {
   const query = queryOf(model, system)
   const type = model.entityTypes.find((t) => t.id === query?.typeId)
   if (!type) return model.attributes
-  const componentIds = new Set([...type.requiredComponentIds, ...type.optionalComponentIds])
+  const componentIds = new Set(
+    effectiveComponents(model.entityTypes, type.id).map((o) => o.componentId),
+  )
   const propertyIds = model.components
     .filter((c) => componentIds.has(c.id))
     .flatMap((c) => c.propertyIds)

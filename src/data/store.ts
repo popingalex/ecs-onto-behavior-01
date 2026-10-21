@@ -4,6 +4,7 @@ import { buildIndex, type WorkbenchIndex } from "./index"
 import { registerReferenceSamples } from "./referenceSamples"
 import { initHistory } from "@/stores/history"
 import { ensureModelDocuments } from "@/stores/modelDocuments"
+import { mergeCatalogRuns } from "@/stores/runCatalog"
 
 interface DataState {
   status: "idle" | "loading" | "ready" | "error"
@@ -30,6 +31,8 @@ export async function loadWorkbench(): Promise<void> {
     ensureModelDocuments()
     // 参考样例（expected_runs）：注册为“查看样例”的预置回合与只读过程记录。
     registerReferenceSamples()
+    // P19 在本浏览器创建的运行：重建其根提交与主分支。
+    mergeCatalogRuns(raw.worlds[0])
     dataStore.setState({ status: "ready", index })
   } catch (error) {
     dataStore.setState({

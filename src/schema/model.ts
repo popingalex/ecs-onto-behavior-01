@@ -44,6 +44,8 @@ export interface UnitDef {
 export interface EntityTypeDef {
   id: string
   label: string
+  /** 父类型 id：继承父链的必需/可选组件（就近声明优先）；null 或缺省表示无父类型。 */
+  parent?: string | null
   requiredComponentIds: string[]
   optionalComponentIds: string[]
 }

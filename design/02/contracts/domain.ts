@@ -10,6 +10,7 @@ export type Binding =
   | {root:'relation';relationId:string;propertyId:string;view:'previous'};
 export interface AttributeSchema {id:string;componentId:string;label:string;type:TypeRef;default:RawValue;writeMode:'configuration'|'exclusive'|'contribution'|'contract';reducerRef?:ObjectRef}
 export interface ComponentSchema {id:string;version:string;propertyIds:string[]}
+export interface EntityTypeDef {id:string;label:string;parent?:string|null;requiredComponentIds:string[];optionalComponentIds:string[]} // parent=父类型 id：子类型继承父链必需/可选组件（就近声明优先）；成环报 ONTOLOGY_CYCLE
 export interface SceneEntity {id:string;typeId:string;templateRef:ObjectRef|null;componentInstances:{schemaRef:ObjectRef}[];initialOverrides:Record<string,RawValue>}
 export type TargetBinding = {root:'self';propertyId:string;view?:never};
 export interface LogicNode {id:string;type:string;inputs:Record<string,TypeRef>;outputs:Record<string,TypeRef>;bindings:Record<string,Binding|TargetBinding>;params:Record<string,RawValue>}

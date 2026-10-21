@@ -12,6 +12,7 @@ import {
   type TargetBinding,
   type TypeRef,
 } from "@/schema/model"
+import { effectiveComponents } from "@/schema/inheritance"
 
 /**
  * DomainBindingService：程序图的领域语义。FlowGram 只负责画布交互与表单承载；
@@ -335,22 +336,17 @@ export function nodeTypeDef(type: string): NodeTypeDef | undefined {
 
 // ---------- 作用域：实体可用属性 ----------
 
-/** program 作用域实体类型上可读的属性（必需 + 可选组件）。 */
+/** program 作用域实体类型上可读的属性（必需 + 可选组件，含 parent 继承）。 */
 export function scopeAttributes(
   model: Pick<Model, "attributes" | "entityTypes">,
   scopeType: string,
 ): Array<{ attribute: AttributeSchema ;optional: boolean }> {
-  const type = model.entityTypes.find((t) => t.id === scopeType)
-  if (!type) return []
   const out: Array<{ attribute: AttributeSchema ;optional: boolean }> = []
-  const groups: Array<[string[], boolean]> = [
-    [type.requiredComponentIds, false],
-    [type.optionalComponentIds, true],
-  ]
-  for (const [ids, optional] of groups)
-    for (const cid of ids)
-      for (const a of model.attributes.filter((x) => x.componentId === cid))
-        out.push({ attribute: a, optional })
+  for (const origin of effectiveComponents(model.entityTypes, scopeType))
+    for (const a of model.attributes.filter(
+      (x) => x.componentId === origin.componentId,
+    ))
+      out.push({ attribute: a, optional: origin.mode === "optional" })
   return out
 }
 

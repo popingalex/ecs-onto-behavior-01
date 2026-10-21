@@ -95,3 +95,37 @@ export function nodeLabel(nodeId: string, program: LogicGraphDocument) {
     label: node ? (nodeTypeDef(node.type)?.label ?? node.type) : "未知节点",
   }
 }
+
+/** 端口单位来源：declared = 记录里固定图快照的端口声明；heuristic = 快照缺该端口时的回落。 */
+export interface PortUnit {
+  unitId: string | null
+  source: "declared" | "heuristic"
+}
+
+/**
+ * 端口单位映射：优先取记录绑定的固定图版本（record.programs）里节点 inputs/outputs 的
+ * TypeRef.unitId——那才是图定义的真实单位。端口不在快照中（记录与图版本不一致）时回落到
+ * 启发式（输入 old/source → degC，其余随节点第一输出单位）并用 source 标注。
+ */
+export function portUnit(
+  program: LogicGraphDocument | undefined,
+  trace: NodeExecution,
+  direction: "input" | "output",
+  portId: string,
+): PortUnit {
+  const node = program?.nodes.find((n) => n.id === trace.nodeId)
+  const declared = node
+    ? direction === "input"
+      ? node.inputs[portId]
+      : node.outputs[portId]
+    : undefined
+  if (declared !== undefined)
+    return { unitId: declared.unitId ?? null, source: "declared" }
+  return {
+    unitId:
+      direction === "input" && (portId === "old" || portId === "source")
+        ? "degC"
+        : trace.outputUnitId,
+    source: "heuristic",
+  }
+}

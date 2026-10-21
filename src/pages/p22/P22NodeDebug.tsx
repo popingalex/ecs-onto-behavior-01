@@ -24,6 +24,7 @@ import {
   layoutProgram,
   nodeLabel,
   nodeTrace,
+  portUnit,
   programFor,
 } from "./traceView"
 
@@ -366,46 +367,74 @@ export default function P22NodeDebug({ ctx }: { ctx: WorkbenchContext }) {
               <div className="border-b border-line px-4 py-3">
                 <SectionLabel>端口值（记录）</SectionLabel>
                 <dl className="mt-1">
-                  {Object.entries(trace.inputs).map(([port, value]) => (
-                    <KeyValue key={port} label={`入 ${port}`}>
-                      <TypedValueCell
-                        align="left"
-                        value={
-                          typeof value === "number"
-                            ? { state: "value", value }
-                            : value === null
-                              ? { state: "null" }
+                  {Object.entries(trace.inputs).map(([port, value]) => {
+                    const u = portUnit(program, trace, "input", port)
+                    return (
+                      <KeyValue
+                        key={port}
+                        label={
+                          <>
+                            入 {port}
+                            {u.source === "heuristic" ? (
+                              <span
+                                className="ml-1 text-faint"
+                                title="端口不在记录的图快照中，单位为启发式回落"
+                              >
+                                ≈
+                              </span>
+                            ) : null}
+                          </>
+                        }
+                      >
+                        <TypedValueCell
+                          align="left"
+                          value={
+                            typeof value === "number"
+                              ? { state: "value", value }
+                              : value === null
+                                ? { state: "null" }
+                                : { state: "value", value: String(value) }
+                          }
+                          unit={
+                            u.unitId ? (index.units.get(u.unitId) ?? null) : null
+                          }
+                        />
+                      </KeyValue>
+                    )
+                  })}
+                  {Object.entries(trace.outputs).map(([port, value]) => {
+                    const u = portUnit(program, trace, "output", port)
+                    return (
+                      <KeyValue
+                        key={port}
+                        label={
+                          <>
+                            出 {port}
+                            {u.source === "heuristic" ? (
+                              <span
+                                className="ml-1 text-faint"
+                                title="端口不在记录的图快照中，单位为启发式回落"
+                              >
+                                ≈
+                              </span>
+                            ) : null}
+                          </>
+                        }
+                      >
+                        <TypedValueCell
+                          align="left"
+                          value={
+                            typeof value === "number"
+                              ? { state: "value", value }
                               : { state: "value", value: String(value) }
-                        }
-                        unit={
-                          trace.outputUnitId
-                            ? (index.units.get(
-                                port === "old" || port === "source"
-                                  ? "degC"
-                                  : (trace.outputUnitId ?? ""),
-                              ) ?? null)
-                            : null
-                        }
-                      />
-                    </KeyValue>
-                  ))}
-                  {Object.entries(trace.outputs).map(([port, value]) => (
-                    <KeyValue key={port} label={`出 ${port}`}>
-                      <TypedValueCell
-                        align="left"
-                        value={
-                          typeof value === "number"
-                            ? { state: "value", value }
-                            : { state: "value", value: String(value) }
-                        }
-                        unit={
-                          trace.outputUnitId
-                            ? (index.units.get(trace.outputUnitId) ?? null)
-                            : null
-                        }
-                      />
-                    </KeyValue>
-                  ))}
+                          }
+                          unit={
+                            u.unitId ? (index.units.get(u.unitId) ?? null) : null
+                          }
+                        />
+                      </KeyValue>
+                    )
+                  })}
                 </dl>
               </div>
 

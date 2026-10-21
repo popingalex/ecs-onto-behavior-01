@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import { useMemo, useRef, useState } from "react"
 import { MapPinOff } from "lucide-react"
 import type { Vector3 } from "@/core/types"
 import { cn } from "@/lib/cn"
@@ -40,16 +40,22 @@ const KIND = {
 /**
  * C12 SpatialViewport（Bevy 视图的 2D 示意）。坐标为 park-ENU，北向朝上。
  * position = null 不绘制但保留在逻辑与列表中；[0, 0, 0] 是有效位置。
+ * 传入 onMove 后可拖动已放置实体（onPointerUp 一次性提交，米坐标）；
+ * 传入 onCanvasClick 后点击空白处回报落点（供放置流程使用）。
  */
 export default function SpatialViewport({
   items,
   selectedId,
   onSelect,
+  onMove,
+  onCanvasClick,
   caption,
 }: {
   items: SpatialItem[]
   selectedId?: string
   onSelect?: (id: string) => void
+  onMove?: (id: string, east: number, north: number) => void
+  onCanvasClick?: (east: number, north: number) => void
   caption?: string
 }) {
   const placed = items.filter(
@@ -70,6 +76,20 @@ export default function SpatialViewport({
   // 北向朝上：SVG y = maxY - north
   const sx = (x: number) => x - box.minX
   const sy = (y: number) => box.maxY - y
+
+  // 拖动：指针 → viewBox 坐标 → 米坐标；提交四舍五入到 0.1 m。
+  const svgRef = useRef<SVGSVGElement>(null)
+  const [drag, setDrag] = useState<{ id: string ;east: number ;north: number } | null>(null)
+  const dragStart = useRef<{ clientX: number ;clientY: number ;moved: boolean } | null>(null)
+  const suppressClick = useRef(false)
+  const toMeters = (clientX: number, clientY: number) => {
+    const svg = svgRef.current
+    const ctm = svg?.getScreenCTM()
+    if (!svg || !ctm) return null
+    const p = new DOMPoint(clientX, clientY).matrixTransform(ctm.inverse())
+    return { east: p.x + box.minX, north: box.maxY - p.y }
+  }
+  const round = (v: number) => Math.round(v * 10) / 10
   // 在同一位置的多个实体做轻微错位，避免完全重叠（仅显示层）。
   const offsets = useMemo(() => {
     const seen = new Map<string, number>()
@@ -86,12 +106,28 @@ export default function SpatialViewport({
   return (
     <div className="canvas-grid relative h-full min-h-[240px] w-full overflow-hidden bg-[#f6f9fb]">
       <svg
+        ref={svgRef}
         viewBox={`0 0 ${box.w} ${box.h}`}
         preserveAspectRatio="xMidYMid meet"
         className="absolute inset-0 h-full w-full"
         role="img"
         aria-label={caption ?? "空间视图"}
       >
+        {onCanvasClick ? (
+          <rect
+            x={0}
+            y={0}
+            width={box.w}
+            height={box.h}
+            fill="transparent"
+            style={{ cursor: "crosshair" }}
+            aria-label="放置落点"
+            onClick={(e) => {
+              const m = toMeters(e.clientX, e.clientY)
+              if (m) onCanvasClick(round(m.east), round(m.north))
+            }}
+          />
+        ) : null}
         {/* 园区轮廓（示意） */}
         <rect
           x={sx(90)}
@@ -137,8 +173,11 @@ export default function SpatialViewport({
         {placed.map((item) => {
           const k = KIND[item.kind]
           const n = offsets.get(item.id) ?? 0
-          const x = sx(item.position[0]) + n * 18
-          const y = sy(item.position[1]) + n * 18
+          const dragging = drag?.id === item.id
+          const px = dragging ? drag.east : item.position[0]
+          const py = dragging ? drag.north : item.position[1]
+          const x = sx(px) + n * 18
+          const y = sy(py) + n * 18
           const selected = item.id === selectedId
           return (
             <g
@@ -146,14 +185,55 @@ export default function SpatialViewport({
               role={onSelect ? "button" : undefined}
               tabIndex={onSelect ? 0 : undefined}
               aria-label={`${item.id} ${item.label}`}
-              onClick={() => onSelect?.(item.id)}
+              opacity={dragging ? 0.75 : 1}
+              onPointerDown={(e) => {
+                if (!onMove || e.button !== 0) return
+                dragStart.current = {
+                  clientX: e.clientX,
+                  clientY: e.clientY,
+                  moved: false,
+                }
+                e.currentTarget.setPointerCapture?.(e.pointerId)
+              }}
+              onPointerMove={(e) => {
+                const start = dragStart.current
+                if (!onMove || !start) return
+                if (
+                  !start.moved &&
+                  Math.hypot(e.clientX - start.clientX, e.clientY - start.clientY) < 4
+                )
+                  return
+                start.moved = true
+                suppressClick.current = true
+                const m = toMeters(e.clientX, e.clientY)
+                if (m) setDrag({ id: item.id, east: m.east, north: m.north })
+              }}
+              onPointerUp={(e) => {
+                const start = dragStart.current
+                if (!onMove || !start) return
+                dragStart.current = null
+                if (!start.moved) return
+                const m = toMeters(e.clientX, e.clientY)
+                setDrag(null)
+                if (m) onMove(item.id, round(m.east), round(m.north))
+              }}
+              onClick={() => {
+                if (suppressClick.current) {
+                  suppressClick.current = false
+                  return
+                }
+                onSelect?.(item.id)
+              }}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
                   e.preventDefault()
                   onSelect?.(item.id)
                 }
               }}
-              className={cn(onSelect && "cursor-pointer outline-none")}
+              className={cn(
+                onSelect && "cursor-pointer outline-none",
+                onMove && "cursor-grab active:cursor-grabbing",
+              )}
             >
               {selected ? (
                 <circle

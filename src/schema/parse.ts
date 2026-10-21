@@ -1,5 +1,9 @@
 import { z } from "zod"
 import {
+  effectiveRequiredIds,
+  hasCycle,
+} from "./inheritance"
+import {
   PORT_PRIMITIVES,
   VALUE_PRIMITIVES,
   refKey,
@@ -74,6 +78,7 @@ const seedSchema = z.object({
     z.object({
       id: z.string(),
       label: z.string(),
+      parent: z.string().nullable().optional(),
       requiredComponentIds: z.array(z.string()),
       optionalComponentIds: z.array(z.string()),
     }),
@@ -415,7 +420,7 @@ export function checkIntegrity(m: PrototypeModel): DomainDiagnostic[] {
         { documentId: a.componentId, propertyId: a.id },
       )
   }
-  for (const t of m.entityTypes)
+  for (const t of m.entityTypes) {
     for (const cid of [...t.requiredComponentIds, ...t.optionalComponentIds])
       if (!components.has(cid))
         add(
@@ -424,6 +429,20 @@ export function checkIntegrity(m: PrototypeModel): DomainDiagnostic[] {
           `实体类型 ${t.id} 引用了不存在的组件 ${cid}`,
           { documentId: t.id },
         )
+    if (t.parent) {
+      if (!types.has(t.parent))
+        add("error", "TYPE_REF_MISSING", `实体类型 ${t.id} 的父类型 ${t.parent} 不存在`, {
+          documentId: t.id,
+        })
+      else if (hasCycle(m.entityTypes, t.id))
+        add(
+          "error",
+          "ONTOLOGY_CYCLE",
+          `实体类型 ${t.id} 的继承链成环（${t.id} → ${t.parent} → … 回到自身）`,
+          { documentId: t.id },
+        )
+    }
+  }
   for (const t of m.templates) {
     if (!types.has(t.typeId))
       add(
@@ -476,7 +495,7 @@ export function checkIntegrity(m: PrototypeModel): DomainDiagnostic[] {
           `实体 ${e.id} 装配了不存在的组件版本 ${refKey(ci.schemaRef)}`,
           { documentId: m.scene.id, nodeId: e.id },
         )
-    for (const cid of type?.requiredComponentIds ?? [])
+    for (const cid of type ? effectiveRequiredIds(m.entityTypes, type.id) : [])
       if (!assembled.has(cid))
         add(
           "error",

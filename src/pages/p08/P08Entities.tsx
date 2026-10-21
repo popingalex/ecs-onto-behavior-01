@@ -15,6 +15,7 @@ import { navigate, useRoute, useViewState } from "@/router/router"
 import { SCENE_DOC, useDraftModel } from "@/stores/modelDocuments"
 import { useEditingDocument } from "@/stores/draftRegistry"
 import { isAssembled, resolveInitialValue } from "@/schema/values"
+import { effectiveComponents } from "@/schema/inheritance"
 import { toast } from "@/stores/toast"
 import CommitText from "@/features/ecs/CommitText"
 import RefsNotice from "@/features/ecs/RefsNotice"
@@ -354,6 +355,9 @@ function EntityDetail({ entityId }: { entityId: string }) {
         .filter((r) => r.attr),
     )
   const addable = model.components.filter((c) => !isAssembled(entity, c.id))
+  /** 有效装配（含 parent 继承）：决定「可选」标注与必需组件锁。 */
+  const origins = effectiveComponents(model.entityTypes, entity.typeId)
+  const originOf = new Map(origins.map((o) => [o.componentId, o]))
 
   const edit = (label: string, op: Parameters<typeof applySceneOp>[1]) => {
     setBlocked(null)
@@ -495,8 +499,8 @@ function EntityDetail({ entityId }: { entityId: string }) {
               const component = model.components.find(
                 (c) => c.id === ci.schemaRef.id,
               )
-              const required =
-                type?.requiredComponentIds.includes(ci.schemaRef.id) ?? false
+              const origin = originOf.get(ci.schemaRef.id)
+              const required = origin?.mode === "required"
               return (
                 <tr key={ci.schemaRef.id}>
                   <Td>
@@ -519,7 +523,7 @@ function EntityDetail({ entityId }: { entityId: string }) {
                   <Td>
                     {required ? (
                       <Tag tone="primary" size="sm">
-                        必需
+                        必需{origin?.inheritedFrom ? "（继承）" : ""}
                       </Tag>
                     ) : (
                       <Tag size="sm">可选</Tag>
@@ -530,7 +534,15 @@ function EntityDetail({ entityId }: { entityId: string }) {
                       size="sm"
                       intent="ghost"
                       disabled={readOnly}
-                      title={required ? "必需组件移除会报错" : "移除该组件实例"}
+                      title={
+                        required
+                          ? `必需组件${
+                              origin?.inheritedFrom
+                                ? `（继承自 ${origin.inheritedFrom}）`
+                                : ""
+                            }移除会报错`
+                          : "移除该组件实例"
+                      }
                       onClick={() =>
                         edit(`移除组件 ${ci.schemaRef.id}`, (scene) =>
                           removeEntityComponent(
@@ -560,7 +572,7 @@ function EntityDetail({ entityId }: { entityId: string }) {
                 options={addable.map((c) => ({
                   value: c.id,
                   label: `${c.id} · ${c.label}${
-                    type?.optionalComponentIds.includes(c.id) ? "（可选）" : ""
+                    originOf.get(c.id)?.mode === "optional" ? "（可选）" : ""
                   }`,
                 }))}
               />
