@@ -1,0 +1,33 @@
+{
+ "endpoint": "/sim/:id/branch/:branch/:time/attributes",
+ "frames": [
+  {
+   "frame": 1,
+   "mismatches": 0
+  },
+  {
+   "frame": 2,
+   "mismatches": 0
+  },
+  {
+   "frame": 3,
+   "mismatches": 0
+  },
+  {
+   "frame": 4,
+   "mismatches": 0
+  },
+  {
+   "frame": 5,
+   "mismatches": 0
+  },
+  {
+   "frame": 6,
+   "mismatches": 0
+  }
+ ],
+ "totalChecked": 3208,
+ "totalMismatches": 0,
+ "engineOnlyDefaultMaterialized": 35408,
+ "note": "显式写入集(3208)与默认物化集(35408)分层;默认不回填"
+}

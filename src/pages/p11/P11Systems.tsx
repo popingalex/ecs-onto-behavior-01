@@ -35,13 +35,25 @@ import { useReadOnly } from "@/features/ecs/editing"
 import { validId } from "@/features/ecs/ids"
 import { systemRefs, type RefHit } from "@/features/ecs/refs"
 import { isNativeMode } from "@/stores/dataSource"
-import { NATIVE_SYSTEM_CATALOG } from "@/services/nativeImport/catalog"
+import {
+  mergeRuntimeCatalog,
+  collectRuntimeObservations,
+  type MergedSystemEntry,
+} from "@/services/nativeImport/catalog"
+import { getNativeImport } from "@/services/nativeImport/seedAdapter"
 
 /**
  * REAL_IMPORT_READ_ONLY：引擎原生系统目录（mas-rust system_registry 静态转录）。
  * S0=原生黑盒 / S1=可映射（lc-* workflow 覆盖）/ S0-infra=基础设施。
  */
-function NativeSystemCatalog() {
+function NativeSystemCatalog({ ctx }: { ctx: WorkbenchContext }) {
+  const imported = getNativeImport()
+  const anchorId = ctx.route.params.anchor
+  const catalog: MergedSystemEntry[] = imported
+    ? mergeRuntimeCatalog(collectRuntimeObservations(imported.bundles))
+    : mergeRuntimeCatalog([])
+  const registered = catalog.filter((s) => s.source === "REGISTERED")
+  const observed = catalog.filter((s) => s.source === "OBSERVED_RUNTIME")
   return (
     <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-4 px-6 py-6">
       <div>
@@ -53,8 +65,12 @@ function NativeSystemCatalog() {
       </div>
       <Card>
         <PanelHeader
-          title="System registry"
-          meta={<span className="tabular">{NATIVE_SYSTEM_CATALOG.length} 个</span>}
+          title="System registry(静态转录 + 运行期发现)"
+          meta={
+            <span className="tabular">
+              {registered.length} 注册 · {observed.length} 运行期发现
+            </span>
+          }
         />
         <Table className="min-w-[960px]">
           <thead>
@@ -68,14 +84,27 @@ function NativeSystemCatalog() {
             </tr>
           </thead>
           <tbody>
-            {NATIVE_SYSTEM_CATALOG.map((s) => (
-              <Tr key={s.id}>
+            {catalog.map((s) => (
+              <Tr
+                key={s.id}
+                className={s.id === anchorId ? "outline outline-2 -outline-offset-2 outline-primary" : undefined}
+              >
                 <Td>
                   <div className="font-medium">{s.label}</div>
                   <div className="font-mono text-caption text-muted">{s.id}</div>
                 </Td>
-                <Td>{s.phase}</Td>
-                <Td>{s.implementation}</Td>
+                <Td>
+                  {s.phase}
+                  {s.source === "OBSERVED_RUNTIME" && (
+                    <span className="ml-1 text-caption text-warning">(UNKNOWN,不推测)</span>
+                  )}
+                </Td>
+                <Td>
+                  {s.implementation}
+                  <span className="ml-1 text-caption text-muted">
+                    {s.source === "OBSERVED_RUNTIME" ? `· 观测 ${s.observedCount ?? "?"} 条@${s.observedAtRun?.slice(0, 8) ?? "?"}` : ""}
+                  </span>
+                </Td>
                 <Td>
                   <Tag
                     tone={
@@ -146,7 +175,7 @@ export default function P11Systems({ ctx: _ctx }: { ctx: WorkbenchContext }) {
   const systemId = route.params.systemId
   // REAL_IMPORT_READ_ONLY：工作台 SystemDefinition 层不适用于引擎原生系统；
   // 改为展示引擎系统目录（system_registry 静态转录，S0/S1 分级见 03_capability_matrix）。
-  if (isNativeMode()) return <NativeSystemCatalog />
+  if (isNativeMode()) return <NativeSystemCatalog ctx={_ctx} />
   if (!systemId) return <SystemList />
   const system = model.systems.find((s) => s.id === systemId)
   if (!system) {

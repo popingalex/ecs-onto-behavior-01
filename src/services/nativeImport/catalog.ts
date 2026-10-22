@@ -33,9 +33,97 @@ export const NATIVE_SYSTEM_CATALOG: NativeSystemCatalogEntry[] = [
   { id: "system.metrics", label: "指标系统", phase: "Metrics", implementation: "infra", sClass: "S0-infra", reads: [], writes: [], note: "基础设施" },
   { id: "system.priority-arbitration", label: "优先级仲裁", phase: "Decision", implementation: "infra", sClass: "S0-infra", reads: [], writes: [], note: "基础设施" },
   { id: "system.health-monitor", label: "健康监控", phase: "Metrics", implementation: "infra", sClass: "S0-infra", reads: [], writes: [], note: "基础设施" },
-  // 运行期观测(J3 实测出现于 deltas source_system_id;静态 registry 转录未收录,如实登记):
-  { id: "field_thermal_live", label: "热场实况(运行期观测)", phase: "Simulation", implementation: "native", sClass: "S0", reads: ["field_thermal/*"], writes: ["field_thermal/temperature_contours"], note: "J3 运行实测出现;静态目录未收录,来源=实测 delta 归因" },
 ]
+
+/**
+ * 运行期目录合并(H2/CAT-05):静态 registry 转录 + 从导入运行 delta 的
+ * source_system_id 动态发现。未知系统保留 UNKNOWN 阶段,不推测归属
+ * (field_thermal_live 即由样例 D 动态发现,不再硬编码)。
+ */
+export interface MergedSystemEntry extends NativeSystemCatalogEntry {
+  source: "REGISTERED" | "OBSERVED_RUNTIME"
+  confidence: "DECLARED" | "OBSERVED"
+  /** 仅 OBSERVED_RUNTIME:首次观测位置。 */
+  observedAtRun?: string
+  firstObservedFrame?: number
+  observedCount?: number
+}
+
+export interface RuntimeObservation {
+  systemId: string
+  runId: string
+  firstFrame: number
+  count: number
+}
+
+export function collectRuntimeObservations(
+  bundles: Array<{
+    runId: string
+    branches: Array<{ id: string; frames: Array<{ frame: number; deltas: Array<{ sourceSystemId?: string }> }> }>
+  }>,
+): RuntimeObservation[] {
+  const bySystem = new Map<string, RuntimeObservation>()
+  for (const bundle of bundles) {
+    for (const branch of bundle.branches) {
+      for (const frame of branch.frames) {
+        for (const d of frame.deltas) {
+          if (!d.sourceSystemId) continue
+          const key = `${d.sourceSystemId}`
+          const cur = bySystem.get(key)
+          if (!cur) {
+            bySystem.set(key, {
+              systemId: d.sourceSystemId,
+              runId: bundle.runId,
+              firstFrame: frame.frame,
+              count: 1,
+            })
+          } else {
+            cur.count += 1
+          }
+        }
+      }
+    }
+  }
+  return [...bySystem.values()].sort((a, b) => b.count - a.count)
+}
+
+export function mergeRuntimeCatalog(
+  observations: RuntimeObservation[],
+): MergedSystemEntry[] {
+  const out: MergedSystemEntry[] = NATIVE_SYSTEM_CATALOG.map((s) => ({
+    ...s,
+    source: "REGISTERED" as const,
+    confidence: "DECLARED" as const,
+  }))
+  for (const obs of observations) {
+    const known = out.find((s) => s.id === obs.systemId)
+    if (known) {
+      known.source = "REGISTERED"
+      known.confidence = "DECLARED"
+      known.observedAtRun = obs.runId
+      known.firstObservedFrame = obs.firstFrame
+      known.observedCount = obs.count
+      continue
+    }
+    // 运行期发现:不推测阶段/实现形态,phase 记 UNKNOWN。
+    out.push({
+      id: obs.systemId,
+      label: `${obs.systemId}(运行期发现)`,
+      phase: "UNKNOWN",
+      implementation: "native",
+      sClass: "S0",
+      reads: [],
+      writes: [],
+      note: `由运行 ${obs.runId.slice(0, 8)} delta 归因观测(${obs.count} 条,首现帧 ${obs.firstFrame});静态 registry 转录未收录,阶段不推测`,
+      source: "OBSERVED_RUNTIME",
+      confidence: "OBSERVED",
+      observedAtRun: obs.runId,
+      firstObservedFrame: obs.firstFrame,
+      observedCount: obs.count,
+    })
+  }
+  return out
+}
 
 /**
  * 单位/量种映射（03_capability_matrix value.unit.quantity）。
