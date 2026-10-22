@@ -6,7 +6,7 @@
 
 ## 阅读顺序
 
-0. **REPORT.md：独立总报告（结论、交付、验收结果、IA v2、剩余事项）。**
+0. **../REPORT.md：全阶段汇总报告（M0–M5 + v0.6 + 地图主角，最新）。** 本目录的 REPORT.md 为 v0.5 阶段报告。
 1. 01_repository_audit.md：实际缺口、可保留基础和源码证据，含28条失效规格路径（已修复，见 07_progress.md）。
 2. 02_revision_plan.md：对象分层、独立页面、组件职责、数据流、文件改动与施工顺序。
 3. 03_figma_make_tasks.md：可逐轮交给Figma Make的明确任务，含完成标准。
