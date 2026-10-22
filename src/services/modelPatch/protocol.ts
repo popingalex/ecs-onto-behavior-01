@@ -131,7 +131,7 @@ export function dryRunModelPatch(
         diagnostics.push({ code: "TYPE_MISMATCH", severity: "error", message: `${op.attributePath} 不可为 null。`, target: { entityId: op.entityId, attributePath: op.attributePath } })
         continue
       }
-      if (t.unitId === "unknown") {
+      if (v !== null && t.unitId === "unknown") {
         diagnostics.push({ code: "UNIT_MISMATCH", severity: "error", message: `${op.attributePath} 单位 UNKNOWN(引擎无单位登记):写值需先在契约层定单位,拒绝盲写。`, target: { entityId: op.entityId, attributePath: op.attributePath } })
         continue
       }
@@ -184,4 +184,41 @@ export class IdempotencyLedger {
   record(patch: ModelPatch, changesetCount: number): void {
     this.entries.set(patch.idempotencyKey, { patchId: patch.patchId, changesetCount })
   }
+}
+
+/**
+ * 原生事务候选协议的状态查询(W0:getStatus)。
+ * 提交超时后客户端按 idempotencyKey 查询最终状态;引擎侧必须能在事务日志中
+ * 回答以下状态之一,不允许"未知即重试"(重复写入风险)。
+ */
+export const patchSubmissionStatusSchema = z.enum([
+  "PENDING", // 已受理未落盘
+  "VALIDATED", // dryRun 通过,待 apply(两阶段模式)
+  "APPLIED", // 已产生新原生 revision
+  "REJECTED", // 校验失败(附 diagnostics)
+  "REVISION_CONFLICT", // 乐观锁失败
+  "IDEMPOTENCY_CONFLICT", // 同 key 异请求
+  "UNKNOWN", // 引擎不可考(需人工/运维仲裁;客户端不得自动重试)
+])
+
+export type PatchSubmissionStatus = z.infer<typeof patchSubmissionStatusSchema>
+
+export interface PatchStatusReply {
+  idempotencyKey: string
+  status: PatchSubmissionStatus
+  /** 仅 APPLIED:引擎产生的原生新 revision(工作台草稿 id 不得冒充)。 */
+  nativeRevision?: string
+  /** 仅 REJECTED:诊断列表。 */
+  diagnostics?: PatchDiagnostic[]
+}
+
+/** 本地getStatus(内存登记簿版):仅演示语义,真实实现属 W1 引擎事务。 */
+export function getPatchStatus(
+  ledger: IdempotencyLedger,
+  idempotencyKey: string,
+  records: Map<string, PatchStatusReply>,
+): PatchStatusReply {
+  const hit = records.get(idempotencyKey)
+  if (hit) return hit
+  return { idempotencyKey, status: "UNKNOWN" }
 }

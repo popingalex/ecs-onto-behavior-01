@@ -4,6 +4,7 @@
 import { loadNativeImport } from "@/services/nativeImport/seedAdapter"
 import {
   dryRunModelPatch,
+  getPatchStatus,
   IdempotencyLedger,
   modelPatchSchema,
   type ModelPatch,
@@ -110,4 +111,59 @@ export async function idempotencyLedgerSemantics() {
   if (replay.status !== "replay") throw new Error("同 key 同 patchId 应重放")
   const conflict = ledger.check(p2)
   if (conflict.status !== "conflict") throw new Error("同 key 异 patchId 应冲突")
+}
+
+export async function partialFailureIsAtomic() {
+  // W-04 预演(本地):多操作中一个非法 → 整包拒绝,零变更集,诊断定位到坏操作。
+  const m = await ensureModel()
+  const patch = basePatch({
+    operations: [
+      { op: "replaceAttribute", entityId: "tank-1", attributePath: "flammable/temperature", newValue: 30 },
+      { op: "replaceAttribute", entityId: "ghost-9", attributePath: "flammable/temperature", newValue: 40 },
+    ],
+  })
+  const r = dryRunModelPatch(m, patch, { sceneId: "chem-roaded", currentRevision: "rev-1" })
+  if (r.ok) throw new Error("部分失败未被整包拒绝")
+  if (r.diagnostics.some((d) => d.target?.entityId !== "ghost-9"))
+    throw new Error("诊断未定位到非法操作")
+}
+
+export async function explicitNullVsUnsetDistinguished() {
+  // UNSET 与 null 不混淆:显式 null 对 nullable 属性合法;对非 nullable 拒绝;
+  // 已声明但从未写过的路径(引擎侧=UNSET)可被 replace 显式赋值。
+  const m = await ensureModel()
+  const nullableAttr = m.attributes.find((a) => a.type.nullable)!
+  const r1 = dryRunModelPatch(
+    m,
+    basePatch({
+      operations: [{ op: "replaceAttribute", entityId: "tank-1", attributePath: nullableAttr.id, newValue: null }],
+    }),
+    { sceneId: "chem-roaded", currentRevision: "rev-1" },
+  )
+  if (!r1.ok) throw new Error("nullable 属性显式 null 应合法")
+  const nonNullAttr = m.attributes.find((a) => !a.type.nullable)!
+  const r2 = dryRunModelPatch(
+    m,
+    basePatch({
+      operations: [{ op: "replaceAttribute", entityId: "tank-1", attributePath: nonNullAttr.id, newValue: null }],
+    }),
+    { sceneId: "chem-roaded", currentRevision: "rev-1" },
+  )
+  if (r2.ok || !r2.diagnostics.some((d) => d.code === "TYPE_MISMATCH"))
+    throw new Error("非 nullable 显式 null 未拒绝")
+}
+
+export async function getStatusFlow() {
+  // getStatus:已记录键返回原状态;未知键=UNKNOWN(客户端不得自动重试)。
+  const records = new Map<string, import("../protocol").PatchStatusReply>()
+  records.set("key-9", {
+    idempotencyKey: "key-9",
+    status: "APPLIED",
+    nativeRevision: "rev-2",
+  })
+  const hit = getPatchStatus(new IdempotencyLedger(), "key-9", records)
+  if (hit.status !== "APPLIED" || hit.nativeRevision !== "rev-2")
+    throw new Error("已记录状态返回错误")
+  const miss = getPatchStatus(new IdempotencyLedger(), "key-x", records)
+  if (miss.status !== "UNKNOWN") throw new Error("未知键应为 UNKNOWN")
 }
