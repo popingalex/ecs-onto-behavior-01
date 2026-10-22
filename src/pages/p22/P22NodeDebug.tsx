@@ -16,6 +16,8 @@ import { useIndex } from "@/data/store"
 import { formatNumber, formatSigned } from "@/lib/format"
 import { cn } from "@/lib/cn"
 import { navigate } from "@/router/router"
+import { isNativeMode } from "@/stores/dataSource"
+import NativeFrameProcess from "./NativeFrameProcess"
 import type { RoundResult } from "@/services/mock-executor"
 import { useRecordByCommit } from "@/stores/trace"
 import {
@@ -56,6 +58,8 @@ export default function P22NodeDebug({ ctx }: { ctx: WorkbenchContext }) {
   )
 
   if (!viewCommit) return null
+  // REAL_IMPORT_READ_ONLY:过程数据按引擎事实分级渲染(REAL-09),不走 mock record。
+  if (isNativeMode()) return <NativeFrameProcess ctx={ctx} />
   if (!record) {
     return (
       <div className="mx-auto w-full max-w-[960px] px-6 py-6">

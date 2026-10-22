@@ -9,6 +9,8 @@ import { formatNumber } from "@/lib/format"
 import { cn } from "@/lib/cn"
 import { navigate } from "@/router/router"
 import { useRecordByCommit } from "@/stores/trace"
+import { isNativeMode } from "@/stores/dataSource"
+import NativeProvenance from "./NativeProvenance"
 import { traceabilityGaps } from "@/pages/p22/traceView"
 
 /**
@@ -22,6 +24,8 @@ export default function P24Provenance({ ctx }: { ctx: WorkbenchContext }) {
   const record = useRecordByCommit(viewCommit?.id)
 
   if (!viewCommit || !entityId) return null
+  // REAL_IMPORT_READ_ONLY:演化链按帧事实渲染(PROPERTY_DELTA/SYSTEM_EFFECT 分级)。
+  if (isNativeMode()) return <NativeProvenance ctx={ctx} />
   const entity = index.entities.get(entityId)
 
   if (!record) {

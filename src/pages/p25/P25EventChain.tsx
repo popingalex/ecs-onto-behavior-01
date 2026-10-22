@@ -7,6 +7,7 @@ import { Tag } from "@/components/ui/StatusTag"
 import { useIndex } from "@/data/store"
 import { formatSimTime } from "@/lib/format"
 import { navigate, useViewState } from "@/router/router"
+import { isNativeMode } from "@/stores/dataSource"
 import { useCommits } from "@/stores/history"
 import { useStore } from "@/lib/store"
 import { traceStore } from "@/stores/trace"
@@ -58,6 +59,19 @@ export default function P25EventChain({ ctx: _ctx }: { ctx: WorkbenchContext }) 
     () => collectEvents(commits, records),
     [commits, records],
   )
+  // REAL_IMPORT_READ_ONLY:真实导入只含逐帧属性变更,无带 ID/因果字段的业务事件;
+  // 时间先后不自动连成因果(REAL-09:不伪造事件链)。
+  if (isNativeMode()) {
+    return (
+      <div className="mx-auto w-full max-w-[960px] px-6 py-6">
+        <Notice tone="warning">
+          真实导入样例未包含带 ID / 因果字段的业务事件记录:引擎侧事件
+          (CommandLog / 事件流)未随离线工件导出,本页在 REAL_IMPORT_READ_ONLY
+          模式下无可展示事实。帧序(时间先后)不自动连成因果链。
+        </Notice>
+      </div>
+    )
+  }
   const branchIds = [...new Set(events.map((e) => e.branchId))]
   const visible = events.filter(
     (e) =>

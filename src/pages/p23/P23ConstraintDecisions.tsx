@@ -7,6 +7,7 @@ import TypedValueCell from "@/components/domain/TypedValueCell"
 import { useIndex } from "@/data/store"
 import { formatNumber, formatSigned } from "@/lib/format"
 import { navigate } from "@/router/router"
+import { isNativeMode } from "@/stores/dataSource"
 import { useRecordByCommit } from "@/stores/trace"
 
 const ALLOCATION_STATUS = {
@@ -26,6 +27,19 @@ export default function P23ConstraintDecisions({
   const record = useRecordByCommit(viewCommit?.id)
 
   if (!viewCommit) return null
+  // REAL_IMPORT_READ_ONLY:引擎无请求→获准效果对,本页语义不适用;明示缺口,不从结果反推(REAL-09)。
+  if (isNativeMode()) {
+    return (
+      <div className="mx-auto w-full max-w-[960px] px-6 py-6">
+        <Notice tone="warning">
+          原引擎(mas-rust)不提供 EffectRequest / 裁决记录:系统直接写属性,帧末统一提交,
+          无"请求→获准"协议。本页只在 MOCK_SANDBOX 的贡献-裁决链上有意义;
+          真实运行的效果事实请看 P22(按 {`source_system_id`} 归并的帧内变更)。
+          <b>不得从温差等结果逆推 −50/−40 之类的请求值。</b>
+        </Notice>
+      </div>
+    )
+  }
   if (!record) {
     return (
       <div className="mx-auto w-full max-w-[960px] px-6 py-6">

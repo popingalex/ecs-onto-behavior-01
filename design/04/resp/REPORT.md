@@ -1,6 +1,6 @@
 # V7-0 双工程只读审计报告(汇总)· 含 V7-1 实施结果
 
-日期:2026-10-22 ｜ V7-0:只读审计轮 ｜ **V7-1(同日,用户批准后实施):FileAdapter 真实只读导入完成**(`00_v71_fileadapter_report.md`)
+日期:2026-10-22 ｜ V7-0:只读审计轮 ｜ V7-1:FileAdapter 真实只读导入完成(`00_v71_fileadapter_report.md`)｜ **V7-2:真实运行过程只读分析完成(`00_v72_process_report.md`;125 tests)**
 工作台 `ecs-onto-behavior-01`(V7-0 审计@`773b450` → V7-1 实施)｜ 引擎 `mas-rust @ 65c7f96`(零改动)+ 前端快照仓 `mas-suite/mas-refactor`
 
 ## 一句话结论
@@ -18,6 +18,8 @@
 | `real_fixture_manifest.md` | 样例来源/revision/校验和/脱敏状态(复制待批准) |
 | `06_integration_decisions.md` | FileAdapter 裁定;V7-1 切片;最小接口契约;风险对策;三决定性问题回答 |
 | `first_pr_proposal.md` | 首个 PR 变更清单/验收(REAL-01..07,12)/回滚方案 |
+| `00_v71_fileadapter_report.md` | V7-1 实施与验收对账 |
+| `00_v72_process_report.md` | V7-2 过程分级渲染与 REAL-08..12 对账;v0.7-R 静态链 J0–J6 闭环结论 |
 
 ## 关键发现(择要)
 
