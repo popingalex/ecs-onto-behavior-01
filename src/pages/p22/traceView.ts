@@ -61,6 +61,37 @@ export function accessLog(record: RoundResult, executionId: string) {
   )
 }
 
+/** 追溯缺口：图快照里读了 previous 的节点，记录却没有任何 inputVersionRefs。 */
+export interface TraceabilityGap {
+  executionId: string
+  nodeId: string
+  /** 图快照声明的读取属性（root=self 时可确定；否则为 null）。 */
+  propertyId: string | null
+}
+
+/**
+ * 审计记录的不可完整追溯节点（W3.5）：旧记录或损坏记录可能缺 inputVersionRef。
+ * 页面据此处指出具体节点，并不得编造依赖边补上缺口。图快照缺失时无法判定，不算缺口。
+ */
+export function traceabilityGaps(record: RoundResult): TraceabilityGap[] {
+  const gaps: TraceabilityGap[] = []
+  for (const n of record.nodeExecutions) {
+    if (n.inputVersionRefs.length > 0) continue
+    const node = record.programs[n.graphRef]?.nodes.find(
+      (x) => x.id === n.nodeId,
+    )
+    if (!node || (node.type !== "ReadPrevious" && node.type !== "ReadSelfPreview"))
+      continue
+    const binding = node.bindings.property
+    gaps.push({
+      executionId: n.executionId,
+      nodeId: n.nodeId,
+      propertyId: binding?.root === "self" ? binding.propertyId : null,
+    })
+  }
+  return gaps
+}
+
 /** 确定性自动布局：拓扑深度为列、列内序为行；只依赖记录里的固定图版本。 */
 export function layoutProgram(
   program: LogicGraphDocument,

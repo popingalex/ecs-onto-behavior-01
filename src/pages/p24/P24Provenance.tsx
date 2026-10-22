@@ -9,6 +9,7 @@ import { formatNumber } from "@/lib/format"
 import { cn } from "@/lib/cn"
 import { navigate } from "@/router/router"
 import { useRecordByCommit } from "@/stores/trace"
+import { traceabilityGaps } from "@/pages/p22/traceView"
 
 /**
  * P24 属性演化链与输入来源：属性版本 + executionId/decisionId 来源；
@@ -50,6 +51,10 @@ export default function P24Provenance({ ctx }: { ctx: WorkbenchContext }) {
   )
   const generated = record.dependencyEdges.filter(
     (e) => e.kind === "generated" && change && e.target === change.versionId,
+  )
+  // 缺 inputVersionRef 的读取节点：本链可能不完整，指出具体节点，不编造边（W3.5）。
+  const gaps = traceabilityGaps(record).filter(
+    (g) => g.propertyId === null || g.propertyId === propertyId,
   )
 
   const gotoExecution = (executionId: string) => {
@@ -107,6 +112,16 @@ export default function P24Provenance({ ctx }: { ctx: WorkbenchContext }) {
           返回编排层
         </Button>
       </div>
+
+      {gaps.length > 0 ? (
+        <Notice tone="warning" className="mb-4">
+          本记录有 {gaps.length}{" "}
+          个读取节点缺失输入版本引用，该属性的演化链可能不完整（未编造依赖边）：
+          <span className="font-mono">
+            {gaps.map((g) => `${g.executionId}·${g.nodeId}`).join("、")}
+          </span>
+        </Notice>
+      ) : null}
 
       {changes.length > 1 ? (
         <div className="mb-4 flex items-center gap-2">

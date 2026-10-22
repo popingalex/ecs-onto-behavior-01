@@ -8,11 +8,13 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "node scripts/test.mjs",
-    "format": "oxfmt"
+    "baseline": "node scripts/persistence-baseline.mjs",
+    "perf:baseline": "node scripts/perf-baseline.mjs",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check"
   },
   "dependencies": {
     "@flowgram.ai/free-layout-editor": "1.0.16",
-    "@tanstack/react-table": "8.21.3",
     "@xyflow/react": "12.12.0",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",

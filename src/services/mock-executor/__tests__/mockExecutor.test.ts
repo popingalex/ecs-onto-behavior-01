@@ -159,6 +159,48 @@ export function baselineRound() {
   )
 }
 
+/** S10-02：添加 cool-A→cool-B 的 order 边后，B 仍读 baseWorld 旧值 100，结果不变。 */
+export function orderEdgeKeepsPreviousReads() {
+  const model = freshModel()
+  const main = model.schedules.find((s) => s.id === "schedule-main")!
+  const ordered: ScheduleDocument = {
+    ...main,
+    edges: [
+      ...main.edges,
+      { id: "x-order", source: "cool-A", target: "cool-B", kind: "order" },
+    ],
+  }
+  const result = mustRun(inputFor({ ...model, schedules: [ordered] }, "12"))
+
+  // 计划变为先 A 后 B（两个串行组），不再是同一并行组
+  assert.deepEqual(result.record.logicalParallelGroups, [
+    ["cool-A"],
+    ["cool-B"],
+    ["reduce-cooling"],
+    ["commit"],
+  ])
+  // cool-B 的 read_previous 仍取 baseWorld 旧值 100°C，不是 cool-A 暂存的 50°C
+  const bOld = node(result, "exec-F01-cool-B", "n-old")
+  assert.equal(bOld.outputs.value, 100)
+  assert.deepEqual(bOld.inputVersionRefs, ["F01.thermal.temperature@c042"])
+  assert.deepEqual(node(result, "exec-F01-cool-B", "n-room").inputs, {
+    old: 100,
+    source: 20,
+  })
+  // 顺序边不改变业务结果：请求/裁决/最终温度与无顺序边时一致
+  assert.equal(effect(result, "F01", "cool-B").requestedDelta, -50)
+  const d1 = decision(result, "F01")
+  assert.equal(d1.scale, 0.8)
+  assert.deepEqual(d1.allocations, [
+    { effectId: "eff-F01-cool-A", approvedDelta: -40, status: "partial" },
+    { effectId: "eff-F01-cool-B", approvedDelta: -40, status: "partial" },
+  ])
+  assert.equal(d1.final, 20)
+  assert.equal(result.nextWorld.values.F01["thermal.temperature"], 20)
+  assert.equal(result.nextWorld.values.F02["thermal.temperature"], 20)
+  assert.equal(result.nextWorld.values.F03["thermal.temperature"], 20)
+}
+
 /** 停用 cool-B：单路请求全额获准，最终 50/30/20。 */
 export function oneCoolerRound() {
   const model = freshModel()
@@ -346,8 +388,7 @@ export function recordsAreImmutable() {
 }
 
 /** 初温低于 20°C：请求为 0，不反向升温。 */
-export function coldStartRequestsZero() {
-  const model = freshModel()
+export function coldStartRequestsZero() {  const model = freshModel()
   const input = inputFor(model, "11")
   input.world.values.F01["thermal.temperature"] = 15
   const result = mustRun(input)
@@ -367,4 +408,70 @@ export function coldStartRequestsZero() {
   )
   // 其余实体照常冷却
   assert.equal(decision(result, "F02").final, 20)
+}
+
+/** W3.3：图快照端口缺单位声明时，记录保持 null，不拿当前 schema 或启发式回填。 */
+export function missingDeclaredUnitStaysNullInRecord() {
+  const model = freshModel()
+  const program = model.programs.find((p) => p.id === "g-cool")!
+  // 剥掉 Negate 输出与 Contribute delta 输入的单位声明（模拟缺单位的图版本）
+  delete program.nodes.find((n) => n.id === "n-neg")!.outputs.delta.unitId
+  delete program.nodes.find((n) => n.id === "n-emit")!.inputs.delta.unitId
+  const result = mustRun(inputFor(model, "13"))
+
+  const neg = node(result, "exec-F01-cool-A", "n-neg")
+  assert.equal(neg.outputUnitId, null, "缺声明的端口单位记 null，不回填 deltaK")
+  const eff = effect(result, "F01", "cool-A")
+  assert.equal(eff.unitId, null, "效果请求单位不回填")
+  const d = decision(result, "F01")
+  assert.equal(d.budgetUnitId, null, "裁决额度单位随请求缺位记 null")
+  // 数值计算不受影响：单位缺失不改变请求/裁决事实
+  assert.equal(eff.requestedDelta, -50)
+  assert.equal(d.final, 20)
+  // 机读证据：序列化后的记录里，被剥单位的端口条目没有编造单位
+  const negEntries = result.nodeExecutions.filter((n) => n.nodeId === "n-neg")
+  assert.equal(negEntries.length, 6)
+  assert.ok(
+    negEntries.every((n) => n.outputUnitId === null),
+    "所有 n-neg 轨迹的输出单位为 null",
+  )
+  const negJson = JSON.stringify(negEntries)
+  assert.ok(
+    !negJson.includes("deltaK"),
+    "记录 JSON 中这些端口没有任何启发式回填单位",
+  )
+  // 属性层单位来自属性定义本身（声明来源），不受影响
+  assert.equal(d.valueUnitId, "degC")
+}
+
+/** W3.1：零净变化但有请求/裁决事实——请求为 0 的效果与裁决记录保留，不丢执行事实。 */
+export function zeroNetChangeKeepsRequestAndDecisionFacts() {
+  const model = freshModel()
+  const input = inputFor(model, "14")
+  input.world.values.F01["thermal.temperature"] = 15
+  const result = mustRun(input)
+
+  // 值没变：不产生 PropertyChange，也没有 generated 边
+  assert.ok(!result.changes.some((c) => c.entityId === "F01"))
+  assert.ok(
+    !result.dependencyEdges.some(
+      (e) => e.kind === "generated" && e.source === "decision-F01",
+    ),
+  )
+  // 但执行、请求、裁决事实全部保留
+  assert.ok(result.systemExecutions.some((e) => e.id === "exec-F01-cool-A"))
+  assert.equal(result.effectRequests.filter((e) => e.entityId === "F01").length, 2)
+  const d = decision(result, "F01")
+  assert.equal(d.final, d.old, "零净变化")
+  assert.equal(d.allocations.length, 2)
+  assert.ok(
+    d.allocations.every((a) => a.approvedDelta === 0),
+    "获准 0 的请求仍是裁决事实",
+  )
+  assert.ok(
+    result.dependencyEdges.some(
+      (e) => e.kind === "proposed" && e.target === "decision-F01",
+    ),
+    "请求→裁决的 proposed 边保留",
+  )
 }

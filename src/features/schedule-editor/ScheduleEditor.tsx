@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react"
+import { useCallback, useMemo, useState } from "react"
 import { Group, Panel, Separator } from "react-resizable-panels"
 import { ReactFlowProvider } from "@xyflow/react"
 import Button from "@/components/ui/Button"
@@ -65,6 +65,19 @@ export default function ScheduleEditor({
     () => (content ? compileSchedule(content.schedule, modelView) : null),
     [content, modelView],
   )
+
+  // 与 ScheduleCanvas 约定：传给 React Flow 的回调需稳定引用，
+  // 否则会经 xyflow StoreUpdater 造成「setState → 重渲染」死循环。
+  const handleSelectionChange = useCallback(
+    (node: ScheduleFlowNode | null, edge: ScheduleFlowEdge | null) =>
+      setSelected({ node, edge }),
+    [],
+  )
+  const handleSystemPairConnect = useCallback((source: string, target: string) => {
+    setPendingPair({ source, target })
+    setPairKind("order")
+    setPairError(null)
+  }, [])
 
   const api = useMemo(
     () => ({
@@ -142,12 +155,8 @@ export default function ScheduleEditor({
               layout={layout}
               readOnly={readOnly}
               focusSystemId={focusSystemId}
-              onSelectionChange={(node, edge) => setSelected({ node, edge })}
-              onSystemPairConnect={(source, target) => {
-                setPendingPair({ source, target })
-                setPairKind("order")
-                setPairError(null)
-              }}
+              onSelectionChange={handleSelectionChange}
+              onSystemPairConnect={handleSystemPairConnect}
             />
           </Panel>
           <Separator className={`w-1 ${HANDLE}`} />

@@ -6,7 +6,7 @@ import {
   type NodeExecution,
   type RoundResult,
 } from "@/services/mock-executor"
-import { portUnit } from "@/pages/p22/traceView"
+import { portUnit, traceabilityGaps } from "@/pages/p22/traceView"
 
 /** P22 端口单位：以记录绑定的固定图快照（record.programs）里的端口声明为准，启发式只是回落。 */
 const runBaseline = (): RoundResult => {
@@ -110,4 +110,65 @@ export function portUnitFallbackIsMarkedHeuristic() {
     unitId: "deltaK",
     source: "heuristic",
   })
+}
+
+/** W3.5：历史单位只来自记录自带图快照；当前草稿把同端口单位改掉不影响旧记录的解释。 */
+export function historicalUnitsStayWithRecordSnapshot() {
+  const result = runBaseline()
+  const program = programOf(result, "exec-F01-cool-A")
+  const trace = traceOf(result, "exec-F01-cool-A", "n-room")
+
+  // 模拟「新 schema」：当前草稿里同一端口的单位定义变了（旧记录不被重新解释）
+  const mutated = structuredClone(program)
+  const roomInputs = mutated.nodes.find((n) => n.id === "n-room")!.inputs
+  roomInputs.old = { ...roomInputs.old, unitId: "degF" }
+  assert.equal(
+    portUnit(mutated, trace, "input", "old").unitId,
+    "degF",
+    "新图版本按新单位解释",
+  )
+  assert.deepEqual(
+    portUnit(program, trace, "input", "old"),
+    { unitId: "degC", source: "declared" },
+    "旧记录绑定旧图快照，仍按当时的 °C 解释",
+  )
+}
+
+/** W3.5：缺 inputVersionRef 的读取节点被审计为不可完整追溯；缺口不编造依赖边。 */
+export function traceabilityGapsDetectsMissingRefs() {
+  const result = runBaseline()
+  assert.deepEqual(
+    traceabilityGaps(result),
+    [],
+    "完整记录没有追溯缺口",
+  )
+
+  // 构造损坏记录：n-old（ReadPrevious）丢失 inputVersionRefs，同时去掉对应 used 边
+  const broken: RoundResult = structuredClone(result)
+  const damaged = broken.nodeExecutions.find(
+    (n) => n.executionId === "exec-F01-cool-A" && n.nodeId === "n-old",
+  )!
+  damaged.inputVersionRefs = []
+  broken.dependencyEdges = broken.dependencyEdges.filter(
+    (e) => !(e.kind === "used" && e.target === "exec-F01-cool-A"),
+  )
+  // 非读取节点（Negate）即使 refs 为空也不算缺口
+  broken.nodeExecutions.find(
+    (n) => n.executionId === "exec-F01-cool-A" && n.nodeId === "n-neg",
+  )!.inputVersionRefs = []
+
+  const gaps = traceabilityGaps(broken)
+  assert.deepEqual(gaps, [
+    {
+      executionId: "exec-F01-cool-A",
+      nodeId: "n-old",
+      propertyId: "thermal.temperature",
+    },
+  ])
+  assert.ok(
+    !broken.dependencyEdges.some(
+      (e) => e.kind === "used" && e.target === "exec-F01-cool-A",
+    ),
+    "审计只指出缺口，不补造 used 边",
+  )
 }

@@ -4,6 +4,7 @@ import type { BranchDef, CommitDef } from "@/core/types"
 import { lineage } from "@/stores/history"
 import { composeModel } from "@/stores/modelDocuments"
 import { getDocument } from "@/stores/draftRegistry"
+import { publishStore } from "@/stores/publish"
 import {
   SCENE_TEMPLATES_DOC,
   type SceneTemplatesContent,
@@ -104,7 +105,13 @@ export const PARAM_TYPES: Record<string, ParamType> = {
   policyId: { label: "策略", exists: (id, i) => i.policies.has(id) },
   taskId: { label: "任务", exists: (id, i) => i.tasks.has(id) },
   eventId: { label: "事件", exists: (id, i) => i.events.has(id) },
-  bundleId: { label: "发布包", exists: (id, i) => i.bundles.has(id) },
+  bundleId: {
+    label: "发布包",
+    // 种子 bundles 之外，P18 本地发布的 bundle（localStorage 持久化）同样是合法深链目标。
+    exists: (id, i) =>
+      i.bundles.has(id) ||
+      publishStore.getState().bundles.some((b) => b.id === id),
+  },
 }
 
 export interface MissingTargetItem {

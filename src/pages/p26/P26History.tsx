@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react"
 import {
+  Download,
   GitBranch,
   GitCommitHorizontal,
   GitCompare,
@@ -24,6 +25,10 @@ import {
   useBranches,
   useCommits,
 } from "@/stores/history"
+import {
+  exportHistoryPackage,
+  persistNewBranch,
+} from "@/stores/persistence/historyPersistence"
 import { useRecordByCommit } from "@/stores/trace"
 import { toast } from "@/stores/toast"
 import type { BranchDef, CommitDef } from "@/core/types"
@@ -83,6 +88,22 @@ export default function P26History({ ctx }: { ctx: WorkbenchContext }) {
       pageId: "P26",
       params: { branchId: b.id, viewCommit: b.headCommit },
     })
+
+  /** 冷启动导出：JSON 归档下载。导入本轮不实现，历史不可迁移到其他设备/浏览器。 */
+  const exportHistory = async () => {
+    const pkg = await exportHistoryPackage()
+    const url = URL.createObjectURL(
+      new Blob([JSON.stringify(pkg, null, 2)], { type: "application/json" }),
+    )
+    const a = document.createElement("a")
+    a.href = url
+    a.download = `history-package-${pkg.exportedAt.slice(0, 10)}.json`
+    a.click()
+    URL.revokeObjectURL(url)
+    toast(
+      `已导出历史包（${pkg.commits.length} 个提交）；原型不提供导入，历史不可迁移到其他设备/浏览器`,
+    )
+  }
 
   return (
     <div className="flex h-full min-h-0">
@@ -169,6 +190,15 @@ export default function P26History({ ctx }: { ctx: WorkbenchContext }) {
               }
             >
               去 P27 对比
+            </Button>
+            <Button
+              size="sm"
+              intent="ghost"
+              icon={Download}
+              title="下载 JSON 归档；原型不提供导入，历史不可迁移到其他设备/浏览器"
+              onClick={() => void exportHistory()}
+            >
+              导出历史包
             </Button>
           </section>
 
@@ -366,7 +396,7 @@ function CommitGraph({
       </svg>
       <div className="border-t border-line px-4 py-2 text-caption text-muted">
         点击本分支谱系内的提交只移动 viewCommit；点击其他分支的提交会先显式切到该分支（branchId
-        才变化）。半透明的样例提交不在任何分支头的当前谱系内，只展示不可选。
+        才变化）。半透明的样例提交不在任何分支头的当前谱系内，只展示不可选。导出的历史包（JSON）仅作归档，原型不提供导入，历史不可跨设备/浏览器迁移。
       </div>
     </div>
   )
@@ -539,6 +569,18 @@ function CreateBranchModal({
       baseCommit: from.parentId,
       headCommit: from.id,
       visibility,
+    })
+    // 分支定义与 head 指针持久化（同事务）；失败只影响刷新后的恢复，明示给用户。
+    void persistNewBranch({
+      id: clean,
+      runId,
+      label: label.trim() || clean,
+      baseCommit: from.parentId,
+      headCommit: from.id,
+      visibility,
+    }).then((result) => {
+      if (!result.ok)
+        toast(`分支 ${clean} 的本地持久化失败：${result.message}；刷新后该分支不会恢复`)
     })
     toast(`已建立分支 ${clean}（head 固定为 ${from.id}）；不影响其他分支`)
     onClose()

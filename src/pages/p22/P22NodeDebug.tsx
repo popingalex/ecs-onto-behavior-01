@@ -27,6 +27,7 @@ import {
   nodeTrace,
   portUnit,
   programFor,
+  traceabilityGaps,
 } from "./traceView"
 
 const ORIGIN_TAG = {
@@ -106,6 +107,7 @@ export default function P22NodeDebug({ ctx }: { ctx: WorkbenchContext }) {
   }
 
   const origin = ORIGIN_TAG[record.origin]
+  const gaps = traceabilityGaps(record)
   const effectOfTrace = trace
     ? record.effectRequests.find(
         (e) => e.executionId === trace.executionId && e.nodeId === trace.nodeId,
@@ -543,6 +545,25 @@ export default function P22NodeDebug({ ctx }: { ctx: WorkbenchContext }) {
 
               <div className="px-4 py-3">
                 <SectionLabel>访问日志</SectionLabel>
+                {gaps.length > 0 ? (
+                  <div className="mt-1 rounded-ui border border-warning-line bg-warning-soft px-2 py-1.5">
+                    <p className="text-caption text-warning-ink">
+                      该记录有 {gaps.length}{" "}
+                      个节点缺失输入版本引用，不可完整追溯（未编造依赖边）：
+                    </p>
+                    <ul className="mt-0.5 space-y-0.5">
+                      {gaps.map((g) => (
+                        <li
+                          key={`${g.executionId}:${g.nodeId}`}
+                          className="font-mono text-caption text-warning-ink"
+                        >
+                          {g.executionId} · {g.nodeId}
+                          {g.propertyId ? `（读 ${g.propertyId}）` : ""}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
                 <ul className="mt-1 space-y-1">
                   {accessLog(record, execution.id).map((e, i) => (
                     <li key={i} className="font-mono text-caption text-muted">

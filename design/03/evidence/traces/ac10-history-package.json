@@ -1,0 +1,4270 @@
+{
+  "format": "history-package/1",
+  "historySchemaVersion": 1,
+  "exportedAt": "2026-10-22T04:12:21.639Z",
+  "commits": [
+    {
+      "id": "c044",
+      "runId": "run-main",
+      "branchId": "main",
+      "parentId": "c042",
+      "round": 43,
+      "simTime": 430,
+      "summary": "当前图求值 · g-cool@g5（已保存模型）",
+      "checkpoint": false,
+      "source": "computed"
+    },
+    {
+      "id": "c045",
+      "runId": "run-main",
+      "branchId": "main",
+      "parentId": "c044",
+      "round": 44,
+      "simTime": 440,
+      "summary": "当前图求值 · g-cool@g5（已保存模型）",
+      "checkpoint": false,
+      "source": "computed"
+    },
+    {
+      "id": "c046",
+      "runId": "run-main",
+      "branchId": "branch-order-ab",
+      "parentId": "c042",
+      "round": 43,
+      "simTime": 430,
+      "summary": "当前图求值 · g-cool@g5（已保存模型）",
+      "checkpoint": false,
+      "source": "computed"
+    }
+  ],
+  "worlds": [
+    {
+      "commitId": "c044",
+      "simTime": 430,
+      "values": {
+        "F01": {
+          "thermal.temperature": 20,
+          "position.local": [
+            320,
+            180,
+            0
+          ],
+          "fire.active": true
+        },
+        "F02": {
+          "thermal.temperature": 20,
+          "position.local": [
+            600,
+            260,
+            0
+          ],
+          "fire.active": true
+        },
+        "F03": {
+          "thermal.temperature": 20,
+          "position.local": [
+            710,
+            430,
+            0
+          ],
+          "fire.active": true
+        },
+        "V01": {
+          "position.local": [
+            280,
+            180,
+            0
+          ],
+          "water.remaining": 5500,
+          "water.capacity": 10000
+        },
+        "V02": {
+          "position.local": [
+            240,
+            180,
+            0
+          ],
+          "water.remaining": 9000,
+          "water.capacity": 10000
+        },
+        "C01": {
+          "position.local": null
+        }
+      }
+    },
+    {
+      "commitId": "c045",
+      "simTime": 440,
+      "values": {
+        "F01": {
+          "thermal.temperature": 20,
+          "position.local": [
+            320,
+            180,
+            0
+          ],
+          "fire.active": true
+        },
+        "F02": {
+          "thermal.temperature": 20,
+          "position.local": [
+            600,
+            260,
+            0
+          ],
+          "fire.active": true
+        },
+        "F03": {
+          "thermal.temperature": 20,
+          "position.local": [
+            710,
+            430,
+            0
+          ],
+          "fire.active": true
+        },
+        "V01": {
+          "position.local": [
+            280,
+            180,
+            0
+          ],
+          "water.remaining": 5500,
+          "water.capacity": 10000
+        },
+        "V02": {
+          "position.local": [
+            240,
+            180,
+            0
+          ],
+          "water.remaining": 9000,
+          "water.capacity": 10000
+        },
+        "C01": {
+          "position.local": null
+        }
+      }
+    },
+    {
+      "commitId": "c046",
+      "simTime": 430,
+      "values": {
+        "F01": {
+          "thermal.temperature": 20,
+          "position.local": [
+            320,
+            180,
+            0
+          ],
+          "fire.active": true
+        },
+        "F02": {
+          "thermal.temperature": 20,
+          "position.local": [
+            600,
+            260,
+            0
+          ],
+          "fire.active": true
+        },
+        "F03": {
+          "thermal.temperature": 20,
+          "position.local": [
+            710,
+            430,
+            0
+          ],
+          "fire.active": true
+        },
+        "V01": {
+          "position.local": [
+            280,
+            180,
+            0
+          ],
+          "water.remaining": 5500,
+          "water.capacity": 10000
+        },
+        "V02": {
+          "position.local": [
+            240,
+            180,
+            0
+          ],
+          "water.remaining": 9000,
+          "water.capacity": 10000
+        },
+        "C01": {
+          "position.local": null
+        }
+      }
+    }
+  ],
+  "records": [
+    {
+      "record": {
+        "id": "record-c044",
+        "runId": "run-main",
+        "branchId": "main",
+        "baseCommit": "c042",
+        "resultCommit": "c044",
+        "modelVersion": "figma-prototype/0.5",
+        "scheduleRef": "schedule-main@s5",
+        "programRefs": [
+          "g-cool@g5"
+        ],
+        "inputVersions": {
+          "schema": "fcb1b489",
+          "scene": "f44ffa1e",
+          "systems": "c16e711e",
+          "baseCommit": "c042",
+          "program:g-cool": "g-cool@g5#82724bce",
+          "schedule:schedule-main": "schedule-main@s5#754635f8"
+        },
+        "simTimeBefore": 420,
+        "simTimeAfter": 430,
+        "logicalParallelGroups": [
+          [
+            "cool-A",
+            "cool-B"
+          ],
+          [
+            "reduce-cooling"
+          ],
+          [
+            "commit"
+          ]
+        ],
+        "elapsedMs": null,
+        "traceOrdering": "canonical systemId/entityId/node order; not measured thread schedule"
+      },
+      "origin": "computed",
+      "nextWorld": {
+        "commitId": "c044",
+        "simTime": 430,
+        "values": {
+          "F01": {
+            "thermal.temperature": 20,
+            "position.local": [
+              320,
+              180,
+              0
+            ],
+            "fire.active": true
+          },
+          "F02": {
+            "thermal.temperature": 20,
+            "position.local": [
+              600,
+              260,
+              0
+            ],
+            "fire.active": true
+          },
+          "F03": {
+            "thermal.temperature": 20,
+            "position.local": [
+              710,
+              430,
+              0
+            ],
+            "fire.active": true
+          },
+          "V01": {
+            "position.local": [
+              280,
+              180,
+              0
+            ],
+            "water.remaining": 5500,
+            "water.capacity": 10000
+          },
+          "V02": {
+            "position.local": [
+              240,
+              180,
+              0
+            ],
+            "water.remaining": 9000,
+            "water.capacity": 10000
+          },
+          "C01": {
+            "position.local": null
+          }
+        }
+      },
+      "programs": {
+        "g-cool@g5": {
+          "id": "g-cool",
+          "version": "g5",
+          "kind": "entity-program",
+          "scopeType": "Fire",
+          "parameters": [
+            {
+              "id": "maxDropK",
+              "type": {
+                "primitive": "f64",
+                "shape": "scalar",
+                "quantityKind": "temperatureDifference",
+                "unitId": "deltaK",
+                "nullable": false
+              },
+              "default": 50
+            },
+            {
+              "id": "sourceC",
+              "type": {
+                "primitive": "f64",
+                "shape": "scalar",
+                "quantityKind": "temperatureAbsolute",
+                "unitId": "degC",
+                "nullable": false
+              },
+              "default": 20
+            }
+          ],
+          "nodes": [
+            {
+              "id": "n-old",
+              "type": "ReadPrevious",
+              "inputs": {},
+              "outputs": {
+                "value": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureAbsolute",
+                  "unitId": "degC",
+                  "nullable": false
+                }
+              },
+              "bindings": {
+                "property": {
+                  "root": "self",
+                  "propertyId": "thermal.temperature",
+                  "view": "previous"
+                }
+              },
+              "params": {}
+            },
+            {
+              "id": "n-room",
+              "type": "CoolingRoom",
+              "inputs": {
+                "old": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureAbsolute",
+                  "unitId": "degC",
+                  "nullable": false
+                },
+                "source": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureAbsolute",
+                  "unitId": "degC",
+                  "nullable": false
+                }
+              },
+              "outputs": {
+                "room": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureDifference",
+                  "unitId": "deltaK",
+                  "nullable": false
+                }
+              },
+              "bindings": {
+                "source": {
+                  "root": "parameter",
+                  "parameterId": "sourceC"
+                }
+              },
+              "params": {}
+            },
+            {
+              "id": "n-cap",
+              "type": "Min",
+              "inputs": {
+                "a": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureDifference",
+                  "unitId": "deltaK",
+                  "nullable": false
+                },
+                "b": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureDifference",
+                  "unitId": "deltaK",
+                  "nullable": false
+                }
+              },
+              "outputs": {
+                "value": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureDifference",
+                  "unitId": "deltaK",
+                  "nullable": false
+                }
+              },
+              "bindings": {
+                "b": {
+                  "root": "parameter",
+                  "parameterId": "maxDropK"
+                }
+              },
+              "params": {}
+            },
+            {
+              "id": "n-neg",
+              "type": "Negate",
+              "inputs": {
+                "value": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureDifference",
+                  "unitId": "deltaK",
+                  "nullable": false
+                }
+              },
+              "outputs": {
+                "delta": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureDifference",
+                  "unitId": "deltaK",
+                  "nullable": false
+                }
+              },
+              "bindings": {},
+              "params": {}
+            },
+            {
+              "id": "n-emit",
+              "type": "Contribute",
+              "inputs": {
+                "delta": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureDifference",
+                  "unitId": "deltaK",
+                  "nullable": false
+                }
+              },
+              "outputs": {
+                "effect": {
+                  "primitive": "EffectRef",
+                  "shape": "scalar",
+                  "nullable": false
+                }
+              },
+              "bindings": {
+                "target": {
+                  "root": "self",
+                  "propertyId": "thermal.temperature"
+                }
+              },
+              "params": {
+                "constraintRef": "cooling-floor@c1"
+              }
+            }
+          ],
+          "edges": [
+            {
+              "id": "le1",
+              "kind": "data",
+              "source": {
+                "nodeId": "n-old",
+                "portId": "value"
+              },
+              "target": {
+                "nodeId": "n-room",
+                "portId": "old"
+              }
+            },
+            {
+              "id": "le2",
+              "kind": "data",
+              "source": {
+                "nodeId": "n-room",
+                "portId": "room"
+              },
+              "target": {
+                "nodeId": "n-cap",
+                "portId": "a"
+              }
+            },
+            {
+              "id": "le3",
+              "kind": "data",
+              "source": {
+                "nodeId": "n-cap",
+                "portId": "value"
+              },
+              "target": {
+                "nodeId": "n-neg",
+                "portId": "value"
+              }
+            },
+            {
+              "id": "le4",
+              "kind": "data",
+              "source": {
+                "nodeId": "n-neg",
+                "portId": "delta"
+              },
+              "target": {
+                "nodeId": "n-emit",
+                "portId": "delta"
+              }
+            }
+          ]
+        }
+      },
+      "systemExecutions": [
+        {
+          "id": "exec-F01-cool-A",
+          "recordId": "record-c044",
+          "systemId": "cool-A",
+          "entityId": "F01",
+          "programRef": "g-cool@g5",
+          "inputCommit": "c042",
+          "nodeExecutionIds": [
+            "exec-F01-cool-A:n-old",
+            "exec-F01-cool-A:n-room",
+            "exec-F01-cool-A:n-cap",
+            "exec-F01-cool-A:n-neg",
+            "exec-F01-cool-A:n-emit"
+          ],
+          "localPreview": 50,
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-A",
+          "recordId": "record-c044",
+          "systemId": "cool-A",
+          "entityId": "F02",
+          "programRef": "g-cool@g5",
+          "inputCommit": "c042",
+          "nodeExecutionIds": [
+            "exec-F02-cool-A:n-old",
+            "exec-F02-cool-A:n-room",
+            "exec-F02-cool-A:n-cap",
+            "exec-F02-cool-A:n-neg",
+            "exec-F02-cool-A:n-emit"
+          ],
+          "localPreview": 30,
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-A",
+          "recordId": "record-c044",
+          "systemId": "cool-A",
+          "entityId": "F03",
+          "programRef": "g-cool@g5",
+          "inputCommit": "c042",
+          "nodeExecutionIds": [
+            "exec-F03-cool-A:n-old",
+            "exec-F03-cool-A:n-room",
+            "exec-F03-cool-A:n-cap",
+            "exec-F03-cool-A:n-neg",
+            "exec-F03-cool-A:n-emit"
+          ],
+          "localPreview": 20,
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-B",
+          "recordId": "record-c044",
+          "systemId": "cool-B",
+          "entityId": "F01",
+          "programRef": "g-cool@g5",
+          "inputCommit": "c042",
+          "nodeExecutionIds": [
+            "exec-F01-cool-B:n-old",
+            "exec-F01-cool-B:n-room",
+            "exec-F01-cool-B:n-cap",
+            "exec-F01-cool-B:n-neg",
+            "exec-F01-cool-B:n-emit"
+          ],
+          "localPreview": 50,
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-B",
+          "recordId": "record-c044",
+          "systemId": "cool-B",
+          "entityId": "F02",
+          "programRef": "g-cool@g5",
+          "inputCommit": "c042",
+          "nodeExecutionIds": [
+            "exec-F02-cool-B:n-old",
+            "exec-F02-cool-B:n-room",
+            "exec-F02-cool-B:n-cap",
+            "exec-F02-cool-B:n-neg",
+            "exec-F02-cool-B:n-emit"
+          ],
+          "localPreview": 30,
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-B",
+          "recordId": "record-c044",
+          "systemId": "cool-B",
+          "entityId": "F03",
+          "programRef": "g-cool@g5",
+          "inputCommit": "c042",
+          "nodeExecutionIds": [
+            "exec-F03-cool-B:n-old",
+            "exec-F03-cool-B:n-room",
+            "exec-F03-cool-B:n-cap",
+            "exec-F03-cool-B:n-neg",
+            "exec-F03-cool-B:n-emit"
+          ],
+          "localPreview": 20,
+          "elapsedMs": null
+        }
+      ],
+      "nodeExecutions": [
+        {
+          "id": "exec-F01-cool-A:n-old",
+          "recordId": "record-c044",
+          "executionId": "exec-F01-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F01",
+          "nodeId": "n-old",
+          "graphRef": "g-cool@g5",
+          "seq": 1,
+          "status": "completed",
+          "inputs": {},
+          "outputs": {
+            "value": 100
+          },
+          "outputUnitId": "degC",
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-A:n-room",
+          "recordId": "record-c044",
+          "executionId": "exec-F01-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F01",
+          "nodeId": "n-room",
+          "graphRef": "g-cool@g5",
+          "seq": 2,
+          "status": "completed",
+          "inputs": {
+            "old": 100,
+            "source": 20
+          },
+          "outputs": {
+            "room": 80
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-A:n-cap",
+          "recordId": "record-c044",
+          "executionId": "exec-F01-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F01",
+          "nodeId": "n-cap",
+          "graphRef": "g-cool@g5",
+          "seq": 3,
+          "status": "completed",
+          "inputs": {
+            "a": 80,
+            "b": 50
+          },
+          "outputs": {
+            "value": 50
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-A:n-neg",
+          "recordId": "record-c044",
+          "executionId": "exec-F01-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F01",
+          "nodeId": "n-neg",
+          "graphRef": "g-cool@g5",
+          "seq": 4,
+          "status": "completed",
+          "inputs": {
+            "value": 50
+          },
+          "outputs": {
+            "delta": -50
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-A:n-emit",
+          "recordId": "record-c044",
+          "executionId": "exec-F01-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F01",
+          "nodeId": "n-emit",
+          "graphRef": "g-cool@g5",
+          "seq": 5,
+          "status": "completed",
+          "inputs": {
+            "delta": -50
+          },
+          "outputs": {
+            "effect": "eff-F01-cool-A"
+          },
+          "outputUnitId": null,
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-A:n-old",
+          "recordId": "record-c044",
+          "executionId": "exec-F02-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F02",
+          "nodeId": "n-old",
+          "graphRef": "g-cool@g5",
+          "seq": 6,
+          "status": "completed",
+          "inputs": {},
+          "outputs": {
+            "value": 80
+          },
+          "outputUnitId": "degC",
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-A:n-room",
+          "recordId": "record-c044",
+          "executionId": "exec-F02-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F02",
+          "nodeId": "n-room",
+          "graphRef": "g-cool@g5",
+          "seq": 7,
+          "status": "completed",
+          "inputs": {
+            "old": 80,
+            "source": 20
+          },
+          "outputs": {
+            "room": 60
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-A:n-cap",
+          "recordId": "record-c044",
+          "executionId": "exec-F02-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F02",
+          "nodeId": "n-cap",
+          "graphRef": "g-cool@g5",
+          "seq": 8,
+          "status": "completed",
+          "inputs": {
+            "a": 60,
+            "b": 50
+          },
+          "outputs": {
+            "value": 50
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-A:n-neg",
+          "recordId": "record-c044",
+          "executionId": "exec-F02-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F02",
+          "nodeId": "n-neg",
+          "graphRef": "g-cool@g5",
+          "seq": 9,
+          "status": "completed",
+          "inputs": {
+            "value": 50
+          },
+          "outputs": {
+            "delta": -50
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-A:n-emit",
+          "recordId": "record-c044",
+          "executionId": "exec-F02-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F02",
+          "nodeId": "n-emit",
+          "graphRef": "g-cool@g5",
+          "seq": 10,
+          "status": "completed",
+          "inputs": {
+            "delta": -50
+          },
+          "outputs": {
+            "effect": "eff-F02-cool-A"
+          },
+          "outputUnitId": null,
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-A:n-old",
+          "recordId": "record-c044",
+          "executionId": "exec-F03-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F03",
+          "nodeId": "n-old",
+          "graphRef": "g-cool@g5",
+          "seq": 11,
+          "status": "completed",
+          "inputs": {},
+          "outputs": {
+            "value": 60
+          },
+          "outputUnitId": "degC",
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-A:n-room",
+          "recordId": "record-c044",
+          "executionId": "exec-F03-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F03",
+          "nodeId": "n-room",
+          "graphRef": "g-cool@g5",
+          "seq": 12,
+          "status": "completed",
+          "inputs": {
+            "old": 60,
+            "source": 20
+          },
+          "outputs": {
+            "room": 40
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-A:n-cap",
+          "recordId": "record-c044",
+          "executionId": "exec-F03-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F03",
+          "nodeId": "n-cap",
+          "graphRef": "g-cool@g5",
+          "seq": 13,
+          "status": "completed",
+          "inputs": {
+            "a": 40,
+            "b": 50
+          },
+          "outputs": {
+            "value": 40
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-A:n-neg",
+          "recordId": "record-c044",
+          "executionId": "exec-F03-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F03",
+          "nodeId": "n-neg",
+          "graphRef": "g-cool@g5",
+          "seq": 14,
+          "status": "completed",
+          "inputs": {
+            "value": 40
+          },
+          "outputs": {
+            "delta": -40
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-A:n-emit",
+          "recordId": "record-c044",
+          "executionId": "exec-F03-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F03",
+          "nodeId": "n-emit",
+          "graphRef": "g-cool@g5",
+          "seq": 15,
+          "status": "completed",
+          "inputs": {
+            "delta": -40
+          },
+          "outputs": {
+            "effect": "eff-F03-cool-A"
+          },
+          "outputUnitId": null,
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-B:n-old",
+          "recordId": "record-c044",
+          "executionId": "exec-F01-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F01",
+          "nodeId": "n-old",
+          "graphRef": "g-cool@g5",
+          "seq": 16,
+          "status": "completed",
+          "inputs": {},
+          "outputs": {
+            "value": 100
+          },
+          "outputUnitId": "degC",
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-B:n-room",
+          "recordId": "record-c044",
+          "executionId": "exec-F01-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F01",
+          "nodeId": "n-room",
+          "graphRef": "g-cool@g5",
+          "seq": 17,
+          "status": "completed",
+          "inputs": {
+            "old": 100,
+            "source": 20
+          },
+          "outputs": {
+            "room": 80
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-B:n-cap",
+          "recordId": "record-c044",
+          "executionId": "exec-F01-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F01",
+          "nodeId": "n-cap",
+          "graphRef": "g-cool@g5",
+          "seq": 18,
+          "status": "completed",
+          "inputs": {
+            "a": 80,
+            "b": 50
+          },
+          "outputs": {
+            "value": 50
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-B:n-neg",
+          "recordId": "record-c044",
+          "executionId": "exec-F01-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F01",
+          "nodeId": "n-neg",
+          "graphRef": "g-cool@g5",
+          "seq": 19,
+          "status": "completed",
+          "inputs": {
+            "value": 50
+          },
+          "outputs": {
+            "delta": -50
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-B:n-emit",
+          "recordId": "record-c044",
+          "executionId": "exec-F01-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F01",
+          "nodeId": "n-emit",
+          "graphRef": "g-cool@g5",
+          "seq": 20,
+          "status": "completed",
+          "inputs": {
+            "delta": -50
+          },
+          "outputs": {
+            "effect": "eff-F01-cool-B"
+          },
+          "outputUnitId": null,
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-B:n-old",
+          "recordId": "record-c044",
+          "executionId": "exec-F02-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F02",
+          "nodeId": "n-old",
+          "graphRef": "g-cool@g5",
+          "seq": 21,
+          "status": "completed",
+          "inputs": {},
+          "outputs": {
+            "value": 80
+          },
+          "outputUnitId": "degC",
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-B:n-room",
+          "recordId": "record-c044",
+          "executionId": "exec-F02-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F02",
+          "nodeId": "n-room",
+          "graphRef": "g-cool@g5",
+          "seq": 22,
+          "status": "completed",
+          "inputs": {
+            "old": 80,
+            "source": 20
+          },
+          "outputs": {
+            "room": 60
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-B:n-cap",
+          "recordId": "record-c044",
+          "executionId": "exec-F02-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F02",
+          "nodeId": "n-cap",
+          "graphRef": "g-cool@g5",
+          "seq": 23,
+          "status": "completed",
+          "inputs": {
+            "a": 60,
+            "b": 50
+          },
+          "outputs": {
+            "value": 50
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-B:n-neg",
+          "recordId": "record-c044",
+          "executionId": "exec-F02-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F02",
+          "nodeId": "n-neg",
+          "graphRef": "g-cool@g5",
+          "seq": 24,
+          "status": "completed",
+          "inputs": {
+            "value": 50
+          },
+          "outputs": {
+            "delta": -50
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-B:n-emit",
+          "recordId": "record-c044",
+          "executionId": "exec-F02-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F02",
+          "nodeId": "n-emit",
+          "graphRef": "g-cool@g5",
+          "seq": 25,
+          "status": "completed",
+          "inputs": {
+            "delta": -50
+          },
+          "outputs": {
+            "effect": "eff-F02-cool-B"
+          },
+          "outputUnitId": null,
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-B:n-old",
+          "recordId": "record-c044",
+          "executionId": "exec-F03-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F03",
+          "nodeId": "n-old",
+          "graphRef": "g-cool@g5",
+          "seq": 26,
+          "status": "completed",
+          "inputs": {},
+          "outputs": {
+            "value": 60
+          },
+          "outputUnitId": "degC",
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-B:n-room",
+          "recordId": "record-c044",
+          "executionId": "exec-F03-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F03",
+          "nodeId": "n-room",
+          "graphRef": "g-cool@g5",
+          "seq": 27,
+          "status": "completed",
+          "inputs": {
+            "old": 60,
+            "source": 20
+          },
+          "outputs": {
+            "room": 40
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-B:n-cap",
+          "recordId": "record-c044",
+          "executionId": "exec-F03-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F03",
+          "nodeId": "n-cap",
+          "graphRef": "g-cool@g5",
+          "seq": 28,
+          "status": "completed",
+          "inputs": {
+            "a": 40,
+            "b": 50
+          },
+          "outputs": {
+            "value": 40
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-B:n-neg",
+          "recordId": "record-c044",
+          "executionId": "exec-F03-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F03",
+          "nodeId": "n-neg",
+          "graphRef": "g-cool@g5",
+          "seq": 29,
+          "status": "completed",
+          "inputs": {
+            "value": 40
+          },
+          "outputs": {
+            "delta": -40
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-B:n-emit",
+          "recordId": "record-c044",
+          "executionId": "exec-F03-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F03",
+          "nodeId": "n-emit",
+          "graphRef": "g-cool@g5",
+          "seq": 30,
+          "status": "completed",
+          "inputs": {
+            "delta": -40
+          },
+          "outputs": {
+            "effect": "eff-F03-cool-B"
+          },
+          "outputUnitId": null,
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        }
+      ],
+      "effectRequests": [
+        {
+          "id": "eff-F01-cool-A",
+          "recordId": "record-c044",
+          "executionId": "exec-F01-cool-A",
+          "nodeId": "n-emit",
+          "systemId": "cool-A",
+          "entityId": "F01",
+          "propertyId": "thermal.temperature",
+          "requestedDelta": -50,
+          "unitId": "deltaK",
+          "selfPreview": 50,
+          "previewUnitId": "degC",
+          "constraintRef": "cooling-floor@c1"
+        },
+        {
+          "id": "eff-F02-cool-A",
+          "recordId": "record-c044",
+          "executionId": "exec-F02-cool-A",
+          "nodeId": "n-emit",
+          "systemId": "cool-A",
+          "entityId": "F02",
+          "propertyId": "thermal.temperature",
+          "requestedDelta": -50,
+          "unitId": "deltaK",
+          "selfPreview": 30,
+          "previewUnitId": "degC",
+          "constraintRef": "cooling-floor@c1"
+        },
+        {
+          "id": "eff-F03-cool-A",
+          "recordId": "record-c044",
+          "executionId": "exec-F03-cool-A",
+          "nodeId": "n-emit",
+          "systemId": "cool-A",
+          "entityId": "F03",
+          "propertyId": "thermal.temperature",
+          "requestedDelta": -40,
+          "unitId": "deltaK",
+          "selfPreview": 20,
+          "previewUnitId": "degC",
+          "constraintRef": "cooling-floor@c1"
+        },
+        {
+          "id": "eff-F01-cool-B",
+          "recordId": "record-c044",
+          "executionId": "exec-F01-cool-B",
+          "nodeId": "n-emit",
+          "systemId": "cool-B",
+          "entityId": "F01",
+          "propertyId": "thermal.temperature",
+          "requestedDelta": -50,
+          "unitId": "deltaK",
+          "selfPreview": 50,
+          "previewUnitId": "degC",
+          "constraintRef": "cooling-floor@c1"
+        },
+        {
+          "id": "eff-F02-cool-B",
+          "recordId": "record-c044",
+          "executionId": "exec-F02-cool-B",
+          "nodeId": "n-emit",
+          "systemId": "cool-B",
+          "entityId": "F02",
+          "propertyId": "thermal.temperature",
+          "requestedDelta": -50,
+          "unitId": "deltaK",
+          "selfPreview": 30,
+          "previewUnitId": "degC",
+          "constraintRef": "cooling-floor@c1"
+        },
+        {
+          "id": "eff-F03-cool-B",
+          "recordId": "record-c044",
+          "executionId": "exec-F03-cool-B",
+          "nodeId": "n-emit",
+          "systemId": "cool-B",
+          "entityId": "F03",
+          "propertyId": "thermal.temperature",
+          "requestedDelta": -40,
+          "unitId": "deltaK",
+          "selfPreview": 20,
+          "previewUnitId": "degC",
+          "constraintRef": "cooling-floor@c1"
+        }
+      ],
+      "decisions": [
+        {
+          "id": "decision-F01",
+          "recordId": "record-c044",
+          "entityId": "F01",
+          "propertyId": "thermal.temperature",
+          "constraintRef": "cooling-floor@c1",
+          "old": 100,
+          "candidate": 0,
+          "budget": 80,
+          "budgetUnitId": "deltaK",
+          "scale": 0.8,
+          "allocations": [
+            {
+              "effectId": "eff-F01-cool-A",
+              "approvedDelta": -40,
+              "status": "partial"
+            },
+            {
+              "effectId": "eff-F01-cool-B",
+              "approvedDelta": -40,
+              "status": "partial"
+            }
+          ],
+          "final": 20,
+          "valueUnitId": "degC"
+        },
+        {
+          "id": "decision-F02",
+          "recordId": "record-c044",
+          "entityId": "F02",
+          "propertyId": "thermal.temperature",
+          "constraintRef": "cooling-floor@c1",
+          "old": 80,
+          "candidate": -20,
+          "budget": 60,
+          "budgetUnitId": "deltaK",
+          "scale": 0.6,
+          "allocations": [
+            {
+              "effectId": "eff-F02-cool-A",
+              "approvedDelta": -30,
+              "status": "partial"
+            },
+            {
+              "effectId": "eff-F02-cool-B",
+              "approvedDelta": -30,
+              "status": "partial"
+            }
+          ],
+          "final": 20,
+          "valueUnitId": "degC"
+        },
+        {
+          "id": "decision-F03",
+          "recordId": "record-c044",
+          "entityId": "F03",
+          "propertyId": "thermal.temperature",
+          "constraintRef": "cooling-floor@c1",
+          "old": 60,
+          "candidate": -20,
+          "budget": 40,
+          "budgetUnitId": "deltaK",
+          "scale": 0.5,
+          "allocations": [
+            {
+              "effectId": "eff-F03-cool-A",
+              "approvedDelta": -20,
+              "status": "partial"
+            },
+            {
+              "effectId": "eff-F03-cool-B",
+              "approvedDelta": -20,
+              "status": "partial"
+            }
+          ],
+          "final": 20,
+          "valueUnitId": "degC"
+        }
+      ],
+      "changes": [
+        {
+          "entityId": "F01",
+          "propertyId": "thermal.temperature",
+          "old": 100,
+          "new": 20,
+          "unitId": "degC",
+          "versionId": "F01.thermal.temperature@c044",
+          "decisionId": "decision-F01"
+        },
+        {
+          "entityId": "F02",
+          "propertyId": "thermal.temperature",
+          "old": 80,
+          "new": 20,
+          "unitId": "degC",
+          "versionId": "F02.thermal.temperature@c044",
+          "decisionId": "decision-F02"
+        },
+        {
+          "entityId": "F03",
+          "propertyId": "thermal.temperature",
+          "old": 60,
+          "new": 20,
+          "unitId": "degC",
+          "versionId": "F03.thermal.temperature@c044",
+          "decisionId": "decision-F03"
+        }
+      ],
+      "dependencyEdges": [
+        {
+          "source": "F01.thermal.temperature@c042",
+          "target": "exec-F01-cool-A",
+          "kind": "used"
+        },
+        {
+          "source": "F02.thermal.temperature@c042",
+          "target": "exec-F02-cool-A",
+          "kind": "used"
+        },
+        {
+          "source": "F03.thermal.temperature@c042",
+          "target": "exec-F03-cool-A",
+          "kind": "used"
+        },
+        {
+          "source": "F01.thermal.temperature@c042",
+          "target": "exec-F01-cool-B",
+          "kind": "used"
+        },
+        {
+          "source": "F02.thermal.temperature@c042",
+          "target": "exec-F02-cool-B",
+          "kind": "used"
+        },
+        {
+          "source": "F03.thermal.temperature@c042",
+          "target": "exec-F03-cool-B",
+          "kind": "used"
+        },
+        {
+          "source": "exec-F01-cool-A",
+          "target": "decision-F01",
+          "kind": "proposed"
+        },
+        {
+          "source": "exec-F01-cool-B",
+          "target": "decision-F01",
+          "kind": "proposed"
+        },
+        {
+          "source": "decision-F01",
+          "target": "F01.thermal.temperature@c044",
+          "kind": "generated"
+        },
+        {
+          "source": "exec-F02-cool-A",
+          "target": "decision-F02",
+          "kind": "proposed"
+        },
+        {
+          "source": "exec-F02-cool-B",
+          "target": "decision-F02",
+          "kind": "proposed"
+        },
+        {
+          "source": "decision-F02",
+          "target": "F02.thermal.temperature@c044",
+          "kind": "generated"
+        },
+        {
+          "source": "exec-F03-cool-A",
+          "target": "decision-F03",
+          "kind": "proposed"
+        },
+        {
+          "source": "exec-F03-cool-B",
+          "target": "decision-F03",
+          "kind": "proposed"
+        },
+        {
+          "source": "decision-F03",
+          "target": "F03.thermal.temperature@c044",
+          "kind": "generated"
+        }
+      ],
+      "diagnostics": []
+    },
+    {
+      "record": {
+        "id": "record-c045",
+        "runId": "run-main",
+        "branchId": "main",
+        "baseCommit": "c044",
+        "resultCommit": "c045",
+        "modelVersion": "figma-prototype/0.5",
+        "scheduleRef": "schedule-main@s5",
+        "programRefs": [
+          "g-cool@g5"
+        ],
+        "inputVersions": {
+          "schema": "fcb1b489",
+          "scene": "f44ffa1e",
+          "systems": "c16e711e",
+          "baseCommit": "c044",
+          "program:g-cool": "g-cool@g5#82724bce",
+          "schedule:schedule-main": "schedule-main@s5#11082ca0"
+        },
+        "simTimeBefore": 430,
+        "simTimeAfter": 440,
+        "logicalParallelGroups": [
+          [
+            "cool-A"
+          ],
+          [
+            "cool-B"
+          ],
+          [
+            "reduce-cooling"
+          ],
+          [
+            "commit"
+          ]
+        ],
+        "elapsedMs": null,
+        "traceOrdering": "canonical systemId/entityId/node order; not measured thread schedule"
+      },
+      "origin": "computed",
+      "nextWorld": {
+        "commitId": "c045",
+        "simTime": 440,
+        "values": {
+          "F01": {
+            "thermal.temperature": 20,
+            "position.local": [
+              320,
+              180,
+              0
+            ],
+            "fire.active": true
+          },
+          "F02": {
+            "thermal.temperature": 20,
+            "position.local": [
+              600,
+              260,
+              0
+            ],
+            "fire.active": true
+          },
+          "F03": {
+            "thermal.temperature": 20,
+            "position.local": [
+              710,
+              430,
+              0
+            ],
+            "fire.active": true
+          },
+          "V01": {
+            "position.local": [
+              280,
+              180,
+              0
+            ],
+            "water.remaining": 5500,
+            "water.capacity": 10000
+          },
+          "V02": {
+            "position.local": [
+              240,
+              180,
+              0
+            ],
+            "water.remaining": 9000,
+            "water.capacity": 10000
+          },
+          "C01": {
+            "position.local": null
+          }
+        }
+      },
+      "programs": {
+        "g-cool@g5": {
+          "id": "g-cool",
+          "version": "g5",
+          "kind": "entity-program",
+          "scopeType": "Fire",
+          "parameters": [
+            {
+              "id": "maxDropK",
+              "type": {
+                "primitive": "f64",
+                "shape": "scalar",
+                "quantityKind": "temperatureDifference",
+                "unitId": "deltaK",
+                "nullable": false
+              },
+              "default": 50
+            },
+            {
+              "id": "sourceC",
+              "type": {
+                "primitive": "f64",
+                "shape": "scalar",
+                "quantityKind": "temperatureAbsolute",
+                "unitId": "degC",
+                "nullable": false
+              },
+              "default": 20
+            }
+          ],
+          "nodes": [
+            {
+              "id": "n-old",
+              "type": "ReadPrevious",
+              "inputs": {},
+              "outputs": {
+                "value": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureAbsolute",
+                  "unitId": "degC",
+                  "nullable": false
+                }
+              },
+              "bindings": {
+                "property": {
+                  "root": "self",
+                  "propertyId": "thermal.temperature",
+                  "view": "previous"
+                }
+              },
+              "params": {}
+            },
+            {
+              "id": "n-room",
+              "type": "CoolingRoom",
+              "inputs": {
+                "old": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureAbsolute",
+                  "unitId": "degC",
+                  "nullable": false
+                },
+                "source": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureAbsolute",
+                  "unitId": "degC",
+                  "nullable": false
+                }
+              },
+              "outputs": {
+                "room": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureDifference",
+                  "unitId": "deltaK",
+                  "nullable": false
+                }
+              },
+              "bindings": {
+                "source": {
+                  "root": "parameter",
+                  "parameterId": "sourceC"
+                }
+              },
+              "params": {}
+            },
+            {
+              "id": "n-cap",
+              "type": "Min",
+              "inputs": {
+                "a": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureDifference",
+                  "unitId": "deltaK",
+                  "nullable": false
+                },
+                "b": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureDifference",
+                  "unitId": "deltaK",
+                  "nullable": false
+                }
+              },
+              "outputs": {
+                "value": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureDifference",
+                  "unitId": "deltaK",
+                  "nullable": false
+                }
+              },
+              "bindings": {
+                "b": {
+                  "root": "parameter",
+                  "parameterId": "maxDropK"
+                }
+              },
+              "params": {}
+            },
+            {
+              "id": "n-neg",
+              "type": "Negate",
+              "inputs": {
+                "value": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureDifference",
+                  "unitId": "deltaK",
+                  "nullable": false
+                }
+              },
+              "outputs": {
+                "delta": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureDifference",
+                  "unitId": "deltaK",
+                  "nullable": false
+                }
+              },
+              "bindings": {},
+              "params": {}
+            },
+            {
+              "id": "n-emit",
+              "type": "Contribute",
+              "inputs": {
+                "delta": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureDifference",
+                  "unitId": "deltaK",
+                  "nullable": false
+                }
+              },
+              "outputs": {
+                "effect": {
+                  "primitive": "EffectRef",
+                  "shape": "scalar",
+                  "nullable": false
+                }
+              },
+              "bindings": {
+                "target": {
+                  "root": "self",
+                  "propertyId": "thermal.temperature"
+                }
+              },
+              "params": {
+                "constraintRef": "cooling-floor@c1"
+              }
+            }
+          ],
+          "edges": [
+            {
+              "id": "le1",
+              "kind": "data",
+              "source": {
+                "nodeId": "n-old",
+                "portId": "value"
+              },
+              "target": {
+                "nodeId": "n-room",
+                "portId": "old"
+              }
+            },
+            {
+              "id": "le2",
+              "kind": "data",
+              "source": {
+                "nodeId": "n-room",
+                "portId": "room"
+              },
+              "target": {
+                "nodeId": "n-cap",
+                "portId": "a"
+              }
+            },
+            {
+              "id": "le3",
+              "kind": "data",
+              "source": {
+                "nodeId": "n-cap",
+                "portId": "value"
+              },
+              "target": {
+                "nodeId": "n-neg",
+                "portId": "value"
+              }
+            },
+            {
+              "id": "le4",
+              "kind": "data",
+              "source": {
+                "nodeId": "n-neg",
+                "portId": "delta"
+              },
+              "target": {
+                "nodeId": "n-emit",
+                "portId": "delta"
+              }
+            }
+          ]
+        }
+      },
+      "systemExecutions": [
+        {
+          "id": "exec-F01-cool-A",
+          "recordId": "record-c045",
+          "systemId": "cool-A",
+          "entityId": "F01",
+          "programRef": "g-cool@g5",
+          "inputCommit": "c044",
+          "nodeExecutionIds": [
+            "exec-F01-cool-A:n-old",
+            "exec-F01-cool-A:n-room",
+            "exec-F01-cool-A:n-cap",
+            "exec-F01-cool-A:n-neg",
+            "exec-F01-cool-A:n-emit"
+          ],
+          "localPreview": 20,
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-A",
+          "recordId": "record-c045",
+          "systemId": "cool-A",
+          "entityId": "F02",
+          "programRef": "g-cool@g5",
+          "inputCommit": "c044",
+          "nodeExecutionIds": [
+            "exec-F02-cool-A:n-old",
+            "exec-F02-cool-A:n-room",
+            "exec-F02-cool-A:n-cap",
+            "exec-F02-cool-A:n-neg",
+            "exec-F02-cool-A:n-emit"
+          ],
+          "localPreview": 20,
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-A",
+          "recordId": "record-c045",
+          "systemId": "cool-A",
+          "entityId": "F03",
+          "programRef": "g-cool@g5",
+          "inputCommit": "c044",
+          "nodeExecutionIds": [
+            "exec-F03-cool-A:n-old",
+            "exec-F03-cool-A:n-room",
+            "exec-F03-cool-A:n-cap",
+            "exec-F03-cool-A:n-neg",
+            "exec-F03-cool-A:n-emit"
+          ],
+          "localPreview": 20,
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-B",
+          "recordId": "record-c045",
+          "systemId": "cool-B",
+          "entityId": "F01",
+          "programRef": "g-cool@g5",
+          "inputCommit": "c044",
+          "nodeExecutionIds": [
+            "exec-F01-cool-B:n-old",
+            "exec-F01-cool-B:n-room",
+            "exec-F01-cool-B:n-cap",
+            "exec-F01-cool-B:n-neg",
+            "exec-F01-cool-B:n-emit"
+          ],
+          "localPreview": 20,
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-B",
+          "recordId": "record-c045",
+          "systemId": "cool-B",
+          "entityId": "F02",
+          "programRef": "g-cool@g5",
+          "inputCommit": "c044",
+          "nodeExecutionIds": [
+            "exec-F02-cool-B:n-old",
+            "exec-F02-cool-B:n-room",
+            "exec-F02-cool-B:n-cap",
+            "exec-F02-cool-B:n-neg",
+            "exec-F02-cool-B:n-emit"
+          ],
+          "localPreview": 20,
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-B",
+          "recordId": "record-c045",
+          "systemId": "cool-B",
+          "entityId": "F03",
+          "programRef": "g-cool@g5",
+          "inputCommit": "c044",
+          "nodeExecutionIds": [
+            "exec-F03-cool-B:n-old",
+            "exec-F03-cool-B:n-room",
+            "exec-F03-cool-B:n-cap",
+            "exec-F03-cool-B:n-neg",
+            "exec-F03-cool-B:n-emit"
+          ],
+          "localPreview": 20,
+          "elapsedMs": null
+        }
+      ],
+      "nodeExecutions": [
+        {
+          "id": "exec-F01-cool-A:n-old",
+          "recordId": "record-c045",
+          "executionId": "exec-F01-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F01",
+          "nodeId": "n-old",
+          "graphRef": "g-cool@g5",
+          "seq": 1,
+          "status": "completed",
+          "inputs": {},
+          "outputs": {
+            "value": 20
+          },
+          "outputUnitId": "degC",
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-A:n-room",
+          "recordId": "record-c045",
+          "executionId": "exec-F01-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F01",
+          "nodeId": "n-room",
+          "graphRef": "g-cool@g5",
+          "seq": 2,
+          "status": "completed",
+          "inputs": {
+            "old": 20,
+            "source": 20
+          },
+          "outputs": {
+            "room": 0
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-A:n-cap",
+          "recordId": "record-c045",
+          "executionId": "exec-F01-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F01",
+          "nodeId": "n-cap",
+          "graphRef": "g-cool@g5",
+          "seq": 3,
+          "status": "completed",
+          "inputs": {
+            "a": 0,
+            "b": 50
+          },
+          "outputs": {
+            "value": 0
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-A:n-neg",
+          "recordId": "record-c045",
+          "executionId": "exec-F01-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F01",
+          "nodeId": "n-neg",
+          "graphRef": "g-cool@g5",
+          "seq": 4,
+          "status": "completed",
+          "inputs": {
+            "value": 0
+          },
+          "outputs": {
+            "delta": 0
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-A:n-emit",
+          "recordId": "record-c045",
+          "executionId": "exec-F01-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F01",
+          "nodeId": "n-emit",
+          "graphRef": "g-cool@g5",
+          "seq": 5,
+          "status": "completed",
+          "inputs": {
+            "delta": 0
+          },
+          "outputs": {
+            "effect": "eff-F01-cool-A"
+          },
+          "outputUnitId": null,
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-A:n-old",
+          "recordId": "record-c045",
+          "executionId": "exec-F02-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F02",
+          "nodeId": "n-old",
+          "graphRef": "g-cool@g5",
+          "seq": 6,
+          "status": "completed",
+          "inputs": {},
+          "outputs": {
+            "value": 20
+          },
+          "outputUnitId": "degC",
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-A:n-room",
+          "recordId": "record-c045",
+          "executionId": "exec-F02-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F02",
+          "nodeId": "n-room",
+          "graphRef": "g-cool@g5",
+          "seq": 7,
+          "status": "completed",
+          "inputs": {
+            "old": 20,
+            "source": 20
+          },
+          "outputs": {
+            "room": 0
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-A:n-cap",
+          "recordId": "record-c045",
+          "executionId": "exec-F02-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F02",
+          "nodeId": "n-cap",
+          "graphRef": "g-cool@g5",
+          "seq": 8,
+          "status": "completed",
+          "inputs": {
+            "a": 0,
+            "b": 50
+          },
+          "outputs": {
+            "value": 0
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-A:n-neg",
+          "recordId": "record-c045",
+          "executionId": "exec-F02-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F02",
+          "nodeId": "n-neg",
+          "graphRef": "g-cool@g5",
+          "seq": 9,
+          "status": "completed",
+          "inputs": {
+            "value": 0
+          },
+          "outputs": {
+            "delta": 0
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-A:n-emit",
+          "recordId": "record-c045",
+          "executionId": "exec-F02-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F02",
+          "nodeId": "n-emit",
+          "graphRef": "g-cool@g5",
+          "seq": 10,
+          "status": "completed",
+          "inputs": {
+            "delta": 0
+          },
+          "outputs": {
+            "effect": "eff-F02-cool-A"
+          },
+          "outputUnitId": null,
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-A:n-old",
+          "recordId": "record-c045",
+          "executionId": "exec-F03-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F03",
+          "nodeId": "n-old",
+          "graphRef": "g-cool@g5",
+          "seq": 11,
+          "status": "completed",
+          "inputs": {},
+          "outputs": {
+            "value": 20
+          },
+          "outputUnitId": "degC",
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-A:n-room",
+          "recordId": "record-c045",
+          "executionId": "exec-F03-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F03",
+          "nodeId": "n-room",
+          "graphRef": "g-cool@g5",
+          "seq": 12,
+          "status": "completed",
+          "inputs": {
+            "old": 20,
+            "source": 20
+          },
+          "outputs": {
+            "room": 0
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-A:n-cap",
+          "recordId": "record-c045",
+          "executionId": "exec-F03-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F03",
+          "nodeId": "n-cap",
+          "graphRef": "g-cool@g5",
+          "seq": 13,
+          "status": "completed",
+          "inputs": {
+            "a": 0,
+            "b": 50
+          },
+          "outputs": {
+            "value": 0
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-A:n-neg",
+          "recordId": "record-c045",
+          "executionId": "exec-F03-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F03",
+          "nodeId": "n-neg",
+          "graphRef": "g-cool@g5",
+          "seq": 14,
+          "status": "completed",
+          "inputs": {
+            "value": 0
+          },
+          "outputs": {
+            "delta": 0
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-A:n-emit",
+          "recordId": "record-c045",
+          "executionId": "exec-F03-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F03",
+          "nodeId": "n-emit",
+          "graphRef": "g-cool@g5",
+          "seq": 15,
+          "status": "completed",
+          "inputs": {
+            "delta": 0
+          },
+          "outputs": {
+            "effect": "eff-F03-cool-A"
+          },
+          "outputUnitId": null,
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-B:n-old",
+          "recordId": "record-c045",
+          "executionId": "exec-F01-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F01",
+          "nodeId": "n-old",
+          "graphRef": "g-cool@g5",
+          "seq": 16,
+          "status": "completed",
+          "inputs": {},
+          "outputs": {
+            "value": 20
+          },
+          "outputUnitId": "degC",
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-B:n-room",
+          "recordId": "record-c045",
+          "executionId": "exec-F01-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F01",
+          "nodeId": "n-room",
+          "graphRef": "g-cool@g5",
+          "seq": 17,
+          "status": "completed",
+          "inputs": {
+            "old": 20,
+            "source": 20
+          },
+          "outputs": {
+            "room": 0
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-B:n-cap",
+          "recordId": "record-c045",
+          "executionId": "exec-F01-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F01",
+          "nodeId": "n-cap",
+          "graphRef": "g-cool@g5",
+          "seq": 18,
+          "status": "completed",
+          "inputs": {
+            "a": 0,
+            "b": 50
+          },
+          "outputs": {
+            "value": 0
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-B:n-neg",
+          "recordId": "record-c045",
+          "executionId": "exec-F01-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F01",
+          "nodeId": "n-neg",
+          "graphRef": "g-cool@g5",
+          "seq": 19,
+          "status": "completed",
+          "inputs": {
+            "value": 0
+          },
+          "outputs": {
+            "delta": 0
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-B:n-emit",
+          "recordId": "record-c045",
+          "executionId": "exec-F01-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F01",
+          "nodeId": "n-emit",
+          "graphRef": "g-cool@g5",
+          "seq": 20,
+          "status": "completed",
+          "inputs": {
+            "delta": 0
+          },
+          "outputs": {
+            "effect": "eff-F01-cool-B"
+          },
+          "outputUnitId": null,
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-B:n-old",
+          "recordId": "record-c045",
+          "executionId": "exec-F02-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F02",
+          "nodeId": "n-old",
+          "graphRef": "g-cool@g5",
+          "seq": 21,
+          "status": "completed",
+          "inputs": {},
+          "outputs": {
+            "value": 20
+          },
+          "outputUnitId": "degC",
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-B:n-room",
+          "recordId": "record-c045",
+          "executionId": "exec-F02-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F02",
+          "nodeId": "n-room",
+          "graphRef": "g-cool@g5",
+          "seq": 22,
+          "status": "completed",
+          "inputs": {
+            "old": 20,
+            "source": 20
+          },
+          "outputs": {
+            "room": 0
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-B:n-cap",
+          "recordId": "record-c045",
+          "executionId": "exec-F02-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F02",
+          "nodeId": "n-cap",
+          "graphRef": "g-cool@g5",
+          "seq": 23,
+          "status": "completed",
+          "inputs": {
+            "a": 0,
+            "b": 50
+          },
+          "outputs": {
+            "value": 0
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-B:n-neg",
+          "recordId": "record-c045",
+          "executionId": "exec-F02-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F02",
+          "nodeId": "n-neg",
+          "graphRef": "g-cool@g5",
+          "seq": 24,
+          "status": "completed",
+          "inputs": {
+            "value": 0
+          },
+          "outputs": {
+            "delta": 0
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-B:n-emit",
+          "recordId": "record-c045",
+          "executionId": "exec-F02-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F02",
+          "nodeId": "n-emit",
+          "graphRef": "g-cool@g5",
+          "seq": 25,
+          "status": "completed",
+          "inputs": {
+            "delta": 0
+          },
+          "outputs": {
+            "effect": "eff-F02-cool-B"
+          },
+          "outputUnitId": null,
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-B:n-old",
+          "recordId": "record-c045",
+          "executionId": "exec-F03-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F03",
+          "nodeId": "n-old",
+          "graphRef": "g-cool@g5",
+          "seq": 26,
+          "status": "completed",
+          "inputs": {},
+          "outputs": {
+            "value": 20
+          },
+          "outputUnitId": "degC",
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-B:n-room",
+          "recordId": "record-c045",
+          "executionId": "exec-F03-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F03",
+          "nodeId": "n-room",
+          "graphRef": "g-cool@g5",
+          "seq": 27,
+          "status": "completed",
+          "inputs": {
+            "old": 20,
+            "source": 20
+          },
+          "outputs": {
+            "room": 0
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-B:n-cap",
+          "recordId": "record-c045",
+          "executionId": "exec-F03-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F03",
+          "nodeId": "n-cap",
+          "graphRef": "g-cool@g5",
+          "seq": 28,
+          "status": "completed",
+          "inputs": {
+            "a": 0,
+            "b": 50
+          },
+          "outputs": {
+            "value": 0
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-B:n-neg",
+          "recordId": "record-c045",
+          "executionId": "exec-F03-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F03",
+          "nodeId": "n-neg",
+          "graphRef": "g-cool@g5",
+          "seq": 29,
+          "status": "completed",
+          "inputs": {
+            "value": 0
+          },
+          "outputs": {
+            "delta": 0
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-B:n-emit",
+          "recordId": "record-c045",
+          "executionId": "exec-F03-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F03",
+          "nodeId": "n-emit",
+          "graphRef": "g-cool@g5",
+          "seq": 30,
+          "status": "completed",
+          "inputs": {
+            "delta": 0
+          },
+          "outputs": {
+            "effect": "eff-F03-cool-B"
+          },
+          "outputUnitId": null,
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c044"
+          ],
+          "elapsedMs": null
+        }
+      ],
+      "effectRequests": [
+        {
+          "id": "eff-F01-cool-A",
+          "recordId": "record-c045",
+          "executionId": "exec-F01-cool-A",
+          "nodeId": "n-emit",
+          "systemId": "cool-A",
+          "entityId": "F01",
+          "propertyId": "thermal.temperature",
+          "requestedDelta": 0,
+          "unitId": "deltaK",
+          "selfPreview": 20,
+          "previewUnitId": "degC",
+          "constraintRef": "cooling-floor@c1"
+        },
+        {
+          "id": "eff-F02-cool-A",
+          "recordId": "record-c045",
+          "executionId": "exec-F02-cool-A",
+          "nodeId": "n-emit",
+          "systemId": "cool-A",
+          "entityId": "F02",
+          "propertyId": "thermal.temperature",
+          "requestedDelta": 0,
+          "unitId": "deltaK",
+          "selfPreview": 20,
+          "previewUnitId": "degC",
+          "constraintRef": "cooling-floor@c1"
+        },
+        {
+          "id": "eff-F03-cool-A",
+          "recordId": "record-c045",
+          "executionId": "exec-F03-cool-A",
+          "nodeId": "n-emit",
+          "systemId": "cool-A",
+          "entityId": "F03",
+          "propertyId": "thermal.temperature",
+          "requestedDelta": 0,
+          "unitId": "deltaK",
+          "selfPreview": 20,
+          "previewUnitId": "degC",
+          "constraintRef": "cooling-floor@c1"
+        },
+        {
+          "id": "eff-F01-cool-B",
+          "recordId": "record-c045",
+          "executionId": "exec-F01-cool-B",
+          "nodeId": "n-emit",
+          "systemId": "cool-B",
+          "entityId": "F01",
+          "propertyId": "thermal.temperature",
+          "requestedDelta": 0,
+          "unitId": "deltaK",
+          "selfPreview": 20,
+          "previewUnitId": "degC",
+          "constraintRef": "cooling-floor@c1"
+        },
+        {
+          "id": "eff-F02-cool-B",
+          "recordId": "record-c045",
+          "executionId": "exec-F02-cool-B",
+          "nodeId": "n-emit",
+          "systemId": "cool-B",
+          "entityId": "F02",
+          "propertyId": "thermal.temperature",
+          "requestedDelta": 0,
+          "unitId": "deltaK",
+          "selfPreview": 20,
+          "previewUnitId": "degC",
+          "constraintRef": "cooling-floor@c1"
+        },
+        {
+          "id": "eff-F03-cool-B",
+          "recordId": "record-c045",
+          "executionId": "exec-F03-cool-B",
+          "nodeId": "n-emit",
+          "systemId": "cool-B",
+          "entityId": "F03",
+          "propertyId": "thermal.temperature",
+          "requestedDelta": 0,
+          "unitId": "deltaK",
+          "selfPreview": 20,
+          "previewUnitId": "degC",
+          "constraintRef": "cooling-floor@c1"
+        }
+      ],
+      "decisions": [
+        {
+          "id": "decision-F01",
+          "recordId": "record-c045",
+          "entityId": "F01",
+          "propertyId": "thermal.temperature",
+          "constraintRef": "cooling-floor@c1",
+          "old": 20,
+          "candidate": 20,
+          "budget": 0,
+          "budgetUnitId": "deltaK",
+          "scale": 1,
+          "allocations": [
+            {
+              "effectId": "eff-F01-cool-A",
+              "approvedDelta": 0,
+              "status": "approved"
+            },
+            {
+              "effectId": "eff-F01-cool-B",
+              "approvedDelta": 0,
+              "status": "approved"
+            }
+          ],
+          "final": 20,
+          "valueUnitId": "degC"
+        },
+        {
+          "id": "decision-F02",
+          "recordId": "record-c045",
+          "entityId": "F02",
+          "propertyId": "thermal.temperature",
+          "constraintRef": "cooling-floor@c1",
+          "old": 20,
+          "candidate": 20,
+          "budget": 0,
+          "budgetUnitId": "deltaK",
+          "scale": 1,
+          "allocations": [
+            {
+              "effectId": "eff-F02-cool-A",
+              "approvedDelta": 0,
+              "status": "approved"
+            },
+            {
+              "effectId": "eff-F02-cool-B",
+              "approvedDelta": 0,
+              "status": "approved"
+            }
+          ],
+          "final": 20,
+          "valueUnitId": "degC"
+        },
+        {
+          "id": "decision-F03",
+          "recordId": "record-c045",
+          "entityId": "F03",
+          "propertyId": "thermal.temperature",
+          "constraintRef": "cooling-floor@c1",
+          "old": 20,
+          "candidate": 20,
+          "budget": 0,
+          "budgetUnitId": "deltaK",
+          "scale": 1,
+          "allocations": [
+            {
+              "effectId": "eff-F03-cool-A",
+              "approvedDelta": 0,
+              "status": "approved"
+            },
+            {
+              "effectId": "eff-F03-cool-B",
+              "approvedDelta": 0,
+              "status": "approved"
+            }
+          ],
+          "final": 20,
+          "valueUnitId": "degC"
+        }
+      ],
+      "changes": [],
+      "dependencyEdges": [
+        {
+          "source": "F01.thermal.temperature@c044",
+          "target": "exec-F01-cool-A",
+          "kind": "used"
+        },
+        {
+          "source": "F02.thermal.temperature@c044",
+          "target": "exec-F02-cool-A",
+          "kind": "used"
+        },
+        {
+          "source": "F03.thermal.temperature@c044",
+          "target": "exec-F03-cool-A",
+          "kind": "used"
+        },
+        {
+          "source": "F01.thermal.temperature@c044",
+          "target": "exec-F01-cool-B",
+          "kind": "used"
+        },
+        {
+          "source": "F02.thermal.temperature@c044",
+          "target": "exec-F02-cool-B",
+          "kind": "used"
+        },
+        {
+          "source": "F03.thermal.temperature@c044",
+          "target": "exec-F03-cool-B",
+          "kind": "used"
+        },
+        {
+          "source": "exec-F01-cool-A",
+          "target": "decision-F01",
+          "kind": "proposed"
+        },
+        {
+          "source": "exec-F01-cool-B",
+          "target": "decision-F01",
+          "kind": "proposed"
+        },
+        {
+          "source": "exec-F02-cool-A",
+          "target": "decision-F02",
+          "kind": "proposed"
+        },
+        {
+          "source": "exec-F02-cool-B",
+          "target": "decision-F02",
+          "kind": "proposed"
+        },
+        {
+          "source": "exec-F03-cool-A",
+          "target": "decision-F03",
+          "kind": "proposed"
+        },
+        {
+          "source": "exec-F03-cool-B",
+          "target": "decision-F03",
+          "kind": "proposed"
+        }
+      ],
+      "diagnostics": []
+    },
+    {
+      "record": {
+        "id": "record-c046",
+        "runId": "run-main",
+        "branchId": "branch-order-ab",
+        "baseCommit": "c042",
+        "resultCommit": "c046",
+        "modelVersion": "figma-prototype/0.5",
+        "scheduleRef": "schedule-main@s5",
+        "programRefs": [
+          "g-cool@g5"
+        ],
+        "inputVersions": {
+          "schema": "fcb1b489",
+          "scene": "f44ffa1e",
+          "systems": "c16e711e",
+          "baseCommit": "c042",
+          "program:g-cool": "g-cool@g5#82724bce",
+          "schedule:schedule-main": "schedule-main@s5#11082ca0"
+        },
+        "simTimeBefore": 420,
+        "simTimeAfter": 430,
+        "logicalParallelGroups": [
+          [
+            "cool-A"
+          ],
+          [
+            "cool-B"
+          ],
+          [
+            "reduce-cooling"
+          ],
+          [
+            "commit"
+          ]
+        ],
+        "elapsedMs": null,
+        "traceOrdering": "canonical systemId/entityId/node order; not measured thread schedule"
+      },
+      "origin": "computed",
+      "nextWorld": {
+        "commitId": "c046",
+        "simTime": 430,
+        "values": {
+          "F01": {
+            "thermal.temperature": 20,
+            "position.local": [
+              320,
+              180,
+              0
+            ],
+            "fire.active": true
+          },
+          "F02": {
+            "thermal.temperature": 20,
+            "position.local": [
+              600,
+              260,
+              0
+            ],
+            "fire.active": true
+          },
+          "F03": {
+            "thermal.temperature": 20,
+            "position.local": [
+              710,
+              430,
+              0
+            ],
+            "fire.active": true
+          },
+          "V01": {
+            "position.local": [
+              280,
+              180,
+              0
+            ],
+            "water.remaining": 5500,
+            "water.capacity": 10000
+          },
+          "V02": {
+            "position.local": [
+              240,
+              180,
+              0
+            ],
+            "water.remaining": 9000,
+            "water.capacity": 10000
+          },
+          "C01": {
+            "position.local": null
+          }
+        }
+      },
+      "programs": {
+        "g-cool@g5": {
+          "id": "g-cool",
+          "version": "g5",
+          "kind": "entity-program",
+          "scopeType": "Fire",
+          "parameters": [
+            {
+              "id": "maxDropK",
+              "type": {
+                "primitive": "f64",
+                "shape": "scalar",
+                "quantityKind": "temperatureDifference",
+                "unitId": "deltaK",
+                "nullable": false
+              },
+              "default": 50
+            },
+            {
+              "id": "sourceC",
+              "type": {
+                "primitive": "f64",
+                "shape": "scalar",
+                "quantityKind": "temperatureAbsolute",
+                "unitId": "degC",
+                "nullable": false
+              },
+              "default": 20
+            }
+          ],
+          "nodes": [
+            {
+              "id": "n-old",
+              "type": "ReadPrevious",
+              "inputs": {},
+              "outputs": {
+                "value": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureAbsolute",
+                  "unitId": "degC",
+                  "nullable": false
+                }
+              },
+              "bindings": {
+                "property": {
+                  "root": "self",
+                  "propertyId": "thermal.temperature",
+                  "view": "previous"
+                }
+              },
+              "params": {}
+            },
+            {
+              "id": "n-room",
+              "type": "CoolingRoom",
+              "inputs": {
+                "old": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureAbsolute",
+                  "unitId": "degC",
+                  "nullable": false
+                },
+                "source": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureAbsolute",
+                  "unitId": "degC",
+                  "nullable": false
+                }
+              },
+              "outputs": {
+                "room": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureDifference",
+                  "unitId": "deltaK",
+                  "nullable": false
+                }
+              },
+              "bindings": {
+                "source": {
+                  "root": "parameter",
+                  "parameterId": "sourceC"
+                }
+              },
+              "params": {}
+            },
+            {
+              "id": "n-cap",
+              "type": "Min",
+              "inputs": {
+                "a": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureDifference",
+                  "unitId": "deltaK",
+                  "nullable": false
+                },
+                "b": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureDifference",
+                  "unitId": "deltaK",
+                  "nullable": false
+                }
+              },
+              "outputs": {
+                "value": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureDifference",
+                  "unitId": "deltaK",
+                  "nullable": false
+                }
+              },
+              "bindings": {
+                "b": {
+                  "root": "parameter",
+                  "parameterId": "maxDropK"
+                }
+              },
+              "params": {}
+            },
+            {
+              "id": "n-neg",
+              "type": "Negate",
+              "inputs": {
+                "value": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureDifference",
+                  "unitId": "deltaK",
+                  "nullable": false
+                }
+              },
+              "outputs": {
+                "delta": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureDifference",
+                  "unitId": "deltaK",
+                  "nullable": false
+                }
+              },
+              "bindings": {},
+              "params": {}
+            },
+            {
+              "id": "n-emit",
+              "type": "Contribute",
+              "inputs": {
+                "delta": {
+                  "primitive": "f64",
+                  "shape": "scalar",
+                  "quantityKind": "temperatureDifference",
+                  "unitId": "deltaK",
+                  "nullable": false
+                }
+              },
+              "outputs": {
+                "effect": {
+                  "primitive": "EffectRef",
+                  "shape": "scalar",
+                  "nullable": false
+                }
+              },
+              "bindings": {
+                "target": {
+                  "root": "self",
+                  "propertyId": "thermal.temperature"
+                }
+              },
+              "params": {
+                "constraintRef": "cooling-floor@c1"
+              }
+            }
+          ],
+          "edges": [
+            {
+              "id": "le1",
+              "kind": "data",
+              "source": {
+                "nodeId": "n-old",
+                "portId": "value"
+              },
+              "target": {
+                "nodeId": "n-room",
+                "portId": "old"
+              }
+            },
+            {
+              "id": "le2",
+              "kind": "data",
+              "source": {
+                "nodeId": "n-room",
+                "portId": "room"
+              },
+              "target": {
+                "nodeId": "n-cap",
+                "portId": "a"
+              }
+            },
+            {
+              "id": "le3",
+              "kind": "data",
+              "source": {
+                "nodeId": "n-cap",
+                "portId": "value"
+              },
+              "target": {
+                "nodeId": "n-neg",
+                "portId": "value"
+              }
+            },
+            {
+              "id": "le4",
+              "kind": "data",
+              "source": {
+                "nodeId": "n-neg",
+                "portId": "delta"
+              },
+              "target": {
+                "nodeId": "n-emit",
+                "portId": "delta"
+              }
+            }
+          ]
+        }
+      },
+      "systemExecutions": [
+        {
+          "id": "exec-F01-cool-A",
+          "recordId": "record-c046",
+          "systemId": "cool-A",
+          "entityId": "F01",
+          "programRef": "g-cool@g5",
+          "inputCommit": "c042",
+          "nodeExecutionIds": [
+            "exec-F01-cool-A:n-old",
+            "exec-F01-cool-A:n-room",
+            "exec-F01-cool-A:n-cap",
+            "exec-F01-cool-A:n-neg",
+            "exec-F01-cool-A:n-emit"
+          ],
+          "localPreview": 50,
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-A",
+          "recordId": "record-c046",
+          "systemId": "cool-A",
+          "entityId": "F02",
+          "programRef": "g-cool@g5",
+          "inputCommit": "c042",
+          "nodeExecutionIds": [
+            "exec-F02-cool-A:n-old",
+            "exec-F02-cool-A:n-room",
+            "exec-F02-cool-A:n-cap",
+            "exec-F02-cool-A:n-neg",
+            "exec-F02-cool-A:n-emit"
+          ],
+          "localPreview": 30,
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-A",
+          "recordId": "record-c046",
+          "systemId": "cool-A",
+          "entityId": "F03",
+          "programRef": "g-cool@g5",
+          "inputCommit": "c042",
+          "nodeExecutionIds": [
+            "exec-F03-cool-A:n-old",
+            "exec-F03-cool-A:n-room",
+            "exec-F03-cool-A:n-cap",
+            "exec-F03-cool-A:n-neg",
+            "exec-F03-cool-A:n-emit"
+          ],
+          "localPreview": 20,
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-B",
+          "recordId": "record-c046",
+          "systemId": "cool-B",
+          "entityId": "F01",
+          "programRef": "g-cool@g5",
+          "inputCommit": "c042",
+          "nodeExecutionIds": [
+            "exec-F01-cool-B:n-old",
+            "exec-F01-cool-B:n-room",
+            "exec-F01-cool-B:n-cap",
+            "exec-F01-cool-B:n-neg",
+            "exec-F01-cool-B:n-emit"
+          ],
+          "localPreview": 50,
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-B",
+          "recordId": "record-c046",
+          "systemId": "cool-B",
+          "entityId": "F02",
+          "programRef": "g-cool@g5",
+          "inputCommit": "c042",
+          "nodeExecutionIds": [
+            "exec-F02-cool-B:n-old",
+            "exec-F02-cool-B:n-room",
+            "exec-F02-cool-B:n-cap",
+            "exec-F02-cool-B:n-neg",
+            "exec-F02-cool-B:n-emit"
+          ],
+          "localPreview": 30,
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-B",
+          "recordId": "record-c046",
+          "systemId": "cool-B",
+          "entityId": "F03",
+          "programRef": "g-cool@g5",
+          "inputCommit": "c042",
+          "nodeExecutionIds": [
+            "exec-F03-cool-B:n-old",
+            "exec-F03-cool-B:n-room",
+            "exec-F03-cool-B:n-cap",
+            "exec-F03-cool-B:n-neg",
+            "exec-F03-cool-B:n-emit"
+          ],
+          "localPreview": 20,
+          "elapsedMs": null
+        }
+      ],
+      "nodeExecutions": [
+        {
+          "id": "exec-F01-cool-A:n-old",
+          "recordId": "record-c046",
+          "executionId": "exec-F01-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F01",
+          "nodeId": "n-old",
+          "graphRef": "g-cool@g5",
+          "seq": 1,
+          "status": "completed",
+          "inputs": {},
+          "outputs": {
+            "value": 100
+          },
+          "outputUnitId": "degC",
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-A:n-room",
+          "recordId": "record-c046",
+          "executionId": "exec-F01-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F01",
+          "nodeId": "n-room",
+          "graphRef": "g-cool@g5",
+          "seq": 2,
+          "status": "completed",
+          "inputs": {
+            "old": 100,
+            "source": 20
+          },
+          "outputs": {
+            "room": 80
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-A:n-cap",
+          "recordId": "record-c046",
+          "executionId": "exec-F01-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F01",
+          "nodeId": "n-cap",
+          "graphRef": "g-cool@g5",
+          "seq": 3,
+          "status": "completed",
+          "inputs": {
+            "a": 80,
+            "b": 50
+          },
+          "outputs": {
+            "value": 50
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-A:n-neg",
+          "recordId": "record-c046",
+          "executionId": "exec-F01-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F01",
+          "nodeId": "n-neg",
+          "graphRef": "g-cool@g5",
+          "seq": 4,
+          "status": "completed",
+          "inputs": {
+            "value": 50
+          },
+          "outputs": {
+            "delta": -50
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-A:n-emit",
+          "recordId": "record-c046",
+          "executionId": "exec-F01-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F01",
+          "nodeId": "n-emit",
+          "graphRef": "g-cool@g5",
+          "seq": 5,
+          "status": "completed",
+          "inputs": {
+            "delta": -50
+          },
+          "outputs": {
+            "effect": "eff-F01-cool-A"
+          },
+          "outputUnitId": null,
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-A:n-old",
+          "recordId": "record-c046",
+          "executionId": "exec-F02-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F02",
+          "nodeId": "n-old",
+          "graphRef": "g-cool@g5",
+          "seq": 6,
+          "status": "completed",
+          "inputs": {},
+          "outputs": {
+            "value": 80
+          },
+          "outputUnitId": "degC",
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-A:n-room",
+          "recordId": "record-c046",
+          "executionId": "exec-F02-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F02",
+          "nodeId": "n-room",
+          "graphRef": "g-cool@g5",
+          "seq": 7,
+          "status": "completed",
+          "inputs": {
+            "old": 80,
+            "source": 20
+          },
+          "outputs": {
+            "room": 60
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-A:n-cap",
+          "recordId": "record-c046",
+          "executionId": "exec-F02-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F02",
+          "nodeId": "n-cap",
+          "graphRef": "g-cool@g5",
+          "seq": 8,
+          "status": "completed",
+          "inputs": {
+            "a": 60,
+            "b": 50
+          },
+          "outputs": {
+            "value": 50
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-A:n-neg",
+          "recordId": "record-c046",
+          "executionId": "exec-F02-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F02",
+          "nodeId": "n-neg",
+          "graphRef": "g-cool@g5",
+          "seq": 9,
+          "status": "completed",
+          "inputs": {
+            "value": 50
+          },
+          "outputs": {
+            "delta": -50
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-A:n-emit",
+          "recordId": "record-c046",
+          "executionId": "exec-F02-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F02",
+          "nodeId": "n-emit",
+          "graphRef": "g-cool@g5",
+          "seq": 10,
+          "status": "completed",
+          "inputs": {
+            "delta": -50
+          },
+          "outputs": {
+            "effect": "eff-F02-cool-A"
+          },
+          "outputUnitId": null,
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-A:n-old",
+          "recordId": "record-c046",
+          "executionId": "exec-F03-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F03",
+          "nodeId": "n-old",
+          "graphRef": "g-cool@g5",
+          "seq": 11,
+          "status": "completed",
+          "inputs": {},
+          "outputs": {
+            "value": 60
+          },
+          "outputUnitId": "degC",
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-A:n-room",
+          "recordId": "record-c046",
+          "executionId": "exec-F03-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F03",
+          "nodeId": "n-room",
+          "graphRef": "g-cool@g5",
+          "seq": 12,
+          "status": "completed",
+          "inputs": {
+            "old": 60,
+            "source": 20
+          },
+          "outputs": {
+            "room": 40
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-A:n-cap",
+          "recordId": "record-c046",
+          "executionId": "exec-F03-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F03",
+          "nodeId": "n-cap",
+          "graphRef": "g-cool@g5",
+          "seq": 13,
+          "status": "completed",
+          "inputs": {
+            "a": 40,
+            "b": 50
+          },
+          "outputs": {
+            "value": 40
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-A:n-neg",
+          "recordId": "record-c046",
+          "executionId": "exec-F03-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F03",
+          "nodeId": "n-neg",
+          "graphRef": "g-cool@g5",
+          "seq": 14,
+          "status": "completed",
+          "inputs": {
+            "value": 40
+          },
+          "outputs": {
+            "delta": -40
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-A:n-emit",
+          "recordId": "record-c046",
+          "executionId": "exec-F03-cool-A",
+          "systemId": "cool-A",
+          "entityId": "F03",
+          "nodeId": "n-emit",
+          "graphRef": "g-cool@g5",
+          "seq": 15,
+          "status": "completed",
+          "inputs": {
+            "delta": -40
+          },
+          "outputs": {
+            "effect": "eff-F03-cool-A"
+          },
+          "outputUnitId": null,
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-B:n-old",
+          "recordId": "record-c046",
+          "executionId": "exec-F01-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F01",
+          "nodeId": "n-old",
+          "graphRef": "g-cool@g5",
+          "seq": 16,
+          "status": "completed",
+          "inputs": {},
+          "outputs": {
+            "value": 100
+          },
+          "outputUnitId": "degC",
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-B:n-room",
+          "recordId": "record-c046",
+          "executionId": "exec-F01-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F01",
+          "nodeId": "n-room",
+          "graphRef": "g-cool@g5",
+          "seq": 17,
+          "status": "completed",
+          "inputs": {
+            "old": 100,
+            "source": 20
+          },
+          "outputs": {
+            "room": 80
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-B:n-cap",
+          "recordId": "record-c046",
+          "executionId": "exec-F01-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F01",
+          "nodeId": "n-cap",
+          "graphRef": "g-cool@g5",
+          "seq": 18,
+          "status": "completed",
+          "inputs": {
+            "a": 80,
+            "b": 50
+          },
+          "outputs": {
+            "value": 50
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-B:n-neg",
+          "recordId": "record-c046",
+          "executionId": "exec-F01-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F01",
+          "nodeId": "n-neg",
+          "graphRef": "g-cool@g5",
+          "seq": 19,
+          "status": "completed",
+          "inputs": {
+            "value": 50
+          },
+          "outputs": {
+            "delta": -50
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F01-cool-B:n-emit",
+          "recordId": "record-c046",
+          "executionId": "exec-F01-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F01",
+          "nodeId": "n-emit",
+          "graphRef": "g-cool@g5",
+          "seq": 20,
+          "status": "completed",
+          "inputs": {
+            "delta": -50
+          },
+          "outputs": {
+            "effect": "eff-F01-cool-B"
+          },
+          "outputUnitId": null,
+          "inputVersionRefs": [
+            "F01.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-B:n-old",
+          "recordId": "record-c046",
+          "executionId": "exec-F02-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F02",
+          "nodeId": "n-old",
+          "graphRef": "g-cool@g5",
+          "seq": 21,
+          "status": "completed",
+          "inputs": {},
+          "outputs": {
+            "value": 80
+          },
+          "outputUnitId": "degC",
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-B:n-room",
+          "recordId": "record-c046",
+          "executionId": "exec-F02-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F02",
+          "nodeId": "n-room",
+          "graphRef": "g-cool@g5",
+          "seq": 22,
+          "status": "completed",
+          "inputs": {
+            "old": 80,
+            "source": 20
+          },
+          "outputs": {
+            "room": 60
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-B:n-cap",
+          "recordId": "record-c046",
+          "executionId": "exec-F02-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F02",
+          "nodeId": "n-cap",
+          "graphRef": "g-cool@g5",
+          "seq": 23,
+          "status": "completed",
+          "inputs": {
+            "a": 60,
+            "b": 50
+          },
+          "outputs": {
+            "value": 50
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-B:n-neg",
+          "recordId": "record-c046",
+          "executionId": "exec-F02-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F02",
+          "nodeId": "n-neg",
+          "graphRef": "g-cool@g5",
+          "seq": 24,
+          "status": "completed",
+          "inputs": {
+            "value": 50
+          },
+          "outputs": {
+            "delta": -50
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F02-cool-B:n-emit",
+          "recordId": "record-c046",
+          "executionId": "exec-F02-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F02",
+          "nodeId": "n-emit",
+          "graphRef": "g-cool@g5",
+          "seq": 25,
+          "status": "completed",
+          "inputs": {
+            "delta": -50
+          },
+          "outputs": {
+            "effect": "eff-F02-cool-B"
+          },
+          "outputUnitId": null,
+          "inputVersionRefs": [
+            "F02.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-B:n-old",
+          "recordId": "record-c046",
+          "executionId": "exec-F03-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F03",
+          "nodeId": "n-old",
+          "graphRef": "g-cool@g5",
+          "seq": 26,
+          "status": "completed",
+          "inputs": {},
+          "outputs": {
+            "value": 60
+          },
+          "outputUnitId": "degC",
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-B:n-room",
+          "recordId": "record-c046",
+          "executionId": "exec-F03-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F03",
+          "nodeId": "n-room",
+          "graphRef": "g-cool@g5",
+          "seq": 27,
+          "status": "completed",
+          "inputs": {
+            "old": 60,
+            "source": 20
+          },
+          "outputs": {
+            "room": 40
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-B:n-cap",
+          "recordId": "record-c046",
+          "executionId": "exec-F03-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F03",
+          "nodeId": "n-cap",
+          "graphRef": "g-cool@g5",
+          "seq": 28,
+          "status": "completed",
+          "inputs": {
+            "a": 40,
+            "b": 50
+          },
+          "outputs": {
+            "value": 40
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-B:n-neg",
+          "recordId": "record-c046",
+          "executionId": "exec-F03-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F03",
+          "nodeId": "n-neg",
+          "graphRef": "g-cool@g5",
+          "seq": 29,
+          "status": "completed",
+          "inputs": {
+            "value": 40
+          },
+          "outputs": {
+            "delta": -40
+          },
+          "outputUnitId": "deltaK",
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        },
+        {
+          "id": "exec-F03-cool-B:n-emit",
+          "recordId": "record-c046",
+          "executionId": "exec-F03-cool-B",
+          "systemId": "cool-B",
+          "entityId": "F03",
+          "nodeId": "n-emit",
+          "graphRef": "g-cool@g5",
+          "seq": 30,
+          "status": "completed",
+          "inputs": {
+            "delta": -40
+          },
+          "outputs": {
+            "effect": "eff-F03-cool-B"
+          },
+          "outputUnitId": null,
+          "inputVersionRefs": [
+            "F03.thermal.temperature@c042"
+          ],
+          "elapsedMs": null
+        }
+      ],
+      "effectRequests": [
+        {
+          "id": "eff-F01-cool-A",
+          "recordId": "record-c046",
+          "executionId": "exec-F01-cool-A",
+          "nodeId": "n-emit",
+          "systemId": "cool-A",
+          "entityId": "F01",
+          "propertyId": "thermal.temperature",
+          "requestedDelta": -50,
+          "unitId": "deltaK",
+          "selfPreview": 50,
+          "previewUnitId": "degC",
+          "constraintRef": "cooling-floor@c1"
+        },
+        {
+          "id": "eff-F02-cool-A",
+          "recordId": "record-c046",
+          "executionId": "exec-F02-cool-A",
+          "nodeId": "n-emit",
+          "systemId": "cool-A",
+          "entityId": "F02",
+          "propertyId": "thermal.temperature",
+          "requestedDelta": -50,
+          "unitId": "deltaK",
+          "selfPreview": 30,
+          "previewUnitId": "degC",
+          "constraintRef": "cooling-floor@c1"
+        },
+        {
+          "id": "eff-F03-cool-A",
+          "recordId": "record-c046",
+          "executionId": "exec-F03-cool-A",
+          "nodeId": "n-emit",
+          "systemId": "cool-A",
+          "entityId": "F03",
+          "propertyId": "thermal.temperature",
+          "requestedDelta": -40,
+          "unitId": "deltaK",
+          "selfPreview": 20,
+          "previewUnitId": "degC",
+          "constraintRef": "cooling-floor@c1"
+        },
+        {
+          "id": "eff-F01-cool-B",
+          "recordId": "record-c046",
+          "executionId": "exec-F01-cool-B",
+          "nodeId": "n-emit",
+          "systemId": "cool-B",
+          "entityId": "F01",
+          "propertyId": "thermal.temperature",
+          "requestedDelta": -50,
+          "unitId": "deltaK",
+          "selfPreview": 50,
+          "previewUnitId": "degC",
+          "constraintRef": "cooling-floor@c1"
+        },
+        {
+          "id": "eff-F02-cool-B",
+          "recordId": "record-c046",
+          "executionId": "exec-F02-cool-B",
+          "nodeId": "n-emit",
+          "systemId": "cool-B",
+          "entityId": "F02",
+          "propertyId": "thermal.temperature",
+          "requestedDelta": -50,
+          "unitId": "deltaK",
+          "selfPreview": 30,
+          "previewUnitId": "degC",
+          "constraintRef": "cooling-floor@c1"
+        },
+        {
+          "id": "eff-F03-cool-B",
+          "recordId": "record-c046",
+          "executionId": "exec-F03-cool-B",
+          "nodeId": "n-emit",
+          "systemId": "cool-B",
+          "entityId": "F03",
+          "propertyId": "thermal.temperature",
+          "requestedDelta": -40,
+          "unitId": "deltaK",
+          "selfPreview": 20,
+          "previewUnitId": "degC",
+          "constraintRef": "cooling-floor@c1"
+        }
+      ],
+      "decisions": [
+        {
+          "id": "decision-F01",
+          "recordId": "record-c046",
+          "entityId": "F01",
+          "propertyId": "thermal.temperature",
+          "constraintRef": "cooling-floor@c1",
+          "old": 100,
+          "candidate": 0,
+          "budget": 80,
+          "budgetUnitId": "deltaK",
+          "scale": 0.8,
+          "allocations": [
+            {
+              "effectId": "eff-F01-cool-A",
+              "approvedDelta": -40,
+              "status": "partial"
+            },
+            {
+              "effectId": "eff-F01-cool-B",
+              "approvedDelta": -40,
+              "status": "partial"
+            }
+          ],
+          "final": 20,
+          "valueUnitId": "degC"
+        },
+        {
+          "id": "decision-F02",
+          "recordId": "record-c046",
+          "entityId": "F02",
+          "propertyId": "thermal.temperature",
+          "constraintRef": "cooling-floor@c1",
+          "old": 80,
+          "candidate": -20,
+          "budget": 60,
+          "budgetUnitId": "deltaK",
+          "scale": 0.6,
+          "allocations": [
+            {
+              "effectId": "eff-F02-cool-A",
+              "approvedDelta": -30,
+              "status": "partial"
+            },
+            {
+              "effectId": "eff-F02-cool-B",
+              "approvedDelta": -30,
+              "status": "partial"
+            }
+          ],
+          "final": 20,
+          "valueUnitId": "degC"
+        },
+        {
+          "id": "decision-F03",
+          "recordId": "record-c046",
+          "entityId": "F03",
+          "propertyId": "thermal.temperature",
+          "constraintRef": "cooling-floor@c1",
+          "old": 60,
+          "candidate": -20,
+          "budget": 40,
+          "budgetUnitId": "deltaK",
+          "scale": 0.5,
+          "allocations": [
+            {
+              "effectId": "eff-F03-cool-A",
+              "approvedDelta": -20,
+              "status": "partial"
+            },
+            {
+              "effectId": "eff-F03-cool-B",
+              "approvedDelta": -20,
+              "status": "partial"
+            }
+          ],
+          "final": 20,
+          "valueUnitId": "degC"
+        }
+      ],
+      "changes": [
+        {
+          "entityId": "F01",
+          "propertyId": "thermal.temperature",
+          "old": 100,
+          "new": 20,
+          "unitId": "degC",
+          "versionId": "F01.thermal.temperature@c046",
+          "decisionId": "decision-F01"
+        },
+        {
+          "entityId": "F02",
+          "propertyId": "thermal.temperature",
+          "old": 80,
+          "new": 20,
+          "unitId": "degC",
+          "versionId": "F02.thermal.temperature@c046",
+          "decisionId": "decision-F02"
+        },
+        {
+          "entityId": "F03",
+          "propertyId": "thermal.temperature",
+          "old": 60,
+          "new": 20,
+          "unitId": "degC",
+          "versionId": "F03.thermal.temperature@c046",
+          "decisionId": "decision-F03"
+        }
+      ],
+      "dependencyEdges": [
+        {
+          "source": "F01.thermal.temperature@c042",
+          "target": "exec-F01-cool-A",
+          "kind": "used"
+        },
+        {
+          "source": "F02.thermal.temperature@c042",
+          "target": "exec-F02-cool-A",
+          "kind": "used"
+        },
+        {
+          "source": "F03.thermal.temperature@c042",
+          "target": "exec-F03-cool-A",
+          "kind": "used"
+        },
+        {
+          "source": "F01.thermal.temperature@c042",
+          "target": "exec-F01-cool-B",
+          "kind": "used"
+        },
+        {
+          "source": "F02.thermal.temperature@c042",
+          "target": "exec-F02-cool-B",
+          "kind": "used"
+        },
+        {
+          "source": "F03.thermal.temperature@c042",
+          "target": "exec-F03-cool-B",
+          "kind": "used"
+        },
+        {
+          "source": "exec-F01-cool-A",
+          "target": "decision-F01",
+          "kind": "proposed"
+        },
+        {
+          "source": "exec-F01-cool-B",
+          "target": "decision-F01",
+          "kind": "proposed"
+        },
+        {
+          "source": "decision-F01",
+          "target": "F01.thermal.temperature@c046",
+          "kind": "generated"
+        },
+        {
+          "source": "exec-F02-cool-A",
+          "target": "decision-F02",
+          "kind": "proposed"
+        },
+        {
+          "source": "exec-F02-cool-B",
+          "target": "decision-F02",
+          "kind": "proposed"
+        },
+        {
+          "source": "decision-F02",
+          "target": "F02.thermal.temperature@c046",
+          "kind": "generated"
+        },
+        {
+          "source": "exec-F03-cool-A",
+          "target": "decision-F03",
+          "kind": "proposed"
+        },
+        {
+          "source": "exec-F03-cool-B",
+          "target": "decision-F03",
+          "kind": "proposed"
+        },
+        {
+          "source": "decision-F03",
+          "target": "F03.thermal.temperature@c046",
+          "kind": "generated"
+        }
+      ],
+      "diagnostics": []
+    }
+  ],
+  "branches": [
+    {
+      "id": "branch-order-ab",
+      "runId": "run-main",
+      "label": "branch-order-ab",
+      "baseCommit": null,
+      "headCommit": "c042",
+      "visibility": "private"
+    }
+  ],
+  "heads": {
+    "branch-order-ab": "c046",
+    "main": "c045"
+  }
+}

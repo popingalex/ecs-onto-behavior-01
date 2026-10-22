@@ -1,7 +1,9 @@
 import type { BranchDef, CommitDef, RunDef, WorldSnapshot } from "@/core/types"
+import type { WorkbenchIndex } from "@/data/index"
 import { dataStore } from "@/data/store"
 import { createStore, useStore } from "@/lib/store"
 import { historyStore } from "@/stores/history"
+import { persistRootCommit } from "@/stores/persistence/historyPersistence"
 
 /**
  * 运行目录（原型语义）：P19 新建的运行持久化在本浏览器 localStorage。
@@ -103,10 +105,14 @@ function rootCommitFor(
 
 /**
  * 把目录中的运行合并进刚加载的工作台：index.runs、history（分支 + 根提交）与世界快照。
- * 幂等；在 initHistory 之后调用。
+ * 幂等；在 initHistory 之后调用。loadWorkbench 传入刚构建的 index（此时 store 里还是旧值），
+ * 会话内的 createRun 依赖 store 里已就绪的 index。
  */
-export function mergeCatalogRuns(baseWorld: WorldSnapshot) {
-  const index = dataStore.getState().index
+export function mergeCatalogRuns(
+  baseWorld: WorldSnapshot,
+  readyIndex?: WorkbenchIndex,
+) {
+  const index = readyIndex ?? dataStore.getState().index
   if (!index) return
   const entries = runCatalogStore.getState().runs
   if (entries.length === 0) return
@@ -114,6 +120,8 @@ export function mergeCatalogRuns(baseWorld: WorldSnapshot) {
     index.runs.set(entry.run.id, entry.run)
     const { commit, world } = rootCommitFor(entry, baseWorld, entry.run.stepSeconds)
     if (!index.worlds.has(commit.id)) index.worlds.set(commit.id, world)
+    // 根提交事实落 IDB（幂等）：目录（localStorage）与历史（IDB）任一丢失都不再断链。
+    void persistRootCommit({ commit, world })
     const history = historyStore.getState()
     const commits = history.commits[commit.id]
       ? history.commits

@@ -241,5 +241,5 @@ export function selectedNodeId(nodes: TreeNode[], route: Route): string | null {
     }
   }
   visit(nodes)
-  return best?.id ?? null
+  return (best as { id: string } | null)?.id ?? null
 }

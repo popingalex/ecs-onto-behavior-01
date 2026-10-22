@@ -26,10 +26,12 @@
 - **交互**：P14/P12 的左库/画布/右表单/下诊断各区拖分隔条调大小。
 - **产物**：面板布局偏好（重置面板布局按钮可见于顶栏）。
 
-## TanStack Table（8.21.3）— 已安装未使用
+## TanStack Table — 已决策移除（W5.3，2026-10-22）
 
-- 依赖在 `package.json`，但 `src` 内**无任何 import**：各页表格目前用 shadcn table + 自绘行。如实记为「装了没用」，M0 的「引入 TanStack Table」只完成安装；如需替换表格层另立任务。
+- 依赖曾在 `package.json`（8.21.3），但 `src` 内**始终无任何 import**：各页表格用 shadcn table + 自绘行，最大表约几十行实体表，无虚拟滚动/复杂列交互需求。
+- W5 决策：**移除**（未用依赖是供应链与锁文件负担，且「已装未用」持续制造验收噪音）。已执行 `pnpm remove @tanstack/react-table` 并同步锁文件；install --frozen-lockfile、test、build 复核通过（证据 `design/03/evidence/toolchain/README.md`）。
+- 触发重新引入的条件：出现 ≥ 数百行的表格且需要虚拟滚动，或需要列固定/列重排/复杂客户端排序过滤交互；届时另立任务整体替换表格层，不再「先装后说」。
 
 ## 结论
 
-React Flow 与 FlowGram 均为真实挂载与业务读写，不是 SVG 占位；shadcn 组件在核心页真实使用；react-resizable-panels 真实可用；TanStack Table 未落地（唯一未兑现的 M0 依赖项）。
+React Flow 与 FlowGram 均为真实挂载与业务读写，不是 SVG 占位；shadcn 组件在核心页真实使用；react-resizable-panels 真实可用；TanStack Table 经 W5 决策移除（M0 唯一未兑现依赖项已闭环为「不采用」）。

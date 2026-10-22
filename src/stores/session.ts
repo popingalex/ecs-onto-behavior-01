@@ -9,16 +9,23 @@ import {
 } from "@/services/executionAdapter"
 import { enqueueRunCommand, updateRunCommand } from "./commandQueue"
 import { contextStore } from "./context"
-import { appendCommit, historyStore } from "./history"
+import { draftRegistry } from "./draftRegistry"
+import { historyStore } from "./history"
+import { noteFailedSettle } from "./persistence/historyPersistence"
 import { startPlayback } from "./playback"
+import {
+  executionContextKey,
+  revisionSnapshot,
+  revisionsChanged,
+} from "./sessionGuards"
+import { applySettleFacts } from "./settleFacts"
 import { toast } from "./toast"
-import { putRecord } from "./trace"
 
 /**
  * SessionStore：权威会话阶段。
  * waitingInputs → frozen → computing → committing → committed → playing → waitingInputs；
- * 失败回到原 head 并保留诊断。结算成功时先把完整 record 写入 trace store，
- * 再更新 commit/head——过程记录先于世界状态落地。
+ * 失败回到原 head 并保留诊断。结算成功的事实落地见 settleFacts.applySettleFacts：
+ * record 先行，本地持久层原子事务成功后才移动世界与 commit/head。
  */
 export interface RunSession {
   phase: RunPhase
@@ -143,15 +150,21 @@ export async function settleRound(
 
   patchSession(runId, { phase: "committing" })
   await delay(350)
-  // 先落完整过程记录（不可变），再更新世界与 commit/head；顺序保证任何时刻
-  // 都不会出现“有提交但没有记录”的中间态。
-  putRecord(result.record)
-  const index = dataStore.getState().index
-  if (index) {
-    index.worlds.set(result.world.commitId, result.world)
-    dataStore.setState({ index: { ...index } })
+  const applied = await applySettleFacts(result)
+  if (!applied.ok) {
+    updateRunCommand(command.commandId, {
+      status: "rejected",
+      message: applied.message,
+    })
+    noteFailedSettle({ runId, branchId, baseCommit })
+    fail(runId, {
+      id: key,
+      severity: "error",
+      code: "HISTORY_PERSIST_FAILED",
+      message: `本地历史写入失败：${applied.message}；分支头保持 ${baseCommit}，可重试推算或在状态栏清空本地历史。`,
+    })
+    return
   }
-  appendCommit(result.commit)
   updateRunCommand(command.commandId, { status: "applied" })
   patchSession(runId, { phase: "committed" })
   toast(
@@ -175,7 +188,7 @@ export async function settleRound(
   }
 
   await delay(300)
-  const run = index?.runs.get(runId)
+  const run = dataStore.getState().index?.runs.get(runId)
   patchSession(runId, { phase: "playing" })
   startPlayback(runId, result.commit.id, run?.playbackSeconds ?? 1, () =>
     patchSession(runId, { phase: "waitingInputs", idempotencyKey: null }),
@@ -191,3 +204,43 @@ export function useRunSession(runId: string | undefined): RunSession {
 export function useExecutionAdapterLabel() {
   return useStore(sessionStore, (s) => s.adapter.label)
 }
+
+/** 清除所有会话的错误横幅：上下文切换或试算输入被修改后，旧诊断不再适用。 */
+function clearAllRunErrors() {
+  sessionStore.setState((s) => {
+    if (!Object.values(s.sessions).some((session) => session.lastError))
+      return {}
+    return {
+      sessions: Object.fromEntries(
+        Object.entries(s.sessions).map(([id, session]) => [
+          id,
+          session.lastError ? { ...session, lastError: null } : session,
+        ]),
+      ),
+    }
+  })
+}
+
+// 错误横幅清理时机（W2 回归 Bug3）：执行上下文切换（切分支/换提交/离开页面），
+// 或任一草稿修订变化（修复造成 INPUT_MISSING 的输入）时清除残留诊断；
+// 下一次 settle 发起时由 patchSession(phase: frozen, lastError: null) 清理（既有）。
+let lastContextKey: string | null = null
+routerStore.subscribe(() => {
+  const state = routerStore.getState()
+  const key = executionContextKey(state.entries[state.index].route)
+  if (lastContextKey === null) {
+    lastContextKey = key
+    return
+  }
+  if (key !== lastContextKey) {
+    lastContextKey = key
+    clearAllRunErrors()
+  }
+})
+
+let lastRevisions: Record<string, number> = {}
+draftRegistry.subscribe(() => {
+  const next = revisionSnapshot(draftRegistry.getState().documents)
+  if (revisionsChanged(lastRevisions, next)) clearAllRunErrors()
+  lastRevisions = next
+})

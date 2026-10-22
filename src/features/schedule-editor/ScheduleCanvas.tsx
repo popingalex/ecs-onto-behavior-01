@@ -11,7 +11,7 @@ import {
   type Viewport,
 } from "@xyflow/react"
 import "@xyflow/react/dist/style.css"
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState, type DragEvent } from "react"
 import type { EditorLayout, ScheduleDocument } from "@/schema/model"
 import type { ScheduleModelView } from "@/services/scheduleCompiler"
 import { applyEdit } from "@/stores/draftRegistry"
@@ -105,16 +105,25 @@ export default function ScheduleCanvas({
     })
   }, [focusSystemId, flow.nodes, schedule, setCenter])
 
-  const onNodesChange = (changes: NodeChange<ScheduleFlowNode>[]) =>
-    setNodes((ns) =>
-      applyNodeChanges(changes.filter((c) => c.type !== "remove"), ns),
-    )
-  const onEdgesChange = (changes: EdgeChange<ScheduleFlowEdge>[]) =>
-    setEdges((es) =>
-      applyEdgeChanges(changes.filter((c) => c.type !== "remove"), es),
-    )
+  // 传给 <ReactFlow> 的回调必须保持稳定引用：xyflow 的 StoreUpdater
+  // 会把这些 prop 同步进内部 store，内联闭包每次渲染都换引用，
+  // store.setState → 订阅者重渲染 → 再产生新闭包，构成死循环白屏。
+  const onNodesChange = useCallback(
+    (changes: NodeChange<ScheduleFlowNode>[]) =>
+      setNodes((ns) =>
+        applyNodeChanges(changes.filter((c) => c.type !== "remove"), ns),
+      ),
+    [],
+  )
+  const onEdgesChange = useCallback(
+    (changes: EdgeChange<ScheduleFlowEdge>[]) =>
+      setEdges((es) =>
+        applyEdgeChanges(changes.filter((c) => c.type !== "remove"), es),
+      ),
+    [],
+  )
 
-  const commitPositions = () => {
+  const commitPositions = useCallback(() => {
     const positions = Object.fromEntries(
       nodes.map((n) => [
         n.id,
@@ -124,7 +133,133 @@ export default function ScheduleCanvas({
     applyEdit<ScheduleContent>(docId, "移动节点", (c) =>
       ops.withPositions(c, positions),
     )
-  }
+  }, [nodes, docId])
+
+  const onConnect = useCallback(
+    (connection: Connection) => {
+      if (!connection.source || !connection.target) return
+      const source = schedule.nodes.find((n) => n.id === connection.source)
+      const target = schedule.nodes.find((n) => n.id === connection.target)
+      if (source?.type === "SystemNode" && target?.type === "SystemNode") {
+        onSystemPairConnect(connection.source, connection.target)
+        return
+      }
+      const result = ops.connectNodes(
+        { schedule, layout },
+        model,
+        connection.source,
+        connection.target,
+        "order",
+      )
+      if (!result.ok) {
+        toast(result.reason, "warning")
+        return
+      }
+      applyEdit<ScheduleContent>(
+        docId,
+        `连接 ${connection.source} → ${connection.target}`,
+        () => result.content,
+      )
+    },
+    [schedule, layout, model, docId, onSystemPairConnect],
+  )
+
+  const onBeforeDelete = useCallback(
+    async ({ nodes: dn, edges: de }: { nodes: ScheduleFlowNode[]; edges: ScheduleFlowEdge[] }) => {
+      if (readOnly) return false
+      const label =
+        dn.length > 0
+          ? `删除节点 ${dn.map((n) => n.id).join("、")}`
+          : `删除边 ${de.map((e) => e.id).join("、")}`
+      applyEdit<ScheduleContent>(docId, label, (c) =>
+        ops.removeEdges(
+          ops.removeNodes(c, dn.map((n) => n.id)),
+          de.map((e) => e.id),
+        ),
+      )
+      return false
+    },
+    [readOnly, docId],
+  )
+
+  const onSelectionChangeProp = useCallback(
+    ({ nodes: sn, edges: se }: { nodes: ScheduleFlowNode[]; edges: ScheduleFlowEdge[] }) => {
+      selectedRef.current = {
+        nodes: sn.map((n) => n.id),
+        edges: se.map((e) => e.id),
+      }
+      selectionCallback.current(
+        (sn[0] as ScheduleFlowNode | undefined) ?? null,
+        (se[0] as ScheduleFlowEdge | undefined) ?? null,
+      )
+    },
+    [],
+  )
+
+  const onMoveEnd = useCallback(
+    (_event: unknown, viewport: Viewport) => {
+      if (skipInitialMoveEnd.current) {
+        skipInitialMoveEnd.current = false
+        return
+      }
+      if (programmaticMove.current) {
+        programmaticMove.current = false
+        return
+      }
+      const rounded = {
+        x: Math.round(viewport.x),
+        y: Math.round(viewport.y),
+        zoom: Math.round(viewport.zoom * 1000) / 1000,
+      }
+      applyEdit<ScheduleContent>(docId, "移动视口", (c) =>
+        ops.withViewport(c, rounded),
+      )
+    },
+    [docId],
+  )
+
+  const onDragOver = useCallback((e: DragEvent) => {
+    if (e.dataTransfer.types.includes(DRAG_MIME)) {
+      e.preventDefault()
+      e.dataTransfer.dropEffect = "move"
+    }
+  }, [])
+
+  const onDrop = useCallback(
+    (e: DragEvent) => {
+      const raw = e.dataTransfer.getData(DRAG_MIME)
+      if (!raw || readOnly) return
+      e.preventDefault()
+      const payload = JSON.parse(raw) as DragPayload
+      const position = screenToFlowPosition({ x: e.clientX, y: e.clientY })
+      const content: ScheduleContent = { schedule, layout }
+      const result =
+        payload.kind === "system"
+          ? ops.addSystemNode(content, payload.systemId, position)
+          : payload.kind === "commit"
+            ? ops.addCommitNode(content, position)
+            : model.constraints[0]
+              ? ops.addConstraintNode(
+                  content,
+                  payload.kind === "reducer" ? "ReducerNode" : "ContractNode",
+                  model.constraints[0],
+                  position,
+                )
+              : { ok: false as const, message: "模型中没有可用约束" }
+      if (!result.ok) {
+        toast(result.message, "warning")
+        return
+      }
+      applyEdit<ScheduleContent>(docId, "拖入节点", () => result.content)
+    },
+    [readOnly, schedule, layout, model, docId, screenToFlowPosition],
+  )
+
+  const deleteKeyCode = useMemo(
+    () => (readOnly ? null : ["Backspace", "Delete"]),
+    [readOnly],
+  )
+  const proOptions = useMemo(() => ({ hideAttribution: false }), [])
 
   return (
     <div className="h-full min-h-0 w-full">
@@ -135,115 +270,22 @@ export default function ScheduleCanvas({
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onNodeDragStop={commitPositions}
-        onConnect={(connection: Connection) => {
-          if (!connection.source || !connection.target) return
-          const source = schedule.nodes.find((n) => n.id === connection.source)
-          const target = schedule.nodes.find((n) => n.id === connection.target)
-          if (source?.type === "SystemNode" && target?.type === "SystemNode") {
-            onSystemPairConnect(connection.source, connection.target)
-            return
-          }
-          const result = ops.connectNodes(
-            { schedule, layout },
-            model,
-            connection.source,
-            connection.target,
-            "order",
-          )
-          if (!result.ok) {
-            toast(result.reason, "warning")
-            return
-          }
-          applyEdit<ScheduleContent>(
-            docId,
-            `连接 ${connection.source} → ${connection.target}`,
-            () => result.content,
-          )
-        }}
-        onBeforeDelete={async ({ nodes: dn, edges: de }) => {
-          if (readOnly) return false
-          const label =
-            dn.length > 0
-              ? `删除节点 ${dn.map((n) => n.id).join("、")}`
-              : `删除边 ${de.map((e) => e.id).join("、")}`
-          applyEdit<ScheduleContent>(docId, label, (c) =>
-            ops.removeEdges(
-              ops.removeNodes(c, dn.map((n) => n.id)),
-              de.map((e) => e.id),
-            ),
-          )
-          return false
-        }}
-        onSelectionChange={({ nodes: sn, edges: se }) => {
-          selectedRef.current = {
-            nodes: sn.map((n) => n.id),
-            edges: se.map((e) => e.id),
-          }
-          onSelectionChange(
-            (sn[0] as ScheduleFlowNode | undefined) ?? null,
-            (se[0] as ScheduleFlowEdge | undefined) ?? null,
-          )
-        }}
-        onMoveEnd={(_event, viewport: Viewport) => {
-          if (skipInitialMoveEnd.current) {
-            skipInitialMoveEnd.current = false
-            return
-          }
-          if (programmaticMove.current) {
-            programmaticMove.current = false
-            return
-          }
-          const rounded = {
-            x: Math.round(viewport.x),
-            y: Math.round(viewport.y),
-            zoom: Math.round(viewport.zoom * 1000) / 1000,
-          }
-          applyEdit<ScheduleContent>(docId, "移动视口", (c) =>
-            ops.withViewport(c, rounded),
-          )
-        }}
-        onDragOver={(e) => {
-          if (e.dataTransfer.types.includes(DRAG_MIME)) {
-            e.preventDefault()
-            e.dataTransfer.dropEffect = "move"
-          }
-        }}
-        onDrop={(e) => {
-          const raw = e.dataTransfer.getData(DRAG_MIME)
-          if (!raw || readOnly) return
-          e.preventDefault()
-          const payload = JSON.parse(raw) as DragPayload
-          const position = screenToFlowPosition({ x: e.clientX, y: e.clientY })
-          const content: ScheduleContent = { schedule, layout }
-          const result =
-            payload.kind === "system"
-              ? ops.addSystemNode(content, payload.systemId, position)
-              : payload.kind === "commit"
-                ? ops.addCommitNode(content, position)
-                : model.constraints[0]
-                  ? ops.addConstraintNode(
-                      content,
-                      payload.kind === "reducer" ? "ReducerNode" : "ContractNode",
-                      model.constraints[0],
-                      position,
-                    )
-                  : { ok: false as const, message: "模型中没有可用约束" }
-          if (!result.ok) {
-            toast(result.message, "warning")
-            return
-          }
-          applyEdit<ScheduleContent>(docId, "拖入节点", () => result.content)
-        }}
+        onConnect={onConnect}
+        onBeforeDelete={onBeforeDelete}
+        onSelectionChange={onSelectionChangeProp}
+        onMoveEnd={onMoveEnd}
+        onDragOver={onDragOver}
+        onDrop={onDrop}
         defaultViewport={layout.viewport}
         fitView={isDefaultViewport}
         minZoom={0.3}
         maxZoom={2}
-        deleteKeyCode={readOnly ? null : ["Backspace", "Delete"]}
+        deleteKeyCode={deleteKeyCode}
         connectionRadius={48}
         nodesDraggable={!readOnly}
         nodesConnectable={!readOnly}
         elementsSelectable
-        proOptions={{ hideAttribution: false }}
+        proOptions={proOptions}
       >
         <Background gap={16} />
         <Controls showInteractive={false} />
