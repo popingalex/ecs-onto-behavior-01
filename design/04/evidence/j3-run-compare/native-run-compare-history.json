@@ -1,0 +1,52 @@
+{
+ "simId": "5UYNf2wUVurVl0616t0Xn",
+ "endpoint": "GET /sim/:id/branch/:branch/:time/attributes(路径参数,真历史)",
+ "frames": [
+  {
+   "frame": 1,
+   "resolvedTick": 1,
+   "workbenchWritten": 533,
+   "mismatches": 0,
+   "engineOnlyDefaultMaterialized": 5903
+  },
+  {
+   "frame": 2,
+   "resolvedTick": 2,
+   "workbenchWritten": 535,
+   "mismatches": 0,
+   "engineOnlyDefaultMaterialized": 5901
+  },
+  {
+   "frame": 3,
+   "resolvedTick": 3,
+   "workbenchWritten": 535,
+   "mismatches": 0,
+   "engineOnlyDefaultMaterialized": 5901
+  },
+  {
+   "frame": 4,
+   "resolvedTick": 4,
+   "workbenchWritten": 535,
+   "mismatches": 0,
+   "engineOnlyDefaultMaterialized": 5901
+  },
+  {
+   "frame": 5,
+   "resolvedTick": 5,
+   "workbenchWritten": 535,
+   "mismatches": 0,
+   "engineOnlyDefaultMaterialized": 5901
+  },
+  {
+   "frame": 6,
+   "resolvedTick": 6,
+   "workbenchWritten": 535,
+   "mismatches": 0,
+   "engineOnlyDefaultMaterialized": 5901
+  }
+ ],
+ "totalChecked": 3208,
+ "totalMismatches": 0,
+ "mismatches": [],
+ "engineOnlyDefaults": 35408
+}

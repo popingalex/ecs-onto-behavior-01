@@ -36,4 +36,4 @@ P20–P25 六个过程页在 REAL_IMPORT_READ_ONLY 模式下全部按引擎事�
 
 ## 结论
 
-v0.7-R(读真实数据和真实运行)的 J0–J6 静态链已闭环:J0(导出冻结+哈希)→J1(导入对照)→J2(P10 PARTIAL,按矩阵判定)→J3(复用既有真实运行,新运行待授权)→J4(P20 帧对照)→J5(P22/P24 分级溯源)→J6(上下文切换)。REAL-01..12 全 PASS,REAL-06 PARTIAL(有据),REAL-18 PASS。
+v0.7-R(读真实数据和真实运行)的 J0–J6 静态链已闭环:J0(导出冻结+哈希)→J1(导入对照)→J2(P10 PARTIAL,按矩阵判定)→J3(复用既有真实运行,新运行待授权)→J4(P20 帧对照)→J5(P22/P24 分级溯源)→J6(上下文切换)。REAL-01..05/07..12 PASS;REAL-06 PARTIAL(缺口=引擎无用户查询层;通过条件与豁免记录见 design/04/next/00_verified_baseline.md §AUD-03);REAL-18 PASS。
