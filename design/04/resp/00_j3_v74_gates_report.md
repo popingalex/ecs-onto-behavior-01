@@ -15,9 +15,9 @@
 |---|---|
 | head 态逐值 | **535/535 写入值全等**(帧 6:工作台 buildRunC 重放 vs 引擎 attributes 端点) |
 | delta 来源 | **390/390 条 source_system_id 零差异**(input=pre 层命令;combustion/fire-extinguishing/field_thermal_live=post 层) |
-| 名义差异 4 处 | 全部由 `attributes?frame=N` 端点**忽略 frame 恒返 head 态**解释(实测 frame=1/2/6 均 tick=6);非归一化错误 |
+| 名义差异 4 处 | 全部由 J3 脚本误用查询参数 `?frame=N`(该形式被忽略恒返 head,实测 frame=1/2/6 均 tick=6)解释;非归一化错误,更正见"点燃演化"行 |
 | 引擎多出 35,408 项 | 引擎物化默认值;工作台按 UNSET 不回填(04 文档 §2 规则) |
-| 点燃演化 | tank-1 温度 41.5→77.4°C 六帧演化在重放中逐帧可现(**per-frame 视图为工作台重放独有**——引擎 HTTP 不提供历史帧态,历史真值在 deltas,已 100% 对上) |
+| 点燃演化 | tank-1 温度 41.5→77.4°C 六帧演化逐帧可现。**v0.7-H 更正**:J3 脚本曾误用查询参数 `?frame=N`(被忽略恒返 head);引擎真历史端点为路径参数 `GET /sim/:id/branch/:branch/:time/attributes`(超界显式 404)。以正确端点逐帧复测:**工作台重放 vs 引擎真历史态 3208/3208 全量零差异**(`evidence/j3-run-compare/native-run-compare-history.json`) |
 
 **顺带发现**(如实登记):
 1. 当前 18080 服务为**旧二进制**:新会话写 legacy `s_simulation.snapshot` 列、无 `s_simulation_tick` 行(对照改走 HTTP deltas 通道,其自带 sourceSystemId)。与既有「新旧二进制共库滚动升级」备忘一致。
@@ -46,4 +46,4 @@
 
 ## 五、v0.7-R 终态对账
 
-J0–J6 **全链闭环**(J3 由本次实跑补齐);REAL-01..12 全 PASS(REAL-06 PARTIAL 有据)、REAL-13..15 NOT_RUN(V7-3/4 完整版闸门)、REAL-16 NOT_RUN(V7-5 闸门)、REAL-17 部分(perf 汇总有、逐系统曲线待新二进制)、REAL-18 PASS。**v0.7-R 达成。**
+J0–J6 **全链闭环**(J3 由本次实跑补齐);REAL-01..05/07..12 PASS、REAL-06 PARTIAL(缺口与通过条件见 design/04/next/00_verified_baseline.md §AUD-03)、REAL-13..15 NOT_RUN(闸门)、REAL-16 NOT_RUN(闸门)、REAL-17 部分、REAL-18 PASS。**v0.7-R 达成(口径已修订)。**

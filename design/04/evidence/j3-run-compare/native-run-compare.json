@@ -92,5 +92,10 @@
   "runtimeObservedSystemIds": [
    "field_thermal_live(静态 registry 转录未收录,运行期观测)"
   ]
+ },
+ "correction_2026_10_23": {
+  "finding": "J3 对照脚本误用查询参数 ?frame=N(被忽略恒返 head)。引擎真历史端点为路径参数 GET /sim/:id/branch/:branch/:time/attributes(源码 routes/attributes.rs:163-196,tick>head 显式 404)。",
+  "recheck": "以正确端点逐帧复测:帧 1-6 每帧 resolvedTick=请求帧,工作台重放 vs 引擎真历史态 3208/3208 全量零差异(证据 native-run-compare-history.json)。",
+  "wordingFix": "此前'引擎 HTTP 不提供历史帧态/per-frame 为工作台独有'的表述作废;正确表述:引擎提供只读历史帧端点,工作台重放与其逐帧全等。"
  }
 }

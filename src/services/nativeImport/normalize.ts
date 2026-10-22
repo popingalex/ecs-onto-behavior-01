@@ -21,8 +21,10 @@ import {
   type NativeBranch,
   type NativeFrame,
   type NativeRunBundle,
+  type NativeTickRow,
 } from "./types"
 import { NATIVE_UNKNOWN_UNIT, lookupNativeUnit } from "./catalog"
+import { validateTicksForReplay } from "./replayGuards"
 import type { NativeModelFixtures, RunBDiskFrame, RunCRaw } from "./fixtures"
 
 /**
@@ -408,6 +410,25 @@ export function buildRunC(raw: RunCRaw): {
     .sort((a, b) =>
       a.branchId === b.branchId ? a.frame - b.frame : a.branchId.localeCompare(b.branchId),
     )
+
+  // H1/FRAME-02:重放前逐分支护栏——丢帧/乱序/重复/分支串档一律拒绝,不拿 head 填空。
+  {
+    const byBranch = new Map<string, NativeTickRow[]>()
+    for (const row of rows) {
+      const list = byBranch.get(row.branchId) ?? []
+      list.push(row)
+      byBranch.set(row.branchId, list)
+    }
+    for (const [branchId, list] of byBranch) {
+      const diagnostics = validateTicksForReplay(list, { branchId })
+      if (diagnostics.length > 0) {
+        throw new Error(
+          `运行 ${raw.runId} 分支 ${branchId} 的 tick 序列不可重放:\n` +
+            diagnostics.map((d) => `- ${d.code}:${d.message}`).join("\n"),
+        )
+      }
+    }
+  }
 
   const branches: NativeBranch[] = []
   const heads: Record<string, number> = {}

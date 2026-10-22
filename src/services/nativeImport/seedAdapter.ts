@@ -15,6 +15,7 @@ import {
   loadChemRoadedModel,
   loadRunB,
   loadRunC,
+  loadRunD,
 } from "./fixtures"
 import {
   buildRunB,
@@ -270,10 +271,15 @@ export async function loadNativeImport(): Promise<NativeImport> {
   if (cachedImport) return cachedImport
   const modelFixtures = await loadChemRoadedModel()
   const model = normalizeModel(modelFixtures)
-  const [runBDisk, runCRaw] = await Promise.all([loadRunB(), loadRunC()])
+  const [runBDisk, runCRaw, runDRaw] = await Promise.all([
+    loadRunB(),
+    loadRunC(),
+    loadRunD(),
+  ])
   const bundleB = buildRunB(runBDisk)
   const built = buildRunC(runCRaw)
-  const bundles = [bundleB, built.bundle]
+  const builtD = buildRunC(runDRaw)
+  const bundles = [bundleB, built.bundle, builtD.bundle]
   const seed = buildNativeSeed(model, bundles)
   const sceneWorldCommit = "nat-scene-chem-roaded-base"
   const baseValues: Record<string, Record<string, RawValue>> = {}

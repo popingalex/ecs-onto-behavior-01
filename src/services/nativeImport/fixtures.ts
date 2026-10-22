@@ -175,11 +175,33 @@ export async function loadRunC(): Promise<RunCRaw> {
   const bundle = await loadJson<RunCRaw["bundle"]>(`runs/${RUN_C_ID}/bundle.json`)
   const ticks = await loadJson<RunCRaw["ticks"]>(`runs/${RUN_C_ID}/ticks.json`)
   if (!Array.isArray(ticks) || ticks.length === 0)
-    throw new Error(`真实运行样例 ${RUN_C_ID} 无 tick 行（REAL-07：不回退 mock）`)
+    throw new Error(`真实运行样例 ${RUN_C_ID} 无 tick 行(REAL-07:不回退 mock)`)
   return {
     runId: RUN_C_ID,
     executionId: run.executionId ?? null,
     sceneId: sceneInfo.sceneId ?? bundle.scene.id,
+    bundle,
+    ticks,
+  }
+}
+
+// ---------- 运行样例 D(J3 实跑会话,2026-10-22 用户授权触发;证据 design/04/evidence/j3-run-compare/) ----------
+
+export const RUN_D_ID = "5UYNf2wUVurVl0616t0Xn"
+
+export async function loadRunD(): Promise<RunCRaw> {
+  const run = await loadJson<{ executionId?: string }>(`runs/${RUN_D_ID}/run.json`)
+  const sceneInfo = await loadJson<{ sceneId?: string }>(
+    `runs/${RUN_D_ID}/scene_info.json`,
+  )
+  const bundle = await loadJson<RunCRaw["bundle"]>(`runs/${RUN_D_ID}/bundle.json`)
+  const ticks = await loadJson<RunCRaw["ticks"]>(`runs/${RUN_D_ID}/ticks.json`)
+  if (!Array.isArray(ticks) || ticks.length === 0)
+    throw new Error(`真实运行样例 ${RUN_D_ID} 无 tick 行(REAL-07:不回退 mock)`)
+  return {
+    runId: RUN_D_ID,
+    executionId: run.executionId ?? null,
+    sceneId: sceneInfo.sceneId ?? "chem-roaded",
     bundle,
     ticks,
   }
