@@ -1,0 +1,1 @@
+{"branchId":"main","changeCount":0,"deltaCount":45,"instanceCount":35,"note":"changedAttributes 为后端本帧 attributeDeltas 的键集合；前端 emit 时可能再过滤未变键","performance":{"total":33},"sessionDir":"sBwT4d6RsTuGGHPIgu1L3","simulationId":"sBwT4d6RsTuGGHPIgu1L3","source":"push","tick":3,"timestampMs":1782797507453}

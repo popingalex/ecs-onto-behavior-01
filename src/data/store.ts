@@ -3,7 +3,9 @@ import { seedDataAdapter, type DataAdapter } from "./adapter"
 import { buildIndex, type WorkbenchIndex } from "./index"
 import { registerReferenceSamples } from "./referenceSamples"
 import { historyStore, initHistory } from "@/stores/history"
-import { ensureModelDocuments } from "@/stores/modelDocuments"
+import { ensureModelDocuments, setBaselineOverride } from "@/stores/modelDocuments"
+import { CURRENT_MODE } from "@/stores/dataSource"
+import { loadNativeImport, nativeImportDataAdapter } from "@/services/nativeImport/seedAdapter"
 import {
   restoreHistory,
   type RestoreOutcome,
@@ -22,7 +24,7 @@ export const dataStore = createStore<DataState>({
   status: "idle",
   index: null,
   error: null,
-  adapter: seedDataAdapter,
+  adapter: CURRENT_MODE === "REAL_IMPORT_READ_ONLY" ? nativeImportDataAdapter : seedDataAdapter,
 })
 
 export async function loadWorkbench(): Promise<void> {
@@ -30,22 +32,30 @@ export async function loadWorkbench(): Promise<void> {
   dataStore.setState({ status: "loading", error: null })
   try {
     const raw = await adapter.load()
+    // REAL_IMPORT_READ_ONLY：先就位原生草稿基线，再走统一的文档注册；
+    // mock 专属的参考样例/目录运行/本地历史恢复一概跳过（REAL-07/12：不混入、不冒充）。
+    if (adapter === nativeImportDataAdapter) {
+      const imported = await loadNativeImport()
+      setBaselineOverride(() => imported.prototype)
+    }
     const index = buildIndex(raw)
     initHistory(raw.branches, raw.commits)
     // 数据就绪后登记 v0.5 草稿文档（并恢复本地存档），不在渲染期间写 store。
     ensureModelDocuments()
-    // 参考样例（expected_runs）：注册为“查看样例”的预置回合与只读过程记录。
-    registerReferenceSamples()
-    // P19 在本浏览器创建的运行：重建其根提交与主分支（传入刚构建的 index）。
-    mergeCatalogRuns(raw.worlds[0], index)
-    // W4 本地历史恢复：读 meta 判空 → 首次初始化（种子）或恢复。
-    // 恢复失败（版本不符 / 链校验不通过）时 outcome 为空并回退种子，不静默混用。
-    const outcome = await restoreHistory({
-      trustedCommitIds: new Set(Object.keys(historyStore.getState().commits)),
-      trustedWorldIds: new Set(index.worlds.keys()),
-      trustedBranchIds: new Set(Object.keys(historyStore.getState().branches)),
-    })
-    if (outcome.mode === "restored") applyRestoredHistory(index, outcome)
+    if (adapter !== nativeImportDataAdapter) {
+      // 参考样例（expected_runs）：注册为“查看样例”的预置回合与只读过程记录。
+      registerReferenceSamples()
+      // P19 在本浏览器创建的运行：重建其根提交与主分支（传入刚构建的 index）。
+      mergeCatalogRuns(raw.worlds[0], index)
+      // W4 本地历史恢复：读 meta 判空 → 首次初始化（种子）或恢复。
+      // 恢复失败（版本不符 / 链校验不通过）时 outcome 为空并回退种子，不静默混用。
+      const outcome = await restoreHistory({
+        trustedCommitIds: new Set(Object.keys(historyStore.getState().commits)),
+        trustedWorldIds: new Set(index.worlds.keys()),
+        trustedBranchIds: new Set(Object.keys(historyStore.getState().branches)),
+      })
+      if (outcome.mode === "restored") applyRestoredHistory(index, outcome)
+    }
     dataStore.setState({ status: "ready", index })
   } catch (error) {
     dataStore.setState({

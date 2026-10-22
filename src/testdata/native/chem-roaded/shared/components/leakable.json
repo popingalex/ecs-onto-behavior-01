@@ -1,0 +1,61 @@
+{
+  "id": "leakable",
+  "name": "可泄漏",
+  "attributes": [
+    {
+      "id": "leakable/is_leaking",
+      "name": "是否泄漏",
+      "value": false,
+      "type": "b",
+      "config": {
+        "layer": "event"
+      }
+    },
+    {
+      "id": "leakable/leak_rate_liquid",
+      "name": "泄漏速率（液体）",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "leakable/is_diffusing",
+      "name": "是否扩散",
+      "value": false,
+      "type": "b",
+      "config": {
+        "layer": "event"
+      }
+    },
+    {
+      "id": "leakable/leak_rate_gas",
+      "name": "泄漏速率（气体）",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "leakable/liquid_pool_area",
+      "name": "液池面积",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "leakable/gas_concentration",
+      "name": "气体浓度",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "event"
+      }
+    }
+  ],
+  "tags": []
+}

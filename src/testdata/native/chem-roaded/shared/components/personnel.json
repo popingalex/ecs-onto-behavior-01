@@ -1,0 +1,242 @@
+{
+  "id": "personnel",
+  "name": "人员",
+  "attributes": [
+    {
+      "id": "personnel/display_name",
+      "name": "姓名",
+      "value": "人员",
+      "type": "s",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "personnel/personnel_kind",
+      "name": "人员类型",
+      "value": "rescue",
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "personnel/load_units",
+      "name": "载荷单位",
+      "value": 1,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "personnel/transport_state",
+      "name": "运输状态",
+      "value": {
+        "kind": "on_map"
+      },
+      "type": "u",
+      "config": {
+        "layer": "display",
+        "description": "on_map | on_board | boarding | disembarking"
+      }
+    },
+    {
+      "id": "personnel/transport_state_kind",
+      "name": "运输状态类别",
+      "value": "on_map",
+      "type": "s",
+      "config": {
+        "layer": "display",
+        "description": "lc-transport 写出的 transport_state.kind 影子列：on_map | on_board | boarding | disembarking"
+      }
+    },
+    {
+      "id": "personnel/walk_speed",
+      "name": "步行速度",
+      "value": 2.0,
+      "type": "n",
+      "config": {
+        "layer": "attribute",
+        "unit": "m/s"
+      }
+    },
+    {
+      "id": "personnel/medical_status",
+      "name": "医疗状态",
+      "value": "",
+      "type": "s",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "personnel/contained_in",
+      "name": "收容于设施",
+      "value": "",
+      "type": "s",
+      "config": {
+        "layer": "attribute",
+        "description": "所在收容设施 instance id（空串=在地图明面）"
+      }
+    },
+    {
+      "id": "personnel/contained",
+      "name": "已收容标志",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "display",
+        "description": "0/1，与 contained_in 同步（状态条 show 仅支持 == 比较）"
+      }
+    },
+    {
+      "id": "source/provider_id",
+      "name": "外部数据源ID",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "source/data_type",
+      "name": "外部数据类型",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "source/external_id",
+      "name": "外部数据唯一标识",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "source/kind",
+      "name": "外部数据种类",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "source/link_state",
+      "name": "外部数据关联状态",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "vital/heart_rate",
+      "name": "心率",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "vital/spo2",
+      "name": "血氧",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "vital/temp",
+      "name": "体温",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "vital/device_id",
+      "name": "体征设备ID",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display"
+      }
+    }
+  ],
+  "tags": [],
+  "config": {
+    "command": [
+      {
+        "id": "action_board",
+        "name": "登车",
+        "kind": "board",
+        "target": [
+          "instance"
+        ],
+        "params": {
+          "carrierIdArg": "carrierId"
+        }
+      },
+      {
+        "id": "action_disembark",
+        "name": "下车",
+        "kind": "disembark"
+      }
+    ],
+    "state": [
+      {
+        "id": "personnel/on_board",
+        "name": "已乘载",
+        "type": "transport",
+        "show": {
+          "expression": "personnel/transport_state_kind == 'on_board'"
+        },
+        "hide": {
+          "enabled": true
+        }
+      },
+      {
+        "id": "personnel/boarding",
+        "name": "登车",
+        "type": "transport",
+        "show": {
+          "expression": "personnel/transport_state_kind == 'boarding'"
+        },
+        "hide": {
+          "enabled": true
+        }
+      },
+      {
+        "id": "personnel/disembarking",
+        "name": "下车",
+        "type": "transport",
+        "show": {
+          "expression": "personnel/transport_state_kind == 'disembarking'"
+        },
+        "hide": {
+          "enabled": true
+        }
+      },
+      {
+        "id": "personnel/contained",
+        "name": "已收容",
+        "type": "transport",
+        "show": {
+          "expression": "personnel/contained == 1"
+        },
+        "hide": {
+          "enabled": true
+        }
+      }
+    ]
+  }
+}

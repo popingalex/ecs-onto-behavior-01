@@ -1,0 +1,34 @@
+{
+  "id": "snow",
+  "name": "雪",
+  "attributes": [
+    {
+      "id": "snow/snowfall_intensity",
+      "name": "降雪强度",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "snow/snowfall_time",
+      "name": "降雪时间",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "snow/is_snowfall",
+      "name": "是否降雪",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "event"
+      }
+    }
+  ],
+  "tags": []
+}

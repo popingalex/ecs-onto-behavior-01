@@ -19,3 +19,6 @@ logs/
 # beside it.
 /.plugins/
 /.opencode-skills/
+
+# native real-import fixtures (V7-1): keep logs inside fixtures despite *.log ignore
+!src/testdata/native/**/*.log

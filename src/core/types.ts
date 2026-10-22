@@ -161,9 +161,10 @@ export interface CommitDef {
   checkpoint: boolean
   /**
    * base：v0.5 基础世界；reference-sample：expected_runs 的预期样例（不是当前图计算结果）；
-   * computed：浏览器端执行器按当前图计算得到。
+   * computed：浏览器端执行器按当前图计算得到；
+   * native-import：mas-rust 真实运行工件的只读导入（一帧 = 一提交，V7-1）。
    */
-  source: "base" | "reference-sample" | "computed"
+  source: "base" | "reference-sample" | "computed" | "native-import"
 }
 
 /** 某个不可变提交的世界快照：entityId → propertyId → 原始值。 */

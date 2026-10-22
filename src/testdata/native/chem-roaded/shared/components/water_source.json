@@ -1,0 +1,25 @@
+{
+  "id": "water_source",
+  "name": "水源",
+  "attributes": [
+    {
+      "id": "water_source/water_supply_flow",
+      "name": "供水流量",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "water_source/water_pressure",
+      "name": "水压",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    }
+  ],
+  "tags": []
+}

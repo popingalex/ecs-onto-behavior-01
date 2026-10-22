@@ -1,0 +1,26 @@
+{
+  "id": "auto_response",
+  "name": "自动响应",
+  "description": "异常自动响应标记",
+  "attributes": [
+    {
+      "id": "auto_response/response_type",
+      "name": "响应类型",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "auto_response/triggered",
+      "name": "是否触发",
+      "value": null,
+      "type": "b",
+      "config": {
+        "layer": "attribute"
+      }
+    }
+  ],
+  "tags": []
+}

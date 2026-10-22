@@ -1,0 +1,34 @@
+{
+  "id": "environment_temperature",
+  "name": "环境温度场",
+  "attributes": [
+    {
+      "id": "environment_temperature/temperature_matrix",
+      "name": "温度矩阵数据",
+      "value": null,
+      "type": "()",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "environment_temperature/temperature_matrix_dense",
+      "name": "温度矩阵稠密数据",
+      "value": null,
+      "type": "()",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "environment_temperature/temperature_contours",
+      "name": "温度等高线数据",
+      "value": null,
+      "type": "()",
+      "config": {
+        "layer": "display"
+      }
+    }
+  ],
+  "tags": []
+}

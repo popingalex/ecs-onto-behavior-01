@@ -1,0 +1,299 @@
+{
+  "id": "environment",
+  "name": "环境",
+  "description": "用来描述场景的环境",
+  "attributes": [
+    {
+      "id": "wind/wind_direction",
+      "value": 70
+    },
+    {
+      "id": "wind/wind_speed",
+      "value": 5
+    },
+    {
+      "id": "temperature/temperature",
+      "value": 27.5
+    },
+    {
+      "id": "field_thermal/grid_config",
+      "value": {
+        "cell_meters": 5,
+        "extension_radius": 270,
+        "max_cells": 900000
+      },
+      "config": {
+        "transport": "server-only"
+      }
+    },
+    {
+      "id": "field_thermal/working_matrix_id",
+      "value": 0,
+      "config": {
+        "transport": "server-only"
+      }
+    },
+    {
+      "id": "field_thermal/field_matrix_meta",
+      "value": {
+        "bounds": {
+          "maxX": 0.0,
+          "maxY": 0.0,
+          "minX": 0.0,
+          "minY": 0.0
+        },
+        "enabled": false,
+        "frame": -1,
+        "gap": 0.05,
+        "grid": [],
+        "gridType": "hexagon",
+        "sources": []
+      }
+    },
+    {
+      "id": "field_thermal/temperature_grid",
+      "value": {
+        "ambientTemperatureC": 27.0,
+        "bounds": {
+          "maxX": 0.0,
+          "maxY": 0.0,
+          "minX": 0.0,
+          "minY": 0.0
+        },
+        "cellSizeMeters": 5.0,
+        "frame": -1,
+        "nx": 0,
+        "ny": 0,
+        "sources": [],
+        "unit": "celsius",
+        "values": []
+      }
+    },
+    {
+      "id": "field_thermal/temperature_contours",
+      "value": {
+        "bounds": {
+          "maxX": 0.0,
+          "maxY": 0.0,
+          "minX": 0.0,
+          "minY": 0.0
+        },
+        "contours": [],
+        "enabled": false,
+        "frame": -1,
+        "sources": []
+      }
+    },
+    {
+      "id": "field_thermal/isotherm_legend",
+      "value": {
+        "bands": [
+          {
+            "max": 40.0,
+            "min": 28.0,
+            "title": "低温"
+          },
+          {
+            "max": 60.0,
+            "min": 40.0,
+            "title": "中等危险"
+          },
+          {
+            "max": 100.0,
+            "min": 60.0,
+            "title": "高危险"
+          },
+          {
+            "min": 100.0,
+            "title": "极高危险"
+          }
+        ],
+        "legendTitle": "温度图例 (°C)"
+      },
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "plot/icon",
+      "value": "lucide:mountain-snow"
+    },
+    {
+      "id": "road_network/nodes",
+      "value": [
+        {
+          "id": "rn_nw",
+          "intersectionRadius": 8,
+          "lat": 38.7135,
+          "lng": 117.6175
+        },
+        {
+          "id": "rn_ne",
+          "intersectionRadius": 8,
+          "lat": 38.7135,
+          "lng": 117.6215
+        },
+        {
+          "id": "rn_sw",
+          "intersectionRadius": 8,
+          "lat": 38.7125,
+          "lng": 117.6175
+        },
+        {
+          "id": "rn_se",
+          "intersectionRadius": 8,
+          "lat": 38.7125,
+          "lng": 117.6215
+        },
+        {
+          "id": "rn_wait_nw",
+          "intersectionRadius": 0,
+          "lat": 38.7138,
+          "lng": 117.6175
+        },
+        {
+          "id": "rn_wait_ne",
+          "intersectionRadius": 0,
+          "lat": 38.7138,
+          "lng": 117.6215
+        }
+      ]
+    },
+    {
+      "id": "road_network/edges",
+      "value": [
+        {
+          "backwardLanes": 2,
+          "distance": 346,
+          "forwardLanes": 2,
+          "from": "rn_nw",
+          "id": "re_north",
+          "to": "rn_ne",
+          "width": 8
+        },
+        {
+          "backwardLanes": 2,
+          "distance": 346,
+          "forwardLanes": 2,
+          "from": "rn_sw",
+          "id": "re_south",
+          "to": "rn_se",
+          "width": 8
+        },
+        {
+          "backwardLanes": 2,
+          "distance": 111,
+          "forwardLanes": 2,
+          "from": "rn_nw",
+          "id": "re_west",
+          "to": "rn_sw",
+          "width": 8
+        },
+        {
+          "backwardLanes": 2,
+          "distance": 33,
+          "forwardLanes": 2,
+          "from": "rn_wait_nw",
+          "id": "re_conn_w",
+          "to": "rn_nw",
+          "width": 8
+        },
+        {
+          "backwardLanes": 2,
+          "distance": 33,
+          "forwardLanes": 2,
+          "from": "rn_wait_ne",
+          "id": "re_conn_e",
+          "to": "rn_ne",
+          "width": 8
+        }
+      ]
+    },
+    {
+      "id": "road_network/areas",
+      "value": [
+        {
+          "id": "ra_wait_north",
+          "nodeIds": [
+            "rn_wait_nw",
+            "rn_wait_ne",
+            "rn_ne",
+            "rn_nw"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "casualty_threat/config",
+      "value": {
+        "sigmaM": 32,
+        "densityRefPersonsPerHa": 2,
+        "doseLimitSeconds": 900,
+        "frameSeconds": 60
+      }
+    },
+    {
+      "id": "plan/evacuation_selection",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "plan/evacuation_applied_frame",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "plan/evacuation_applied_branch",
+      "value": "",
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    }
+  ],
+  "components": [
+    {
+      "id": "wind"
+    },
+    {
+      "id": "rain"
+    },
+    {
+      "id": "snow"
+    },
+    {
+      "id": "temperature"
+    },
+    {
+      "id": "field_thermal"
+    },
+    {
+      "id": "work_efficiency"
+    },
+    {
+      "id": "road_network"
+    },
+    {
+      "id": "scene"
+    },
+    {
+      "id": "meta"
+    },
+    {
+      "id": "casualty_threat"
+    }
+  ],
+  "tags": [],
+  "bundle_ids": [],
+  "deprecated": false,
+  "version": "1.0",
+  "config": {
+    "singleton": true
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "id": "plot",
+  "name": "标绘",
+  "description": "通用标绘实体",
+  "attributes": [
+    {
+      "id": "plot/type",
+      "value": "point"
+    },
+    {
+      "id": "plot/icon",
+      "value": "lucide:map-pin"
+    }
+  ],
+  "components": [
+    {
+      "id": "transform"
+    },
+    {
+      "id": "plot"
+    }
+  ],
+  "tags": [
+    {
+      "id": "chemical_fire",
+      "name": "危化火灾",
+      "category": "disaster_domain"
+    },
+    {
+      "id": "system",
+      "name": "系统",
+      "category": "category"
+    },
+    {
+      "id": "plot",
+      "name": "标绘",
+      "category": "category"
+    }
+  ],
+  "bundle_ids": [],
+  "deprecated": false,
+  "version": "1.0"
+}

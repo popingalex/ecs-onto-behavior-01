@@ -1,0 +1,886 @@
+[
+  {
+    "id": "example-resource-dispatch",
+    "name": "示例：资源调度流程",
+    "enabled": false,
+    "priority": 0,
+    "participants": [],
+    "workflow": {
+      "edges": [
+        {
+          "id": "ede_1",
+          "kind": "control",
+          "source": "erd_1",
+          "target": "erd_2"
+        },
+        {
+          "id": "ede_2",
+          "kind": "control",
+          "source": "erd_1",
+          "target": "erd_3"
+        },
+        {
+          "id": "ede_3",
+          "kind": "control",
+          "source": "erd_1",
+          "target": "erd_4"
+        },
+        {
+          "id": "ede_4",
+          "kind": "data",
+          "source": "erd_2",
+          "target": "erd_5"
+        },
+        {
+          "id": "ede_5",
+          "kind": "data",
+          "source": "erd_3",
+          "target": "erd_5"
+        },
+        {
+          "id": "ede_6",
+          "kind": "data",
+          "source": "erd_4",
+          "target": "erd_5"
+        },
+        {
+          "id": "ede_7",
+          "kind": "data",
+          "source": "erd_5",
+          "target": "erd_6"
+        },
+        {
+          "id": "ede_8",
+          "kind": "control",
+          "source": "erd_6",
+          "sourceHandle": "true",
+          "target": "erd_7"
+        },
+        {
+          "id": "ede_9",
+          "kind": "control",
+          "source": "erd_6",
+          "sourceHandle": "false",
+          "target": "erd_9"
+        },
+        {
+          "id": "ede_10",
+          "kind": "data",
+          "source": "erd_7",
+          "target": "erd_8"
+        },
+        {
+          "id": "ede_11",
+          "kind": "control",
+          "source": "erd_8",
+          "target": "erd_10"
+        }
+      ],
+      "nodes": [
+        {
+          "config": {
+            "participantId": "pool"
+          },
+          "enabled": true,
+          "id": "erd_1",
+          "kind": "participant_source",
+          "name": "资源池",
+          "order": 1
+        },
+        {
+          "config": {
+            "reads": [
+              {
+                "name": "total_resources",
+                "componentKey": "inventory",
+                "fieldKey": "total"
+              }
+            ],
+            "assignments": []
+          },
+          "enabled": true,
+          "id": "erd_2",
+          "kind": "calculate",
+          "name": "读取资源总量",
+          "order": 2
+        },
+        {
+          "config": {
+            "reads": [
+              {
+                "name": "used_resources",
+                "componentKey": "inventory",
+                "fieldKey": "in_use"
+              }
+            ],
+            "assignments": []
+          },
+          "enabled": true,
+          "id": "erd_3",
+          "kind": "calculate",
+          "name": "读取已占用资源",
+          "order": 3
+        },
+        {
+          "config": {
+            "reads": [
+              {
+                "name": "demand_amount",
+                "componentKey": "request",
+                "fieldKey": "required"
+              }
+            ],
+            "assignments": []
+          },
+          "enabled": true,
+          "id": "erd_4",
+          "kind": "calculate",
+          "name": "读取调度需求",
+          "order": 4
+        },
+        {
+          "config": {
+            "expression": "total_resources - used_resources",
+            "inputVariables": [
+              "total_resources",
+              "used_resources"
+            ],
+            "outputType": "number",
+            "outputVariable": "free_resources"
+          },
+          "enabled": true,
+          "id": "erd_5",
+          "kind": "calculate",
+          "name": "计算可用资源",
+          "order": 5
+        },
+        {
+          "config": {
+            "expression": "free_resources >= demand_amount"
+          },
+          "enabled": true,
+          "id": "erd_6",
+          "kind": "condition",
+          "name": "资源是否满足",
+          "order": 6
+        },
+        {
+          "config": {
+            "expression": "min(demand_amount, free_resources)",
+            "inputVariables": [
+              "demand_amount",
+              "free_resources"
+            ],
+            "outputType": "number",
+            "outputVariable": "allocation"
+          },
+          "enabled": true,
+          "id": "erd_7",
+          "kind": "calculate",
+          "name": "计算分配量",
+          "order": 7
+        },
+        {
+          "config": {
+            "componentKey": "inventory",
+            "fieldKey": "allocated",
+            "participantId": "pool",
+            "valueExpression": "allocation"
+          },
+          "enabled": true,
+          "id": "erd_8",
+          "kind": "write_field",
+          "name": "写入分配结果",
+          "order": 8
+        },
+        {
+          "config": {
+            "eventKey": "resource_dispatch.rejected",
+            "payloadBindings": {
+              "demand": "demand_amount",
+              "free": "free_resources"
+            }
+          },
+          "enabled": true,
+          "id": "erd_9",
+          "kind": "emit_event",
+          "name": "资源不足",
+          "order": 9
+        },
+        {
+          "config": {
+            "eventKey": "resource_dispatch.completed",
+            "payloadBindings": {
+              "allocated": "allocation",
+              "total": "total_resources"
+            }
+          },
+          "enabled": true,
+          "id": "erd_10",
+          "kind": "emit_event",
+          "name": "调度完成",
+          "order": 10
+        }
+      ],
+      "type": "workflow"
+    }
+  },
+  {
+    "id": "example-sprinkler",
+    "name": "示例：喷淋决策",
+    "enabled": false,
+    "priority": 0,
+    "participants": [],
+    "workflow": {
+      "type": "workflow",
+      "nodes": [
+        {
+          "id": "n1",
+          "kind": "participant_source",
+          "name": "读取喷淋器",
+          "config": {
+            "participantId": "sprayers"
+          }
+        },
+        {
+          "id": "n2",
+          "kind": "streaming",
+          "name": "过滤：有控制组件",
+          "config": {
+            "mode": "filter",
+            "condition": "has_controlled_component"
+          },
+          "inputs": [
+            {
+              "id": "in",
+              "type": "stream",
+              "label": "entities"
+            }
+          ],
+          "outputs": [
+            {
+              "id": "true",
+              "type": "stream",
+              "label": "pass"
+            },
+            {
+              "id": "false",
+              "type": "stream",
+              "label": "drop"
+            }
+          ]
+        },
+        {
+          "id": "n3",
+          "kind": "streaming",
+          "name": "分流：有喷水指令",
+          "config": {
+            "mode": "split",
+            "condition": "has_spray_cmd"
+          },
+          "inputs": [
+            {
+              "id": "cond",
+              "type": "value",
+              "label": "condition"
+            }
+          ],
+          "outputs": [
+            {
+              "id": "true",
+              "type": "stream",
+              "label": "spray"
+            },
+            {
+              "id": "false",
+              "type": "stream",
+              "label": "idle"
+            }
+          ]
+        },
+        {
+          "id": "n4",
+          "kind": "calculate",
+          "name": "计算用水量",
+          "config": {
+            "expression": "consumption = flow_rate * 1.1",
+            "mode": "map"
+          },
+          "inputs": [
+            {
+              "id": "in",
+              "type": "value",
+              "label": "commands"
+            }
+          ],
+          "outputs": [
+            {
+              "id": "stream",
+              "type": "stream",
+              "label": "passthrough"
+            },
+            {
+              "id": "value",
+              "type": "value",
+              "label": "consumption"
+            }
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "id": "e1",
+          "source": "n1",
+          "sourcePort": "out",
+          "target": "n2",
+          "targetPort": "in"
+        },
+        {
+          "id": "e2",
+          "source": "n2",
+          "sourcePort": "true",
+          "target": "n3",
+          "targetPort": "cond"
+        }
+      ]
+    }
+  },
+  {
+    "id": "water-intake",
+    "name": "取水系统",
+    "expression": "water_intake_system.processIntakeCommands",
+    "enabled": true,
+    "priority": 0,
+    "participants": [
+      {
+        "id": "fireEngines",
+        "name": "fireEngines",
+        "components": [
+          {
+            "id": "water_sprayer"
+          },
+          {
+            "id": "controlled"
+          }
+        ]
+      },
+      {
+        "id": "fireHydrants",
+        "name": "fireHydrants",
+        "components": [
+          {
+            "id": "fire_hydrant"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "transport",
+    "name": "运输系统",
+    "expression": "lc-transport",
+    "enabled": true,
+    "priority": 0,
+    "participants": [
+      {
+        "id": "carriers",
+        "name": "carriers",
+        "components": [
+          { "id": "transport" },
+          { "id": "controlled" },
+          { "id": "transform" },
+          { "id": "mobile" }
+        ]
+      },
+      {
+        "id": "personnel_units",
+        "name": "personnel_units",
+        "components": [
+          { "id": "personnel" },
+          { "id": "controlled" },
+          { "id": "transform" },
+          { "id": "plot" }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "mobile",
+    "name": "移动系统",
+    "description": "实体移动与路径规划系统",
+    "expression": "mobile",
+    "enabled": true,
+    "priority": 0,
+    "participants": [
+      {
+        "id": "movers",
+        "name": "movers",
+        "components": [
+          {
+            "id": "transform"
+          },
+          {
+            "id": "mobile"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "combustion",
+    "name": "燃烧系统",
+    "expression": "combustion_system.update",
+    "enabled": true,
+    "priority": 0,
+    "participants": [
+      {
+        "id": "tanks",
+        "name": "tanks",
+        "components": [
+          {
+            "id": "flammable"
+          },
+          {
+            "id": "container"
+          },
+          {
+            "id": "tank"
+          }
+        ]
+      },
+      {
+        "id": "sprayers",
+        "name": "sprayers",
+        "components": [
+          {
+            "id": "water_sprayer"
+          },
+          {
+            "id": "transform"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "radiation-diffusion",
+    "name": "辐射扩散系统",
+    "expression": "radiation_diffusion_system.update",
+    "enabled": true,
+    "priority": 0,
+    "after": ["combustion"],
+    "participants": [
+      {
+        "id": "environments",
+        "name": "environments",
+        "entities": [
+          {
+            "id": "environment"
+          }
+        ]
+      },
+      {
+        "id": "sources",
+        "name": "sources",
+        "components": [
+          {
+            "id": "flammable"
+          },
+          {
+            "id": "transform"
+          }
+        ]
+      },
+      {
+        "id": "targets",
+        "name": "targets",
+        "components": [
+          {
+            "id": "transform"
+          },
+          {
+            "id": "container"
+          }
+        ]
+      },
+      {
+        "id": "sprayers",
+        "name": "sprayers",
+        "components": [
+          {
+            "id": "water_sprayer"
+          },
+          {
+            "id": "transform"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fire-extinguishing",
+    "name": "灭火交互系统",
+    "expression": "fire_extinguishing_interaction_system.update",
+    "enabled": true,
+    "priority": 0,
+    "participants": [
+      {
+        "id": "tanks",
+        "name": "tanks",
+        "components": [
+          {
+            "id": "flammable"
+          },
+          {
+            "id": "container"
+          },
+          {
+            "id": "tank"
+          }
+        ]
+      },
+      {
+        "id": "sprayers",
+        "name": "sprayers",
+        "components": [
+          {
+            "id": "water_sprayer"
+          },
+          {
+            "id": "transform"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sprinkler",
+    "name": "喷淋系统",
+    "expression": "sprinkler_system.update",
+    "enabled": true,
+    "priority": 0,
+    "participants": [
+      {
+        "id": "sprayers",
+        "name": "sprayers",
+        "components": [
+          {
+            "id": "water_sprayer"
+          },
+          {
+            "id": "controlled"
+          },
+          {
+            "id": "transform"
+          }
+        ]
+      },
+      {
+        "id": "fixedSprinklers",
+        "name": "fixedSprinklers",
+        "components": [
+          {
+            "id": "water_sprayer"
+          },
+          {
+            "id": "container"
+          },
+          {
+            "id": "transform"
+          }
+        ]
+      },
+      {
+        "id": "allEntities",
+        "name": "allEntities",
+        "components": [
+          {
+            "id": "transform"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "tank-init",
+    "name": "储罐初始化系统",
+    "expression": "tank_init_system",
+    "enabled": true,
+    "priority": 0,
+    "participants": [
+      {
+        "id": "tanks",
+        "name": "tanks",
+        "entities": [
+          {
+            "id": "tank"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "geo-damage",
+    "name": "地理损害系统",
+    "expression": "geo_damage_system",
+    "enabled": true,
+    "priority": 0,
+    "participants": [
+      {
+        "id": "tanks",
+        "name": "tanks",
+        "components": [
+          {
+            "id": "flammable"
+          },
+          {
+            "id": "transform"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "example-fire-response",
+    "name": "示例：火灾响应流程",
+    "enabled": false,
+    "priority": 0,
+    "participants": [],
+    "workflow": {
+      "edges": [
+        {
+          "id": "efe_1",
+          "kind": "control",
+          "source": "efr_1",
+          "target": "efr_2"
+        },
+        {
+          "id": "efe_2",
+          "kind": "control",
+          "source": "efr_1",
+          "target": "efr_3"
+        },
+        {
+          "id": "efe_3",
+          "kind": "control",
+          "source": "efr_1",
+          "target": "efr_4"
+        },
+        {
+          "id": "efe_4",
+          "kind": "data",
+          "source": "efr_2",
+          "target": "efr_5"
+        },
+        {
+          "id": "efe_5",
+          "kind": "data",
+          "source": "efr_3",
+          "target": "efr_5"
+        },
+        {
+          "id": "efe_6",
+          "kind": "data",
+          "source": "efr_4",
+          "target": "efr_5"
+        },
+        {
+          "id": "efe_7",
+          "kind": "data",
+          "source": "efr_5",
+          "target": "efr_6"
+        },
+        {
+          "id": "efe_8",
+          "kind": "control",
+          "source": "efr_6",
+          "sourceHandle": "true",
+          "target": "efr_7"
+        },
+        {
+          "id": "efe_9",
+          "kind": "control",
+          "source": "efr_6",
+          "sourceHandle": "true",
+          "target": "efr_8"
+        },
+        {
+          "id": "efe_10",
+          "kind": "control",
+          "source": "efr_6",
+          "sourceHandle": "false",
+          "target": "efr_9"
+        },
+        {
+          "id": "efe_11",
+          "kind": "control",
+          "source": "efr_7",
+          "target": "efr_10"
+        },
+        {
+          "id": "efe_12",
+          "kind": "control",
+          "source": "efr_8",
+          "target": "efr_10"
+        }
+      ],
+      "nodes": [
+        {
+          "config": {
+            "participantId": "scene"
+          },
+          "enabled": true,
+          "id": "efr_1",
+          "kind": "participant_source",
+          "name": "火灾现场",
+          "order": 1
+        },
+        {
+          "config": {
+            "reads": [
+              {
+                "name": "fire_intensity",
+                "componentKey": "fire",
+                "fieldKey": "intensity"
+              }
+            ],
+            "assignments": []
+          },
+          "enabled": true,
+          "id": "efr_2",
+          "kind": "calculate",
+          "name": "读取火势等级",
+          "order": 2
+        },
+        {
+          "config": {
+            "reads": [
+              {
+                "name": "fire_area",
+                "componentKey": "fire",
+                "fieldKey": "area"
+              }
+            ],
+            "assignments": []
+          },
+          "enabled": true,
+          "id": "efr_3",
+          "kind": "calculate",
+          "name": "读取火势面积",
+          "order": 3
+        },
+        {
+          "config": {
+            "reads": [
+              {
+                "name": "avail_resources",
+                "componentKey": "resource_pool",
+                "fieldKey": "available"
+              }
+            ],
+            "assignments": []
+          },
+          "enabled": true,
+          "id": "efr_4",
+          "kind": "calculate",
+          "name": "读取可用资源",
+          "order": 4
+        },
+        {
+          "config": {
+            "expression": "fire_intensity * fire_area * 0.5",
+            "inputVariables": [
+              "fire_intensity",
+              "fire_area"
+            ],
+            "outputType": "number",
+            "outputVariable": "required_resources"
+          },
+          "enabled": true,
+          "id": "efr_5",
+          "kind": "calculate",
+          "name": "计算所需资源",
+          "order": 5
+        },
+        {
+          "config": {
+            "expression": "avail_resources >= required_resources"
+          },
+          "enabled": true,
+          "id": "efr_6",
+          "kind": "condition",
+          "name": "资源是否充足",
+          "order": 6
+        },
+        {
+          "config": {
+            "componentKey": "resource_pool",
+            "fieldKey": "allocated",
+            "participantId": "resources",
+            "valueExpression": "required_resources"
+          },
+          "enabled": true,
+          "id": "efr_7",
+          "kind": "write_field",
+          "name": "调度资源",
+          "order": 7
+        },
+        {
+          "config": {
+            "componentKey": "fire",
+            "fieldKey": "status",
+            "participantId": "scene",
+            "valueExpression": "\"responding\""
+          },
+          "enabled": true,
+          "id": "efr_8",
+          "kind": "write_field",
+          "name": "更新火灾状态",
+          "order": 8
+        },
+        {
+          "config": {
+            "eventKey": "fire_response.insufficient_resources",
+            "payloadBindings": {
+              "available": "avail_resources",
+              "required": "required_resources"
+            }
+          },
+          "enabled": true,
+          "id": "efr_9",
+          "kind": "emit_event",
+          "name": "资源不足",
+          "order": 9
+        },
+        {
+          "config": {
+            "eventKey": "fire_response.dispatched",
+            "payloadBindings": {
+              "resources": "required_resources"
+            }
+          },
+          "enabled": true,
+          "id": "efr_10",
+          "kind": "emit_event",
+          "name": "已调度完成",
+          "order": 10
+        }
+      ],
+      "type": "workflow"
+    }
+  },
+  {
+    "id": "injury-threat",
+    "name": "人员受威胁热力系统",
+    "description": "温度场（辐射扩散矩阵）× 人员密度场（高斯 KDE）逐格叠加：发布威胁等值带、人员暴露温度/风险档/热剂量，以及服务端密度/威胁矩阵",
+    "expression": "injury_threat_system.update",
+    "enabled": true,
+    "priority": 0,
+    "after": ["radiation-diffusion"],
+    "participants": [
+      { "id": "environments", "name": "environments", "entities": [{ "id": "environment" }] },
+      { "id": "personnel", "name": "personnel", "components": [{ "id": "personnel" }, { "id": "transform" }] },
+      { "id": "casualties", "name": "casualties", "components": [{ "id": "casualty" }, { "id": "transform" }] }
+    ]
+  }
+]

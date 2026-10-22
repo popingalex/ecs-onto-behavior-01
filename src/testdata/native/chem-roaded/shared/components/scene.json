@@ -1,0 +1,49 @@
+{
+  "id": "scene",
+  "name": "场景",
+  "description": "场景核心区域与相机聚焦配置",
+  "attributes": [
+    {
+      "id": "scene/core_area_nodes",
+      "name": "核心区域节点",
+      "value": [],
+      "type": "s[]",
+      "config": {
+        "layer": "attribute",
+        "description": "核心区路网节点 id 列表"
+      }
+    },
+    {
+      "id": "scene/core_focus_entities",
+      "name": "核心聚焦实体类型",
+      "value": [],
+      "type": "s[]",
+      "config": {
+        "layer": "attribute",
+        "description": "进入场景时相机聚焦的实体类型列表"
+      }
+    },
+    {
+      "id": "scene/core_focus_instances",
+      "name": "核心聚焦实例",
+      "value": [],
+      "type": "s[]",
+      "config": {
+        "layer": "attribute",
+        "description": "进入场景时相机聚焦的实例 id 列表（优先于实体类型）"
+      }
+    },
+    {
+      "id": "dataset/records",
+      "name": "数据加载记录",
+      "value": [],
+      "type": "(datasetId:s,visible:b,eastM:n,northM:n,upM:n,headingDeg:n,pitchDeg:n,rollDeg:n,scale:n,loadedAt:s)[]",
+      "config": {
+        "layer": "attribute",
+        "description": "本场景已加载的 b3dm 数据集与其对齐参数；offsetM 为 ENU 米（东/北/上），rotationDeg 为绕包围球中心的旋转，scale 为整体缩放。进入场景按此记录恢复可见性，不再依赖会话内存"
+      }
+    }
+  ],
+  "tags": [],
+  "config": {}
+}

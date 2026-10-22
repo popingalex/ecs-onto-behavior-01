@@ -1,0 +1,26 @@
+{
+  "id": "health_status",
+  "name": "健康状态",
+  "description": "设备健康状态",
+  "attributes": [
+    {
+      "id": "health_status/status",
+      "name": "状态",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "health_status/last_check",
+      "name": "上次检查",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    }
+  ],
+  "tags": []
+}

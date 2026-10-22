@@ -1,0 +1,21 @@
+[
+  {
+    "id": "building-1",
+    "name": "建筑-1",
+    "entity": "building",
+    "attributes": [
+      {
+        "id": "transform/position",
+        "value": [
+          117.622457,
+          0,
+          38.711759
+        ]
+      },
+      {
+        "id": "building_name",
+        "value": "消防队"
+      }
+    ]
+  }
+]

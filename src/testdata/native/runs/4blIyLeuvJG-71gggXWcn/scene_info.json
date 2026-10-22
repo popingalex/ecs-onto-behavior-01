@@ -1,0 +1,11 @@
+{
+  "simId": "4blIyLeuvJG-71gggXWcn",
+  "sceneId": "chem-evacuation",
+  "sceneName": "危化品火灾-人员转移场景",
+  "sceneCategory": "chemical_fire",
+  "sceneDescription": "带有路网、人员、灾害、人员转移逻辑、收容设施、受灾设施的完整场景",
+  "name": null,
+  "createdAt": "2026-10-22T09:21:34.503Z",
+  "workflowId": null,
+  "workflowName": null
+}

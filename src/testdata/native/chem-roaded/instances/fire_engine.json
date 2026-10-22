@@ -1,0 +1,94 @@
+[
+  {
+    "id": "fire_truck-1",
+    "name": "喷水消防车-1",
+    "entity": "fire_engine",
+    "attributes": [
+      {
+        "id": "transform/position",
+        "value": [
+          117.622009,
+          0,
+          38.712784
+        ]
+      },
+      {
+        "id": "transform/rotation",
+        "value": [
+          270,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fire_truck-2",
+    "name": "喷水消防车-2",
+    "entity": "fire_engine",
+    "attributes": [
+      {
+        "id": "transform/position",
+        "value": [
+          117.622009,
+          0,
+          38.7126656
+        ]
+      },
+      {
+        "id": "transform/rotation",
+        "value": [
+          270,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fire_truck-3",
+    "name": "喷水消防车-3",
+    "entity": "fire_engine",
+    "attributes": [
+      {
+        "id": "transform/position",
+        "value": [
+          117.622009,
+          0,
+          38.712569
+        ]
+      },
+      {
+        "id": "transform/rotation",
+        "value": [
+          270,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fire_truck-4",
+    "name": "喷水消防车-4",
+    "entity": "fire_engine",
+    "attributes": [
+      {
+        "id": "transform/position",
+        "value": [
+          117.622009,
+          0,
+          38.7124672
+        ]
+      },
+      {
+        "id": "transform/rotation",
+        "value": [
+          270,
+          0,
+          0
+        ]
+      }
+    ]
+  }
+]

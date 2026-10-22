@@ -1,0 +1,57 @@
+{
+  "id": "network",
+  "attributes": [
+    {
+      "id": "transform/coordinates",
+      "value": []
+    },
+    {
+      "id": "transform/position",
+      "value": []
+    },
+    {
+      "id": "transform/lonlatposition",
+      "value": []
+    },
+    {
+      "id": "transform/rotation",
+      "value": []
+    },
+    {
+      "id": "transform/scale",
+      "value": []
+    },
+    {
+      "id": "plot/points",
+      "value": []
+    },
+    {
+      "id": "plot/type",
+      "value": "network"
+    },
+    {
+      "id": "plot/lines",
+      "value": []
+    },
+    {
+      "id": "plot/visible",
+      "value": false
+    },
+    {
+      "id": "plot/icon",
+      "value": "lucide:circle-pile"
+    }
+  ],
+  "components": [
+    {
+      "id": "plot"
+    },
+    {
+      "id": "transform"
+    }
+  ],
+  "tags": [],
+  "bundle_ids": [],
+  "deprecated": false,
+  "version": "1.0"
+}

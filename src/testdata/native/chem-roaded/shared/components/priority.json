@@ -1,0 +1,35 @@
+{
+  "id": "priority",
+  "name": "优先级",
+  "description": "优先级评估结果",
+  "attributes": [
+    {
+      "id": "priority/level",
+      "name": "优先级等级",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "priority/urgency",
+      "name": "紧急度",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "priority/auto_handle_threshold",
+      "name": "自动处理阈值",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    }
+  ],
+  "tags": []
+}

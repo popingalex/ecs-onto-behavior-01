@@ -1,0 +1,36 @@
+{
+  "id": "uav_recon",
+  "name": "侦察无人机",
+  "description": "配备光电载荷的侦察 UAV",
+  "attributes": [],
+  "components": [
+    {
+      "id": "transform"
+    },
+    {
+      "id": "mobile"
+    },
+    {
+      "id": "controlled"
+    },
+    {
+      "id": "battery"
+    },
+    {
+      "id": "telemetry"
+    },
+    {
+      "id": "health_status"
+    },
+    {
+      "id": "uav_platform"
+    },
+    {
+      "id": "meta"
+    }
+  ],
+  "tags": [],
+  "bundle_ids": [],
+  "deprecated": false,
+  "version": "1.0"
+}

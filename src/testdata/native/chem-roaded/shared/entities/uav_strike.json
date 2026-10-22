@@ -1,0 +1,42 @@
+{
+  "id": "uav_strike",
+  "name": "攻击无人机",
+  "description": "携带事件源和优先级组件的攻击 UAV",
+  "attributes": [],
+  "components": [
+    {
+      "id": "transform"
+    },
+    {
+      "id": "mobile"
+    },
+    {
+      "id": "controlled"
+    },
+    {
+      "id": "event_source"
+    },
+    {
+      "id": "priority"
+    },
+    {
+      "id": "battery"
+    },
+    {
+      "id": "telemetry"
+    },
+    {
+      "id": "health_status"
+    },
+    {
+      "id": "uav_platform"
+    },
+    {
+      "id": "meta"
+    }
+  ],
+  "tags": [],
+  "bundle_ids": [],
+  "deprecated": false,
+  "version": "1.0"
+}

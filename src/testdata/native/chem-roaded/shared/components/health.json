@@ -1,0 +1,38 @@
+{
+  "id": "health",
+  "name": "健康",
+  "attributes": [
+    {
+      "id": "health/durability",
+      "name": "耐久度",
+      "value": 100.0,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    }
+  ],
+  "tags": [],
+  "config": {
+    "state": [
+      {
+        "id": "health/damaged",
+        "name": "受损",
+        "type": "affected",
+        "show": {
+          "expression": "'flammable/is_burning' == 1"
+        },
+        "metric": {
+          "expression": "health/durability",
+          "label": "耐久度",
+          "format": "percentage",
+          "precision": 1,
+          "yAxis": "right",
+          "trend": {
+            "enabled": true
+          }
+        }
+      }
+    ]
+  }
+}

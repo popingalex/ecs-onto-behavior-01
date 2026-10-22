@@ -1,0 +1,35 @@
+{
+  "id": "battery",
+  "name": "电量",
+  "description": "电量状态",
+  "attributes": [
+    {
+      "id": "battery/level_pct",
+      "name": "电量百分比",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "battery/decay_rate_per_frame",
+      "name": "每帧衰减率",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "battery/estimated_remaining_sec",
+      "name": "预计剩余时间",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    }
+  ],
+  "tags": []
+}

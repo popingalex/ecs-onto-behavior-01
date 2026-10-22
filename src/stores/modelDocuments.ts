@@ -68,6 +68,26 @@ export const scheduleDocId = (scheduleId: string) => `schedule:${scheduleId}`
 
 const MODEL_VERSION = "model-05"
 
+/**
+ * V7-1 原生只读基线：REAL_IMPORT_READ_ONLY 模式下由 loadWorkbench 在
+ * ensureModelDocuments 之前注入（loadNativeImport 归一化产物）。
+ * baseVersion 随之切换为 native-import-1@<rev>，使 localStorage 里
+ * mock 存档因版本不符被拒（跨模式草稿互不污染）。
+ */
+let baselineOverride: PrototypeModel | null = null
+
+export function setBaselineOverride(loader: () => PrototypeModel): void {
+  baselineOverride = structuredClone(loader())
+}
+
+function baseline(): PrototypeModel {
+  return baselineOverride ?? loadPrototype().model
+}
+
+function baselineVersion(): string {
+  return baselineOverride ? baselineOverride.schemaVersion : MODEL_VERSION
+}
+
 /** 本地恢复与 JSON 导入共用的内容校验：不另写一份宽松版本。 */
 export const programContentSchema = z
   .object({ program: seedParts.logicPrograms.element, layout: layoutSchema })
@@ -201,7 +221,7 @@ function registerProgramDocument(
 
 /** 全部程序文档 id：种子程序在前，用户程序按创建顺序在后。 */
 export function programDocumentIds(): string[] {
-  const base = loadPrototype().model
+  const base = baseline()
   return [
     ...base.programs.map((p) => p.id),
     ...extraPrograms.map((p) => p.id),
@@ -230,6 +250,8 @@ export function ensureProgramDocument(
 
 /** 新建空程序并立即本地保存（刷新后仍在）；返回新程序 id。 */
 export function createProgramDocument(scopeType: string): string {
+  if (baselineOverride)
+    throw new Error("REAL_IMPORT_READ_ONLY：真实只读导入模式下不能新建程序。")
   ensureModelDocuments()
   let i = 1
   let id = `g-new-${i}`
@@ -245,6 +267,8 @@ export function createProgramDocument(scopeType: string): string {
 
 /** 复制程序当前草稿内容为新程序文档；立即本地保存。返回新程序 id。 */
 export function duplicateProgramDocument(sourceProgramId: string): string {
+  if (baselineOverride)
+    throw new Error("REAL_IMPORT_READ_ONLY：真实只读导入模式下不能复制程序。")
   ensureModelDocuments()
   const source = getDocument<ProgramContent>(programDocId(sourceProgramId))
   if (!source) throw new Error(`程序 ${sourceProgramId} 未注册`)
@@ -280,11 +304,12 @@ export function duplicateProgramDocument(sourceProgramId: string): string {
 export function ensureModelDocuments() {
   if (registered) return
   registered = true
-  const base = loadPrototype().model
+  const base = baseline()
+  const version = baselineVersion()
   registerDocument<SchemaContent>(SCHEMA_DOC, {
     kind: "schema",
     label: "实体模式",
-    baseVersion: MODEL_VERSION,
+    baseVersion: version,
     baseline: () =>
       structuredClone({
         units: base.units,
@@ -306,7 +331,7 @@ export function ensureModelDocuments() {
   registerDocument<SceneDraft>(SCENE_DOC, {
     kind: "scene",
     label: `场景 ${base.scene.id}`,
-    baseVersion: MODEL_VERSION,
+    baseVersion: version,
     baseline: () => structuredClone(base.scene),
     restore: (raw) => seedParts.sceneDraft.parse(raw),
     validate: validateComposed,
@@ -314,7 +339,7 @@ export function ensureModelDocuments() {
   registerDocument<SystemsContent>(SYSTEMS_DOC, {
     kind: "system",
     label: "System 与查询",
-    baseVersion: MODEL_VERSION,
+    baseVersion: version,
     baseline: () =>
       structuredClone({
         queries: base.queries,
@@ -351,12 +376,14 @@ export function ensureModelDocuments() {
     })
   }
   // 用户程序（P30 新建 / 复制）：按持久化索引重新注册，内容从各自存档恢复。
+  // 原生只读模式跳过：mock 用户程序不得混入真实导入（REAL-07）。
   const seedProgramIds = new Set(base.programs.map((p) => p.id))
-  for (const entry of loadProgramIndex()) {
-    if (seedProgramIds.has(entry.id)) continue
-    registerProgramDocument(base, entry)
-    if (!extraPrograms.some((p) => p.id === entry.id))
-      extraPrograms.push(entry)
+  if (!baselineOverride) {
+    for (const entry of loadProgramIndex()) {
+      if (seedProgramIds.has(entry.id)) continue
+      registerProgramDocument(base, entry)
+      if (!extraPrograms.some((p) => p.id === entry.id)) extraPrograms.push(entry)
+    }
   }
 }
 
@@ -372,7 +399,7 @@ function contentOf<T>(documentId: string, view: "draft" | "saved"): T {
  */
 export function composeModel(view: "draft" | "saved"): PrototypeModel {
   ensureModelDocuments()
-  const base = loadPrototype().model
+  const base = baseline()
   const schema = contentOf<SchemaContent>(SCHEMA_DOC, view)
   const systems = contentOf<SystemsContent>(SYSTEMS_DOC, view)
   const programs = programDocumentIds().map((id) =>
@@ -411,7 +438,7 @@ export function useModelDocument<T>(
 
 /** 组成模型的全部文档 id（种子 + 程序索引里的用户程序）。 */
 export function modelDocumentIds(): string[] {
-  const base = loadPrototype().model
+  const base = baseline()
   return [
     SCHEMA_DOC,
     SCENE_DOC,

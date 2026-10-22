@@ -1,0 +1,43 @@
+{
+  "id": "environment_radiation",
+  "name": "环境辐射场",
+  "attributes": [
+    {
+      "id": "environment_radiation/radiation_intensity_grid",
+      "name": "辐射强度栅格",
+      "value": null,
+      "type": "()",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "environment_radiation/radiation_matrix",
+      "name": "辐射矩阵数据",
+      "value": null,
+      "type": "()",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "environment_radiation/radiation_contours",
+      "name": "辐射等高线数据",
+      "value": null,
+      "type": "()",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "environment_radiation/isotherm_legend",
+      "name": "等温图例配置",
+      "value": null,
+      "type": "()",
+      "config": {
+        "layer": "display"
+      }
+    }
+  ],
+  "tags": []
+}

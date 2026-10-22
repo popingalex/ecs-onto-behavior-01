@@ -1,0 +1,29 @@
+[
+  {
+    "id": "scene",
+    "name": "场景",
+    "entity": "scene",
+    "attributes": [
+      {
+        "id": "transform/position",
+        "value": [
+          117.6074,
+          0,
+          38.7128
+        ]
+      },
+      {
+        "id": "scene_info/scene_name",
+        "value": "天津"
+      },
+      {
+        "id": "scene_info/center_position",
+        "value": [
+          117.6074,
+          0,
+          38.7128
+        ]
+      }
+    ]
+  }
+]

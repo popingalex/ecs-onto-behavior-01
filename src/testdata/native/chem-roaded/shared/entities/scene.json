@@ -1,0 +1,116 @@
+{
+  "id": "scene",
+  "name": "场景",
+  "description": "场景元信息",
+  "attributes": [
+    {
+      "id": "scene_info/scene_name",
+      "value": ""
+    },
+    {
+      "id": "scene_info/scene_id",
+      "value": ""
+    },
+    {
+      "id": "scene_info/combat_zone_return_result",
+      "value": ""
+    },
+    {
+      "id": "scene_info/scene_type",
+      "value": ""
+    },
+    {
+      "id": "scene_info/scene_area",
+      "value": 0
+    },
+    {
+      "id": "scene_info/scene_category",
+      "value": ""
+    },
+    {
+      "id": "scene_info/model_config",
+      "value": ""
+    },
+    {
+      "id": "scene_info/region",
+      "value": []
+    },
+    {
+      "id": "scene_info/four_points",
+      "value": []
+    },
+    {
+      "id": "scene_info/dem_file_name",
+      "value": ""
+    },
+    {
+      "id": "scene_info/upstream_depth",
+      "value": 0
+    },
+    {
+      "id": "scene_info/material_transportation_distance",
+      "value": 0
+    },
+    {
+      "id": "scene_info/scene_date",
+      "value": ""
+    },
+    {
+      "id": "scene_info/suggestions_data",
+      "value": null
+    },
+    {
+      "id": "scene_info/suggestions_scheme_config",
+      "value": null
+    },
+    {
+      "id": "scene_info/name",
+      "value": ""
+    },
+    {
+      "id": "scene_info/description",
+      "value": ""
+    },
+    {
+      "id": "scene_info/time",
+      "value": 0
+    },
+    {
+      "id": "scene_info/center_position",
+      "value": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "plot/icon",
+      "value": "lucide:clapperboard"
+    },
+    {
+      "id": "dataset/records",
+      "value": []
+    }
+  ],
+  "components": [
+    {
+      "id": "scene_info"
+    },
+    {
+      "id": "scene"
+    },
+    {
+      "id": "transform"
+    },
+    {
+      "id": "meta"
+    }
+  ],
+  "tags": [],
+  "bundle_ids": [],
+  "deprecated": false,
+  "version": "1.0",
+  "config": {
+    "singleton": true
+  }
+}

@@ -3,6 +3,8 @@ import type { Diagnostic } from "@/core/types"
 import { stableHash } from "@/lib/hash"
 import { createId } from "@/lib/id"
 import { createStore, useStore } from "@/lib/store"
+import { isNativeMode } from "@/stores/dataSource"
+import { toast } from "@/stores/toast"
 
 /**
  * DraftRegistry：按 documentId 隔离的资产草稿。
@@ -242,6 +244,11 @@ export function applyEdit<T>(
 ): boolean {
   const doc = getDocument<T>(documentId)
   if (!doc) throw new Error(`草稿文档 ${documentId} 未注册`)
+  // REAL_IMPORT_READ_ONLY：所有草稿编辑一律拒绝（源系统为 mas-rust 权威，工作台仅展示）。
+  if (isNativeMode()) {
+    toast("真实只读导入（REAL_IMPORT_READ_ONLY）模式下编辑已禁用：源数据为 mas-rust 权威，工作台仅展示。")
+    return false
+  }
   const next = recipe(doc.content)
   const nextHash = stableHash(next)
   if (next === doc.content || nextHash === doc.contentHash) return false
@@ -306,6 +313,13 @@ export function redoDocument(documentId: string): HistoryEntry | null {
 export async function saveDocument(documentId: string): Promise<boolean> {
   const doc = getDocument(documentId)
   if (!doc || doc.saving) return false
+  // REAL_IMPORT_READ_ONLY：不写 localStorage，避免原生基线与 mock 存档互相污染。
+  if (isNativeMode()) {
+    patchDoc(documentId, {
+      saveError: "真实只读导入模式下不保存草稿（源系统为 mas-rust 权威）。",
+    })
+    return false
+  }
   patchDoc(documentId, { saving: true, saveError: null })
   await Promise.resolve()
   const latest = getDocument(documentId)!

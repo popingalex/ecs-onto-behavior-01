@@ -1,0 +1,62 @@
+{
+  "id": "hospital",
+  "name": "医院",
+  "description": "医院科室、救治能力与床位容量",
+  "attributes": [
+    {
+      "id": "hospital/departments",
+      "name": "科室列表",
+      "value": [],
+      "type": "(code:s,name:s,emergency_support:b,service_level:s)[]",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "hospital/capabilities",
+      "name": "救治能力",
+      "value": [],
+      "type": "s[]",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "hospital/capacity",
+      "name": "床位容量",
+      "value": {
+        "total_beds": 0,
+        "available_beds": 0,
+        "icu_beds": 0,
+        "available_icu_beds": 0,
+        "emergency_slots": 0,
+        "available_emergency_slots": 0,
+        "max_patients": 0
+      },
+      "type": "u",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "hospital/beds",
+      "name": "床位",
+      "value": {},
+      "type": "u",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "hospital/ambulances",
+      "name": "所属救护车",
+      "value": [],
+      "type": "s[]",
+      "config": {
+        "layer": "attribute"
+      }
+    }
+  ],
+  "tags": [],
+  "config": {}
+}

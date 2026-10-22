@@ -1,0 +1,117 @@
+[
+  {
+    "id": "foam_fire_truck-5",
+    "name": "泡沫消防车-1",
+    "entity": "foam_fire_truck",
+    "attributes": [
+      {
+        "id": "transform/position",
+        "value": [
+          117.622009,
+          0,
+          38.7129173
+        ]
+      },
+      {
+        "id": "transform/rotation",
+        "value": [
+          270,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foam_fire_truck-6",
+    "name": "泡沫消防车-2",
+    "entity": "foam_fire_truck",
+    "attributes": [
+      {
+        "id": "transform/position",
+        "value": [
+          117.622009,
+          0,
+          38.71304
+        ]
+      },
+      {
+        "id": "transform/rotation",
+        "value": [
+          270,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foam_fire_truck-7",
+    "name": "泡沫消防车-3",
+    "entity": "foam_fire_truck",
+    "attributes": [
+      {
+        "id": "transform/position",
+        "value": [
+          117.62201,
+          0,
+          38.713152
+        ]
+      },
+      {
+        "id": "transform/rotation",
+        "value": [
+          270,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foam_fire_truck-8",
+    "name": "泡沫消防车-4",
+    "entity": "foam_fire_truck",
+    "attributes": [
+      {
+        "id": "transform/position",
+        "value": [
+          117.622009,
+          0,
+          38.7132721
+        ]
+      },
+      {
+        "id": "transform/rotation",
+        "value": [
+          270,
+          0,
+          0
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foam_fire_truck-9",
+    "name": "泡沫消防车-5",
+    "entity": "foam_fire_truck",
+    "attributes": [
+      {
+        "id": "transform/position",
+        "value": [
+          117.622009,
+          0,
+          38.71338
+        ]
+      },
+      {
+        "id": "transform/rotation",
+        "value": [
+          270,
+          0,
+          0
+        ]
+      }
+    ]
+  }
+]

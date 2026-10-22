@@ -1,0 +1,107 @@
+[
+  {
+    "id": "fire_hydrant-1",
+    "name": "消火栓-1",
+    "entity": "fire_hydrant",
+    "attributes": [
+      {
+        "id": "transform/position",
+        "value": [
+          117.614817,
+          0,
+          38.712868
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fire_hydrant-2",
+    "name": "消火栓-2",
+    "entity": "fire_hydrant",
+    "attributes": [
+      {
+        "id": "transform/position",
+        "value": [
+          117.616508,
+          0,
+          38.7116623
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fire_hydrant-3",
+    "name": "消火栓-3",
+    "entity": "fire_hydrant",
+    "attributes": [
+      {
+        "id": "transform/position",
+        "value": [
+          117.615616,
+          0,
+          38.7116737
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fire_hydrant-4",
+    "name": "消火栓-4",
+    "entity": "fire_hydrant",
+    "attributes": [
+      {
+        "id": "transform/position",
+        "value": [
+          117.617493,
+          0,
+          38.7132034
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fire_hydrant-5",
+    "name": "消火栓-5",
+    "entity": "fire_hydrant",
+    "attributes": [
+      {
+        "id": "transform/position",
+        "value": [
+          117.616608,
+          0,
+          38.7132149
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fire_hydrant-6",
+    "name": "消火栓-6",
+    "entity": "fire_hydrant",
+    "attributes": [
+      {
+        "id": "transform/position",
+        "value": [
+          117.615677,
+          0,
+          38.7132263
+        ]
+      }
+    ]
+  },
+  {
+    "id": "fire_hydrant-7",
+    "name": "消火栓-7",
+    "entity": "fire_hydrant",
+    "attributes": [
+      {
+        "id": "transform/position",
+        "value": [
+          117.614738,
+          0,
+          38.7124825
+        ]
+      }
+    ]
+  }
+]

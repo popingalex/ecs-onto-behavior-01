@@ -1,0 +1,83 @@
+{
+  "id": "field_thermal",
+  "name": "环境温度场",
+  "description": "挂在 environment 实体上的统一热力/辐射温度场（A 工作矩阵 / B 持久化格点 / C 前端矢量）",
+  "attributes": [
+    {
+      "id": "field_thermal/grid_config",
+      "name": "温度场栅格初始化参数",
+      "value": {
+        "cell_meters": 5,
+        "extension_radius": 270,
+        "max_cells": 900000
+      },
+      "type": "()",
+      "config": {
+        "transport": "server-only"
+      }
+    },
+    {
+      "id": "field_thermal/working_matrix_id",
+      "name": "工作矩阵句柄（A）",
+      "value": 0,
+      "type": "()",
+      "config": {
+        "transport": "server-only"
+      }
+    },
+    {
+      "id": "field_thermal/temperature_grid",
+      "name": "温度场格点数据（B）",
+      "value": null,
+      "type": "()",
+      "config": {
+        "transport": "server-only"
+      }
+    },
+    {
+      "id": "field_thermal/field_matrix_meta",
+      "name": "温度场矩阵元数据（B）",
+      "value": null,
+      "type": "()",
+      "config": {
+        "transport": "server-only"
+      }
+    },
+    {
+      "id": "field_thermal/temperature_contours",
+      "name": "温度场等高线矢量（C）",
+      "value": null,
+      "type": "()",
+      "config": {
+        "transport": "client"
+      }
+    },
+    {
+      "id": "field_thermal/isotherm_legend",
+      "name": "等温图例配置",
+      "value": null,
+      "type": "()",
+      "config": {
+        "transport": "server-only"
+      }
+    }
+  ],
+  "tags": [],
+  "config": {
+    "effects": [
+      {
+        "id": "temperature_contours",
+        "type": "heatmap",
+        "trigger": {
+          "attribute": "field_thermal/temperature_contours",
+          "op": "!=",
+          "value": null
+        },
+        "params": {
+          "displayMode": "contour",
+          "opacity": 0.7
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+[
+  {
+    "id": "rescue_point-1",
+    "name": "救援点-1",
+    "entity": "rescue_point",
+    "attributes": [
+      {
+        "id": "transform/position",
+        "value": [
+          117.6189,
+          0,
+          38.713444
+        ]
+      },
+      {
+        "id": "remaining_rescue_people_num",
+        "value": 10
+      }
+    ]
+  }
+]

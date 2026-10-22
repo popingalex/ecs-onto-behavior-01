@@ -5,8 +5,10 @@ import { createStore, useStore } from "@/lib/store"
 import { navigate, routerStore } from "@/router/router"
 import {
   mockExecutorAdapter,
+  readOnlyImportAdapter,
   type ExecutionAdapter,
 } from "@/services/executionAdapter"
+import { CURRENT_MODE } from "@/stores/dataSource"
 import { enqueueRunCommand, updateRunCommand } from "./commandQueue"
 import { contextStore } from "./context"
 import { draftRegistry } from "./draftRegistry"
@@ -44,9 +46,11 @@ export const sessionStore = createStore<{
   adapter: ExecutionAdapter
 }>({
   sessions: {},
-  // 默认执行路径：浏览器 mock 执行器对当前图真实求值。
+  // 默认执行路径：MOCK_SANDBOX 用浏览器 mock 执行器对当前图真实求值；
+  // REAL_IMPORT_READ_ONLY 用只读适配器（settle 一律拒绝，见 executionAdapter）。
   // referenceAdapter 只在“查看样例”入口显式指定。
-  adapter: mockExecutorAdapter,
+  adapter:
+    CURRENT_MODE === "REAL_IMPORT_READ_ONLY" ? readOnlyImportAdapter : mockExecutorAdapter,
 })
 
 function getSession(runId: string): RunSession {

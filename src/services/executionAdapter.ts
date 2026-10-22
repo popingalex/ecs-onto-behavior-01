@@ -173,3 +173,26 @@ export const referenceAdapter: ExecutionAdapter = {
     }
   },
 }
+
+/**
+ * V7-1 REAL_IMPORT_READ_ONLY：真实导入数据不提供执行通道。
+ * settle 一律拒绝——展示数据来自 mas-rust 真实运行工件，工作台不得
+ * 在真实数据上下文里用 mock 执行器伪装“执行成功”（REAL-07/12）。
+ */
+export const readOnlyImportAdapter: ExecutionAdapter = {
+  name: "native-readonly-import",
+  label: "真实只读导入 · mas-rust 离线工件（不可执行）",
+  async settle(request) {
+    return {
+      ok: false,
+      diagnostic: {
+        id: `settle:${request.idempotencyKey}`,
+        severity: "error",
+        code: "REAL_READ_ONLY",
+        message:
+          `真实只读导入（REAL_IMPORT_READ_ONLY）不提供推演执行：当前数据为 mas-rust 真实运行工件，` +
+          `执行需由原系统发起（J3）。分支头保持 ${request.baseCommit}；如需试算请切回 MOCK_SANDBOX。`,
+      },
+    }
+  },
+}

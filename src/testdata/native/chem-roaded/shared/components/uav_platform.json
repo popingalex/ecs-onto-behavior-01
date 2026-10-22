@@ -1,0 +1,35 @@
+{
+  "id": "uav_platform",
+  "name": "UAV平台",
+  "description": "UAV平台状态",
+  "attributes": [
+    {
+      "id": "uav_platform/battery_pct",
+      "name": "电量百分比",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "uav_platform/max_range_m",
+      "name": "最大航程",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "uav_platform/status",
+      "name": "平台状态",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    }
+  ],
+  "tags": []
+}

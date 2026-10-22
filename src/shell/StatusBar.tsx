@@ -8,6 +8,11 @@ import { toLogicalUri } from "@/router/route"
 import { useRunCommands } from "@/stores/commandQueue"
 import { ROLE_LABELS, useConnection, useRole } from "@/stores/context"
 import {
+  CURRENT_MODE,
+  switchDataSource,
+} from "@/stores/dataSource"
+import type { DataSourceMode } from "@/services/nativeImport/types"
+import {
   clearLocalHistory,
   usePersistenceStatus,
 } from "@/stores/persistence/historyPersistence"
@@ -56,6 +61,7 @@ export default function StatusBar({
         <Cpu size={12} aria-hidden />
         {adapter}
       </span>
+      <DataSourceBadge />
       <PersistenceIndicator />
       <span>
         命令队列 <span className="tabular text-ink-soft">{pending}</span> 待处理
@@ -70,6 +76,56 @@ export default function StatusBar({
       </span>
       <span className="shrink-0">React 原型 · 生产实现 Rust / egui</span>
     </footer>
+  )
+}
+
+/**
+ * 数据源徽标（V7-1）：MOCK_SANDBOX / REAL_IMPORT_READ_ONLY 互斥切换。
+ * 切换写 sessionStorage 后整页重载，避免两种来源的 store/草稿/历史串味（REAL-11/12）。
+ */
+function DataSourceBadge() {
+  const [mode, setMode] = useState<DataSourceMode>(CURRENT_MODE)
+  const [confirming, setConfirming] = useState(false)
+  const native = mode === "REAL_IMPORT_READ_ONLY"
+  return (
+    <span className="flex items-center gap-1.5">
+      <Database size={12} aria-hidden />
+      <span className={native ? "font-medium text-warning" : undefined}>
+        {native ? "REAL_IMPORT_READ_ONLY" : "MOCK_SANDBOX"}
+      </span>
+      <button
+        type="button"
+        className="rounded border border-border px-1.5 py-0.5 hover:bg-surface-hover"
+        onClick={() => setConfirming(true)}
+      >
+        切换数据源
+      </button>
+      {confirming && (
+        <span className="flex items-center gap-1.5">
+          <span className="text-ink-soft">
+            切到{native ? "MOCK_SANDBOX（种子+mock 执行）" : "REAL_IMPORT_READ_ONLY（mas-rust 只读）"}？
+          </span>
+          <button
+            type="button"
+            className="rounded border border-border px-1.5 py-0.5 hover:bg-surface-hover"
+            onClick={() => {
+              const next: DataSourceMode = native ? "MOCK_SANDBOX" : "REAL_IMPORT_READ_ONLY"
+              setMode(next)
+              switchDataSource(next)
+            }}
+          >
+            确认并重载
+          </button>
+          <button
+            type="button"
+            className="rounded border border-border px-1.5 py-0.5 hover:bg-surface-hover"
+            onClick={() => setConfirming(false)}
+          >
+            取消
+          </button>
+        </span>
+      )}
+    </span>
   )
 }
 

@@ -1,0 +1,66 @@
+{
+  "id": "transform",
+  "name": "变换",
+  "attributes": [
+    {
+      "id": "transform/coordinates",
+      "name": "坐标",
+      "type": "n[3]",
+      "config": {
+        "layer": "display",
+        "editor": "spatialTransform",
+        "display": {
+          "precision": 6
+        }
+      }
+    },
+    {
+      "id": "transform/position",
+      "name": "位置",
+      "type": "n[3]",
+      "config": {
+        "layer": "display",
+        "editor": "spatialTransform",
+        "display": {
+          "precision": 6
+        }
+      }
+    },
+    {
+      "id": "transform/lonlatposition",
+      "name": "经纬度位置",
+      "type": "n[3]",
+      "config": {
+        "layer": "display",
+        "editor": "spatialTransform",
+        "display": {
+          "precision": 6
+        }
+      }
+    },
+    {
+      "id": "transform/rotation",
+      "name": "旋转",
+      "type": "n[3]",
+      "config": {
+        "layer": "display",
+        "editor": "spatialTransform"
+      }
+    },
+    {
+      "id": "transform/scale",
+      "name": "缩放",
+      "value": [
+        1,
+        1,
+        1
+      ],
+      "type": "n[3]",
+      "config": {
+        "layer": "display",
+        "editor": "spatialTransform"
+      }
+    }
+  ],
+  "tags": []
+}

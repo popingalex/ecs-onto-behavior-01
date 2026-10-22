@@ -1,0 +1,248 @@
+{
+  "id": "flammable",
+  "name": "可燃",
+  "attributes": [
+    {
+      "id": "flammable/is_burning",
+      "name": "是否燃烧",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "label": {
+          "visible": false,
+          "heightOffset": 20
+        }
+      }
+    },
+    {
+      "id": "flammable/heat_release_energy",
+      "name": "热释放能量",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "flammable/burning_rate",
+      "name": "燃烧速率",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "flammable/flame_total_heat_radiation",
+      "name": "火焰总热辐射",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "flammable/flame_length",
+      "name": "火焰长度",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "flammable/flame_angle",
+      "name": "火焰倾角",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "flammable/flame_direction",
+      "name": "火焰方向",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "flammable/burnout_time",
+      "name": "燃尽时间",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "flammable/equivalent_fire_area",
+      "name": "等效火面积",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "display",
+        "label": {
+          "format": "area",
+          "precision": 1,
+          "unit": "m²",
+          "condition": {
+            "attribute": "flammable/is_burning",
+            "operator": "eq",
+            "value": 1,
+            "action": "force_show",
+            "ever": true
+          }
+        }
+      }
+    },
+    {
+      "id": "flammable/is_liquid_pool_fire",
+      "name": "是否液池火",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "flammable/intensity",
+      "name": "火势强度",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "flammable/temperature",
+      "name": "温度",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "display",
+        "label": {
+          "format": "temperature",
+          "precision": 1,
+          "condition": {
+            "attribute": "flammable/is_burning",
+            "operator": "eq",
+            "value": 1,
+            "action": "force_show",
+            "ever": true
+          }
+        }
+      }
+    },
+    {
+      "id": "flammable/thermal_radiation",
+      "name": "热辐射",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "flammable/burning_area",
+      "name": "燃烧面积",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "flammable/source_type",
+      "name": "火源类型",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display"
+      }
+    }
+  ],
+  "tags": [],
+  "config": {
+    "effects": [
+      {
+        "id": "flame_particles",
+        "type": "particle",
+        "trigger": {
+          "state": "flammable/fire"
+        },
+        "params": {
+          "particleType": "fire",
+          "radius": "$tank/radius",
+          "height": "$tank/height",
+          "intensity": 1
+        }
+      }
+    ],
+    "state": [
+      {
+        "id": "flammable/fire",
+        "name": "火灾",
+        "type": "affected",
+        "show": {
+          "expression": "'flammable/is_burning' == 1"
+        },
+        "hide": {
+          "enabled": true
+        },
+        "metric": {
+          "expression": "'flammable/equivalent_fire_area' / 'tank/tank_top_total_area' * 100",
+          "label": "火面积",
+          "format": "percentage",
+          "precision": 1,
+          "yAxis": "right",
+          "trend": {
+            "enabled": true
+          }
+        }
+      },
+      {
+        "id": "flammable/fire_temperature",
+        "name": "温度",
+        "type": "affected",
+        "show": {
+          "expression": "'flammable/is_burning' == 1"
+        },
+        "hide": {
+          "enabled": true
+        },
+        "metric": {
+          "expression": "flammable/temperature",
+          "label": "温度",
+          "format": "temperature",
+          "precision": 1,
+          "yAxis": "left",
+          "trend": {
+            "enabled": true
+          }
+        }
+      }
+    ],
+    "event": [
+      {
+        "expression": "'flammable/is_burning' == 1",
+        "name": "点燃",
+        "category": "danger"
+      },
+      {
+        "expression": "'flammable/is_burning' == 0",
+        "name": "熄灭",
+        "category": "success"
+      }
+    ],
+    "command": [
+      {
+        "id": "action_ignite",
+        "name": "点燃",
+        "kind": "ignite"
+      }
+    ]
+  }
+}

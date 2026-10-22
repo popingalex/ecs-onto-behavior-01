@@ -1,0 +1,68 @@
+{
+  "id": "controlled",
+  "name": "可控制的",
+  "attributes": [
+    {
+      "id": "controlled/status",
+      "name": "状态",
+      "value": "idle",
+      "type": "s",
+      "config": {}
+    },
+    {
+      "id": "controlled/received_instructions",
+      "name": "接收到的指令",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "command"
+      }
+    },
+    {
+      "id": "controlled/command_effect_set",
+      "name": "指令效果集",
+      "value": [],
+      "type": "u[]",
+      "config": {
+        "layer": "command"
+      }
+    },
+    {
+      "id": "controlled/command_distance",
+      "name": "指令距离",
+      "value": 100,
+      "type": "n",
+      "config": {
+        "layer": "command"
+      }
+    },
+    {
+      "id": "controlled/is_playback",
+      "name": "是否回放",
+      "value": false,
+      "type": "b",
+      "config": {
+        "layer": "command"
+      }
+    },
+    {
+      "id": "controlled/commands",
+      "name": "指令队列",
+      "value": null,
+      "type": "(command:s,args:u,status?:s,progress?:n)[]",
+      "config": {
+        "layer": "command"
+      }
+    }
+  ],
+  "tags": [],
+  "config": {
+    "event": [
+      {
+        "expression": "controlled/commands",
+        "name": "下达指令",
+        "category": "info"
+      }
+    ]
+  }
+}

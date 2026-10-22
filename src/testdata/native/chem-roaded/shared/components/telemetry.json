@@ -1,0 +1,35 @@
+{
+  "id": "telemetry",
+  "name": "遥测",
+  "description": "遥测链路状态",
+  "attributes": [
+    {
+      "id": "telemetry/signal_strength",
+      "name": "信号强度",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "telemetry/packet_loss_rate",
+      "name": "丢包率",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "telemetry/last_heartbeat",
+      "name": "上次心跳",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    }
+  ],
+  "tags": []
+}

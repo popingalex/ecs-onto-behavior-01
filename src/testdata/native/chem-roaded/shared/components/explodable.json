@@ -1,0 +1,43 @@
+{
+  "id": "explodable",
+  "name": "可爆炸",
+  "attributes": [
+    {
+      "id": "explodable/is_explosion_pressure_vessel",
+      "name": "是否爆炸（压力容器）",
+      "value": false,
+      "type": "b",
+      "config": {
+        "layer": "event"
+      }
+    },
+    {
+      "id": "explodable/explosion_energy_pressure_vessel",
+      "name": "爆炸能量（压力容器）",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "explodable/is_explosion_vapor_cloud",
+      "name": "是否爆炸（蒸气云）",
+      "value": false,
+      "type": "b",
+      "config": {
+        "layer": "event"
+      }
+    },
+    {
+      "id": "explodable/explosion_energy_vapor_cloud",
+      "name": "爆炸能量（蒸气云）",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    }
+  ],
+  "tags": []
+}

@@ -34,6 +34,72 @@ import ValueEditor from "@/features/ecs/ValueEditor"
 import { useReadOnly } from "@/features/ecs/editing"
 import { validId } from "@/features/ecs/ids"
 import { systemRefs, type RefHit } from "@/features/ecs/refs"
+import { isNativeMode } from "@/stores/dataSource"
+import { NATIVE_SYSTEM_CATALOG } from "@/services/nativeImport/catalog"
+
+/**
+ * REAL_IMPORT_READ_ONLY：引擎原生系统目录（mas-rust system_registry 静态转录）。
+ * S0=原生黑盒 / S1=可映射（lc-* workflow 覆盖）/ S0-infra=基础设施。
+ */
+function NativeSystemCatalog() {
+  return (
+    <div className="mx-auto flex w-full max-w-[1280px] flex-col gap-4 px-6 py-6">
+      <div>
+        <h2 className="text-title font-semibold">原生 System 目录（只读）</h2>
+        <p className="mt-1 text-body text-muted">
+          引擎以 9 阶段注册表调度（mas-rust system_registry）；工作台
+          SystemDefinition/程序绑定层不适用于原生系统，此处仅展示目录与适配分级。
+        </p>
+      </div>
+      <Card>
+        <PanelHeader
+          title="System registry"
+          meta={<span className="tabular">{NATIVE_SYSTEM_CATALOG.length} 个</span>}
+        />
+        <Table className="min-w-[960px]">
+          <thead>
+            <tr>
+              <Th className="w-[220px]">System</Th>
+              <Th>阶段</Th>
+              <Th>实现形态</Th>
+              <Th>分级</Th>
+              <Th>读 / 写（示例）</Th>
+              <Th>备注</Th>
+            </tr>
+          </thead>
+          <tbody>
+            {NATIVE_SYSTEM_CATALOG.map((s) => (
+              <Tr key={s.id}>
+                <Td>
+                  <div className="font-medium">{s.label}</div>
+                  <div className="font-mono text-caption text-muted">{s.id}</div>
+                </Td>
+                <Td>{s.phase}</Td>
+                <Td>{s.implementation}</Td>
+                <Td>
+                  <Tag
+                    tone={
+                      s.sClass === "S1" ? "primary" : s.sClass === "S0" ? "neutral" : "purple"
+                    }
+                  >
+                    {s.sClass}
+                  </Tag>
+                </Td>
+                <Td className="font-mono text-caption">
+                  {[...s.reads, ...s.writes].slice(0, 4).join("，") || "—"}
+                </Td>
+                <Td className="text-caption">{s.note}</Td>
+              </Tr>
+            ))}
+          </tbody>
+        </Table>
+      </Card>
+      <Notice tone="info">
+        运行样例的逐帧系统归因（source_system_id）见 P20/P22；请求→获准效果对与节点输入版本在引擎中不存在，工作台不伪造。
+      </Notice>
+    </div>
+  )
+}
 
 const ACCESS_LABEL = {
   readPrevious: "读取（previous 视图）",
@@ -78,6 +144,9 @@ export default function P11Systems({ ctx: _ctx }: { ctx: WorkbenchContext }) {
   const model = useDraftModel()
   const route = useRoute()
   const systemId = route.params.systemId
+  // REAL_IMPORT_READ_ONLY：工作台 SystemDefinition 层不适用于引擎原生系统；
+  // 改为展示引擎系统目录（system_registry 静态转录，S0/S1 分级见 03_capability_matrix）。
+  if (isNativeMode()) return <NativeSystemCatalog />
   if (!systemId) return <SystemList />
   const system = model.systems.find((s) => s.id === systemId)
   if (!system) {

@@ -1,0 +1,268 @@
+{
+  "id": "tank",
+  "name": "储罐",
+  "attributes": [
+    {
+      "id": "tank/style",
+      "name": "储罐样式",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "tank/radius",
+      "name": "半径",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "tank/height",
+      "name": "高度",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "tank/diameter",
+      "name": "直径",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "tank/tank_pressure",
+      "name": "罐体压力",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "tank/failure_pressure",
+      "name": "失效压力",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "tank/tank_wall_thickness",
+      "name": "罐壁厚度",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "tank/total_weight",
+      "name": "总重量",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "tank/fixed_foam_system",
+      "name": "固定式泡沫系统",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "tank/fixed_cooling_system",
+      "name": "固定式冷却系统",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "tank/fixed_foam_sprinkler_flow",
+      "name": "固定式泡沫喷淋流量",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "tank/fixed_cooling_sprinkler_flow",
+      "name": "固定式冷却喷淋流量",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "tank/water_truck_flow_filter",
+      "name": "水车流量过滤器",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "tank/fire_hose_flow_filter",
+      "name": "消防水带流量过滤器",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "tank/foam_truck_foam_filter",
+      "name": "泡沫车泡沫过滤器",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "tank/fire_cannon_foam_filter",
+      "name": "消防炮泡沫过滤器",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "tank/tank_rated_pressure",
+      "name": "罐内额定压力",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "tank/tank_wall_material_density",
+      "name": "储罐壁材料密度",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "tank/tank_wall_material_specific_heat",
+      "name": "储罐壁材料比热容",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "tank/tank_wall_yield_stress",
+      "name": "罐壁屈服应力",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "tank/tank_top_total_area",
+      "name": "储罐顶部总面积",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "tank/tank_material_yield_strength",
+      "name": "储罐材质屈服强度",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "tank/is_steam",
+      "name": "是否蒸汽",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "event"
+      }
+    },
+    {
+      "id": "tank/is_spark",
+      "name": "是否火星",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "event"
+      }
+    },
+    {
+      "id": "tank/fire_intensity",
+      "name": "火势强度",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "tank/foam_supply_strength",
+      "name": "泡沫供应强度",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "tank/foam_application_time",
+      "name": "泡沫应用时间",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "tank/foam_mixture_amount",
+      "name": "泡沫混合量",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "tank/tank_type",
+      "name": "储罐类型",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    }
+  ],
+  "tags": []
+}

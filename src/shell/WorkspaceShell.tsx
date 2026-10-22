@@ -39,6 +39,7 @@ import ResizeHandle from "./ResizeHandle"
 import ResourceTree from "./ResourceTree"
 import RouteGate from "./RouteGate"
 import StatusBar from "./StatusBar"
+import NativeModeStrip from "@/components/domain/NativeModeStrip"
 import Toaster from "./Toaster"
 import TopBar from "./TopBar"
 
@@ -108,6 +109,7 @@ export default function WorkspaceShell() {
         跳到主工作区
       </a>
       <TopBar />
+      <NativeModeStrip />
       <div className="flex min-h-0 flex-1">
         <FunctionRail active={ctx.group.id} />
         <div className="flex min-w-0 flex-1 flex-col">

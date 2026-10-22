@@ -1,0 +1,110 @@
+{
+  "id": "ball_tank",
+  "name": "球罐",
+  "description": "球形储罐",
+  "attributes": [
+    {
+      "id": "container/volume",
+      "value": 50000
+    },
+    {
+      "id": "container/liquid_level",
+      "value": 10
+    },
+    {
+      "id": "health/durability",
+      "value": 100
+    },
+    {
+      "id": "plot/type",
+      "value": "point"
+    },
+    {
+      "id": "plot/icon",
+      "value": "lucide:circle"
+    }
+  ],
+  "components": [
+    {
+      "id": "transform"
+    },
+    {
+      "id": "container"
+    },
+    {
+      "id": "plot"
+    },
+    {
+      "id": "flammable"
+    },
+    {
+      "id": "leakable"
+    },
+    {
+      "id": "explodable"
+    },
+    {
+      "id": "health"
+    },
+    {
+      "id": "radiatable"
+    },
+    {
+      "id": "controlled"
+    },
+    {
+      "id": "ui"
+    }
+  ],
+  "tags": [
+    {
+      "id": "disaster_domain.chemical_fire",
+      "name": "危化火"
+    },
+    {
+      "id": "role.production",
+      "name": "生产设施"
+    },
+    {
+      "id": "role.bearer",
+      "name": "承灾体"
+    },
+    {
+      "id": "category.production",
+      "name": "生产"
+    },
+    {
+      "id": "chemical_fire",
+      "name": "危化火灾",
+      "category": "disaster_domain"
+    },
+    {
+      "id": "fire",
+      "name": "火灾",
+      "category": "disaster_domain"
+    },
+    {
+      "id": "bearer",
+      "name": "承灾体",
+      "category": "role"
+    },
+    {
+      "id": "equipment",
+      "name": "设备",
+      "category": "category"
+    },
+    {
+      "id": "storage",
+      "name": "存储",
+      "category": "category"
+    },
+    {
+      "id": "ball_tank",
+      "name": "球罐",
+      "category": "category"
+    }
+  ],
+  "bundle_ids": [],
+  "deprecated": false,
+  "version": "1.0"
+}

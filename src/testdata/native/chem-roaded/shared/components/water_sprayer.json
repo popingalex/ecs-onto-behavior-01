@@ -1,0 +1,128 @@
+{
+  "id": "water_sprayer",
+  "name": "喷水装置",
+  "attributes": [
+    {
+      "id": "water_sprayer/spray_flow_rate",
+      "name": "喷淋流量",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "water_sprayer/range",
+      "name": "射程",
+      "value": 60.0,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "water_sprayer/sprinkler_target_object",
+      "name": "喷淋目标对象",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "water_sprayer/sprinkler_target_point",
+      "name": "喷淋目标点",
+      "value": null,
+      "type": "n[]",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "water_sprayer/$require_target",
+      "name": "是否需要选择目标",
+      "value": false,
+      "type": "b",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "water_sprayer/allow_spray_while_moving",
+      "name": "允许边移动边喷水",
+      "value": false,
+      "type": "b",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "water_sprayer/is_spraying",
+      "name": "是否喷水",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "event"
+      }
+    }
+  ],
+  "tags": [],
+  "config": {
+    "effects": [
+      {
+        "id": "water_spray",
+        "type": "spray",
+        "trigger": {
+          "state": "water_sprayer/water_spraying"
+        },
+        "params": {
+          "effectType": "water",
+          "flow": "$water_sprayer/spray_flow_rate",
+          "direction": 0,
+          "targetEntityId": "$water_sprayer/sprinkler_target_object",
+          "range": "$water_sprayer/range"
+        }
+      },
+      {
+        "id": "spray_range",
+        "type": "range",
+        "trigger": {
+          "state": "water_sprayer/water_spraying"
+        },
+        "params": {
+          "radius": "$water_sprayer/range",
+          "color": "#00a8ff"
+        }
+      }
+    ],
+    "state": [
+      {
+        "id": "water_sprayer/water_spraying",
+        "name": "喷射",
+        "type": "rescuing",
+        "show": {
+          "expression": "'water_sprayer/is_spraying' == 1"
+        },
+        "hide": {
+          "enabled": true
+        },
+        "metric": {
+          "expression": "'water_tank/current_water_volume' / 'water_tank/total_water_volume' * 100",
+          "label": "剩余水量%",
+          "format": "percentage",
+          "precision": 0,
+          "trend": {
+            "enabled": true
+          }
+        }
+      }
+    ],
+    "command": [
+      {
+        "id": "action_spray_water",
+        "name": "喷水",
+        "kind": "spray"
+      }
+    ]
+  }
+}

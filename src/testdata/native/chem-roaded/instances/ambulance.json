@@ -1,0 +1,29 @@
+[
+  {
+    "id": "ambulance-1",
+    "name": "救护车-1",
+    "entity": "ambulance",
+    "attributes": [
+      {
+        "id": "transform/position",
+        "value": [
+          117.622,
+          0,
+          38.713552
+        ]
+      },
+      {
+        "id": "vehicle/rescue_people_num",
+        "value": 5
+      },
+      {
+        "id": "transform/rotation",
+        "value": [
+          270,
+          0,
+          0
+        ]
+      }
+    ]
+  }
+]

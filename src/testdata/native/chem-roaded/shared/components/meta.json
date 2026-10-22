@@ -1,0 +1,17 @@
+{
+  "id": "meta",
+  "name": "元数据",
+  "description": "内核 spawn 簿记",
+  "attributes": [
+    {
+      "id": "meta/born",
+      "name": "生成帧",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    }
+  ],
+  "tags": []
+}

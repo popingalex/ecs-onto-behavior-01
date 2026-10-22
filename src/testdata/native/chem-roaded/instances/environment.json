@@ -1,0 +1,278 @@
+[
+  {
+    "id": "environment",
+    "name": "环境实体",
+    "entity": "environment",
+    "attributes": [
+      {
+        "id": "wind/wind_direction",
+        "value": [
+          270,
+          0,
+          0
+        ]
+      },
+      {
+        "id": "wind/wind_speed",
+        "value": 7
+      },
+      {
+        "id": "wind_direction",
+        "value": [
+          270,
+          0,
+          0
+        ]
+      },
+      {
+        "id": "wind_speed",
+        "value": 7
+      },
+      {
+        "id": "temperature/temperature",
+        "value": 27.5
+      },
+      {
+        "id": "field_thermal/grid_config",
+        "value": {
+          "cell_meters": 5,
+          "extension_radius": 270,
+          "max_cells": 900000
+        }
+      },
+      {
+        "id": "road_network/nodes",
+        "value": [
+          {
+            "id": "n-tank-nw",
+            "intersectionRadius": 6,
+            "lat": 38.71341424,
+            "lng": 117.61779094
+          },
+          {
+            "id": "n-tank-ne",
+            "intersectionRadius": 6,
+            "lat": 38.71341424,
+            "lng": 117.61999406
+          },
+          {
+            "id": "n-tank-mw",
+            "intersectionRadius": 6,
+            "lat": 38.7124195,
+            "lng": 117.61779094
+          },
+          {
+            "id": "n-tank-me",
+            "intersectionRadius": 6,
+            "lat": 38.7124195,
+            "lng": 117.61999406
+          },
+          {
+            "id": "n-tank-sw",
+            "intersectionRadius": 6,
+            "lat": 38.71141066,
+            "lng": 117.61779094
+          },
+          {
+            "id": "n-tank-se",
+            "intersectionRadius": 6,
+            "lat": 38.71141066,
+            "lng": 117.61999406
+          },
+          {
+            "id": "n-vehicle-nw",
+            "intersectionRadius": 4,
+            "lat": 38.71373166,
+            "lng": 117.62176975
+          },
+          {
+            "id": "n-vehicle-ne",
+            "intersectionRadius": 4,
+            "lat": 38.71373166,
+            "lng": 117.62224025
+          },
+          {
+            "id": "n-vehicle-sw",
+            "intersectionRadius": 4,
+            "lat": 38.71228754,
+            "lng": 117.62176975
+          },
+          {
+            "id": "n-vehicle-se",
+            "intersectionRadius": 4,
+            "lat": 38.71228754,
+            "lng": 117.62224025
+          },
+          {
+            "id": "n-conn-north",
+            "intersectionRadius": 5,
+            "lat": 38.71341424,
+            "lng": 117.62176975
+          },
+          {
+            "id": "n-conn-south",
+            "intersectionRadius": 5,
+            "lat": 38.7124195,
+            "lng": 117.62176975
+          }
+        ]
+      },
+      {
+        "id": "road_network/edges",
+        "value": [
+          {
+            "backwardLanes": 1,
+            "distance": 191.4,
+            "forwardLanes": 1,
+            "from": "n-tank-nw",
+            "id": "e-tank-north",
+            "to": "n-tank-ne",
+            "width": 8
+          },
+          {
+            "backwardLanes": 1,
+            "distance": 191.4,
+            "forwardLanes": 1,
+            "from": "n-tank-mw",
+            "id": "e-tank-middle",
+            "to": "n-tank-me",
+            "width": 8
+          },
+          {
+            "backwardLanes": 1,
+            "distance": 191.4,
+            "forwardLanes": 1,
+            "from": "n-tank-sw",
+            "id": "e-tank-south",
+            "to": "n-tank-se",
+            "width": 8
+          },
+          {
+            "backwardLanes": 1,
+            "distance": 110.7,
+            "forwardLanes": 1,
+            "from": "n-tank-nw",
+            "id": "e-tank-west-north",
+            "to": "n-tank-mw",
+            "width": 8
+          },
+          {
+            "backwardLanes": 1,
+            "distance": 112.3,
+            "forwardLanes": 1,
+            "from": "n-tank-mw",
+            "id": "e-tank-west-south",
+            "to": "n-tank-sw",
+            "width": 8
+          },
+          {
+            "backwardLanes": 1,
+            "distance": 110.7,
+            "forwardLanes": 1,
+            "from": "n-tank-ne",
+            "id": "e-tank-east-north",
+            "to": "n-tank-me",
+            "width": 8
+          },
+          {
+            "backwardLanes": 1,
+            "distance": 112.3,
+            "forwardLanes": 1,
+            "from": "n-tank-me",
+            "id": "e-tank-east-south",
+            "to": "n-tank-se",
+            "width": 8
+          },
+          {
+            "backwardLanes": 1,
+            "distance": 154.2,
+            "forwardLanes": 1,
+            "from": "n-tank-ne",
+            "id": "e-conn-north",
+            "to": "n-conn-north",
+            "width": 8
+          },
+          {
+            "backwardLanes": 1,
+            "distance": 154.2,
+            "forwardLanes": 1,
+            "from": "n-tank-me",
+            "id": "e-conn-south",
+            "to": "n-conn-south",
+            "width": 8
+          },
+          {
+            "backwardLanes": 1,
+            "distance": 38.0,
+            "forwardLanes": 1,
+            "from": "n-vehicle-sw",
+            "id": "e-vehicle-south",
+            "to": "n-vehicle-se",
+            "width": 8
+          },
+          {
+            "backwardLanes": 1,
+            "distance": 38.0,
+            "forwardLanes": 1,
+            "from": "n-vehicle-nw",
+            "id": "e-vehicle-north",
+            "to": "n-vehicle-ne",
+            "width": 8
+          },
+          {
+            "backwardLanes": 1,
+            "distance": 154.0,
+            "forwardLanes": 1,
+            "from": "n-vehicle-sw",
+            "id": "e-vehicle-west",
+            "to": "n-vehicle-nw",
+            "width": 8
+          },
+          {
+            "backwardLanes": 1,
+            "distance": 154.0,
+            "forwardLanes": 1,
+            "from": "n-vehicle-se",
+            "id": "e-vehicle-east",
+            "to": "n-vehicle-ne",
+            "width": 8
+          },
+          {
+            "backwardLanes": 1,
+            "distance": 15.0,
+            "forwardLanes": 1,
+            "from": "n-vehicle-sw",
+            "id": "e-vehicle-sw-conn",
+            "to": "n-conn-south",
+            "width": 8
+          },
+          {
+            "backwardLanes": 1,
+            "distance": 15.0,
+            "forwardLanes": 1,
+            "from": "n-vehicle-nw",
+            "id": "e-vehicle-nw-conn",
+            "to": "n-conn-north",
+            "width": 8
+          }
+        ]
+      },
+      {
+        "id": "road_network/areas",
+        "value": [
+          {
+            "id": "a-vehicle-parking",
+            "nodeIds": [
+              "n-conn-north",
+              "n-vehicle-nw",
+              "n-vehicle-ne",
+              "n-vehicle-se",
+              "n-vehicle-sw",
+              "n-conn-south"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

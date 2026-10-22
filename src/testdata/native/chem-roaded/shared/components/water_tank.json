@@ -1,0 +1,52 @@
+{
+  "id": "water_tank",
+  "name": "水箱",
+  "attributes": [
+    {
+      "id": "water_tank/water_capacity",
+      "name": "水罐容量",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "water_tank/current_water_volume",
+      "name": "现有水量",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "water_tank/total_water_volume",
+      "name": "总水量",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "water_tank/total_foam_volume",
+      "name": "泡沫总量(L)",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    }
+  ],
+  "tags": [],
+  "config": {
+    "command": [
+      {
+        "id": "action_water_intake",
+        "name": "取水",
+        "kind": "intake"
+      }
+    ]
+  }
+}

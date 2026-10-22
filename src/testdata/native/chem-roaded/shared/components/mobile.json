@@ -1,0 +1,208 @@
+{
+  "id": "mobile",
+  "name": "移动的",
+  "attributes": [
+    {
+      "id": "mobile/velocity",
+      "name": "速度",
+      "value": null,
+      "type": "(mode:s,scalar:n)[]",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "mobile/destination",
+      "name": "目的地",
+      "value": null,
+      "type": "n[7]",
+      "config": {
+        "layer": "command"
+      }
+    },
+    {
+      "id": "mobile/path",
+      "name": "路径",
+      "value": null,
+      "type": "n[6][]",
+      "config": {
+        "layer": "command",
+        "display": {
+          "precision": 6
+        }
+      }
+    },
+    {
+      "id": "mobile/path_network",
+      "name": "路网路径",
+      "value": null,
+      "type": "n[3][]",
+      "config": {
+        "layer": "command",
+        "display": {
+          "precision": 6
+        }
+      }
+    },
+    {
+      "id": "mobile/path_lanes",
+      "name": "路径车道",
+      "value": null,
+      "type": "n[]",
+      "config": {
+        "layer": "command"
+      }
+    },
+    {
+      "id": "mobile/path_ids",
+      "name": "路径ID列表",
+      "value": null,
+      "type": "s[]",
+      "config": {
+        "layer": "command"
+      }
+    },
+    {
+      "id": "mobile/path_id",
+      "name": "当前路径ID",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "command"
+      }
+    },
+    {
+      "id": "mobile/path_frame",
+      "name": "帧路径",
+      "value": null,
+      "type": "n[7][]",
+      "config": {
+        "layer": "command",
+        "display": {
+          "precision": 6
+        }
+      }
+    },
+    {
+      "id": "mobile/move_progress",
+      "name": "移动进度",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "mobile/path_index",
+      "name": "路径索引",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "command"
+      }
+    },
+    {
+      "id": "mobile/movement_range",
+      "name": "移动范围",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "mobile/movement_range_angle",
+      "name": "移动范围角度",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "mobile/path_display",
+      "name": "路径显示策略",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display",
+        "description": "路径在地图上的显示策略。null=默认直线，road_network=路网路径。"
+      }
+    },
+    {
+      "id": "mobile/speed_factor",
+      "type": "n",
+      "value": 1.0,
+      "name": "速度倍率",
+      "description": "移动速度倍率（action_move speedFactor 持久化，1.0=不加速）"
+    }
+  ],
+  "tags": [],
+  "config": {
+    "effects": [
+      {
+        "id": "movement_path",
+        "type": "motion_path",
+        "trigger": {
+          "state": "mobile/move_executing"
+        },
+        "params": {
+          "path": "$mobile/path",
+          "color": "#FFB366",
+          "width": 2.5,
+          "alpha": 0.88
+        }
+      },
+      {
+        "id": "movement_path_frame",
+        "type": "motion_path",
+        "trigger": {
+          "state": "mobile/move_executing"
+        },
+        "params": {
+          "path": "$mobile/path_frame",
+          "color": "#CC5500",
+          "width": 3.5,
+          "alpha": 0.95
+        }
+      }
+    ],
+    "command": [
+      {
+        "id": "action_move",
+        "name": "移动",
+        "kind": "move",
+        "target": "path",
+        "selectionMode": "path"
+      },
+      {
+        "id": "action_stop",
+        "name": "停止",
+        "kind": "stop"
+      }
+    ],
+    "state": [
+      {
+        "id": "mobile/move_executing",
+        "name": "机动",
+        "type": "mobilizing",
+        "show": {
+          "expression": "command(item, { commands: ['action_move', 'move'], status: 'executing' })",
+          "description": "仅 todo/executing（含 progress）显示移动路径；done 后必须隐藏。status=executing 对 action_move 语义包含 todo。"
+        },
+        "hide": {
+          "enabled": true
+        },
+        "metric": {
+          "expression": "mobile/move_progress",
+          "label": "路径%",
+          "format": "percentage",
+          "precision": 0,
+          "trend": {
+            "enabled": true
+          }
+        }
+      }
+    ]
+  }
+}

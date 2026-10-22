@@ -1,0 +1,2559 @@
+{
+    "id": "chem-roaded",
+    "name": "危化品火灾-路网场景",
+    "category": "chemical_fire",
+    "instances": [
+        {
+            "id": "ambulance-1",
+            "name": "救护车-1",
+            "entity": "ambulance",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.622,
+                        0,
+                        38.713552
+                    ]
+                },
+                {
+                    "id": "vehicle/rescue_people_num",
+                    "value": 5
+                },
+                {
+                    "id": "transform/rotation",
+                    "value": [
+                        270,
+                        0,
+                        0
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ball_tank-1",
+            "name": "球罐-1",
+            "entity": "ball_tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.608,
+                        0,
+                        38.71226
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ball_tank-2",
+            "name": "球罐-2",
+            "entity": "ball_tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.608,
+                        0,
+                        38.71186
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ball_tank-3",
+            "name": "球罐-3",
+            "entity": "ball_tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.6084,
+                        0,
+                        38.71186
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ball_tank-4",
+            "name": "球罐-4",
+            "entity": "ball_tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.6084,
+                        0,
+                        38.71226
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ball_tank-5",
+            "name": "球罐-5",
+            "entity": "ball_tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.61186,
+                        0,
+                        38.71387
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "ball_tank-6",
+            "name": "球罐-6",
+            "entity": "ball_tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.61153,
+                        0,
+                        38.71387
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "building-1",
+            "name": "建筑-1",
+            "entity": "building",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.622457,
+                        0,
+                        38.711759
+                    ]
+                },
+                {
+                    "id": "building_name",
+                    "value": "消防队"
+                }
+            ]
+        },
+        {
+            "id": "environment",
+            "name": "环境实体",
+            "entity": "environment",
+            "attributes": [
+                {
+                    "id": "wind/wind_direction",
+                    "value": [
+                        270,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "id": "wind/wind_speed",
+                    "value": 7
+                },
+                {
+                    "id": "wind_direction",
+                    "value": [
+                        270,
+                        0,
+                        0
+                    ]
+                },
+                {
+                    "id": "wind_speed",
+                    "value": 7
+                },
+                {
+                    "id": "temperature/temperature",
+                    "value": 27.5
+                },
+                {
+                    "id": "field_thermal/grid_config",
+                    "value": {
+                        "max_cells": 900000,
+                        "cell_meters": 5,
+                        "extension_radius": 270
+                    }
+                },
+                {
+                    "id": "road_network/nodes",
+                    "value": [
+                        {
+                            "id": "n-tank-nw",
+                            "lat": 38.71341424,
+                            "lng": 117.61779094,
+                            "intersectionRadius": 6
+                        },
+                        {
+                            "id": "n-tank-ne",
+                            "lat": 38.71341424,
+                            "lng": 117.61999406,
+                            "intersectionRadius": 6
+                        },
+                        {
+                            "id": "n-tank-mw",
+                            "lat": 38.7124195,
+                            "lng": 117.61779094,
+                            "intersectionRadius": 6
+                        },
+                        {
+                            "id": "n-tank-me",
+                            "lat": 38.7124195,
+                            "lng": 117.61999406,
+                            "intersectionRadius": 6
+                        },
+                        {
+                            "id": "n-tank-sw",
+                            "lat": 38.71141066,
+                            "lng": 117.61779094,
+                            "intersectionRadius": 6
+                        },
+                        {
+                            "id": "n-tank-se",
+                            "lat": 38.71141066,
+                            "lng": 117.61999406,
+                            "intersectionRadius": 6
+                        },
+                        {
+                            "id": "n-vehicle-nw",
+                            "lat": 38.71373166,
+                            "lng": 117.62176975,
+                            "intersectionRadius": 4
+                        },
+                        {
+                            "id": "n-vehicle-ne",
+                            "lat": 38.71373166,
+                            "lng": 117.62224025,
+                            "intersectionRadius": 4
+                        },
+                        {
+                            "id": "n-vehicle-sw",
+                            "lat": 38.71228754,
+                            "lng": 117.62176975,
+                            "intersectionRadius": 4
+                        },
+                        {
+                            "id": "n-vehicle-se",
+                            "lat": 38.71228754,
+                            "lng": 117.62224025,
+                            "intersectionRadius": 4
+                        },
+                        {
+                            "id": "n-conn-north",
+                            "lat": 38.71341424,
+                            "lng": 117.62176975,
+                            "intersectionRadius": 5
+                        },
+                        {
+                            "id": "n-conn-south",
+                            "lat": 38.7124195,
+                            "lng": 117.62176975,
+                            "intersectionRadius": 5
+                        }
+                    ]
+                },
+                {
+                    "id": "road_network/edges",
+                    "value": [
+                        {
+                            "id": "e-tank-north",
+                            "to": "n-tank-ne",
+                            "from": "n-tank-nw",
+                            "width": 8,
+                            "distance": 191.4,
+                            "forwardLanes": 1,
+                            "backwardLanes": 1
+                        },
+                        {
+                            "id": "e-tank-middle",
+                            "to": "n-tank-me",
+                            "from": "n-tank-mw",
+                            "width": 8,
+                            "distance": 191.4,
+                            "forwardLanes": 1,
+                            "backwardLanes": 1
+                        },
+                        {
+                            "id": "e-tank-south",
+                            "to": "n-tank-se",
+                            "from": "n-tank-sw",
+                            "width": 8,
+                            "distance": 191.4,
+                            "forwardLanes": 1,
+                            "backwardLanes": 1
+                        },
+                        {
+                            "id": "e-tank-west-north",
+                            "to": "n-tank-mw",
+                            "from": "n-tank-nw",
+                            "width": 8,
+                            "distance": 110.7,
+                            "forwardLanes": 1,
+                            "backwardLanes": 1
+                        },
+                        {
+                            "id": "e-tank-west-south",
+                            "to": "n-tank-sw",
+                            "from": "n-tank-mw",
+                            "width": 8,
+                            "distance": 112.3,
+                            "forwardLanes": 1,
+                            "backwardLanes": 1
+                        },
+                        {
+                            "id": "e-tank-east-north",
+                            "to": "n-tank-me",
+                            "from": "n-tank-ne",
+                            "width": 8,
+                            "distance": 110.7,
+                            "forwardLanes": 1,
+                            "backwardLanes": 1
+                        },
+                        {
+                            "id": "e-tank-east-south",
+                            "to": "n-tank-se",
+                            "from": "n-tank-me",
+                            "width": 8,
+                            "distance": 112.3,
+                            "forwardLanes": 1,
+                            "backwardLanes": 1
+                        },
+                        {
+                            "id": "e-conn-north",
+                            "to": "n-conn-north",
+                            "from": "n-tank-ne",
+                            "width": 8,
+                            "distance": 154.2,
+                            "forwardLanes": 1,
+                            "backwardLanes": 1
+                        },
+                        {
+                            "id": "e-conn-south",
+                            "to": "n-conn-south",
+                            "from": "n-tank-me",
+                            "width": 8,
+                            "distance": 154.2,
+                            "forwardLanes": 1,
+                            "backwardLanes": 1
+                        },
+                        {
+                            "id": "e-vehicle-south",
+                            "to": "n-vehicle-se",
+                            "from": "n-vehicle-sw",
+                            "width": 8,
+                            "distance": 38.0,
+                            "forwardLanes": 1,
+                            "backwardLanes": 1
+                        },
+                        {
+                            "id": "e-vehicle-north",
+                            "to": "n-vehicle-ne",
+                            "from": "n-vehicle-nw",
+                            "width": 8,
+                            "distance": 38.0,
+                            "forwardLanes": 1,
+                            "backwardLanes": 1
+                        },
+                        {
+                            "id": "e-vehicle-west",
+                            "to": "n-vehicle-nw",
+                            "from": "n-vehicle-sw",
+                            "width": 8,
+                            "distance": 154.0,
+                            "forwardLanes": 1,
+                            "backwardLanes": 1
+                        },
+                        {
+                            "id": "e-vehicle-east",
+                            "to": "n-vehicle-ne",
+                            "from": "n-vehicle-se",
+                            "width": 8,
+                            "distance": 154.0,
+                            "forwardLanes": 1,
+                            "backwardLanes": 1
+                        },
+                        {
+                            "id": "e-vehicle-sw-conn",
+                            "to": "n-conn-south",
+                            "from": "n-vehicle-sw",
+                            "width": 8,
+                            "distance": 15.0,
+                            "forwardLanes": 1,
+                            "backwardLanes": 1
+                        },
+                        {
+                            "id": "e-vehicle-nw-conn",
+                            "to": "n-conn-north",
+                            "from": "n-vehicle-nw",
+                            "width": 8,
+                            "distance": 15.0,
+                            "forwardLanes": 1,
+                            "backwardLanes": 1
+                        }
+                    ]
+                },
+                {
+                    "id": "road_network/areas",
+                    "value": [
+                        {
+                            "id": "a-vehicle-parking",
+                            "nodeIds": [
+                                "n-conn-north",
+                                "n-vehicle-nw",
+                                "n-vehicle-ne",
+                                "n-vehicle-se",
+                                "n-vehicle-sw",
+                                "n-conn-south"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "fire_truck-1",
+            "name": "喷水消防车-1",
+            "entity": "fire_engine",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.622009,
+                        0,
+                        38.712784
+                    ]
+                },
+                {
+                    "id": "transform/rotation",
+                    "value": [
+                        270,
+                        0,
+                        0
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "fire_truck-2",
+            "name": "喷水消防车-2",
+            "entity": "fire_engine",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.622009,
+                        0,
+                        38.7126656
+                    ]
+                },
+                {
+                    "id": "transform/rotation",
+                    "value": [
+                        270,
+                        0,
+                        0
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "fire_truck-3",
+            "name": "喷水消防车-3",
+            "entity": "fire_engine",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.622009,
+                        0,
+                        38.712569
+                    ]
+                },
+                {
+                    "id": "transform/rotation",
+                    "value": [
+                        270,
+                        0,
+                        0
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "fire_truck-4",
+            "name": "喷水消防车-4",
+            "entity": "fire_engine",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.622009,
+                        0,
+                        38.7124672
+                    ]
+                },
+                {
+                    "id": "transform/rotation",
+                    "value": [
+                        270,
+                        0,
+                        0
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "fire_hydrant-1",
+            "name": "消火栓-1",
+            "entity": "fire_hydrant",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.614817,
+                        0,
+                        38.712868
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "fire_hydrant-2",
+            "name": "消火栓-2",
+            "entity": "fire_hydrant",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.616508,
+                        0,
+                        38.7116623
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "fire_hydrant-3",
+            "name": "消火栓-3",
+            "entity": "fire_hydrant",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.615616,
+                        0,
+                        38.7116737
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "fire_hydrant-4",
+            "name": "消火栓-4",
+            "entity": "fire_hydrant",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.617493,
+                        0,
+                        38.7132034
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "fire_hydrant-5",
+            "name": "消火栓-5",
+            "entity": "fire_hydrant",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.616608,
+                        0,
+                        38.7132149
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "fire_hydrant-6",
+            "name": "消火栓-6",
+            "entity": "fire_hydrant",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.615677,
+                        0,
+                        38.7132263
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "fire_hydrant-7",
+            "name": "消火栓-7",
+            "entity": "fire_hydrant",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.614738,
+                        0,
+                        38.7124825
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "foam_fire_truck-5",
+            "name": "泡沫消防车-1",
+            "entity": "foam_fire_truck",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.622009,
+                        0,
+                        38.7129173
+                    ]
+                },
+                {
+                    "id": "transform/rotation",
+                    "value": [
+                        270,
+                        0,
+                        0
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "foam_fire_truck-6",
+            "name": "泡沫消防车-2",
+            "entity": "foam_fire_truck",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.622009,
+                        0,
+                        38.71304
+                    ]
+                },
+                {
+                    "id": "transform/rotation",
+                    "value": [
+                        270,
+                        0,
+                        0
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "foam_fire_truck-7",
+            "name": "泡沫消防车-3",
+            "entity": "foam_fire_truck",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.62201,
+                        0,
+                        38.713152
+                    ]
+                },
+                {
+                    "id": "transform/rotation",
+                    "value": [
+                        270,
+                        0,
+                        0
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "foam_fire_truck-8",
+            "name": "泡沫消防车-4",
+            "entity": "foam_fire_truck",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.622009,
+                        0,
+                        38.7132721
+                    ]
+                },
+                {
+                    "id": "transform/rotation",
+                    "value": [
+                        270,
+                        0,
+                        0
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "foam_fire_truck-9",
+            "name": "泡沫消防车-5",
+            "entity": "foam_fire_truck",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.622009,
+                        0,
+                        38.71338
+                    ]
+                },
+                {
+                    "id": "transform/rotation",
+                    "value": [
+                        270,
+                        0,
+                        0
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "rescue_point-1",
+            "name": "救援点-1",
+            "entity": "rescue_point",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.6189,
+                        0,
+                        38.713444
+                    ]
+                },
+                {
+                    "id": "remaining_rescue_people_num",
+                    "value": 10
+                }
+            ]
+        },
+        {
+            "id": "scene",
+            "name": "场景",
+            "entity": "scene",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.6074,
+                        0,
+                        38.7128
+                    ]
+                },
+                {
+                    "id": "scene_info/scene_name",
+                    "value": "天津"
+                },
+                {
+                    "id": "scene_info/center_position",
+                    "value": [
+                        117.6074,
+                        0,
+                        38.7128
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "tank-1",
+            "name": "储罐-1",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.61866,
+                        0,
+                        38.71301
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "1"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-2",
+            "name": "储罐-2",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.618332,
+                        0,
+                        38.71301
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "1"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-3",
+            "name": "储罐-3",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.618958,
+                        0,
+                        38.713
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "1"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-4",
+            "name": "储罐-4",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.619217,
+                        0,
+                        38.7129974
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "1"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-5",
+            "name": "储罐-5",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.619461,
+                        0,
+                        38.7129974
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "1"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-6",
+            "name": "储罐-6",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.619446,
+                        0,
+                        38.7127151
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "1"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 6
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 113.1
+                }
+            ]
+        },
+        {
+            "id": "tank-7",
+            "name": "储罐-7",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.619232,
+                        0,
+                        38.7127151
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "1"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 6
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 113.1
+                }
+            ]
+        },
+        {
+            "id": "tank-8",
+            "name": "储罐-8",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.619049,
+                        0,
+                        38.7127151
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "1"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 6
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 113.1
+                }
+            ]
+        },
+        {
+            "id": "tank-9",
+            "name": "储罐-9",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.618851,
+                        0,
+                        38.7127151
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "1"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 6
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 113.1
+                }
+            ]
+        },
+        {
+            "id": "tank-10",
+            "name": "储罐-10",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.618652,
+                        0,
+                        38.7127151
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "1"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 6
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 113.1
+                }
+            ]
+        },
+        {
+            "id": "tank-11",
+            "name": "储罐-11",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.618469,
+                        0,
+                        38.7127151
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "1"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 6
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 113.1
+                }
+            ]
+        },
+        {
+            "id": "tank-12",
+            "name": "储罐-12",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.618271,
+                        0,
+                        38.7127151
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "1"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 6
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 113.1
+                }
+            ]
+        },
+        {
+            "id": "tank-13",
+            "name": "储罐-13",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.618332,
+                        0,
+                        38.7121239
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "1"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-14",
+            "name": "储罐-14",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.618309,
+                        0,
+                        38.7118263
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "1"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-15",
+            "name": "储罐-15",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.618637,
+                        0,
+                        38.71182
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "1"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-16",
+            "name": "储罐-16",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.618622,
+                        0,
+                        38.71212
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "1"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-17",
+            "name": "储罐-17",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.618927,
+                        0,
+                        38.71212
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "1"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-18",
+            "name": "储罐-18",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.618927,
+                        0,
+                        38.71182
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "1"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-19",
+            "name": "储罐-19",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.6192,
+                        0,
+                        38.71182
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "1"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-20",
+            "name": "储罐-20",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.6192,
+                        0,
+                        38.71212
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "1"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-21",
+            "name": "储罐-21",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.619476,
+                        0,
+                        38.7121124
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "1"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-22",
+            "name": "储罐-22",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.619461,
+                        0,
+                        38.7118149
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "1"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-23",
+            "name": "储罐-23",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.617027,
+                        0,
+                        38.7128258
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "2"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 24
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 1809.56
+                }
+            ]
+        },
+        {
+            "id": "tank-24",
+            "name": "储罐-24",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.616135,
+                        0,
+                        38.7128372
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "2"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 24
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 1809.56
+                }
+            ]
+        },
+        {
+            "id": "tank-25",
+            "name": "储罐-25",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.615234,
+                        0,
+                        38.71284
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "2"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 24
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 1809.56
+                }
+            ]
+        },
+        {
+            "id": "tank-26",
+            "name": "储罐-26",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.617012,
+                        0,
+                        38.7121048
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "2"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 24
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 1809.56
+                }
+            ]
+        },
+        {
+            "id": "tank-27",
+            "name": "储罐-27",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.616135,
+                        0,
+                        38.7121124
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "2"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 24
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 1809.56
+                }
+            ]
+        },
+        {
+            "id": "tank-28",
+            "name": "储罐-28",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.615204,
+                        0,
+                        38.7121239
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "2"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 24
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 1809.56
+                }
+            ]
+        },
+        {
+            "id": "tank-29",
+            "name": "储罐-29",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.617126,
+                        0,
+                        38.713726
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "2"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 12
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 452.39
+                }
+            ]
+        },
+        {
+            "id": "tank-30",
+            "name": "储罐-30",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.616653,
+                        0,
+                        38.713726
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "2"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 12
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 452.39
+                }
+            ]
+        },
+        {
+            "id": "tank-31",
+            "name": "储罐-31",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.611679,
+                        0,
+                        38.71285
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "2"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-32",
+            "name": "储罐-32",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.611694,
+                        0,
+                        38.713192
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "2"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-33",
+            "name": "储罐-33",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.611252,
+                        0,
+                        38.7131958
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "2"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-34",
+            "name": "储罐-34",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.611237,
+                        0,
+                        38.7128525
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "2"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-35",
+            "name": "储罐-35",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.610222,
+                        0,
+                        38.7135544
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "2"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 12
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 452.39
+                }
+            ]
+        },
+        {
+            "id": "tank-36",
+            "name": "储罐-36",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.609795,
+                        0,
+                        38.713562
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "2"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 12
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 452.39
+                }
+            ]
+        },
+        {
+            "id": "tank-37",
+            "name": "储罐-37",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.6098,
+                        0,
+                        38.71391
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "2"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 12
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 452.39
+                }
+            ]
+        },
+        {
+            "id": "tank-38",
+            "name": "储罐-38",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.610252,
+                        0,
+                        38.7139
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "2"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 12
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 452.39
+                }
+            ]
+        },
+        {
+            "id": "tank-39",
+            "name": "储罐-39",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.6096,
+                        0,
+                        38.7122
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "2"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-40",
+            "name": "储罐-40",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.609253,
+                        0,
+                        38.712204
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "2"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-41",
+            "name": "储罐-41",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.6096,
+                        0,
+                        38.7119064
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "2"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-42",
+            "name": "储罐-42",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.611465,
+                        0,
+                        38.7120628
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "3"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 24
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 1809.56
+                }
+            ]
+        },
+        {
+            "id": "tank-43",
+            "name": "储罐-43",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.619675,
+                        0,
+                        38.71362
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "4"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-44",
+            "name": "储罐-44",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.619415,
+                        0,
+                        38.71362
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "4"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-45",
+            "name": "储罐-45",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.609665,
+                        0,
+                        38.7133026
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "5"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 8
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 201.06
+                }
+            ]
+        },
+        {
+            "id": "tank-46",
+            "name": "储罐-46",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.609894,
+                        0,
+                        38.7133026
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "5"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 8
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 201.06
+                }
+            ]
+        },
+        {
+            "id": "tank-47",
+            "name": "储罐-47",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.610107,
+                        0,
+                        38.7133026
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "5"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 8
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 201.06
+                }
+            ]
+        },
+        {
+            "id": "tank-48",
+            "name": "储罐-48",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.610336,
+                        0,
+                        38.713295
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "5"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 8
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 201.06
+                }
+            ]
+        },
+        {
+            "id": "tank-49",
+            "name": "储罐-49",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.605606,
+                        0,
+                        38.712925
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "6"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 12
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 452.39
+                }
+            ]
+        },
+        {
+            "id": "tank-50",
+            "name": "储罐-50",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.605988,
+                        0,
+                        38.7129135
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "6"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 12
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 452.39
+                }
+            ]
+        },
+        {
+            "id": "tank-51",
+            "name": "储罐-51",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.60788,
+                        0,
+                        38.71288
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "6"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-52",
+            "name": "储罐-52",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.6082,
+                        0,
+                        38.71288
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "6"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-53",
+            "name": "储罐-53",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.608521,
+                        0,
+                        38.7128754
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "6"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-54",
+            "name": "储罐-54",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.608826,
+                        0,
+                        38.7128754
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "6"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-55",
+            "name": "储罐-55",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.608818,
+                        0,
+                        38.71314
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "6"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-56",
+            "name": "储罐-56",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.608505,
+                        0,
+                        38.7131424
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "6"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-57",
+            "name": "储罐-57",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.6082,
+                        0,
+                        38.7131424
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "6"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-58",
+            "name": "储罐-58",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.607864,
+                        0,
+                        38.7131424
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "6"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-59",
+            "name": "储罐-59",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.607887,
+                        0,
+                        38.7137032
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "6"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-60",
+            "name": "储罐-60",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.6082,
+                        0,
+                        38.7137032
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "6"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-61",
+            "name": "储罐-61",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.608528,
+                        0,
+                        38.7137032
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "6"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-62",
+            "name": "储罐-62",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.608864,
+                        0,
+                        38.7136955
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "6"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-63",
+            "name": "储罐-63",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.608856,
+                        0,
+                        38.71396
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "6"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-64",
+            "name": "储罐-64",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.608528,
+                        0,
+                        38.7139626
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "6"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-65",
+            "name": "储罐-65",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.608215,
+                        0,
+                        38.7139626
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "6"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        },
+        {
+            "id": "tank-66",
+            "name": "储罐-66",
+            "entity": "tank",
+            "attributes": [
+                {
+                    "id": "transform/position",
+                    "value": [
+                        117.6079,
+                        0,
+                        38.71397
+                    ]
+                },
+                {
+                    "id": "style",
+                    "value": "6"
+                },
+                {
+                    "id": "tank/radius",
+                    "value": 10.0
+                },
+                {
+                    "id": "tank/tank_top_total_area",
+                    "value": 314.16
+                }
+            ]
+        }
+    ]
+}

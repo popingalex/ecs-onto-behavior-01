@@ -1,0 +1,34 @@
+{
+  "id": "rain",
+  "name": "雨",
+  "attributes": [
+    {
+      "id": "rain/rainfall_intensity",
+      "name": "降雨强度",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "rain/rainfall_time",
+      "name": "降雨时间",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "rain/is_rainfall",
+      "name": "是否降雨",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "event"
+      }
+    }
+  ],
+  "tags": []
+}

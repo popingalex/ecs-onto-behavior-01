@@ -1,0 +1,43 @@
+{
+  "id": "road_network",
+  "name": "路网",
+  "attributes": [
+    {
+      "id": "road_network/nodes",
+      "name": "路网节点",
+      "value": null,
+      "type": "(id:s,lng:n,lat:n,intersectionRadius:n)[]",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "road_network/edges",
+      "name": "路网边",
+      "value": null,
+      "type": "(id:s,from:s,to:s,distance:n,width:n,forwardLanes:n,backwardLanes:n,allowMidEdgeTurn:b)[]",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "road_network/areas",
+      "name": "路网区域",
+      "value": null,
+      "type": "(id:s,nodeIds:s[])[]",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "road_network/source",
+      "name": "路网来源",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    }
+  ],
+  "tags": []
+}

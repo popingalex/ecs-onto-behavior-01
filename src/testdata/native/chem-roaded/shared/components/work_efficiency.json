@@ -1,0 +1,16 @@
+{
+  "id": "work_efficiency",
+  "name": "工作效率",
+  "attributes": [
+    {
+      "id": "work_efficiency/work_efficiency",
+      "name": "增效/降效系数",
+      "value": 1,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    }
+  ],
+  "tags": []
+}

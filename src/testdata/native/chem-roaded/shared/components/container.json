@@ -1,0 +1,82 @@
+{
+  "id": "container",
+  "name": "容器",
+  "attributes": [
+    {
+      "id": "container/volume",
+      "name": "容积",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "container/liquid_level",
+      "name": "液位",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "container/pressure",
+      "name": "压力",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "container/temperature",
+      "name": "温度",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "container/stored_substance_name",
+      "name": "储存物质名称",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "container/stored_substance_english_name",
+      "name": "储存物质英文名称",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    }
+  ],
+  "tags": [],
+  "config": {
+    "state": [
+      {
+        "id": "container/container_fire",
+        "name": "火灾",
+        "type": "affected",
+        "show": {
+          "expression": "'flammable/is_burning' == 1"
+        },
+        "metric": {
+          "expression": "container/temperature",
+          "label": "温度",
+          "format": "temperature",
+          "precision": 1,
+          "trend": {
+            "enabled": true
+          }
+        }
+      }
+    ]
+  }
+}

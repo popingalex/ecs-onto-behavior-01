@@ -1,0 +1,58 @@
+{
+  "id": "building",
+  "name": "建筑物",
+  "description": "建筑物",
+  "attributes": [
+    {
+      "id": "building_name",
+      "value": ""
+    },
+    {
+      "id": "plot/type",
+      "value": "point"
+    }
+  ],
+  "components": [
+    {
+      "id": "transform"
+    },
+    {
+      "id": "plot"
+    },
+    {
+      "id": "meta"
+    }
+  ],
+  "tags": [
+    {
+      "id": "disaster_domain.chemical_fire",
+      "name": "危化火"
+    },
+    {
+      "id": "role.bearer",
+      "name": "承灾体"
+    },
+    {
+      "id": "category.building",
+      "name": "建筑"
+    },
+    {
+      "id": "chemical_fire",
+      "name": "危化火灾",
+      "category": "disaster_domain"
+    },
+    {
+      "id": "bearer",
+      "name": "承灾体",
+      "category": "role"
+    },
+    {
+      "id": "building",
+      "name": "建筑",
+      "category": "category"
+    }
+  ],
+  "bundle_ids": [],
+  "deprecated": false,
+  "version": "1.0"
+}

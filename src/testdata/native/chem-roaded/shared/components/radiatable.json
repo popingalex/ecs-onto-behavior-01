@@ -1,0 +1,43 @@
+{
+  "id": "radiatable",
+  "name": "可辐射的",
+  "attributes": [
+    {
+      "id": "radiatable/received_heat_radiation",
+      "name": "承受热辐射",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "radiatable/max_received_radiation",
+      "name": "最大接收辐射强度",
+      "value": 0.0,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "radiatable/radiation_distance",
+      "name": "到最近辐射源距离",
+      "value": 1e+300,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "radiatable/radiation_field_data",
+      "name": "辐射场数据",
+      "value": null,
+      "type": "()",
+      "config": {
+        "layer": "display"
+      }
+    }
+  ],
+  "tags": []
+}

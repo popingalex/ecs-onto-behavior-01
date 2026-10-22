@@ -55,7 +55,8 @@ const COMMIT_SOURCE = {
     label: "参考样例 · 非当前图计算",
   },
   computed: { tone: "success" as const, label: "当前图求值" },
-}
+  "native-import": { tone: "purple" as const, label: "原生导入 · 只读" },
+} as const
 
 /** P20 演练运行工作台：冻结 → 计算 → 提交 → 播放；所有读数来自 viewCommit 的不可变快照。 */
 export default function P20RunWorkbench({ ctx }: { ctx: WorkbenchContext }) {

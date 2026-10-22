@@ -1,0 +1,241 @@
+{
+  "id": "ambulance",
+  "name": "救护车",
+  "description": "救护车，用于人员救援和安置",
+  "attributes": [
+    {
+      "id": "vehicle/rescue_people_num",
+      "value": 10,
+      "type": "n"
+    },
+    {
+      "id": "current_rescue_people_num",
+      "value": 0,
+      "type": "n"
+    },
+    {
+      "id": "rescue_point_object",
+      "value": "",
+      "type": "s"
+    },
+    {
+      "id": "plot/type",
+      "value": "point"
+    },
+    {
+      "id": "plot/color",
+      "value": "#FFFFFF"
+    },
+    {
+      "id": "plot/model",
+      "value": "lowpoly"
+    },
+    {
+      "id": "plot/lowpolyModelId",
+      "value": "lp-ambulance"
+    },
+    {
+      "id": "plot/lowpolyAutoFit",
+      "value": true
+    },
+    {
+      "id": "plot/height",
+      "value": 2.8
+    },
+    {
+      "id": "plot/width",
+      "value": 2.2
+    },
+    {
+      "id": "plot/length",
+      "value": 5.5
+    },
+    {
+      "id": "mobile/path_display",
+      "value": "road_network"
+    },
+    {
+      "id": "mobile/velocity",
+      "value": [
+        {
+          "scalar": 45
+        }
+      ]
+    },
+    {
+      "id": "transport/max_load_units",
+      "value": 8
+    },
+    {
+      "id": "transport/boarding_radius",
+      "value": 15
+    },
+    {
+      "id": "source/spawn_reason",
+      "value": "external-sync:initial",
+      "type": "s"
+    },
+    {
+      "id": "source/fetched_at",
+      "value": "",
+      "type": "s"
+    },
+    {
+      "id": "source/kind",
+      "value": "external",
+      "type": "s"
+    },
+    {
+      "id": "source/provider_id",
+      "value": "",
+      "type": "s"
+    },
+    {
+      "id": "source/data_type",
+      "value": "",
+      "type": "s"
+    },
+    {
+      "id": "source/external_id",
+      "value": "",
+      "type": "s"
+    },
+    {
+      "id": "source/link_state",
+      "value": "live",
+      "type": "s"
+    },
+    {
+      "id": "ambulance/home_hospital_id",
+      "value": "",
+      "type": "s"
+    },
+    {
+      "id": "ambulance/home_hospital_external_id",
+      "value": "",
+      "type": "s"
+    },
+    {
+      "id": "ambulance/plate",
+      "value": "",
+      "type": "s"
+    },
+    {
+      "id": "ambulance/level",
+      "value": "",
+      "type": "s"
+    },
+    {
+      "id": "ambulance/assigned_hospital_id",
+      "value": "",
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "ambulance/assigned_personnel_ids",
+      "value": [],
+      "type": "s[]",
+      "config": {
+        "layer": "attribute"
+      }
+    }
+  ],
+  "components": [
+    {
+      "id": "transform"
+    },
+    {
+      "id": "mobile"
+    },
+    {
+      "id": "controlled"
+    },
+    {
+      "id": "vehicle"
+    },
+    {
+      "id": "transport"
+    },
+    {
+      "id": "plot"
+    },
+    {
+      "id": "ui"
+    },
+    {
+      "id": "source"
+    },
+    {
+      "id": "meta"
+    },
+    {
+      "id": "ambulance"
+    }
+  ],
+  "tags": [
+    {
+      "id": "disaster_domain.general",
+      "name": "通用",
+      "category": "disaster_domain"
+    },
+    {
+      "id": "role.rescue",
+      "name": "救援",
+      "category": "role"
+    },
+    {
+      "id": "role.rescue_force",
+      "name": "救援力量",
+      "category": "role"
+    },
+    {
+      "id": "category.vehicle",
+      "name": "车辆",
+      "category": "category"
+    },
+    {
+      "id": "rescue",
+      "name": "救援",
+      "category": "role"
+    },
+    {
+      "id": "rescue_equipment",
+      "name": "救援装备",
+      "category": "category"
+    },
+    {
+      "id": "ambulance",
+      "name": "救护车",
+      "category": "category"
+    }
+  ],
+  "bundle_ids": [],
+  "config": {
+    "command": [
+      {
+        "id": "action_board",
+        "name": "装载人员",
+        "target": [
+          "instance.personnel"
+        ],
+        "params": {
+          "loadIdsArg": "loadIds"
+        }
+      },
+      {
+        "id": "action_disembark",
+        "name": "卸载人员",
+        "target": [
+          "instance.personnel"
+        ],
+        "params": {
+          "loadIdsArg": "loadIds"
+        }
+      }
+    ]
+  },
+  "deprecated": false,
+  "version": "1.0"
+}

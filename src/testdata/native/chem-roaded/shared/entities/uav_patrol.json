@@ -1,0 +1,39 @@
+{
+  "id": "uav_patrol",
+  "name": "巡逻无人机",
+  "description": "低电量巡逻 UAV，用于触发健康异常处置",
+  "attributes": [],
+  "components": [
+    {
+      "id": "transform"
+    },
+    {
+      "id": "mobile"
+    },
+    {
+      "id": "controlled"
+    },
+    {
+      "id": "battery"
+    },
+    {
+      "id": "telemetry"
+    },
+    {
+      "id": "health_status"
+    },
+    {
+      "id": "auto_response"
+    },
+    {
+      "id": "uav_platform"
+    },
+    {
+      "id": "meta"
+    }
+  ],
+  "tags": [],
+  "bundle_ids": [],
+  "deprecated": false,
+  "version": "1.0"
+}

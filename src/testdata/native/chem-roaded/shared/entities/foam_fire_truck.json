@@ -1,0 +1,388 @@
+{
+  "id": "foam_fire_truck",
+  "name": "泡沫消防车",
+  "description": "移动式消防设施，泡沫灭火",
+  "attributes": [
+    {
+      "id": "water_sprayer/spray_flow_rate",
+      "value": 3000
+    },
+    {
+      "id": "water_sprayer/range",
+      "value": 100
+    },
+    {
+      "id": "mobile/velocity",
+      "value": [
+        {
+          "scalar": 45
+        }
+      ]
+    },
+    {
+      "id": "water_tank/total_water_volume",
+      "value": 0
+    },
+    {
+      "id": "water_tank/water_capacity",
+      "value": 0
+    },
+    {
+      "id": "water_tank/current_water_volume",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "label": {
+          "format": "progress_with_max",
+          "maxAttribute": "water_tank/total_water_volume",
+          "precision": 0,
+          "order": 1,
+          "condition": {
+            "attribute": "water_sprayer/is_spraying",
+            "operator": "eq",
+            "value": 1,
+            "action": "force_show"
+          }
+        }
+      }
+    },
+    {
+      "id": "water_sprayer/is_spraying",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "alias": "喷射状态",
+        "label": {
+          "visible": false,
+          "condition": {
+            "attribute": "water_sprayer/is_spraying",
+            "operator": "eq",
+            "value": 1,
+            "action": "force_show",
+            "ever": true
+          }
+        }
+      }
+    },
+    {
+      "id": "plot/type",
+      "value": "point"
+    },
+    {
+      "id": "foam_mixer/foam_capacity",
+      "value": 0
+    },
+    {
+      "id": "foam_mixer/current_foam",
+      "value": 0
+    },
+    {
+      "id": "foam_mixer/is_spraying",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "alias": "泡沫喷射状态",
+        "label": {
+          "visible": false
+        }
+      }
+    },
+    {
+      "id": "plot/color",
+      "value": "#CC3333"
+    },
+    {
+      "id": "plot/model",
+      "value": "lowpoly"
+    },
+    {
+      "id": "plot/lowpolyModelId",
+      "value": "lp-foam-fire-truck"
+    },
+    {
+      "id": "plot/lowpolyAutoFit",
+      "value": true
+    },
+    {
+      "id": "plot/height",
+      "value": 3.5
+    },
+    {
+      "id": "plot/width",
+      "value": 2.5
+    },
+    {
+      "id": "plot/length",
+      "value": 8.0
+    },
+    {
+      "id": "mobile/path_display",
+      "value": "road_network"
+    },
+    {
+      "id": "vehicle/rescue_people_num",
+      "value": 4,
+      "type": "n"
+    },
+    {
+      "id": "transport/max_load_units",
+      "value": 6
+    },
+    {
+      "id": "transport/boarding_radius",
+      "value": 15
+    },
+    {
+      "id": "source/spawn_reason",
+      "value": "external-sync:initial",
+      "type": "s"
+    },
+    {
+      "id": "source/fetched_at",
+      "value": "",
+      "type": "s"
+    },
+    {
+      "id": "source/kind",
+      "value": "external",
+      "type": "s"
+    },
+    {
+      "id": "source/provider_id",
+      "value": "",
+      "type": "s"
+    },
+    {
+      "id": "source/data_type",
+      "value": "",
+      "type": "s"
+    },
+    {
+      "id": "source/external_id",
+      "value": "",
+      "type": "s"
+    },
+    {
+      "id": "source/link_state",
+      "value": "live",
+      "type": "s"
+    },
+    {
+      "id": "foam_mixer/mix_ratio",
+      "value": 0.03,
+      "type": "n"
+    },
+    {
+      "id": "foam_mixer/foam_tank_volume",
+      "value": 0,
+      "type": "n"
+    }
+  ],
+  "components": [
+    {
+      "id": "transform"
+    },
+    {
+      "id": "mobile"
+    },
+    {
+      "id": "controlled"
+    },
+    {
+      "id": "health"
+    },
+    {
+      "id": "radiatable"
+    },
+    {
+      "id": "water_tank"
+    },
+    {
+      "id": "water_sprayer"
+    },
+    {
+      "id": "foam_mixer"
+    },
+    {
+      "id": "vehicle"
+    },
+    {
+      "id": "transport"
+    },
+    {
+      "id": "plot"
+    },
+    {
+      "id": "ui"
+    },
+    {
+      "id": "source"
+    },
+    {
+      "id": "meta"
+    }
+  ],
+  "tags": [
+    {
+      "id": "disaster_domain.fire",
+      "name": "火灾",
+      "category": "disaster_domain"
+    },
+    {
+      "id": "disaster_domain.chemical_fire",
+      "name": "危化火",
+      "category": "disaster_domain"
+    },
+    {
+      "id": "role.rescue",
+      "name": "救援",
+      "category": "role"
+    },
+    {
+      "id": "role.rescue_force",
+      "name": "救援力量",
+      "category": "role"
+    },
+    {
+      "id": "category.vehicle",
+      "name": "车辆",
+      "category": "category"
+    },
+    {
+      "id": "chemical_fire",
+      "name": "危化火灾",
+      "category": "disaster_domain"
+    },
+    {
+      "id": "fire",
+      "name": "火灾",
+      "category": "disaster_domain"
+    },
+    {
+      "id": "rescue",
+      "name": "救援",
+      "category": "role"
+    },
+    {
+      "id": "rescue_equipment",
+      "name": "救援装备",
+      "category": "category"
+    },
+    {
+      "id": "fire_truck",
+      "name": "消防车",
+      "category": "category"
+    },
+    {
+      "id": "water_tank",
+      "name": "水罐",
+      "category": "category"
+    },
+    {
+      "id": "foam",
+      "name": "泡沫",
+      "category": "category"
+    }
+  ],
+  "interactions": [
+    {
+      "id": "tank_volume_label",
+      "kind": "label",
+      "config": {
+        "name": "水位标牌",
+        "enterCondition": "water_tank/current_water_volume > 0",
+        "displayItems": [
+          {
+            "id": "current_vol",
+            "expression": "water_tank/current_water_volume",
+            "format": "progress_with_max",
+            "maxAttribute": "water_tank/total_water_volume",
+            "precision": 1,
+            "unit": "L"
+          }
+        ]
+      }
+    },
+    {
+      "id": "water_depleted_event",
+      "kind": "event",
+      "expression": "water_tank/current_water_volume <= 0",
+      "config": {
+        "event": "水量耗尽",
+        "condition": {
+          "operator": "lte",
+          "value": 0
+        },
+        "category": "danger"
+      }
+    },
+    {
+      "id": "spraying_label",
+      "kind": "label",
+      "config": {
+        "name": "喷射标牌",
+        "enterCondition": "water_sprayer/is_spraying == 1",
+        "displayItems": [
+          {
+            "id": "spray_text",
+            "expression": "\"喷泡沫中\"",
+            "format": "raw"
+          }
+        ]
+      }
+    }
+  ],
+  "config": {
+    "effects": [
+      {
+        "id": "water_spray",
+        "type": "spray",
+        "params": {
+          "effectType": "foam"
+        }
+      }
+    ],
+    "label": [
+      {
+        "name": "水量",
+        "format": "table",
+        "show": {
+          "expression": "controlled/commands[?(@.command == 'action_spray_water' && @.status == 'executing')]"
+        },
+        "items": [
+          {
+            "label": "剩余水量",
+            "expression": "'water_tank/current_water_volume' / 'water_tank/total_water_volume' * 100",
+            "unit": "%"
+          }
+        ]
+      }
+    ],
+    "command": [
+      {
+        "commandId": "action_spray_water",
+        "kind": "spray",
+        "params": {
+          "range": {
+            "attribute": "water_sprayer/range"
+          },
+          "target": [
+            "instance"
+          ]
+        }
+      },
+      {
+        "commandId": "action_spray_foam",
+        "kind": "spray",
+        "params": {
+          "target": [
+            "instance"
+          ]
+        }
+      }
+    ]
+  },
+  "bundle_ids": [],
+  "deprecated": false,
+  "version": "1.0"
+}

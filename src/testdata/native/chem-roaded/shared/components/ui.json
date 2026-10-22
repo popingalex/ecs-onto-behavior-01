@@ -1,0 +1,16 @@
+{
+  "id": "ui",
+  "name": "界面",
+  "attributes": [
+    {
+      "id": "ui/is_basic_property_progress_bar",
+      "name": "基础属性进度条",
+      "value": false,
+      "type": "b",
+      "config": {
+        "layer": "display"
+      }
+    }
+  ],
+  "tags": []
+}

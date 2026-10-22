@@ -1,0 +1,44 @@
+{
+  "id": "component_group_demo_vehicle",
+  "name": "Component Group Demo Vehicle",
+  "description": "用于验证 componentGroup resource / componentGroupBinding relation 的最小 archetype；边界字段仍兼容为 bundle_ids",
+  "attributes": [
+    {
+      "id": "transform/scale",
+      "value": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "id": "controlled/status",
+      "value": "idle"
+    },
+    {
+      "id": "controlled/commands",
+      "value": []
+    }
+  ],
+  "components": [
+    {
+      "id": "transform"
+    },
+    {
+      "id": "controlled"
+    }
+  ],
+  "tags": [
+    {
+      "id": "role.rescue",
+      "name": "救援",
+      "category": "role"
+    }
+  ],
+  "bundle_ids": [
+    "vehicle.core",
+    "suppression.foam"
+  ],
+  "deprecated": false,
+  "version": "0"
+}

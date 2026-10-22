@@ -1,0 +1,44 @@
+{
+  "id": "event_source",
+  "name": "事件源",
+  "description": "事件源组件，用于优先级仲裁",
+  "attributes": [
+    {
+      "id": "event_source/event_type",
+      "name": "事件类型",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "event_source/severity",
+      "name": "严重等级",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "event_source/source_entity",
+      "name": "源实体",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "event_source/timestamp",
+      "name": "时间戳",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    }
+  ],
+  "tags": []
+}

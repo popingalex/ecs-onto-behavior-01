@@ -1,0 +1,187 @@
+{
+  "id": "scene_info",
+  "name": "场景信息",
+  "attributes": [
+    {
+      "id": "scene_info/scene_name",
+      "name": "场景名称",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "scene_info/scene_id",
+      "name": "场景ID",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "scene_info/combat_zone_return_result",
+      "name": "辐射圈结果",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "scene_info/scene_type",
+      "name": "场景类型",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "scene_info/scene_area",
+      "name": "场景面积",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "scene_info/scene_category",
+      "name": "场景分类",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "scene_info/model_config",
+      "name": "模型设置",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "scene_info/region",
+      "name": "场景区域",
+      "value": null,
+      "type": "n[][]",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "scene_info/four_points",
+      "name": "四至点集合",
+      "value": null,
+      "type": "n[][]",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "scene_info/dem_file_name",
+      "name": "DEM 文件名",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "scene_info/upstream_depth",
+      "name": "上游水深",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "scene_info/material_transportation_distance",
+      "name": "物料运输距离",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "scene_info/scene_date",
+      "name": "场景开始推演时间",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "scene_info/suggestions_data",
+      "name": "场景资源建议数据",
+      "value": null,
+      "type": "u",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "scene_info/suggestions_scheme_config",
+      "name": "推荐方案设置",
+      "value": null,
+      "type": "u",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "scene_info/name",
+      "name": "显示名称",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "scene_info/description",
+      "name": "描述",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "scene_info/time",
+      "name": "推演时间",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "scene_info/center_position",
+      "name": "中心位置",
+      "value": null,
+      "type": "n[3]",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "scene_info/radiation_field",
+      "name": "辐射场数据",
+      "value": null,
+      "type": "()",
+      "config": {
+        "layer": "display"
+      }
+    }
+  ],
+  "tags": []
+}

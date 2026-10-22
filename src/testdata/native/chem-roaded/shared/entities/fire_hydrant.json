@@ -1,0 +1,70 @@
+{
+  "id": "fire_hydrant",
+  "name": "消火栓",
+  "description": "固定式补水、灭火设施（连接供水管网）",
+  "attributes": [
+    {
+      "id": "water_source/water_supply_flow",
+      "value": 10000
+    },
+    {
+      "id": "plot/type",
+      "value": "point"
+    },
+    {
+      "id": "plot/icon",
+      "value": "lucide:droplets"
+    }
+  ],
+  "components": [
+    {
+      "id": "plot"
+    },
+    {
+      "id": "transform"
+    },
+    {
+      "id": "water_source"
+    }
+  ],
+  "tags": [
+    {
+      "id": "disaster_domain.fire",
+      "name": "火灾",
+      "category": "disaster_domain"
+    },
+    {
+      "id": "disaster_domain.chemical_fire",
+      "name": "危化火",
+      "category": "disaster_domain"
+    },
+    {
+      "id": "disaster_domain.forest_fire",
+      "name": "林火",
+      "category": "disaster_domain"
+    },
+    {
+      "id": "role.rescue",
+      "name": "救援",
+      "category": "role"
+    },
+    {
+      "id": "role.rescue_facility",
+      "name": "救援设施",
+      "category": "role"
+    },
+    {
+      "id": "category.facility",
+      "name": "设施",
+      "category": "category"
+    },
+    {
+      "id": "hydrant",
+      "name": "消火栓",
+      "category": "category"
+    }
+  ],
+  "bundle_ids": [],
+  "deprecated": false,
+  "version": "1.0"
+}

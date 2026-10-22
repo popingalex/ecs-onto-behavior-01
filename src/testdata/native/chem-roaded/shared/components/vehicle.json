@@ -1,0 +1,43 @@
+{
+  "id": "vehicle",
+  "name": "载具",
+  "attributes": [
+    {
+      "id": "vehicle/is_selectable",
+      "name": "是否可框选",
+      "value": true,
+      "type": "b",
+      "config": {
+        "layer": "event"
+      }
+    },
+    {
+      "id": "vehicle/vehicle_id",
+      "name": "车辆编号",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "vehicle/status",
+      "name": "车辆状态",
+      "value": "idle",
+      "type": "s",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "vehicle/rescue_people_num",
+      "name": "乘员数",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    }
+  ],
+  "tags": []
+}

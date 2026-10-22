@@ -1,0 +1,88 @@
+{
+  "id": "foam_mixer",
+  "name": "泡沫混合器",
+  "attributes": [
+    {
+      "id": "foam_mixer/foam_capacity",
+      "name": "泡沫容量",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "foam_mixer/current_foam",
+      "name": "当前泡沫量",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "foam_mixer/is_spraying",
+      "name": "是否喷射",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "event"
+      }
+    },
+    {
+      "id": "foam_mixer/foam_tank_volume",
+      "name": "泡沫罐容积",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "foam_mixer/mix_ratio",
+      "name": "泡沫混合比",
+      "value": 0.03,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    }
+  ],
+  "tags": [],
+  "config": {
+    "state": [
+      {
+        "id": "foam_mixer/foam_spraying",
+        "name": "喷射",
+        "type": "rescuing",
+        "show": {
+          "expression": "'foam_mixer/is_spraying' == 1"
+        },
+        "hide": {
+          "enabled": true
+        },
+        "metric": {
+          "expression": "'foam_mixer/current_foam' / 'foam_mixer/foam_capacity' * 100",
+          "label": "剩余泡沫%",
+          "format": "percentage",
+          "precision": 0,
+          "trend": {
+            "enabled": true
+          }
+        }
+      }
+    ],
+    "command": [
+      {
+        "id": "action_spray_foam",
+        "name": "喷泡沫",
+        "kind": "spray",
+        "dependencies": [
+          {
+            "component_id": "water_sprayer"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "id": "wind",
+  "name": "风",
+  "attributes": [
+    {
+      "id": "wind/wind_direction",
+      "name": "风向",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "wind/wind_speed",
+      "name": "风速",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    }
+  ],
+  "tags": []
+}

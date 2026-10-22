@@ -1,0 +1,205 @@
+{
+  "id": "casualty",
+  "name": "伤员",
+  "description": "伤员医疗状态、分诊与医院安置",
+  "attributes": [
+    {
+      "id": "casualty/injury_type_code",
+      "name": "伤情类型",
+      "value": "",
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "casualty/injury_description",
+      "name": "伤情描述",
+      "value": "",
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "casualty/triage_level",
+      "name": "分诊级别",
+      "value": "",
+      "type": "s",
+      "config": {
+        "layer": "attribute",
+        "description": "RED | YELLOW | GREEN"
+      }
+    },
+    {
+      "id": "casualty/required_capabilities",
+      "name": "所需救治能力",
+      "value": [],
+      "type": "s[]",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "casualty/required_department_codes",
+      "name": "所需科室",
+      "value": [],
+      "type": "s[]",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "casualty/transport_priority",
+      "name": "转运优先级",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "casualty/transportable",
+      "name": "可转运",
+      "value": true,
+      "type": "b",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "casualty/scene_service_minutes",
+      "name": "现场处置时间",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "casualty/latest_treatment_time",
+      "name": "最近救治时间",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "casualty/assigned_hospital_id",
+      "name": "收治医院",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "casualty/injury_zone",
+      "name": "受伤区域",
+      "value": "",
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "casualty/status",
+      "name": "医疗状态",
+      "value": "waiting",
+      "type": "s",
+      "config": {
+        "layer": "display",
+        "description": "waiting | triaged | hospitalized"
+      }
+    },
+    {
+      "id": "casualty/threat_level",
+      "name": "威胁等级",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display",
+        "transport": "client"
+      }
+    },
+    {
+      "id": "casualty/exposure_temperature",
+      "name": "暴露温度(℃)",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "display",
+        "transport": "client"
+      }
+    },
+    {
+      "id": "casualty/threat_dose",
+      "name": "热剂量",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "display",
+        "transport": "client"
+      }
+    }
+  ],
+  "tags": [],
+  "config": {
+    "command": [
+      {
+        "id": "action_triage",
+        "name": "伤情分诊",
+        "kind": "triage",
+        "params": {
+          "triageLevelArg": "triageLevel",
+          "hospitalIdArg": "hospitalId",
+          "priorityArg": "priority"
+        }
+      },
+      {
+        "id": "action_hospitalize",
+        "name": "送达医院",
+        "kind": "hospitalize",
+        "params": {
+          "hospitalIdArg": "hospitalId"
+        }
+      }
+    ],
+    "state": [
+      {
+        "id": "casualty/waiting",
+        "name": "待分诊",
+        "type": "medical",
+        "show": {
+          "expression": "casualty/status == 'waiting'"
+        },
+        "hide": {
+          "enabled": true
+        }
+      },
+      {
+        "id": "casualty/triaged",
+        "name": "已分诊",
+        "type": "medical",
+        "show": {
+          "expression": "casualty/status == 'triaged'"
+        },
+        "hide": {
+          "enabled": true
+        }
+      },
+      {
+        "id": "casualty/hospitalized",
+        "name": "已住院",
+        "type": "medical",
+        "show": {
+          "expression": "casualty/status == 'hospitalized'"
+        },
+        "hide": {
+          "enabled": true
+        }
+      }
+    ]
+  }
+}

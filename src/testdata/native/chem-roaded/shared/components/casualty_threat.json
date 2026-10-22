@@ -1,0 +1,68 @@
+{
+  "id": "casualty_threat",
+  "name": "伤员威胁分析",
+  "description": "injury-threat 系统的场景配置与逐帧分析输出（温度场 × 人员密度 KDE 叠加）",
+  "attributes": [
+    {
+      "id": "casualty_threat/config",
+      "name": "威胁模型参数",
+      "value": {
+        "sigmaM": 32,
+        "densityRefPersonsPerHa": 2,
+        "doseLimitSeconds": 900,
+        "frameSeconds": 60
+      },
+      "type": "()",
+      "config": {
+        "transport": "server-only"
+      }
+    },
+    {
+      "id": "casualty_threat/summary",
+      "name": "威胁汇总",
+      "value": null,
+      "type": "()",
+      "config": {
+        "transport": "client"
+      }
+    },
+    {
+      "id": "casualty_threat/persons",
+      "name": "人员威胁明细",
+      "value": null,
+      "type": "()",
+      "config": {
+        "transport": "client"
+      }
+    },
+    {
+      "id": "casualty_threat/contours",
+      "name": "威胁等值带",
+      "value": null,
+      "type": "()",
+      "config": {
+        "transport": "client"
+      }
+    },
+    {
+      "id": "casualty_threat/density_grid",
+      "name": "人员密度矩阵",
+      "value": null,
+      "type": "()",
+      "config": {
+        "transport": "server-only"
+      }
+    },
+    {
+      "id": "casualty_threat/threat_grid",
+      "name": "威胁指数矩阵",
+      "value": null,
+      "type": "()",
+      "config": {
+        "transport": "server-only"
+      }
+    }
+  ],
+  "tags": [],
+  "config": {}
+}

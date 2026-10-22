@@ -1,0 +1,762 @@
+[
+  {
+    "id": "combustion_system.update",
+    "inputs": [
+      {
+        "description": "参数 1: com.gsafety.simulation.compute.Context",
+        "id": "context",
+        "name": "context",
+        "type": "u"
+      },
+      {
+        "description": "参数 2: 旧版工程.util.List",
+        "id": "tanks",
+        "name": "tanks",
+        "type": "u[]"
+      },
+      {
+        "description": "参数 3: 旧版工程.util.List",
+        "id": "sprayers",
+        "name": "sprayers",
+        "type": "u[]"
+      }
+    ],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "update",
+    "className": "com.gsafety.simulation.behavior.system.v2.CombustionSystem",
+    "modulePath": "combustion_system",
+    "deprecated": false
+  },
+  {
+    "id": "fire_engine_system.fireRescue",
+    "name": "救护车救援",
+    "description": "处理救护车的救援和安置操作",
+    "inputs": [
+      {
+        "id": "ambulances",
+        "name": "ambulances",
+        "type": "u[]"
+      },
+      {
+        "id": "rescuePoints",
+        "name": "rescuePoints",
+        "type": "u[]"
+      }
+    ],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "fireRescue",
+    "className": "com.gsafety.simulation.behavior.FireEngineSystem",
+    "modulePath": "fire_engine_system",
+    "deprecated": false
+  },
+  {
+    "id": "com.gsafety.simulation.behavior.system.v2.MobileSystem.update",
+    "name": "MobileSystem.update",
+    "description": "移动系统 v2 更新表达式",
+    "inputs": [],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "update",
+    "className": "com.gsafety.simulation.behavior.system.v2.MobileSystem",
+    "modulePath": "com/gsafety/simulation/behavior/system/v2",
+    "version": "0",
+    "deprecated": false
+  },
+  {
+    "id": "fire_engine_system.foamOutfire",
+    "name": "泡沫灭火",
+    "description": "处理泡沫消防车的灭火和取水操作",
+    "inputs": [
+      {
+        "id": "foamFireTrucks",
+        "name": "foamFireTrucks",
+        "type": "u[]"
+      },
+      {
+        "id": "fireHydrants",
+        "name": "fireHydrants",
+        "type": "u[]"
+      }
+    ],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "foamOutfire",
+    "className": "com.gsafety.simulation.behavior.FireEngineSystem",
+    "modulePath": "fire_engine_system",
+    "deprecated": false
+  },
+  {
+    "id": "fire_engine_system.spurtWaterCoolDown",
+    "name": "喷水冷却",
+    "description": "处理水罐消防车的冷却和取水操作",
+    "inputs": [
+      {
+        "id": "fireEngines",
+        "name": "fireEngines",
+        "type": "u[]"
+      },
+      {
+        "id": "fireHydrants",
+        "name": "fireHydrants",
+        "type": "u[]"
+      }
+    ],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "spurtWaterCoolDown",
+    "className": "com.gsafety.simulation.behavior.FireEngineSystem",
+    "modulePath": "fire_engine_system",
+    "deprecated": false
+  },
+  {
+    "id": "sprinkler_system.update",
+    "inputs": [
+      {
+        "description": "参数 1: com.gsafety.simulation.compute.Context",
+        "id": "context",
+        "name": "context",
+        "type": "u"
+      },
+      {
+        "description": "参数 2: 旧版工程.util.List",
+        "id": "sprayers",
+        "name": "sprayers",
+        "type": "u[]"
+      },
+      {
+        "description": "参数 3: 旧版工程.util.List",
+        "id": "fixedSprinklers",
+        "name": "fixedSprinklers",
+        "type": "u[]"
+      },
+      {
+        "description": "参数 4: 旧版工程.util.List",
+        "id": "allEntities",
+        "name": "allEntities",
+        "type": "u[]"
+      }
+    ],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "update",
+    "className": "com.gsafety.simulation.behavior.system.v2.SprinklerSystem",
+    "modulePath": "sprinkler_system",
+    "deprecated": false
+  },
+  {
+    "id": "com.gsafety.simulation.behavior.system.v2.PriorityArbitrationSystem.update",
+    "name": "PriorityArbitrationSystem.update",
+    "description": "优先级仲裁系统 v2 更新表达式",
+    "inputs": [],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "update",
+    "className": "com.gsafety.simulation.behavior.system.v2.PriorityArbitrationSystem",
+    "modulePath": "com/gsafety/simulation/behavior/system/v2",
+    "version": "0",
+    "deprecated": false
+  },
+  {
+    "id": "com.gsafety.simulation.behavior.system.v2.HealthMonitorSystem.update",
+    "name": "HealthMonitorSystem.update",
+    "description": "健康监测系统 v2 更新表达式",
+    "inputs": [],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "update",
+    "className": "com.gsafety.simulation.behavior.system.v2.HealthMonitorSystem",
+    "modulePath": "com/gsafety/simulation/behavior/system/v2",
+    "version": "0",
+    "deprecated": false
+  },
+  {
+    "id": "movement_system.move",
+    "name": "移动",
+    "description": "处理具备移动组件实体的位移",
+    "inputs": [
+      {
+        "id": "movers",
+        "name": "movers",
+        "type": "u[]"
+      }
+    ],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "move",
+    "className": "com.gsafety.simulation.behavior.MovementSystem",
+    "modulePath": "movement_system",
+    "deprecated": false
+  },
+  {
+    "id": "combustion_evolution_system.update",
+    "name": "燃烧",
+    "description": "v2 燃烧系统",
+    "inputs": [
+      {
+        "id": "instances",
+        "name": "instances",
+        "type": "u[]"
+      }
+    ],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "update",
+    "className": "com.gsafety.simulation.behavior.system.v2.CombustionSystem",
+    "modulePath": "combustion_system",
+    "deprecated": false
+  },
+  {
+    "id": "fire_fighting_operation_system.update",
+    "name": "喷淋",
+    "description": "v2 喷淋系统",
+    "inputs": [
+      {
+        "id": "instances",
+        "name": "instances",
+        "type": "u[]"
+      }
+    ],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "update",
+    "className": "com.gsafety.simulation.behavior.system.v2.SprinklerSystem",
+    "modulePath": "sprinkler_system",
+    "deprecated": false
+  },
+  {
+    "id": "com.gsafety.simulation.behavior.system.v2.CombustionSystem",
+    "name": "CombustionSystem.update",
+    "inputs": [],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "update",
+    "className": "com.gsafety.simulation.behavior.system.v2.CombustionSystem",
+    "modulePath": "com/gsafety/simulation/behavior/system/v2",
+    "deprecated": false
+  },
+  {
+    "id": "foam_spray_effect_system.updateFoamSprayEffects",
+    "inputs": [
+      {
+        "description": "参数 1: com.gsafety.simulation.compute.Context",
+        "id": "context",
+        "name": "context",
+        "type": "u"
+      },
+      {
+        "description": "参数 2: 旧版工程.util.List",
+        "id": "foamMixers",
+        "name": "foamMixers",
+        "type": "u[]"
+      }
+    ],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "updateFoamSprayEffects",
+    "className": "com.gsafety.simulation.behavior.FoamSprayEffectSystem",
+    "modulePath": "foam_spray_effect_system",
+    "deprecated": false
+  },
+  {
+    "id": "fire_effect_system.updateFireEffects",
+    "inputs": [
+      {
+        "description": "参数 1: com.gsafety.simulation.compute.Context",
+        "id": "context",
+        "name": "context",
+        "type": "u"
+      },
+      {
+        "description": "参数 2: 旧版工程.util.List",
+        "id": "flammables",
+        "name": "flammables",
+        "type": "u[]"
+      }
+    ],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "updateFireEffects",
+    "className": "com.gsafety.simulation.behavior.FireEffectSystem",
+    "modulePath": "fire_effect_system",
+    "deprecated": false
+  },
+  {
+    "id": "radiation_effect_system.updateRadiationEffects",
+    "inputs": [
+      {
+        "description": "参数 1: com.gsafety.simulation.compute.Context",
+        "id": "context",
+        "name": "context",
+        "type": "u"
+      },
+      {
+        "description": "参数 2: 旧版工程.util.List",
+        "id": "radiatables",
+        "name": "radiatables",
+        "type": "u[]"
+      }
+    ],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "updateRadiationEffects",
+    "className": "com.gsafety.simulation.behavior.RadiationEffectSystem",
+    "modulePath": "radiation_effect_system",
+    "deprecated": false
+  },
+  {
+    "id": "water_spray_effect_system.updateWaterSprayEffects",
+    "inputs": [
+      {
+        "description": "参数 1: com.gsafety.simulation.compute.Context",
+        "id": "context",
+        "name": "context",
+        "type": "u"
+      },
+      {
+        "description": "参数 2: 旧版工程.util.List",
+        "id": "sprayers",
+        "name": "sprayers",
+        "type": "u[]"
+      }
+    ],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "updateWaterSprayEffects",
+    "className": "com.gsafety.simulation.behavior.WaterSprayEffectSystem",
+    "modulePath": "water_spray_effect_system",
+    "deprecated": false
+  },
+  {
+    "id": "water_intake_system.processIntakeCommands",
+    "inputs": [
+      {
+        "description": "参数 1: com.gsafety.simulation.compute.Context",
+        "id": "context",
+        "name": "context",
+        "type": "u"
+      },
+      {
+        "description": "参数 2: 旧版工程.util.List",
+        "id": "fireEngines",
+        "name": "fireEngines",
+        "type": "u[]"
+      },
+      {
+        "description": "参数 3: 旧版工程.util.List",
+        "id": "fireHydrants",
+        "name": "fireHydrants",
+        "type": "u[]"
+      }
+    ],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "processIntakeCommands",
+    "className": "com.gsafety.simulation.behavior.system.v2.WaterIntakeSystem",
+    "modulePath": "water_intake_system",
+    "deprecated": false
+  },
+  {
+    "id": "chemical_fire_model",
+    "name": "化学火灾热辐射范围模型",
+    "description": "计算储罐火的热辐射范围，调用远程化学火灾模型服务",
+    "inputs": [
+      {
+        "id": "paramIn",
+        "name": "paramIn",
+        "type": "s",
+        "value": "{\"103001\":\"无风\",...}"
+      }
+    ],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "deprecated": false
+  },
+  {
+    "id": "com.gsafety.simulation.behavior.system.v2.RadiationDiffusionSystem",
+    "name": "RadiationDiffusionSystem.update",
+    "inputs": [],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "update",
+    "className": "com.gsafety.simulation.behavior.system.v2.RadiationDiffusionSystem",
+    "modulePath": "com/gsafety/simulation/behavior/system/v2",
+    "deprecated": false
+  },
+  {
+    "id": "com.gsafety.simulation.behavior.system.v2.FireExtinguishingInteractionSystem",
+    "name": "FireExtinguishingInteractionSystem.update",
+    "inputs": [],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "update",
+    "className": "com.gsafety.simulation.behavior.system.v2.FireExtinguishingInteractionSystem",
+    "modulePath": "com/gsafety/simulation/behavior/system/v2",
+    "deprecated": false
+  },
+  {
+    "id": "com.gsafety.simulation.behavior.system.v2.SprinklerSystem",
+    "name": "SprinklerSystem.update",
+    "inputs": [],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "update",
+    "className": "com.gsafety.simulation.behavior.system.v2.SprinklerSystem",
+    "modulePath": "com/gsafety/simulation/behavior/system/v2",
+    "deprecated": false
+  },
+  {
+    "id": "com.gsafety.simulation.behavior.system.v2.MobileSystem",
+    "name": "MobileSystem.update",
+    "inputs": [],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "update",
+    "className": "com.gsafety.simulation.behavior.system.v2.MobileSystem",
+    "modulePath": "com/gsafety/simulation/behavior/system/v2",
+    "deprecated": false
+  },
+  {
+    "id": "tank_fire_system.tankFire",
+    "name": "储罐火灾",
+    "description": "处理储罐火灾的物理模拟",
+    "inputs": [
+      {
+        "id": "environments",
+        "name": "environments",
+        "type": "u[]"
+      },
+      {
+        "id": "tanks",
+        "name": "tanks",
+        "type": "u[]"
+      },
+      {
+        "id": "foamFireTrucks",
+        "name": "foamFireTrucks",
+        "type": "u[]"
+      },
+      {
+        "id": "fireEngines",
+        "name": "fireEngines",
+        "type": "u[]"
+      }
+    ],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "tankFire",
+    "className": "com.gsafety.simulation.behavior.TankFireSystem",
+    "modulePath": "tank_fire_system",
+    "deprecated": false
+  },
+  {
+    "id": "tank_fire_model",
+    "name": "储罐火灾模型",
+    "description": "处理储罐火灾的物理模拟，计算燃烧状态、温度、压力等参数",
+    "inputs": [
+      {
+        "id": "uid",
+        "name": "uid",
+        "type": "s",
+        "value": "test-simulation-001"
+      }
+    ],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "deprecated": false
+  },
+  {
+    "id": "com.gsafety.simulation.behavior.system.v2.WaterIntakeSystem",
+    "name": "WaterIntakeSystem.processIntakeCommands",
+    "inputs": [],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "processIntakeCommands",
+    "className": "com.gsafety.simulation.behavior.system.v2.WaterIntakeSystem",
+    "modulePath": "com/gsafety/simulation/behavior/system/v2",
+    "deprecated": false
+  },
+  {
+    "id": "fire_extinguishing_interaction_system.update",
+    "inputs": [
+      {
+        "description": "参数 1: com.gsafety.simulation.compute.Context",
+        "id": "context",
+        "name": "context",
+        "type": "u"
+      },
+      {
+        "description": "参数 2: 旧版工程.util.List",
+        "id": "tanks",
+        "name": "tanks",
+        "type": "u[]"
+      },
+      {
+        "description": "参数 3: 旧版工程.util.List",
+        "id": "sprayers",
+        "name": "sprayers",
+        "type": "u[]"
+      }
+    ],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "update",
+    "className": "com.gsafety.simulation.behavior.system.v2.FireExtinguishingInteractionSystem",
+    "modulePath": "fire_extinguishing_interaction_system",
+    "deprecated": false
+  },
+  {
+    "id": "chemical_outfire_model",
+    "name": "化学火灾灭火模型",
+    "description": "处理灭火效果和灭火剂应用，计算泡沫供应强度、应用时间等参数",
+    "inputs": [
+      {
+        "id": "paramIn",
+        "name": "paramIn",
+        "type": "s",
+        "value": "{...}"
+      }
+    ],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "deprecated": false
+  },
+  {
+    "id": "radiation_system.applyRadiation",
+    "name": "辐射影响",
+    "description": "燃烧实体对可辐射实体的耐久影响",
+    "inputs": [
+      {
+        "id": "sources",
+        "name": "sources",
+        "type": "u[]"
+      },
+      {
+        "id": "targets",
+        "name": "targets",
+        "type": "u[]"
+      }
+    ],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "applyRadiation",
+    "className": "com.gsafety.simulation.behavior.RadiationSystem",
+    "modulePath": "radiation_system",
+    "deprecated": false
+  },
+  {
+    "id": "radiation_diffusion_system.update",
+    "inputs": [
+      {
+        "description": "参数 1: com.gsafety.simulation.compute.Context",
+        "id": "context",
+        "name": "context",
+        "type": "u"
+      },
+      {
+        "description": "参数 2: 旧版工程.util.List",
+        "id": "environments",
+        "name": "environments",
+        "type": "u[]"
+      },
+      {
+        "description": "参数 3: 旧版工程.util.List",
+        "id": "sources",
+        "name": "sources",
+        "type": "u[]"
+      },
+      {
+        "description": "参数 4: 旧版工程.util.List",
+        "id": "targets",
+        "name": "targets",
+        "type": "u[]"
+      },
+      {
+        "description": "参数 5: 旧版工程.util.List",
+        "id": "sprayers",
+        "name": "sprayers",
+        "type": "u[]"
+      }
+    ],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "update",
+    "className": "com.gsafety.simulation.behavior.system.v2.RadiationDiffusionSystem",
+    "modulePath": "radiation_diffusion_system",
+    "deprecated": false
+  },
+  {
+    "id": "tank_explode_system.steamCloudExplode",
+    "name": "蒸汽云爆炸",
+    "description": "处理蒸汽云爆炸",
+    "inputs": [
+      {
+        "id": "environments",
+        "name": "environments",
+        "type": "u[]"
+      },
+      {
+        "id": "tanks",
+        "name": "tanks",
+        "type": "u[]"
+      }
+    ],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "steamCloudExplode",
+    "className": "com.gsafety.simulation.behavior.TankExplodeSystem",
+    "modulePath": "tank_explode_system",
+    "deprecated": false
+  },
+  {
+    "id": "tank_fire_system.outfire",
+    "name": "灭火",
+    "description": "处理灭火效果和灭火剂应用",
+    "inputs": [
+      {
+        "id": "tanks",
+        "name": "tanks",
+        "type": "u[]"
+      }
+    ],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "outfire",
+    "className": "com.gsafety.simulation.behavior.TankFireSystem",
+    "modulePath": "tank_fire_system",
+    "deprecated": false
+  },
+  {
+    "id": "tank_fire_system.radiationRange",
+    "name": "热辐射范围",
+    "description": "计算储罐火的热辐射范围",
+    "inputs": [
+      {
+        "id": "scenes",
+        "name": "scenes",
+        "type": "u[]"
+      },
+      {
+        "id": "environments",
+        "name": "environments",
+        "type": "u[]"
+      },
+      {
+        "id": "tanks",
+        "name": "tanks",
+        "type": "u[]"
+      }
+    ],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "radiationRange",
+    "className": "com.gsafety.simulation.behavior.TankFireSystem",
+    "modulePath": "tank_fire_system",
+    "deprecated": false
+  },
+  {
+    "id": "mobile_system.update",
+    "inputs": [
+      {
+        "description": "参数 1: com.gsafety.simulation.compute.Context",
+        "id": "context",
+        "name": "context",
+        "type": "u"
+      },
+      {
+        "description": "参数 2: 旧版工程.util.List",
+        "id": "agents",
+        "name": "agents",
+        "type": "u[]"
+      }
+    ],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "update",
+    "className": "com.gsafety.simulation.behavior.system.v2.MobileSystem",
+    "modulePath": "mobile_system",
+    "deprecated": false
+  },
+  {
+    "id": "combustion_system.ignite",
+    "name": "点燃",
+    "description": "处理点燃指令，设置实体为燃烧状态",
+    "inputs": [
+      {
+        "id": "flammables",
+        "name": "flammables",
+        "type": "u[]"
+      }
+    ],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "ignite",
+    "className": "com.gsafety.simulation.behavior.CombustionSystem",
+    "modulePath": "combustion_system",
+    "deprecated": false
+  },
+  {
+    "id": "tank_explode_system.pressureExplode",
+    "name": "压力容器爆炸",
+    "description": "处理压力容器爆炸和连锁反应",
+    "inputs": [
+      {
+        "id": "environments",
+        "name": "environments",
+        "type": "u[]"
+      },
+      {
+        "id": "tanks",
+        "name": "tanks",
+        "type": "u[]"
+      },
+      {
+        "id": "fireEngines",
+        "name": "fireEngines",
+        "type": "u[]"
+      }
+    ],
+    "headers": [],
+    "tags": [],
+    "type": "local",
+    "functionName": "pressureExplode",
+    "className": "com.gsafety.simulation.behavior.TankExplodeSystem",
+    "modulePath": "tank_explode_system",
+    "deprecated": false
+  }
+]

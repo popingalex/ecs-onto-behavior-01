@@ -18,6 +18,7 @@ const ORIGIN_TAG = {
   base: { tone: "neutral" as const, label: "基础世界" },
   "reference-sample": { tone: "warning" as const, label: "参考样例 · 非当前图计算" },
   computed: { tone: "success" as const, label: "当前图求值" },
+  "native-import": { tone: "purple" as const, label: "原生导入 · 只读" },
 } as const
 
 function CommitPick({

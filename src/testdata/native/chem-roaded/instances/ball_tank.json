@@ -1,0 +1,92 @@
+[
+  {
+    "id": "ball_tank-1",
+    "name": "球罐-1",
+    "entity": "ball_tank",
+    "attributes": [
+      {
+        "id": "transform/position",
+        "value": [
+          117.608,
+          0,
+          38.71226
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ball_tank-2",
+    "name": "球罐-2",
+    "entity": "ball_tank",
+    "attributes": [
+      {
+        "id": "transform/position",
+        "value": [
+          117.608,
+          0,
+          38.71186
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ball_tank-3",
+    "name": "球罐-3",
+    "entity": "ball_tank",
+    "attributes": [
+      {
+        "id": "transform/position",
+        "value": [
+          117.6084,
+          0,
+          38.71186
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ball_tank-4",
+    "name": "球罐-4",
+    "entity": "ball_tank",
+    "attributes": [
+      {
+        "id": "transform/position",
+        "value": [
+          117.6084,
+          0,
+          38.71226
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ball_tank-5",
+    "name": "球罐-5",
+    "entity": "ball_tank",
+    "attributes": [
+      {
+        "id": "transform/position",
+        "value": [
+          117.61186,
+          0,
+          38.71387
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ball_tank-6",
+    "name": "球罐-6",
+    "entity": "ball_tank",
+    "attributes": [
+      {
+        "id": "transform/position",
+        "value": [
+          117.61153,
+          0,
+          38.71387
+        ]
+      }
+    ]
+  }
+]

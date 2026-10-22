@@ -1,0 +1,57 @@
+{
+  "id": "rescue_point",
+  "name": "救援点",
+  "description": "救援点，需要救援人员的位置",
+  "attributes": [
+    {
+      "id": "remaining_rescue_people_num",
+      "value": 0,
+      "type": "n"
+    },
+    {
+      "id": "plot/type",
+      "value": "point"
+    },
+    {
+      "id": "accommodation/occupant_count",
+      "name": "收容人数",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "alias": "收容",
+        "layer": "display",
+        "label": {
+          "format": "raw",
+          "unit": "人",
+          "order": 3,
+          "condition": {
+            "attribute": "accommodation/occupant_count",
+            "operator": "gt",
+            "value": 0,
+            "action": "force_show"
+          },
+          "displayName": "收容",
+          "precision": 0
+        }
+      }
+    }
+  ],
+  "components": [
+    {
+      "id": "transform"
+    },
+    {
+      "id": "plot"
+    },
+    {
+      "id": "accommodation"
+    },
+    {
+      "id": "meta"
+    }
+  ],
+  "tags": [],
+  "bundle_ids": [],
+  "deprecated": false,
+  "version": "1.0"
+}

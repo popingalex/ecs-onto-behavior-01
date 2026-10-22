@@ -1,0 +1,16 @@
+{
+  "id": "temperature",
+  "name": "温度",
+  "attributes": [
+    {
+      "id": "temperature/temperature",
+      "name": "气温",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    }
+  ],
+  "tags": []
+}

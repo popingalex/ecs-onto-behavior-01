@@ -1,0 +1,44 @@
+{
+  "id": "ambulance",
+  "name": "救护车",
+  "description": "救护车业务属性（120 调度接入）",
+  "attributes": [
+    {
+      "id": "ambulance/home_hospital_id",
+      "name": "所属医院实例",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "ambulance/home_hospital_external_id",
+      "name": "所属医院外部ID",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "ambulance/plate",
+      "name": "车牌号",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "ambulance/level",
+      "name": "救护等级",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display"
+      }
+    }
+  ],
+  "tags": []
+}

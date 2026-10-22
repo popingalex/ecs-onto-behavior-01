@@ -1,0 +1,106 @@
+{
+  "id": "transport",
+  "name": "运输",
+  "attributes": [
+    {
+      "id": "transport/enabled",
+      "name": "运输能力启用",
+      "value": true,
+      "type": "b",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "transport/max_load_units",
+      "name": "最大载荷单位",
+      "value": 8,
+      "type": "n",
+      "config": {
+        "layer": "attribute",
+        "description": "可装载实例的载荷单位上限（每实例默认占用 1 载荷单位）"
+      }
+    },
+    {
+      "id": "transport/passengers",
+      "name": "载荷名单",
+      "value": [],
+      "type": "(instance_id:s,load_units:n,boarded_at_tick:n)[]",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "transport/boarding_radius",
+      "name": "装载半径",
+      "value": 15,
+      "type": "n",
+      "config": {
+        "layer": "attribute",
+        "description": "装载实例与载具的最大距离（米）"
+      }
+    },
+    {
+      "id": "transport/require_carrier_stationary",
+      "name": "要求载具静止",
+      "value": true,
+      "type": "b",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "transport/state",
+      "name": "运输操作状态",
+      "value": "idle",
+      "type": "s",
+      "config": {
+        "layer": "display"
+      }
+    }
+  ],
+  "tags": [],
+  "config": {
+    "command": [
+      {
+        "id": "action_board",
+        "name": "装载",
+        "kind": "board",
+        "target": [
+          "instance"
+        ],
+        "params": {
+          "loadIdsArg": "loadIds"
+        }
+      },
+      {
+        "id": "action_disembark",
+        "name": "卸载",
+        "kind": "disembark",
+        "target": [
+          "instance"
+        ],
+        "params": {
+          "loadIdsArg": "loadIds"
+        }
+      }
+    ],
+    "state": [
+      {
+        "id": "transport/passengers_summary",
+        "name": "载荷",
+        "type": "transport",
+        "show": {
+          "expression": "transport/max_load_units > 0"
+        },
+        "metric": {
+          "expression": "transport/passengers.length",
+          "label": "载荷",
+          "format": "fraction",
+          "maxExpression": "transport/max_load_units",
+          "precision": 0
+        }
+      }
+    ]
+  }
+}

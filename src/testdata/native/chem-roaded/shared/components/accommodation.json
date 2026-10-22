@@ -1,0 +1,72 @@
+{
+  "id": "accommodation",
+  "name": "收容",
+  "attributes": [
+    {
+      "id": "accommodation/enabled",
+      "name": "收容能力启用",
+      "value": true,
+      "type": "b",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "accommodation/radius",
+      "name": "收容半径",
+      "value": 35,
+      "type": "n",
+      "config": {
+        "layer": "attribute",
+        "description": "卸载落点与设施的最大距离（米），落入即视为进入设施"
+      }
+    },
+    {
+      "id": "accommodation/occupants",
+      "name": "收容名单",
+      "value": [],
+      "type": "(instance_id:s,load_units:n,entered_at_tick:n)[]",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "accommodation/occupant_count",
+      "name": "收容人数",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "display",
+        "description": "由 snippet 与 occupants 同步维护（载荷单位合计），供标牌行与状态条按数值比较"
+      }
+    },
+    {
+      "id": "accommodation/has_occupants",
+      "name": "是否有收容人员",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "layer": "display",
+        "description": "0/1 标志，由 snippet 与 occupants 同步维护（状态条 show 仅支持 == 比较）"
+      }
+    }
+  ],
+  "tags": [],
+  "config": {
+    "state": [
+      {
+        "id": "accommodation/occupied",
+        "name": "收容中",
+        "type": "transport",
+        "show": {
+          "expression": "accommodation/has_occupants == 1"
+        },
+        "metric": {
+          "expression": "accommodation/occupant_count",
+          "label": "收容",
+          "precision": 0
+        }
+      }
+    ]
+  }
+}

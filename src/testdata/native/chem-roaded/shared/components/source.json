@@ -1,0 +1,98 @@
+{
+  "id": "source",
+  "name": "溯源",
+  "description": "外部数据接入溯源（sync_external 生成）",
+  "attributes": [
+    {
+      "id": "source/kind",
+      "name": "来源类型",
+      "value": "external",
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "source/data_type",
+      "name": "数据类型",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "source/provider_id",
+      "name": "提供方ID",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "source/provider_name",
+      "name": "提供方名称",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "source/external_id",
+      "name": "外部ID",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "source/link_state",
+      "name": "链路状态",
+      "value": "live",
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "source/first_seen_at",
+      "name": "首次发现",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "source/last_seen_at",
+      "name": "最近发现",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "source/spawn_reason",
+      "name": "生成原因",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    },
+    {
+      "id": "source/fetched_at",
+      "name": "拉取时间",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "attribute"
+      }
+    }
+  ],
+  "tags": []
+}

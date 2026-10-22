@@ -1,0 +1,326 @@
+{
+  "id": "plot",
+  "name": "标绘",
+  "attributes": [
+    {
+      "id": "plot/points",
+      "name": "点集",
+      "value": null,
+      "type": "n[]",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "plot/type",
+      "name": "类型",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "plot/lines",
+      "name": "线集",
+      "value": null,
+      "type": "n[]",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "plot/visible",
+      "name": "可见",
+      "value": true,
+      "type": "b",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "plot/color",
+      "name": "颜色",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "plot/model",
+      "name": "模型类型",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "plot/height",
+      "name": "高度",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "plot/width",
+      "name": "宽度",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "plot/length",
+      "name": "长度",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "plot/radius",
+      "name": "半径",
+      "value": null,
+      "type": "n",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "plot/icon",
+      "name": "图标",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "plot/tilesetId",
+      "name": "瓦片集",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display",
+        "editor": "tileSlice"
+      }
+    },
+    {
+      "id": "plot/sliceShape",
+      "name": "切片形状",
+      "value": null,
+      "type": "(lon:n,lat:n,alt:n)[]",
+      "config": {
+        "layer": "display",
+        "editor": "tileSlice"
+      }
+    },
+    {
+      "id": "plot/sliceOffset",
+      "name": "切片偏移",
+      "value": [
+        0,
+        0,
+        0
+      ],
+      "type": "n[3]",
+      "config": {
+        "layer": "display",
+        "editor": "tileSlice"
+      }
+    },
+    {
+      "id": "plot/sliceScale",
+      "name": "切片缩放",
+      "value": [
+        1,
+        1,
+        1
+      ],
+      "type": "n[3]",
+      "config": {
+        "layer": "display",
+        "editor": "tileSlice"
+      }
+    },
+    {
+      "id": "plot/sliceRotation",
+      "name": "切片旋转",
+      "value": [
+        0,
+        0,
+        0
+      ],
+      "type": "n[3]",
+      "config": {
+        "layer": "display",
+        "editor": "tileSlice"
+      }
+    },
+    {
+      "id": "plot/lowpolyModelId",
+      "name": "Lowpoly模型ID",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display",
+        "editor": "lowpoly"
+      }
+    },
+    {
+      "id": "plot/lowpolyScale",
+      "name": "Lowpoly缩放",
+      "value": [
+        1,
+        1,
+        1
+      ],
+      "type": "n[3]",
+      "config": {
+        "layer": "display",
+        "editor": "lowpoly"
+      }
+    },
+    {
+      "id": "plot/lowpolyOffset",
+      "name": "Lowpoly偏移",
+      "value": [
+        0,
+        0,
+        0
+      ],
+      "type": "n[3]",
+      "config": {
+        "layer": "display",
+        "editor": "lowpoly"
+      }
+    },
+    {
+      "id": "plot/lowpolyRotation",
+      "name": "Lowpoly旋转",
+      "value": [
+        0,
+        0,
+        0
+      ],
+      "type": "n[3]",
+      "config": {
+        "layer": "display",
+        "editor": "lowpoly"
+      }
+    },
+    {
+      "id": "plot/lowpolyAutoFit",
+      "name": "Lowpoly自动适配",
+      "value": true,
+      "type": "b",
+      "config": {
+        "layer": "display",
+        "editor": "lowpoly"
+      }
+    },
+    {
+      "id": "plot/sliceId",
+      "name": "切片任务ID",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display",
+        "editor": "tileSlice"
+      }
+    },
+    {
+      "id": "plot/sliceLocalBounds",
+      "name": "切片局部包围盒",
+      "value": null,
+      "type": "u",
+      "config": {
+        "layer": "display",
+        "editor": "tileSlice"
+      }
+    },
+    {
+      "id": "plot/bakedTilesetUrl",
+      "name": "烘焙切片地址",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display",
+        "editor": "tileSlice"
+      }
+    },
+    {
+      "id": "plot/bakedCoordinateMode",
+      "name": "烘焙坐标模式",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display",
+        "editor": "tileSlice"
+      }
+    },
+    {
+      "id": "plot/bakedVertexAxis",
+      "name": "烘焙顶点轴",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display",
+        "editor": "tileSlice"
+      }
+    },
+    {
+      "id": "plot/modelSource",
+      "name": "模型来源",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display",
+        "editor": "lowpoly"
+      }
+    },
+    {
+      "id": "plot/name",
+      "name": "名称标签",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "plot/locateSource",
+      "name": "定位来源",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "plot/paramSource",
+      "name": "参数来源",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display"
+      }
+    },
+    {
+      "id": "plot/positionAdjustmentKey",
+      "name": "位置调整键",
+      "value": null,
+      "type": "s",
+      "config": {
+        "layer": "display"
+      }
+    }
+  ],
+  "tags": []
+}

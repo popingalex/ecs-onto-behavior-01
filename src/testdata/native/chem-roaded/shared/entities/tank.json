@@ -1,0 +1,403 @@
+{
+  "id": "tank",
+  "name": "储罐",
+  "description": "储罐实体",
+  "attributes": [
+    {
+      "id": "tank/style",
+      "value": 1
+    },
+    {
+      "id": "geo_footprint/origin_lon_lat_height",
+      "name": "占地原点",
+      "value": [
+        0,
+        0,
+        0
+      ],
+      "type": "n[3]",
+      "config": {
+        "layer": "attribute",
+        "description": "geo_footprint 原点经纬高（后端 tank_init/mobile 运行时写入）"
+      }
+    },
+    {
+      "id": "tank/radius",
+      "value": 10
+    },
+    {
+      "id": "container/volume",
+      "value": 100000
+    },
+    {
+      "id": "container/liquid_level",
+      "value": 14
+    },
+    {
+      "id": "flammable/is_burning",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "alias": "燃烧状态",
+        "layer": "display",
+        "label": {
+          "visible": false,
+          "heightOffset": 20,
+          "condition": {
+            "attribute": "flammable/is_burning",
+            "operator": "eq",
+            "value": 1,
+            "action": "force_show",
+            "ever": true
+          }
+        }
+      }
+    },
+    {
+      "id": "health/durability",
+      "value": 100,
+      "type": "n",
+      "config": {
+        "label": {
+          "format": "progress",
+          "precision": 1,
+          "unit": "%",
+          "order": 2,
+          "condition": {
+            "action": "force_show",
+            "any": [
+              {
+                "attribute": "flammable/is_burning",
+                "operator": "eq",
+                "value": 1,
+                "action": "force_show",
+                "ever": true
+              },
+              {
+                "attribute": "health/durability",
+                "operator": "lt",
+                "value": 99,
+                "action": "force_show"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "tank/tank_pressure",
+      "value": 2.6
+    },
+    {
+      "id": "leakable/liquid_pool_area",
+      "value": 100
+    },
+    {
+      "id": "tank/diameter",
+      "value": 80
+    },
+    {
+      "id": "tank/tank_wall_thickness",
+      "value": 0.2
+    },
+    {
+      "id": "tank/total_weight",
+      "value": 10000
+    },
+    {
+      "id": "tank/fixed_foam_sprinkler_flow",
+      "value": 100
+    },
+    {
+      "id": "tank/height",
+      "value": 12
+    },
+    {
+      "id": "container/stored_substance_name",
+      "value": "柴油"
+    },
+    {
+      "id": "container/stored_substance_english_name",
+      "value": "Diesel"
+    },
+    {
+      "id": "tank/tank_wall_material_density",
+      "value": 7800
+    },
+    {
+      "id": "tank/tank_wall_material_specific_heat",
+      "value": 460
+    },
+    {
+      "id": "tank/tank_rated_pressure",
+      "value": 2.6
+    },
+    {
+      "id": "tank/tank_wall_yield_stress",
+      "value": 490
+    },
+    {
+      "id": "radiatable/received_heat_radiation",
+      "value": 0
+    },
+    {
+      "id": "container/temperature",
+      "value": 27,
+      "type": "n",
+      "config": {}
+    },
+    {
+      "id": "flammable/temperature",
+      "value": 27
+    },
+    {
+      "id": "flammable/thermal_radiation",
+      "value": 0
+    },
+    {
+      "id": "flammable/equivalent_fire_area",
+      "value": 0,
+      "type": "n",
+      "config": {
+        "label": {
+          "format": "progress_with_max",
+          "maxAttribute": "tank/tank_top_total_area",
+          "precision": 1,
+          "unit": "%",
+          "order": 3,
+          "condition": {
+            "attribute": "flammable/is_burning",
+            "operator": "eq",
+            "value": 1,
+            "action": "force_show",
+            "ever": true
+          }
+        }
+      }
+    },
+    {
+      "id": "tank/tank_top_total_area",
+      "value": 314
+    },
+    {
+      "id": "tank/tank_material_yield_strength",
+      "value": 490
+    },
+    {
+      "id": "plot/type",
+      "value": "point"
+    },
+    {
+      "id": "plot/color",
+      "value": "#A0A0A0"
+    },
+    {
+      "id": "plot/model",
+      "value": "lowpoly"
+    },
+    {
+      "id": "plot/lowpolyModelId",
+      "value": "lp-tank"
+    },
+    {
+      "id": "plot/lowpolyAutoFit",
+      "value": true
+    },
+    {
+      "id": "plot/height",
+      "value": "$tank/height"
+    },
+    {
+      "id": "plot/radius",
+      "value": "$tank/radius"
+    },
+    {
+      "id": "plot/locateSource",
+      "value": "",
+      "type": "s"
+    },
+    {
+      "id": "plot/paramSource",
+      "value": "",
+      "type": "s"
+    },
+    {
+      "id": "plot/name",
+      "value": "",
+      "type": "s"
+    },
+    {
+      "id": "name",
+      "value": "",
+      "type": "s"
+    }
+  ],
+  "components": [
+    {
+      "id": "transform"
+    },
+    {
+      "id": "container"
+    },
+    {
+      "id": "tank"
+    },
+    {
+      "id": "plot"
+    },
+    {
+      "id": "flammable"
+    },
+    {
+      "id": "leakable"
+    },
+    {
+      "id": "explodable"
+    },
+    {
+      "id": "health"
+    },
+    {
+      "id": "radiatable"
+    },
+    {
+      "id": "controlled"
+    },
+    {
+      "id": "ui"
+    },
+    {
+      "id": "meta"
+    }
+  ],
+  "tags": [
+    {
+      "id": "disaster_domain.chemical_fire",
+      "name": "危化火"
+    },
+    {
+      "id": "role.production",
+      "name": "生产设施"
+    },
+    {
+      "id": "role.bearer",
+      "name": "承灾体"
+    },
+    {
+      "id": "category.production",
+      "name": "生产"
+    },
+    {
+      "id": "chemical_fire",
+      "name": "危化火灾",
+      "category": "disaster_domain"
+    },
+    {
+      "id": "fire",
+      "name": "火灾",
+      "category": "disaster_domain"
+    },
+    {
+      "id": "bearer",
+      "name": "承灾体",
+      "category": "role"
+    },
+    {
+      "id": "equipment",
+      "name": "设备",
+      "category": "category"
+    },
+    {
+      "id": "storage",
+      "name": "存储",
+      "category": "category"
+    },
+    {
+      "id": "tank",
+      "name": "储罐",
+      "category": "category"
+    }
+  ],
+  "interactions": [
+    {
+      "id": "is_burning_event",
+      "kind": "event",
+      "expression": "flammable/is_burning == 1",
+      "config": {
+        "event": "燃烧状态变化",
+        "transitions": [
+          {
+            "from": 0,
+            "to": 1,
+            "event": "点燃",
+            "category": "danger"
+          },
+          {
+            "from": 1,
+            "to": 0,
+            "event": "熄灭",
+            "category": "normal"
+          }
+        ]
+      }
+    },
+    {
+      "id": "burning_label",
+      "kind": "label",
+      "config": {
+        "name": "储罐标牌",
+        "enterCondition": "flammable/is_burning == 1",
+        "exitCondition": "flammable/is_burning == 0",
+        "displayItems": [
+          {
+            "id": "temp_val",
+            "expression": "container/temperature",
+            "format": "temperature",
+            "precision": 1
+          },
+          {
+            "id": "dur_val",
+            "expression": "health/durability",
+            "format": "progress",
+            "precision": 1,
+            "unit": "%"
+          },
+          {
+            "id": "fire_area_val",
+            "expression": "flammable/equivalent_fire_area",
+            "format": "progress_with_max",
+            "maxAttribute": "tank/tank_top_total_area",
+            "precision": 1,
+            "unit": "%"
+          }
+        ]
+      }
+    }
+  ],
+  "bundle_ids": [],
+  "config": {
+    "label": [
+      {
+        "name": "储罐状态",
+        "format": "table",
+        "show": {
+          "expression": "ever('flammable/is_burning') || 'health/durability' < 99"
+        },
+        "items": [
+          {
+            "label": "温度",
+            "expression": "container/temperature",
+            "unit": "°C"
+          },
+          {
+            "label": "火面积",
+            "expression": "'flammable/equivalent_fire_area' / 'tank/tank_top_total_area' * 100",
+            "unit": "%"
+          }
+        ]
+      }
+    ]
+  },
+  "deprecated": false,
+  "version": "1.0"
+}
