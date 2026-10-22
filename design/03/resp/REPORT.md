@@ -51,7 +51,7 @@ React 原型 UI（不取消 Rust 长期目标）；TS executor 是参考器非�
 
 ## 文档地图
 
-- 本报告：`design/REPORT.md`
+- 本报告：`design/03/resp/REPORT.md`
 - v0.6 完成报告/验收/发布决策：`design/03/resp/00_v06_completion_report.md`、`design/03/03_v06_acceptance.md`、`design/03/05_release_decision.md`
 - 契约：`design/03/contracts/`（mapengine-integration / execution-adapter-boundary / local-history-v06 / trace-provenance-v06 / architecture-decisions）
 - 过程档案：`design/02/07_progress.md`、`design/02/REPORT.md`（v0.5 阶段）、`design/02/acceptance/`
