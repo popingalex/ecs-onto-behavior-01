@@ -23,6 +23,8 @@ export interface PageSpec {
 type Layout = PageSpec["layout"]
 const FORM: Layout = { tree: true, inspector: true, dock: false, canvas: false }
 const GRAPH: Layout = { tree: true, inspector: true, dock: true, canvas: true }
+/** 地图主角页：主区整幅为地图宿主，内容面板由页面自管（悬浮层 / 图标栏，三选一互斥），不走通用三栏（ADR-v06-06）。 */
+const MAP: Layout = { tree: false, inspector: false, dock: false, canvas: true }
 const OVERLAY: Layout = {
   tree: false,
   inspector: false,
@@ -252,8 +254,9 @@ const LIST: PageSpec[] = [
     group: "simulation",
     kind: "page",
     context: "execution",
-    summary: "冻结 → 计算 → 提交 → 播放；暂停播放不改变已提交 commit。",
-    layout: GRAPH,
+    summary:
+      "地图主角：整幅地图 + 悬浮面板（三选一互斥）；冻结 → 计算 → 提交 → 播放。",
+    layout: MAP,
     requires: RUN_CONTEXT,
     components: ["C12", "C13", "C11", "C14", "C17"],
   },

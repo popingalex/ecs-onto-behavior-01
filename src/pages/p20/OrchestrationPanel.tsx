@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import { Layers } from "lucide-react"
+import { ChevronDown, ChevronUp, Layers } from "lucide-react"
 import { Notice, SectionLabel } from "@/components/ui/Card"
 import { Tag } from "@/components/ui/StatusTag"
 import { formatNumber, formatSigned } from "@/lib/format"
@@ -17,6 +17,9 @@ import {
 /**
  * P20 编排层（第一层 · system 编排）：有记录时按 record 批次渲染并行组与 system 合计；
  * 无记录时显示 compileSchedule 的计划预览并标注“尚未执行”。节点级细节下钻 P22。
+ *
+ * 地图主角布局（ADR-v06-06）：不固定遮挡地图，默认折叠为地图上方的一行摘要 chip，
+ * 点击展开为悬浮卡片；定位与 pointer-events 由父级（P20 地图悬浮层）管理。
  */
 export default function OrchestrationPanel({
   record,
@@ -26,6 +29,7 @@ export default function OrchestrationPanel({
   exec: { runId: string ;branchId: string ;viewCommit: string }
 }) {
   const model = useDraftModel()
+  const [open, setOpen] = useViewState<boolean>("p20.orch.open", false)
   const [selectedSystem, setSelectedSystem] = useViewState<string>(
     "p20.orch.system",
     "",
@@ -47,21 +51,55 @@ export default function OrchestrationPanel({
     return { schedule, plan: compileSchedule(schedule, view) }
   }, [record, model])
 
+  const summary = useMemo(() => {
+    if (orchestration) {
+      const systems = orchestration.batches.flatMap((b) =>
+        b.kind === "systems" ? b.systems : [],
+      )
+      const approved = systems.reduce((sum, s) => sum + s.approvedTotal, 0)
+      return `${orchestration.batches.length} 批次 · ${systems.length} system · 获准 ${formatSigned(approved)}`
+    }
+    if (plan) return `计划预览 · ${plan.plan.groups.length} 批次（未执行）`
+    return "无调度可预览"
+  }, [orchestration, plan])
+
+  const header = (
+    <button
+      type="button"
+      aria-expanded={open}
+      onClick={() => setOpen((v) => !v)}
+      className={cn(
+        "pointer-events-auto flex items-center gap-2 border border-border bg-surface/95 px-3 text-left shadow-pop",
+        open
+          ? "h-9 w-full shrink-0 rounded-t-ui border-b border-b-line"
+          : "h-8 rounded-ui hover:bg-hover",
+      )}
+    >
+      <Layers size={14} className="shrink-0 text-muted" aria-hidden />
+      <span className="shrink-0 text-label font-semibold">编排层</span>
+      <Tag size="sm" tone="primary">
+        第一层 · System 编排
+      </Tag>
+      <span className="truncate text-caption text-muted">{summary}</span>
+      {open ? (
+        <ChevronDown size={14} className="ml-auto shrink-0 text-muted" aria-hidden />
+      ) : (
+        <ChevronUp size={14} className="shrink-0 text-muted" aria-hidden />
+      )}
+    </button>
+  )
+
+  if (!open) return header
+
   return (
     <section
       aria-label="编排层"
-      className="flex max-h-72 min-h-0 shrink flex-col border-t border-border bg-surface"
+      className="pointer-events-auto flex max-h-[60vh] w-[min(760px,100%)] flex-col rounded-ui border border-border bg-surface shadow-pop"
     >
-      <div className="flex h-9 shrink-0 items-center gap-2 border-b border-line px-4">
-        <Layers size={14} className="text-muted" aria-hidden />
-        <span className="text-body font-semibold">编排层</span>
-        <Tag size="sm" tone="primary">
-          第一层 · System 编排
-        </Tag>
-        <span className="truncate text-caption text-muted">
-          并行分组 · 读 previous（{orchestration?.baseCommit ?? "旧值"}）·
-          写裁决；节点级行为下钻 P22
-        </span>
+      {header}
+      <div className="flex h-8 shrink-0 items-center border-b border-line px-4 text-caption text-muted">
+        并行分组 · 读 previous（{orchestration?.baseCommit ?? "旧值"}）·
+        写裁决；节点级行为下钻 P22
       </div>
       <div
         key={orchestration?.recordId ?? "plan"}

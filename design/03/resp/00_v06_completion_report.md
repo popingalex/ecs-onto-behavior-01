@@ -40,3 +40,11 @@
 ## 证据规范符合性
 
 每项验收证据关联 commit SHA、运行环境（M2 Ultra/Node 22.20.0/Chromium 内置浏览器）、日期、场景；机读 trace/plan/record JSON 与截图并存（`evidence/traces/`、各 evidence 子目录）。
+
+## 追加：地图主角布局（2026-10-22，用户指令）
+
+- 新增 `src/components/domain/MapViewport.tsx`：geo 宿主边界组件（geo 逻辑明确归外部 MapEngine，预留 engine 挂载位，本仓库不实现）；过渡渲染器为现有 SpatialViewport。
+- P20 重构为地图主角布局：地图满幅主区；左/右/下内容面板三选一互斥展开（pin 也受互斥约束），其余时间以小图标工具栏/图例/摘要 chip 长期悬浮于地图上方；编排层改为可折叠悬浮卡。
+- 页面级 `MAP` 布局标记使 P20 脱离通用三栏，其他页面零影响；互斥 reducer 8 测试，合计 109 passed。
+- 证据：`design/03/evidence/ia-v2/map-protagonist-*.png`（默认满幅/左面板/右检查器/底部表/编排卡/推算后/1440）。
+- ADR-v06-06 已记入 `contracts/architecture-decisions.md`。

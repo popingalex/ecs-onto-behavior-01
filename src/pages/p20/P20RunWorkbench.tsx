@@ -1,20 +1,35 @@
-import { useMemo } from "react"
-import { Bug, Eye, GitBranch, ListOrdered, Plus, X } from "lucide-react"
+import { useEffect, useMemo, type ReactNode } from "react"
+import {
+  Boxes,
+  Bug,
+  Eye,
+  GitBranch,
+  ListOrdered,
+  PanelRight,
+  Pin,
+  Plus,
+  Table2,
+  X,
+} from "lucide-react"
 import type { WorkbenchContext } from "@/app/useWorkbenchContext"
 import Button, { IconButton } from "@/components/ui/Button"
 import { Notice } from "@/components/ui/Card"
 import { Tag } from "@/components/ui/StatusTag"
 import EntityTable from "@/components/domain/EntityTable"
+import MapViewport from "@/components/domain/MapViewport"
 import RunControls from "@/components/domain/RunControls"
-import SpatialViewport from "@/components/domain/SpatialViewport"
 import { useIndex } from "@/data/store"
+import { cn } from "@/lib/cn"
 import { formatSimTime } from "@/lib/format"
-import { navigate, useViewState } from "@/router/router"
+import { isEditableTarget } from "@/lib/keyboard"
+import { navigate, useOverlay, useViewState } from "@/router/router"
 import {
   hasPrecomputedRound,
   referenceAdapter,
 } from "@/services/executionAdapter"
-import { useLayout } from "@/stores/layout"
+import Inspector from "@/shell/Inspector"
+import ResourceTree from "@/shell/ResourceTree"
+import RouteGate from "@/shell/RouteGate"
 import {
   dismissRunError,
   settleRound,
@@ -23,6 +38,14 @@ import {
 } from "@/stores/session"
 import { useRecordByCommit } from "@/stores/trace"
 import OrchestrationPanel from "./OrchestrationPanel"
+import P20Inspector from "./P20Inspector"
+import {
+  MAP_LAYOUT_DEFAULT,
+  reduceMapLayout,
+  type MapLayoutAction,
+  type MapLayoutState,
+  type MapPanelId,
+} from "./mapLayout"
 import { runColumns, spatialItems } from "./runView"
 
 const COMMIT_SOURCE = {
@@ -46,9 +69,27 @@ export default function P20RunWorkbench({ ctx }: { ctx: WorkbenchContext }) {
     "modelView",
     "saved",
   )
-  const dockOpen = useLayout((s) => s.dockOpen)
-  const dockHeight = useLayout((s) => s.dockHeight)
-  const fullscreen = useLayout((s) => s.fullscreen)
+  const [panel, setPanel] = useViewState<MapLayoutState>(
+    "p20.mapPanel",
+    MAP_LAYOUT_DEFAULT,
+  )
+  const overlay = useOverlay()
+  const dispatch = (action: MapLayoutAction) =>
+    setPanel((prev) => reduceMapLayout(prev, action))
+
+  // Esc 收回悬浮面板（全局弹层打开时不抢占）。
+  const panelOpen = panel.open
+  useEffect(() => {
+    if (!panelOpen) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape" || e.isComposing) return
+      if (overlay || isEditableTarget(e.target)) return
+      dispatch({ type: "close" })
+    }
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [panelOpen, overlay])
 
   const world = viewCommit ? index.worlds.get(viewCommit.id) : undefined
   const previous = viewCommit?.parentId
@@ -207,11 +248,12 @@ export default function P20RunWorkbench({ ctx }: { ctx: WorkbenchContext }) {
       ) : null}
 
       {/*
-        视口至少保留可辨认的高度并裁切溢出： SpatialViewport 内容有 min-h-[240px]，
-        矮视口下若不裁切会越过 1px 的容器画到编排层/实体状态表上。
+        地图主角布局（ADR-v06-06）：主区整幅 = MapViewport 宿主；内容面板只以
+        悬浮层临时遮挡（左/右/下三选一互斥），长期悬浮物只有图标工具栏、
+        图例与状态徽标。裁切溢出：SpatialViewport 内容有 min-h-[240px]。
       */}
-      <div className="relative min-h-[160px] flex-1 overflow-hidden">
-        <SpatialViewport
+      <div className="relative min-h-[160px] flex-1 overflow-clip">
+        <MapViewport
           items={items}
           selectedId={selected}
           onSelect={setSelected}
@@ -219,35 +261,182 @@ export default function P20RunWorkbench({ ctx }: { ctx: WorkbenchContext }) {
             mode === "history" ? " · 历史只读" : ""
           }`}
         />
-      </div>
 
-      <OrchestrationPanel record={record} exec={exec} />
+        {/* 遮罩：点击收回当前悬浮面板 */}
+        {panel.open ? (
+          <div
+            className="absolute inset-0 z-20 bg-[rgb(22_42_64/0.16)]"
+            onClick={() => dispatch({ type: "close" })}
+            aria-hidden
+          />
+        ) : null}
 
-      {dockOpen && !fullscreen ? (
-        <div
-          className="flex shrink-0 flex-col border-t border-border bg-surface"
-          style={{ height: dockHeight }}
-        >
-          <div className="flex h-10 shrink-0 items-center gap-3 border-b border-line px-4">
-            <span className="text-body font-semibold">实体状态</span>
-            <span className="text-caption text-muted">
-              只读 · {viewCommit.id}
-              {previous
-                ? ` · 括号内为相对父提交 ${previous.commitId} 的变化`
-                : ""}
-            </span>
-          </div>
-          <div className="scroll-thin min-h-0 flex-1 overflow-auto">
-            <EntityTable
-              world={world}
-              previous={previous}
-              columns={columns}
-              selectedId={selected}
-              onSelect={setSelected}
-            />
-          </div>
+        {/* 编排层：地图上方的可折叠悬浮卡（默认折叠为一行摘要） */}
+        <div className="pointer-events-none absolute inset-x-14 top-2 z-20 flex justify-center">
+          <OrchestrationPanel record={record} exec={exec} />
         </div>
-      ) : null}
+
+        {/* 左缘图标工具栏（长期悬浮，不占布局；左面板展开时贴其外缘） */}
+        <div
+          className={cn(
+            "absolute top-1/2 z-40 flex -translate-y-1/2 flex-col items-center gap-1 rounded-ui border border-border bg-surface/95 p-1 shadow-pop transition-[left] duration-150",
+            panel.open === "left" ? "left-[308px]" : "left-2",
+          )}
+        >
+          <IconButton
+            icon={Boxes}
+            size="sm"
+            label={panel.open === "left" ? "收起对象树" : "对象树（实体 / 分支 / 提交）"}
+            active={panel.open === "left"}
+            onClick={() => dispatch({ type: "toggle", panel: "left" })}
+          />
+          <IconButton
+            icon={ListOrdered}
+            size="sm"
+            label="命令队列（P21 抽屉）"
+            onClick={() =>
+              navigate({ pageId: "P21", params: { baseCommit: viewCommit.id } })
+            }
+          />
+        </div>
+
+        {/* 右缘图标工具栏 */}
+        <div
+          className={cn(
+            "absolute top-1/2 z-40 flex -translate-y-1/2 flex-col items-center gap-1 rounded-ui border border-border bg-surface/95 p-1 shadow-pop transition-[right] duration-150",
+            panel.open === "right" ? "right-[348px]" : "right-2",
+          )}
+        >
+          <IconButton
+            icon={PanelRight}
+            size="sm"
+            label={panel.open === "right" ? "收起实体检查器" : "实体检查器"}
+            active={panel.open === "right"}
+            onClick={() => dispatch({ type: "toggle", panel: "right" })}
+          />
+        </div>
+
+        {/* 底部拉手：实体状态表 */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 flex justify-center">
+          <button
+            type="button"
+            aria-expanded={panel.open === "bottom"}
+            onClick={() => dispatch({ type: "toggle", panel: "bottom" })}
+            className={cn(
+              "pointer-events-auto flex h-7 items-center gap-1.5 rounded-t-ui border border-b-0 border-border bg-surface/95 px-3 text-label text-ink-soft shadow-pop hover:bg-hover",
+            )}
+          >
+            <Table2 size={14} className="text-muted" aria-hidden />
+            实体状态
+            <span className="text-caption text-muted">
+              {panel.open === "bottom" ? "收起" : "展开"}
+            </span>
+          </button>
+        </div>
+
+        {/* 悬浮内容面板：左/右/下三选一互斥（mapLayout reducer） */}
+        {panel.open === "left" ? (
+          <FloatPanel
+            className="bottom-0 left-0 top-0 w-[300px] border-r"
+            title="对象树"
+            pinned={panel.pinned === "left"}
+            onPin={() => dispatch({ type: "pin", panel: "left" })}
+            onClose={() => dispatch({ type: "close" })}
+          >
+            <div className="min-h-0 flex-1">
+              <ResourceTree group={ctx.group.id} />
+            </div>
+          </FloatPanel>
+        ) : null}
+        {panel.open === "right" ? (
+          <FloatPanel
+            className="bottom-0 right-0 top-0 w-[340px] border-l"
+            title="实体检查器"
+            pinned={panel.pinned === "right"}
+            onPin={() => dispatch({ type: "pin", panel: "right" })}
+            onClose={() => dispatch({ type: "close" })}
+          >
+            <div className="min-h-0 flex-1">
+              <Inspector ctx={ctx}>
+                <RouteGate ctx={ctx}>
+                  <P20Inspector ctx={ctx} />
+                </RouteGate>
+              </Inspector>
+            </div>
+          </FloatPanel>
+        ) : null}
+        {panel.open === "bottom" ? (
+          <FloatPanel
+            className="inset-x-0 bottom-0 h-[40%] border-t"
+            title="实体状态"
+            subtitle={`只读 · ${viewCommit.id}${
+              previous ? ` · 括号内为相对父提交 ${previous.commitId} 的变化` : ""
+            }`}
+            pinned={panel.pinned === "bottom"}
+            onPin={() => dispatch({ type: "pin", panel: "bottom" })}
+            onClose={() => dispatch({ type: "close" })}
+          >
+            <div className="scroll-thin min-h-0 flex-1 overflow-auto">
+              <EntityTable
+                world={world}
+                previous={previous}
+                columns={columns}
+                selectedId={selected}
+                onSelect={setSelected}
+              />
+            </div>
+          </FloatPanel>
+        ) : null}
+      </div>
     </div>
+  )
+}
+
+/** P20 悬浮内容面板外框：覆盖在地图上方（absolute + shadow），可 pin（仍遵守三选一互斥）。 */
+function FloatPanel({
+  className,
+  title,
+  subtitle,
+  pinned,
+  onPin,
+  onClose,
+  children,
+}: {
+  className: string
+  title: string
+  subtitle?: string
+  pinned: boolean
+  onPin: () => void
+  onClose: () => void
+  children: ReactNode
+}) {
+  return (
+    <section
+      aria-label={title}
+      className={cn(
+        "absolute z-30 flex flex-col border-border bg-surface shadow-pop",
+        className,
+      )}
+    >
+      <div className="flex h-10 shrink-0 items-center gap-2 border-b border-line px-3">
+        <span className="text-body font-semibold">{title}</span>
+        {subtitle ? (
+          <span className="min-w-0 flex-1 truncate text-caption text-muted">
+            {subtitle}
+          </span>
+        ) : (
+          <span className="flex-1" />
+        )}
+        <IconButton
+          icon={Pin}
+          size="sm"
+          label={pinned ? "取消固定（其他面板可临时展开）" : "固定展开（仍与其他面板互斥）"}
+          active={pinned}
+          onClick={onPin}
+        />
+        <IconButton icon={X} size="sm" label={`关闭${title}（Esc）`} onClick={onClose} />
+      </div>
+      {children}
+    </section>
   )
 }
