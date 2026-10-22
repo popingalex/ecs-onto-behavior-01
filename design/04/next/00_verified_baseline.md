@@ -1,6 +1,6 @@
 # 00 verified-baseline(v0.7-H 任务 A 交付)
 
-日期:2026-10-23 ｜ 分支:`v07-h-hardening`(基于 main@`89d0ee628a664c500d7d8adb4e4969de463e24b9`)
+日期:2026-10-22(深夜;提交 22:5x +0800,见 H_RELEASE_EVIDENCE) ｜ 分支:`v07-h-hardening`(基于 main@`89d0ee628a664c500d7d8adb4e4969de463e24b9`)
 方法:全部命令在本机复跑,非转录报告声明。
 
 ## AUD-01 代码与测试基线(独立复现)

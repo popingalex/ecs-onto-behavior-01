@@ -1,6 +1,6 @@
 # 01 历史帧契约(H1 定稿)
 
-日期:2026-10-23 ｜ 实现:`src/services/nativeImport/replayGuards.ts`(+黄金钉死测试)
+日期:2026-10-22(深夜;提交 22:5x +0800,见 H_RELEASE_EVIDENCE) ｜ 实现:`src/services/nativeImport/replayGuards.ts`(+黄金钉死测试)
 
 ## 1. 引擎端点语义(实测确证)
 
