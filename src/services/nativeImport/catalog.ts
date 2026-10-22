@@ -33,6 +33,8 @@ export const NATIVE_SYSTEM_CATALOG: NativeSystemCatalogEntry[] = [
   { id: "system.metrics", label: "指标系统", phase: "Metrics", implementation: "infra", sClass: "S0-infra", reads: [], writes: [], note: "基础设施" },
   { id: "system.priority-arbitration", label: "优先级仲裁", phase: "Decision", implementation: "infra", sClass: "S0-infra", reads: [], writes: [], note: "基础设施" },
   { id: "system.health-monitor", label: "健康监控", phase: "Metrics", implementation: "infra", sClass: "S0-infra", reads: [], writes: [], note: "基础设施" },
+  // 运行期观测(J3 实测出现于 deltas source_system_id;静态 registry 转录未收录,如实登记):
+  { id: "field_thermal_live", label: "热场实况(运行期观测)", phase: "Simulation", implementation: "native", sClass: "S0", reads: ["field_thermal/*"], writes: ["field_thermal/temperature_contours"], note: "J3 运行实测出现;静态目录未收录,来源=实测 delta 归因" },
 ]
 
 /**

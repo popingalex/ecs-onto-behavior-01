@@ -21,6 +21,8 @@ import {
   type ScheduleContent,
 } from "@/stores/modelDocuments"
 import { toast } from "@/stores/toast"
+import { isNativeMode } from "@/stores/dataSource"
+import NativeExecutionPlan from "./NativeExecutionPlan"
 
 /** P12 System 外层调度：React Flow 图编辑 schedule:<id> 草稿文档（与程序文档独立 undo）。 */
 export default function P12Schedule({ ctx }: { ctx: WorkbenchContext }) {
@@ -32,6 +34,8 @@ export default function P12Schedule({ ctx }: { ctx: WorkbenchContext }) {
   const role = useRole()
   const readOnly = !canEdit(role)
 
+  // REAL_IMPORT_READ_ONLY:渲染引擎真实 9 阶段执行计划(只读等效,V7-4 S0 可见级)。
+  if (isNativeMode()) return <NativeExecutionPlan ctx={ctx} />
   const schedule = model.schedules.find((s) => s.id === scheduleId)
   if (!doc || !schedule) {
     return (

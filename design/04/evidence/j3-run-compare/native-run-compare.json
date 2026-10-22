@@ -1,0 +1,96 @@
+{
+ "simId": "5UYNf2wUVurVl0616t0Xn",
+ "direction": "workbench(写入集) ⊆ engine(物化全量),逐值相等;engine-only=默认物化(UNSET,不回填)",
+ "frames": [
+  {
+   "frame": 1,
+   "workbenchWritten": 533,
+   "mismatches": 0,
+   "engineOnlyDefaultMaterialized": 5903
+  },
+  {
+   "frame": 2,
+   "workbenchWritten": 535,
+   "mismatches": 1,
+   "engineOnlyDefaultMaterialized": 5901
+  },
+  {
+   "frame": 3,
+   "workbenchWritten": 535,
+   "mismatches": 1,
+   "engineOnlyDefaultMaterialized": 5901
+  },
+  {
+   "frame": 4,
+   "workbenchWritten": 535,
+   "mismatches": 1,
+   "engineOnlyDefaultMaterialized": 5901
+  },
+  {
+   "frame": 5,
+   "workbenchWritten": 535,
+   "mismatches": 1,
+   "engineOnlyDefaultMaterialized": 5901
+  },
+  {
+   "frame": 6,
+   "workbenchWritten": 535,
+   "mismatches": 0,
+   "engineOnlyDefaultMaterialized": 5901
+  }
+ ],
+ "totalChecked": 3208,
+ "totalMismatches": 4,
+ "mismatches": [
+  {
+   "frame": 2,
+   "iid": "tank-1",
+   "attr": "flammable/temperature",
+   "engine": "77.43085965628441",
+   "workbench": "41.46773202156945"
+  },
+  {
+   "frame": 3,
+   "iid": "tank-1",
+   "attr": "flammable/temperature",
+   "engine": "77.43085965628441",
+   "workbench": "52.38699188529187"
+  },
+  {
+   "frame": 4,
+   "iid": "tank-1",
+   "attr": "flammable/temperature",
+   "engine": "77.43085965628441",
+   "workbench": "61.67059493760095"
+  },
+  {
+   "frame": 5,
+   "iid": "tank-1",
+   "attr": "flammable/temperature",
+   "engine": "77.43085965628441",
+   "workbench": "69.92067631727006"
+  }
+ ],
+ "engineOnlyDefaults": 35408,
+ "sourceCheck": {
+  "engineRows": 390,
+  "sourceMismatch": 0,
+  "samples": []
+ },
+ "conclusion": {
+  "verdict": "PASS",
+  "summary": "工作台 buildRunC(HTTP deltas+bundle 重放)与引擎对拍:head 态逐值全等;delta 来源 100% 一致;4 处名义差异全部由 attributes 端点忽略 frame 参数(恒返回 head 态,实测 frame=1/2/6 均 tick=6)解释,非归一化错误",
+  "numbers": {
+   "headFrameExactMatch": "535/535 写入值全等(帧 6)",
+   "deltaRows": 390,
+   "sourceSystemIdMismatch": 0,
+   "engineOnlyDefaultMaterialized": 35408,
+   "engineOnlySemantics": "引擎物化默认值;工作台按 UNSET 不回填(04 文档 §2 规则,非差异)",
+   "ignitedEntity": "tank-1(action_ignite @frame1 经 CommandLog,温度 41.5→77.4°C 演化 6 帧)"
+  },
+  "engineBinaryNote": "当前 18080 服务为旧二进制:新会话写 legacy s_simulation.snapshot 列、无 s_simulation_tick 行;HTTP /branch/:b/deltas 仍带 sourceSystemId(对照采用该通道)",
+  "runtimeObservedSystemIds": [
+   "field_thermal_live(静态 registry 转录未收录,运行期观测)"
+  ]
+ }
+}

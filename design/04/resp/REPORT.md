@@ -1,6 +1,6 @@
 # V7-0 双工程只读审计报告(汇总)· 含 V7-1 实施结果
 
-日期:2026-10-22 ｜ V7-0:只读审计轮 ｜ V7-1:FileAdapter 真实只读导入完成(`00_v71_fileadapter_report.md`)｜ **V7-2:真实运行过程只读分析完成(`00_v72_process_report.md`;125 tests)**
+日期:2026-10-22 ｜ V7-0:只读审计轮 ｜ V7-1:FileAdapter 真实只读导入完成(`00_v71_fileadapter_report.md`)｜ V7-2:真实运行过程只读分析完成(`00_v72_process_report.md`)｜ **J3 实跑对照 PASS+V7-4 切片+V7-3/V7-5 闸门裁定(`00_j3_v74_gates_report.md`;v0.7-R 达成)**
 工作台 `ecs-onto-behavior-01`(V7-0 审计@`773b450` → V7-1 实施)｜ 引擎 `mas-rust @ 65c7f96`(零改动)+ 前端快照仓 `mas-suite/mas-refactor`
 
 ## 一句话结论
@@ -20,6 +20,7 @@
 | `first_pr_proposal.md` | 首个 PR 变更清单/验收(REAL-01..07,12)/回滚方案 |
 | `00_v71_fileadapter_report.md` | V7-1 实施与验收对账 |
 | `00_v72_process_report.md` | V7-2 过程分级渲染与 REAL-08..12 对账;v0.7-R 静态链 J0–J6 闭环结论 |
+| `00_j3_v74_gates_report.md` | J3 引擎实跑双侧对照(535/535 全等,390 delta 来源零差异);V7-4 等效计划只读渲染;V7-3/V7-5 闸门裁定与解锁条件;v0.7-R 终态对账 |
 
 ## 关键发现(择要)
 
