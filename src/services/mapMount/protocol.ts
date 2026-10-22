@@ -50,8 +50,29 @@ export class MapMountHost {
   private pendingSelect: { correlationId: string; entityId: string; contextKey: string } | null = null
   private lastHostInitiatedEntity: string | null = null
 
-  constructor(private transport: MapTransport) {
+  private initTimer: ReturnType<typeof setTimeout> | null = null
+
+  constructor(
+    private transport: MapTransport,
+    options: { initTimeoutMs?: number } = {},
+  ) {
     this.transport.onMessage((m) => this.receive(m))
+    if (options.initTimeoutMs !== undefined) {
+      this.initTimer = setTimeout(() => {
+        if (this.state === "init-sent") {
+          this.state = "error"
+          this.handler?.({
+            type: "ERROR",
+            code: "INIT_TIMEOUT",
+            detail: `READY 未在 ${String(options.initTimeoutMs)}ms 内到达`,
+          })
+        }
+      }, options.initTimeoutMs)
+    }
+  }
+
+  dispose(): void {
+    if (this.initTimer) clearTimeout(this.initTimer)
   }
 
   get stateName(): MountState {
@@ -99,12 +120,21 @@ export class MapMountHost {
 
   private receive(m: MapToHostMessage): void {
     if (m.type === "READY") {
+      if (this.state !== "init-sent") {
+        this.state = "error"
+        this.handler?.({ type: "ERROR", code: "READY_REJECTED", detail: `state=${this.state}` })
+        return
+      }
       if (m.protocolVersion !== MAP_MOUNT_PROTOCOL_VERSION) {
         this.state = "error"
         this.handler?.({ type: "ERROR", code: "PROTOCOL_VERSION_MISMATCH", detail: `map=${m.protocolVersion}` })
         return
       }
       this.state = "ready"
+      if (this.initTimer) {
+        clearTimeout(this.initTimer)
+        this.initTimer = null
+      }
       this.handler?.(m)
       return
     }
@@ -138,4 +168,26 @@ export class MapMountHost {
 
 export function contextKeyOf(c: MountContext): string {
   return `${c.sceneId}@${c.sceneRevision}/${c.simulationId}/${c.branchId}/${c.viewRef}`
+}
+
+/**
+ * 地图位置策略(G0 规则级):Vec3 不自动当经纬度;null 不渲染标记但实体仍在逻辑列表;
+ * [0,0,0] 是合法位置(原点);coordinateFrame 未经联调核对前一律 UNRESOLVED。
+ */
+export type MapPositionClassification =
+  | { kind: "NO_MARKER"; reason: "position 为 null(实体仍在逻辑列表)" }
+  | { kind: "VALID_ORIGIN"; note: "[0,0,0] 是合法位置" }
+  | { kind: "PENDING_FRAME_RESOLUTION"; note: "Vec3 数值有效,但 coordinateFrame 未定(禁猜经纬度)" }
+  | { kind: "INVALID"; reason: string }
+
+export function classifyMapPosition(value: unknown): MapPositionClassification {
+  if (value === null) return { kind: "NO_MARKER", reason: "position 为 null(实体仍在逻辑列表)" }
+  if (Array.isArray(value) && value.length === 3 && value.every((x) => typeof x === "number")) {
+    if ((value as number[]).every((x) => x === 0)) return { kind: "VALID_ORIGIN", note: "[0,0,0] 是合法位置" }
+    return {
+      kind: "PENDING_FRAME_RESOLUTION",
+      note: "Vec3 数值有效,但 coordinateFrame 未定(禁猜经纬度)",
+    }
+  }
+  return { kind: "INVALID", reason: "位置值形状不符(期望 null 或 Vec3)" }
 }
