@@ -1,53 +1,63 @@
-# V7-0 双工程只读审计报告(汇总)· 含 V7-1 实施结果
+# ecs-onto-behavior-01 现状报告(截至 2026-10-23)
 
-日期:2026-10-22 ｜ V7-0:只读审计轮 ｜ V7-1:FileAdapter 真实只读导入完成(`00_v71_fileadapter_report.md`)｜ V7-2:真实运行过程只读分析完成(`00_v72_process_report.md`)｜ **J3 实跑对照 PASS+V7-4 切片+V7-3/V7-5 闸门裁定(`00_j3_v74_gates_report.md`;v0.7-R 达成)**
-工作台 `ecs-onto-behavior-01`(V7-0 审计@`773b450` → V7-1 实施)｜ 引擎 `mas-rust @ 65c7f96`(零改动)+ 前端快照仓 `mas-suite/mas-refactor`
+工作台 `main @ 0b60022`(已推送,148 passed / 0 failed)｜ 引擎 `feature/202605 @ 1ff58ba`(已推送,W1+T 已合入)
+本轮覆盖:自上次 req 输入(postH 两份计划,归档为 `09_post_h_implementation_plan.md`/`10_post_h_agent_instructions.md`)以来的全部工作。
 
-## 一句话结论
+## 一句话现状
 
-两工程事实已源码级核清:原有推演系统是 **bevy_ecs+动态属性表的 Rust 引擎(9 阶段 16 系统、workflow 低代码图、append-only 帧历史、PG 持久)**,可**无损提供**场景身份/schema 与至少两份可复现真实运行(83 实例 10 帧自包含样例 + SYSTEM_EFFECT 级 17 帧样例);工作台侧缺口全部集中在「真实适配层不存在」而非模型不兼容——**建议以离线 FileAdapter 为第一切片启动 V7-1**,首批只读,不做写回/图编译/MapEngine。
+**W1(原生事务化模型写入)已从引擎端点到工作台 UI 端到端闭环**:引擎 `/cm/model-patch` 单事务端点(乐观锁+幂等+原子回滚)合入主线,W-01..08 隔离实测全 PASS;工作台 P18 补丁面板浏览器 E2E 实际提交成功(APPLIED rev-3,引擎复核落库);T(逐系统 TraceRecorder)真实输出落地(TRACE-01/02/04/05 PASS)。全程 18080 共享服务未动、共享 PG 仅增量、既有数据零破坏。
 
-## 本轮产物
+## 自上次 req 以来的三段工作
 
-| 文档 | 内容 |
-|---|---|
-| `02_dual_repo_audit.md` | 双工程架构与源码定位;十二问逐条回答;位置勘误(前端真身在 mas-suite) |
-| `03_capability_matrix.md` | 22 项能力映射矩阵(integrationClass/语义冲突/改动/证据);16 系统 S0/S1/S2 分级 |
-| `04_semantics_gap_analysis.md` | State[n]/值/效果/提交/历史/追溯六组差异+裁决建议;不可映射清单 |
-| `05_native_data_inventory.md` | 引擎数据资产盘点;推荐样例 A/B/C;敏感性与缺口 |
-| `real_fixture_manifest.md` | 样例来源/revision/校验和/脱敏状态(复制待批准) |
-| `06_integration_decisions.md` | FileAdapter 裁定;V7-1 切片;最小接口契约;风险对策;三决定性问题回答 |
-| `first_pr_proposal.md` | 首个 PR 变更清单/验收(REAL-01..07,12)/回滚方案 |
-| `00_v71_fileadapter_report.md` | V7-1 实施与验收对账 |
-| `00_v72_process_report.md` | V7-2 过程分级渲染与 REAL-08..12 对账;v0.7-R 静态链 J0–J6 闭环结论 |
-| `00_j3_v74_gates_report.md` | J3 引擎实跑双侧对照(535/535 全等,390 delta 来源零差异);V7-4 等效计划只读渲染;V7-3/V7-5 闸门裁定与解锁条件;v0.7-R 终态对账 |
+### ① postH Sprint(P0–P3,分支 `v07-post-h` 合并 `b7172d4`)
 
-## 关键发现(择要)
+| 批次 | 结果 | 要点 |
+|---|---|---|
+| P0 证据封版 | PASS | `next/H_RELEASE_EVIDENCE.md`:四个证据问题全部裁定——历史端点"更正"=**调用端误用**(查询参数从未注册路由,引擎双路由并存未改);3208/3208=写入值层、35,408 默认另层;文档日期以 **git 提交时间戳**为权威并已修正;J3 黄金数据 correction 为追加字段、哈希封存 |
+| P1 W0 | PASS(准备级) | /cm 审计:纯 CRUD、revision/事务 **0 命中**;modelPatch 补 getStatus 契约+部分失败原子性+显式 null(绕过单位检查)与 UNSET 区分负例 |
+| P2 X0 | PASS(只读级) | `executionProfile.ts` Profile v0.2 代码化:帧内可见性**按写路径分置**(write=FRAME_PROPAGATED / deferred=DEFERRED_FLUSH / silent=SILENT_BLOCK / workflow=PHASE_SNAPSHOT);S 矩阵一律拒绝编译(X1 闸门);J3 归属核对测试 |
+| P3 G0 | PASS(协议级) | map-engine-v2 只读核对(入口=React 组件无 iframe 出口、默认 LNG_ALT_LAT、feature id=instanceId 零转换);mapMount 超时熔断+位置策略(null 不渲染/[0,0,0] 合法/Vec3 待坐标系联调) |
 
-1. **109 passed / 0 failed 独立复验通过**(HEAD 773b450)——v0.6 报告声明属实。
-2. **引擎即 ECS**:ECS 实体直接携带业务 `InstanceId`(字符串同构,ext-{provider}-{item} 规则),身份映射零成本;运行真值在 `ExtraAttributes` 动态表,组件存在性=archetype 装配。
-3. **溯源分级实测**:PG 新格式 tick 行 delta 带 `source_system_id`(SYSTEM_EFFECT 级,活库 3 运行;样例 C 11 帧已导出);磁盘工件仅 after 值(PROPERTY_DELTA);**请求→获准效果对与输入版本引用在引擎中不存在**——P23/P24 必须诚实降级,禁止反推。
-4. **引擎已有可编译图系统**:config 默认 workflow 模式,8 个系统被 lc-* 节点图覆盖且有节点级 NodeTrace——V7-4 的 S1/S2 映射有现实路径,无需先造编译器。
-5. **工作台三处概念空白需新增**(非改语义):sourceSystemId/sourceRevision、capability manifest、FileAdapter;单位映射引擎侧无类型(f64),须 UNKNOWN 策略。
-6. **样例质量**:推荐样例 B(83 实例/10 帧/1.95MB/0 外部依赖/无个人信息)完全自包含,可直接支撑 J0–J6 只读闭环。
+### ② W1+T 引擎侧(用户授权 worktree+共享 PG 增量;分支 `feat/w1-model-patch-1023`,合入 `feature/202605` 并推送)
 
-## G0 出口条件对账
+- **W1 端点** `/cm/model-patch/{validate,apply,status/:key,revision/:scene}`(schema/model_patch.rs + routes/model_patch.rs):rev-N 修订计数器(不动 s_scene DDL);apply 单 tokio_postgres 事务=幂等摘要→`FOR UPDATE` 行锁→修订比对→s_entity 声明+类型校验→instances jsonb 原子更新+审计登记。
+- **验收 W-01..08 全 PASS**(隔离实例 18081+独立 data_dir,证据 `evidence/w1-modelpatch/`):dryRun 零写入/原生 rev-1→rev-2 修订链/四类拒绝/同 key 重放不重复写、异请求冲突/多操作一坏整包回滚零半提交/原场景与 J3 会话零触碰/双侧(引擎↔工作台归一化器)逐值一致/18080 PID 全程不变。
+- **附加实证**:补丁场景上重跑点燃 6 帧,delta 50/30/27/25/23/23 与 J3 **逐位一致**(确定性保持)。
+- **T**:`MAS_TRACE_RECORDER=1` 门控+双持久化路径逐帧 flush(踩坑:推帧走 push 路径,仅挂 engine.rs 会漏);`plan-run.jsonl` 每帧 10 系统逐项 duration_ms(真实 TraceRecorder 非估算,TRACE-02);开销约 +10%(TRACE-04)。
 
-| 条件 | 状态 |
-|---|---|
-| 工程技术栈与运行入口有证据 | ✅ 02 文档 |
-| 代表性真实场景可安全复制 | ✅ chem-roaded(93 实例,合成数据)+样例 B(脱敏判定通过) |
-| 单一原始真相来源选定 | ✅ 模型/场景/运行权威=引擎(PG+磁盘工件);工作台仅缓存 |
-| 核心 ID/值/版本/执行/追溯能力清单 | ✅ 03 矩阵 22 项 |
-| 每个 System 兼容等级 | ✅ S0×6 / S1×8 / 基础设施 S0;S2 待 V7-4 证明 |
-| 依据真实工程更新任务顺序 | ✅ 06 文档(V7-1 FileAdapter → V7-2 RunBundle → 3/4/5 闸门) |
+### ③ W1-UI+TRACE-03(工作台 `main @ 0b60022`)
 
-## 严格执行声明(REAL-18 前置)
+- `nativeClient.ts` 四端点客户端,含 **DTO 翻译**(工作台 `entityId` ↔ 引擎 `instanceId`,实测发现)+ zod 拒绝空操作。
+- P18 原生模式=补丁面板(仅连隔离实例,明示禁指 18080):**浏览器 E2E 实操作 拉取 rev-2 → validate(before/77)→ apply APPLIED rev-3**;引擎复核 tank-1 health/durability=77 落库、审计表 rev-1/2/3 可查;截图 `12-P18-native-modelpatch.png`。
+- TRACE-03:display_name↔sys_id 10 条映射入 catalog(实测名全覆盖,未知名不猜),测试钉死。
 
-本轮操作仅:git log/status、rg/ls/cat、shasum、psql 只读 SELECT、工作台自身 pnpm test。两工程源文件零修改、零提交、零推送、零数据库写入、未启动/触碰任何推演进程。
+## 里程碑总账(V7-0 至今)
 
-## 下一步(待用户批准)
+| 阶段 | 状态 | 交付锚点 |
+|---|---|---|
+| V7-0 双工程审计 | ✅ | resp/02–06+manifest(22 项能力矩阵,S0/S1 分级) |
+| V7-1 FileAdapter 只读导入 | ✅ | 双模开关+三道封锁;109→120 tests |
+| V7-2 过程只读分析 | ✅ | P22 帧过程/P24 演化链分级;125 tests |
+| J3 实跑对照 + V7-4 切片 | ✅ | 逐帧 3208/3208 全等(端点勘误后);P12 等效计划 |
+| v0.7-H 加固 | ✅ | replayGuards+样例 D 黄金钉死+目录动态发现;138 tests |
+| postH(P0–P3) | ✅ | 证据封版+W0/X0/G0 准备;146 tests |
+| W1 引擎+UI 闭环 | ✅ | 引擎合入 feature/202605;P18 E2E;148 tests |
+| T 逐系统耗时 | ✅ | plan-run.jsonl 实测;N-11 PASS |
+| X1 图编译 / G1 真地图 | ⛔ 未开工(无环境卡点:X1 可用隔离实例 workflowResource 通道;G1 需 map-engine-v2 壳方案) | — |
 
-1. 批准样例 A/B 复制到 `src/testdata/native/`(real_fixture_manifest §5 授权范围)。
-2. 批准 first_pr_proposal(V7-1 FileAdapter)开工;期间引擎仓维持只读。
-3. V7-2 前决定是否授权导出样例 C(PG tick 行只读 SELECT 导出)。
+## 验收与安全边界
+
+- REAL-NEXT 现状:N-01..10/12/13(引擎实测)/14(引擎实测)/15(引擎实测)/16/18/19/21/22 PASS;N-11 PASS;N-17/20 NOT_RUN(X1/G1)。
+- 安全边界执行:18080 全程未动(PID 31791 起于 Oct21 不变);共享 PG 仅增量(新表 s_model_patch、试验场景 chem-roaded-w1lab 现 rev-3、试验 sim 行——保留作证据,可按需清理);J3 黄金数据未改;未以 mock 冒充真实、未把 source_system_id 冒充节点因果、未猜经纬度。
+- 引擎侧合并说明:mas-rust 与 mas-suite/mas-rust 为两个独立 clone 同在 feature/202605;合入经 mas-rust 拉取 origin 分支完成(代理失效期 GitHub SSH 直连可用)。
+
+## 文档地图(resp/next)
+
+- resp/:02–06 审计五件+manifest+first_pr_proposal;00_v71/v72/j3_v74 各轮报告;**本文件=现状总报告**。
+- next/:00_verified_baseline、01_history_frame_contract、04_native_execution_semantics(v0.2)、05_trace_recorder_isolation、06_model_patch_protocol(含引擎已实现标注)、07_mapengine_mount_contract、08_acceptance_real_next(REAL-NEXT 对账)、11_w1_t_report(W1+T 完整报告)、H_RELEASE_EVIDENCE。
+- 归档计划:07/08(v0.7-H 轮)、09/10(postH 轮)。
+- 证据:j3-run-compare/、native-mode/、w1-modelpatch/、trace-isolated/。
+
+## 下一步建议(无授权依赖排序)
+
+1. **X1 图编译对拍**(环境已备:隔离实例+workflowResource 通道+J3 对拍方法);2. addEntity/removeEntity 扩展(引擎侧,复用事务框架);3. G1 map-engine-v2 iframe 壳方案评审;4. 工作台接 trace display(P22 逐系统耗时面板,数据源 plan-run.jsonl)。
