@@ -46,3 +46,16 @@
 | P3 G0 宿主 | **PASS(协议级)** | map-engine-v2 入口/坐标/featureID 实测落 07 文档;超时熔断+位置策略测试;**未接入真实地图** |
 
 **宣布边界**:仅"证据封版与 W0/X0/G0 准备完成";W1(原生事务提交)/X1(IR 编译)/G1(真地图)/T(TraceRecorder)仍为闸门 NOT_RUN。
+
+---
+
+## W1+T 增量(2026-10-23,引擎 worktree 已推送;证据 w1-modelpatch/ + trace-isolated/)
+
+| 项 | 状态 | 说明 |
+|---|---|---|
+| N-11 TraceRecorder | **PASS** | 隔离实例真实逐系统耗时(plan-run.jsonl;TRACE-01/02/04/05 ✓,03 映射待 UI) |
+| N-13 模型变更预览 | **PASS(引擎实测)** | validate 零写入 + 变更集 |
+| N-14 乐观锁/幂等 | **PASS(引擎实测)** | REVISION_CONFLICT/REPLAYED/IDEMPOTENCY_CONFLICT |
+| N-15 失败原子性 | **PASS(引擎实测)** | 多操作一坏整包回滚,零半提交 |
+
+**宣布边界更新**:W1(隔离场景)可宣布「原生事务化模型补丁可用(worktree 分支,待评审合入)」;生产场景合并与 addEntity/removeEntity 扩展仍待评审。

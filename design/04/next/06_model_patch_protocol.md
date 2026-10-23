@@ -52,3 +52,11 @@ WRITE-04/06/07/08 ⛔ 闸门(引擎事务)。
 2. 首个试验:仅 replaceAttribute 单操作,改一个引擎原生支持参数(如 flammable/temperature 初值);
 3. 引擎侧事务要求(候选协议,须引擎评审):单事务内 revision 原子检查→全操作校验→全提交/全回滚→幂等键+请求 digest→产生原生新 revision;失败路径注入(中途 kill)验证可恢复;
 4. 验收:W-01..08(计划 §4);双向读取一致以工作台重放 vs 引擎历史端点逐帧对拍为准(方法已就绪)。
+
+---
+
+## W1 引擎侧已实现(2026-10-23,worktree feat/w1-model-patch-1023 @1cd0076,已推送)
+
+本文件的"候选协议"已在引擎侧落地:`/cm/model-patch/{validate,apply,status/:key,revision/:scene}`
+(单事务原子/FOR UPDATE 行锁/幂等摘要/rev-N 计数器);W-01..08 全 PASS、双侧一致实证——
+详见 `11_w1_t_report.md` 与 `evidence/w1-modelpatch/`。工作台 UI 接入为下一批(P18)。

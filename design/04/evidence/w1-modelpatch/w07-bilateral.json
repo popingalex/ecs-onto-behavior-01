@@ -1,0 +1,6 @@
+{
+ "tank1_durability": 25,
+ "tank2_durability": 60,
+ "entityCount": 93,
+ "verdict": "PASS:引擎补丁值经工作台归一化器读取一致"
+}

@@ -1,0 +1,81 @@
+{
+ "source": {
+  "binary": "worktree feat/w1-model-patch-1023 @65c7f96+ (release)",
+  "instance": "18081 隔离(独立 data_dir /tmp/w1-data)",
+  "env": "MAS_TRACE_RECORDER=1",
+  "scene": "chem-roaded-w1lab(W1 补丁后 rev-2)",
+  "sim": "K335GoNrdqVTZlR6w6raq"
+ },
+ "trace_frames": [
+  {
+   "frame": 1,
+   "compute_ms": 30,
+   "system_stats": {
+    "人员受威胁热力系统": 16,
+    "储罐初始化系统": 0,
+    "取水系统": 0,
+    "喷淋系统": 0,
+    "地理损害系统": 0,
+    "灭火交互系统": 0,
+    "燃烧系统": 0,
+    "移动系统": 0,
+    "辐射扩散系统": 10,
+    "运输系统": 1
+   }
+  },
+  {
+   "frame": 2,
+   "compute_ms": 29,
+   "system_stats": {
+    "人员受威胁热力系统": 17,
+    "储罐初始化系统": 0,
+    "取水系统": 0,
+    "喷淋系统": 0,
+    "地理损害系统": 0,
+    "灭火交互系统": 0,
+    "燃烧系统": 0,
+    "移动系统": 0,
+    "辐射扩散系统": 8,
+    "运输系统": 1
+   }
+  },
+  {
+   "frame": 3,
+   "compute_ms": 28,
+   "system_stats": {
+    "人员受威胁热力系统": 16,
+    "储罐初始化系统": 0,
+    "取水系统": 0,
+    "喷淋系统": 0,
+    "地理损害系统": 0,
+    "灭火交互系统": 0,
+    "燃烧系统": 0,
+    "移动系统": 0,
+    "辐射扩散系统": 8,
+    "运输系统": 2
+   }
+  }
+ ],
+ "overhead_compare_TRACE04": {
+  "no_trace_runtime_compute_ms": [
+   6.415375,
+   34.302082999999996,
+   34.302082999999996,
+   42.75975,
+   42.75975,
+   36.975458
+  ],
+  "with_trace_runtime_compute_ms": [
+   7.955125000000001,
+   37.56075,
+   37.56075,
+   40.054666000000005,
+   40.054666000000005,
+   39.239959
+  ]
+ },
+ "notes": [
+  "system_stats 键为引擎 display_name(中文),与 system_registry sys_id 的映射经 catalog 表;TRACE-03 待 UI 侧接线",
+  "18080 全程未动(PID 31791 起于 Oct21)"
+ ]
+}
