@@ -59,3 +59,8 @@
 | N-15 失败原子性 | **PASS(引擎实测)** | 多操作一坏整包回滚,零半提交 |
 
 **宣布边界更新**:W1(隔离场景)可宣布「原生事务化模型补丁可用(worktree 分支,待评审合入)」;生产场景合并与 addEntity/removeEntity 扩展仍待评审。
+
+| 追加(同日) | | |
+| W1 UI 闭环(P18) | **PASS** | 浏览器 E2E APPLIED rev-3+引擎复核 77 落库+截图 |
+| TRACE-03 映射 | **PASS** | display_name↔sys_id 目录映射+测试 |
+| 引擎合入 | **DONE** | feature/202605 @1ff58ba(推送) |

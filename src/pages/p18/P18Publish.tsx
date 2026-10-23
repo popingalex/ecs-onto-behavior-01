@@ -29,6 +29,8 @@ import {
   usePublishedBundles,
 } from "@/stores/publish"
 import { toast } from "@/stores/toast"
+import { isNativeMode } from "@/stores/dataSource"
+import NativeModelPatch from "./NativeModelPatch"
 import {
   currentModelHash,
   diagnosticRoute,
@@ -40,7 +42,10 @@ import {
  * P18 校验与发布：对全部草稿文档的组合模型跑 checkIntegrity；
  * 错误为 0 且校验未过期才可发布——发布只固定定义（语义哈希清单），不创建模拟 commit。
  */
-export default function P18Publish({ ctx: _ctx }: { ctx: WorkbenchContext }) {
+export default function P18Publish(props: { ctx: WorkbenchContext }) {
+  // REAL_IMPORT_READ_ONLY:发布页切换为 W1 原生事务化模型补丁面板。
+  if (isNativeMode()) return <NativeModelPatch />
+  const { ctx: _ctx } = props
   const index = useIndex()
   const model = useDraftModel()
   const docs = useDraftDocuments()

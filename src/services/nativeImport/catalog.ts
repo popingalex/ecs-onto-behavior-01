@@ -175,3 +175,25 @@ export const NATIVE_CAPABILITY: NativeCapability = {
     sBwT4d6RsTuGGHPIgu1L3: "PROPERTY_DELTA",
   },
 }
+
+/**
+ * TRACE-03:引擎 TraceRecorder 的 system_stats 键为中文 display_name
+ * (MAS_TRACE_RECORDER 输出实测,证据 trace-isolated/plan-run.jsonl)。
+ * 映射到 registry sys_id,供逐系统耗时与目录对齐;未知名保留原样不猜。
+ */
+export const DISPLAY_NAME_TO_SYS_ID: Record<string, string> = {
+  "人员受威胁热力系统": "injury-threat",
+  "储罐初始化系统": "tank-init",
+  "取水系统": "water-intake",
+  "喷淋系统": "sprinkler",
+  "地理损害系统": "geo-damage",
+  "灭火交互系统": "fire-extinguishing",
+  "燃烧系统": "combustion",
+  "疏散移动系统": "mobile",
+  "辐射扩散系统": "radiation-diffusion",
+  "转运工作流系统": "transport",
+}
+
+export function sysIdOfDisplayName(displayName: string): string {
+  return DISPLAY_NAME_TO_SYS_ID[displayName] ?? displayName
+}

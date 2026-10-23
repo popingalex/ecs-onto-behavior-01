@@ -39,3 +39,12 @@
 - s_model_patch 为**新表**(增量);REJECTED 亦落审计行;同 key 重试语义=同摘要重评估/异摘要拒绝(文档化);
 - worktree 未合入引擎 main(待评审);共享 PG 中 w1lab 场景与 2 个试验 sim 行保留作证据,可按需清理;
 - 工作台 UI 尚未接 /cm/model-patch(下一批:P18 发布页接入 dryRun/apply 流)。
+
+---
+
+## 收尾更新(2026-10-23 续)
+
+- **引擎分支已合入 `feature/202605` 并推送**(merge `1ff58ba`,含 ea11373);合入路径经 mas-rust 独立 clone(代理失效期改用直连 SSH)。
+- **工作台 P18 接入完成**:`NativeModelPatch.tsx`(原生模式发布页=补丁构造/validate 预览/apply 事务提交/修订刷新;仅连隔离实例);`nativeClient.ts`(DTO 翻译:工作台 entityId→引擎 instanceId)。**浏览器 E2E 实测:拉取 rev-2 → validate(before/77)→ apply APPLIED rev-3**,引擎侧复核 tank-1 durability=77 落库(截图 `12-P18-native-modelpatch.png`)。
+- **TRACE-03 完成**:`DISPLAY_NAME_TO_SYS_ID` 映射入 catalog(10 系统,实测 display_name 全覆盖;未知名原样保留),测试钉死。
+- 测试 146→**148 passed**。

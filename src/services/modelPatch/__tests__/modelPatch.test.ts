@@ -167,3 +167,33 @@ export async function getStatusFlow() {
   const miss = getPatchStatus(new IdempotencyLedger(), "key-x", records)
   if (miss.status !== "UNKNOWN") throw new Error("未知键应为 UNKNOWN")
 }
+
+export async function nativeClientRequestShapesAreTyped() {
+  // P18 数据层:请求体经 zod 校验(非法补丁抛错;合法补丁路径/形状正确)。
+  const { patchRequestPath } = await import("../nativeClient")
+  const { path, body } = patchRequestPath(basePatch())
+  if (path !== "/cm/model-patch/apply") throw new Error("路径错误")
+  const parsed = JSON.parse(body)
+  if (parsed.targetSceneId !== "chem-roaded" || parsed.operations[0].instanceId !== "tank-1")
+    throw new Error("camelCase 序列化错误")
+  let threw = false
+  try {
+    patchRequestPath(basePatch({ operations: [] }))
+  } catch {
+    threw = true
+  }
+  if (!threw) throw new Error("空操作补丁应被 zod 拒绝")
+}
+
+export async function traceDisplayNameMappingCoversObserved() {
+  // TRACE-03:实测 plan-run.jsonl 出现的 display_name 全部可映射到 registry sys_id。
+  const { DISPLAY_NAME_TO_SYS_ID, sysIdOfDisplayName, NATIVE_SYSTEM_CATALOG } =
+    await import("@/services/nativeImport/catalog")
+  const ids = new Set(NATIVE_SYSTEM_CATALOG.map((s: { id: string }) => s.id))
+  for (const name of ["人员受威胁热力系统", "储罐初始化系统", "取水系统", "喷淋系统", "地理损害系统", "灭火交互系统"]) {
+    const sysId = sysIdOfDisplayName(name)
+    if (!ids.has(sysId)) throw new Error(`映射 ${name}→${sysId} 不在目录`)
+  }
+  if (sysIdOfDisplayName("未知系统甲") !== "未知系统甲") throw new Error("未知名应原样保留不猜")
+  if (Object.keys(DISPLAY_NAME_TO_SYS_ID).length !== 10) throw new Error("映射表数量钉死 10")
+}
